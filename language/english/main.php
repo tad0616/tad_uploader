@@ -5,22 +5,6 @@
 // $Id: main.php,v 1.1 2008/05/14 01:27:37 tad Exp $
 // ------------------------------------------------------------------------- //
 
-define("_TO_ADMIN_PAGE","Management interface");
-//Object
-define("_MD_HOMEPAGE","Files list");
-define("_BP_BACK_PAGE","Previous page");
-define("_BP_NEXT_PAGE","Next page");
-define("_BP_FIRST_PAGE","First page");
-define("_BP_LAST_PAGE","Last page");
-define("_BP_GO_BACK_PAGE","Go backward %s pages");
-define("_BP_GO_NEXT_PAGE","Go forward %s pages");
-define("_BP_TOOLBAR","Total pages: %s . You are at page: %s");
-define("_BP_DEL_CHK","Are you sure to delete this data?");
-define("_BP_FUNCTION","Function");
-define("_BP_EDIT","Edit");
-define("_BP_DEL","Delete");
-define("_BP_ADD","Add new data");
-define("_TAD_NEED_TADTOOLS","Need modules/tadtools. You can download tadtools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
 define("_MA_TADUP_UPLOAD","Upload");
 
 //index.php

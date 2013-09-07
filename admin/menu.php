@@ -13,6 +13,7 @@ $adminmenu[$i]['title'] = _MI_TADUP_ADMENU1;
 $adminmenu[$i]['link'] = "admin/main.php";
 $adminmenu[$i]['desc'] = _MI_TADUP_ADMENU1 ;
 $adminmenu[$i]['icon'] = "{$icon_dir}opened_folder.png" ;
+
 $i++;
 $adminmenu[$i]['title'] = _MI_TADUP_ADMENU2;
 $adminmenu[$i]['link'] = "admin/power.php";

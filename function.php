@@ -4,6 +4,7 @@ if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php")){
  redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50",3, _TAD_NEED_TADTOOLS);
 }
 include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
+
 $uid_dir=0;
 if($xoopsUser){
   $uid_dir=$xoopsUser->getVar('uid');
@@ -184,7 +185,7 @@ function get_cate_path($csn="",$sub=false){
   global $xoopsDB;
 
   if(!$sub){
-      $home[_MD_HOMEPAGE]=XOOPS_URL."/modules/tad_uploader/index.php";
+      $home[_TAD_TO_MOD]=XOOPS_URL."/modules/tad_uploader/index.php";
   }else{
       $home=array();
   }
@@ -231,7 +232,7 @@ function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$
 
 	$sql = "replace into ".$xoopsDB->prefix("tad_uploader")." (cat_sn,cat_title,cat_desc,cat_enable,uid,of_cat_sn,cat_share,cat_sort,cat_count)
 	values('{$the_cat_sn}','{$cat_title}','{$cat_desc}','{$cat_enable}','{$uid}','{$of_cat_sn}','{$cat_share}','{$cat_sort}','{$cat_count}')";
-	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _AM_TADUP_DB_ERROR2);
+	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADUP_DB_ERROR2);
 
 	//取得最後新增資料的流水編號
 	$cat_sn=$xoopsDB->getInsertId();

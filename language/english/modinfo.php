@@ -1,9 +1,5 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 吳弘凱(tad0616@gmail.com) 製作
-// 製作日期：2008-02-06
-// $Id: modinfo.php,v 1.1 2008/05/14 01:27:37 tad Exp $
-// ------------------------------------------------------------------------- //
+include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
 
 define('_MI_TADUP_ADMIN_HOME',"Home");
 define("_MI_TADUP_ADMIN_HOME_DESC","Back to Home");

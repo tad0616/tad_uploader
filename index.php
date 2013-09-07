@@ -1,12 +1,7 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 吳弘凱(tad0616@gmail.com) 製作
-// 製作日期：2008-02-06
-// $Id: index.php,v 1.1 2008/05/14 01:27:37 tad Exp $
-// ------------------------------------------------------------------------- //
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = "tu_main_tpl.html";
+$xoopsOption['template_main'] = "tad_uploader_main.html";
 if(empty($_SESSION['list_mode'])) $_SESSION['list_mode']=$xoopsModuleConfig['show_mode'];
 
 include XOOPS_ROOT_PATH."/header.php";
@@ -58,7 +53,7 @@ function list_all_data($the_cat_sn=0){
     <td data-hide='phone' nowrap>"._MD_TADUP_FILE_SIZE."</td>
     <td data-hide='phone' nowrap>"._MD_TADUP_FILE_COUNTER."</td>
     {$desc_title}
-    <td data-hide='phone' nowrap>"._BP_FUNCTION."</td>
+    <td data-hide='phone' nowrap>"._TAD_FUNCTION."</td>
     </tr>":"<tr><td>";
 
 
@@ -230,7 +225,7 @@ function get_files_list($the_cat_sn="",$check_up_power="",$show_bar=true){
 
 			$up_date=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($up_date)));
 
-      $adm_tool=($isAdmin)?"<td><a href='uploads.php?cfsn=$cfsn'><img src='images/pencil.png' alt='"._BP_EDIT."' title='"._BP_EDIT."'></a></td>":"";
+      $adm_tool=($isAdmin)?"<td><a href='uploads.php?cfsn=$cfsn'><img src='images/pencil.png' alt='"._TAD_EDIT."' title='"._TAD_EDIT."'></a></td>":"";
 
       $real_file=get_file_name($file_name,$cfsn);
       //$mp3_player=substr($file_name,-3)=="mp3"?"<audio src='"._TAD_UPLOADER_URL."/user_{$uid}/{$real_file}' preload='auto' />":"";

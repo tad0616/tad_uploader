@@ -1,16 +1,12 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 吳弘凱(tad0616@gmail.com) 製作
-// 製作日期：2008-02-06
-// $Id: modinfo.php,v 1.1 2008/05/14 01:27:37 tad Exp $
-// ------------------------------------------------------------------------- //
+include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
 
 define('_MI_TADUP_ADMIN_HOME',"首頁");
 define("_MI_TADUP_ADMIN_HOME_DESC","回首頁");
 define("_MI_TADUP_ADMIN_ABOUT" , "關於");
 define("_MI_TADUP_ADMIN_ABOUT_DESC" , "關於此模組");
 
-define("_MI_TADUP_NAME","網路資料櫃");
+define("_MI_TADUP_NAME","網路硬碟");
 define("_MI_TADUP_DESC","就是上傳模組囉～");
 define("_MI_TADUP_ADMENU1", "資料夾設定");
 define("_MI_TADUP_ADMENU2", "細部權限設定");

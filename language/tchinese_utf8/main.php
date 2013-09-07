@@ -5,22 +5,6 @@
 // $Id: main.php,v 1.1 2008/05/14 01:27:37 tad Exp $
 // ------------------------------------------------------------------------- //
 
-define("_TO_ADMIN_PAGE","管理介面");
-//分頁物件用的語系
-define("_MD_HOMEPAGE","回檔案列表");
-define("_BP_BACK_PAGE","上一頁");
-define("_BP_NEXT_PAGE","下一頁");
-define("_BP_FIRST_PAGE","第一頁");
-define("_BP_LAST_PAGE","最後頁");
-define("_BP_GO_BACK_PAGE","前 %s 頁");
-define("_BP_GO_NEXT_PAGE","後 %s 頁");
-define("_BP_TOOLBAR","共 %s 頁，目前在第 %s 頁：");
-define("_BP_DEL_CHK","確定要刪除此資料？");
-define("_BP_FUNCTION","功能");
-define("_BP_EDIT","編輯");
-define("_BP_DEL","刪除");
-define("_BP_ADD","新增資料");
-define("_TAD_NEED_TADTOOLS"," 需要 modules/tadtools，可至<a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad教材網</a>下載。");
 define("_MA_TADUP_UPLOAD","檔案上傳");
 
 //index.php

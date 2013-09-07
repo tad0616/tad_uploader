@@ -1,9 +1,4 @@
 <?php
-//  ------------------------------------------------------------------------ //
-// 本模組由 吳弘凱(tad0616@gmail.com) 製作
-// 製作日期：2008-02-06
-// $Id: xoops_version.php,v 1.1 2008/05/14 01:27:37 tad Exp $
-// ------------------------------------------------------------------------- //
 
 //---基本設定---//
 $modversion = array();
@@ -22,22 +17,21 @@ $modversion['dirname']		= basename(dirname(__FILE__));
 
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2013/5/7';
+$modversion['release_date'] = '2013/09/08';
 $modversion['module_website_url'] = 'http://tad0616.net/';
-$modversion['module_website_name'] = _MI_TADUP_WEB;
-$modversion['module_status'] = 'RC1';
+$modversion['module_website_name'] = _MI_TAD_WEB;
+$modversion['module_status'] = 'release';
 $modversion['author_website_url'] = 'http://tad0616.net/';
-$modversion['author_website_name'] = 'Tad';
-$modversion['min_php']='5.2';
+$modversion['author_website_name'] = _MI_TAD_WEB;
+$modversion['min_php']=5.2;
 $modversion['min_xoops']='2.5';
-$modversion['min_db'] = array('mysql'=>'5.0.7', 'mysqli'=>'5.0.7');
 
 //---paypal資訊---//
 $modversion ['paypal'] = array();
 $modversion ['paypal']['business'] = 'tad0616@gmail.com';
-$modversion ['paypal']['item_name'] = 'Donation : ' . _MI_TADUP_DESC;
+$modversion ['paypal']['item_name'] = 'Donation : ' . _MI_TAD_WEB;
 $modversion ['paypal']['amount'] = 0;
-$modversion ['paypal']['currency_code'] = 'TWD';
+$modversion ['paypal']['currency_code'] = 'USD';
 
 
 //---資料表架構---//
@@ -66,10 +60,23 @@ $modversion['hasMain'] = 1;
 	
 
 //---樣板設定---//
-$modversion['templates'][1]['file'] = 'tu_main_tpl.html';
-$modversion['templates'][1]['description'] = _MI_TADUP_TEMPLATE_DESC1;
-$modversion['templates'][2]['file'] = 'tu_upload_tpl.html';
-$modversion['templates'][2]['description'] = _MI_TADUP_TEMPLATE_DESC2;
+$modversion['templates'] = array();
+$i=1;
+$modversion['templates'][$i]['file'] = 'tad_uploader_main.html';
+$modversion['templates'][$i]['description'] = 'tad_uploader_main.html';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'tad_uploader_uploads.html';
+$modversion['templates'][$i]['description'] = 'tad_uploader_uploads.html';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'tad_uploader_adm_main.html';
+$modversion['templates'][$i]['description'] = 'tad_uploader_adm_main.html';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'tad_uploader_adm_power.html';
+$modversion['templates'][$i]['description'] = 'tad_uploader_adm_power.html';
+
 
 //---區塊設定---//
 $modversion['blocks'][1]['file'] = "catalog_block_1.php";
