@@ -1,0 +1,572 @@
+.file_title{
+
+}
+
+.file_num{
+  font-size:11px;
+  font-family:Arial;
+}
+
+.cat_count{
+  font-family:Arial;
+  padding:6px;
+  font-size:11px;
+  border-right:0px;
+}
+
+.cf_desc{
+
+}
+
+/* admin/index.php */
+.pic_li_border{
+  list-style: none;
+  background-position: center 16px;
+  background-repeat: no-repeat;
+  padding:0px;
+  width:150px;
+  height:185px;
+  border:1px solid #cfcfcf;
+  margin: 4px;
+  float: left;
+  position: relative;
+}
+
+.pic_bg{
+  width: 150px;
+  height: 185px;
+  vertical-align:bottom;
+  position:relative;
+  background-image:url(images/film.gif);
+}
+
+.pic_title {
+  font-size:11px;
+  height:16px;
+  line-height:16px;
+	position: absolute;
+	left: 19px;
+	top: 0px;
+	width: 112px;
+	color: #f0f0f0;
+	font-weight: normal;
+	background-color: #0c0c0c;
+	text-align:center;
+	vertical-align:middle;
+	overflow:hidden;
+}
+
+.pic_desc {
+  font-size:11px;
+  height:40px;
+	position: absolute;
+	left: 19px;
+	bottom: 0px;
+	width: 112px;
+	color: #5f5f5f;
+	font-weight: normal;
+	background-color: #ffffff;
+	text-align:left;
+	overflow:hidden;
+	line-height:13px;
+	white-space:pre-wrap;
+}
+
+.video_info {
+  font-size:11px;
+  height:40px;
+	position: absolute;
+	left: 19px;
+	bottom: 39px;
+	width: 112px;
+	color: #ffffff;
+	font-weight: normal;
+	background-color: rgb(102,0,0);
+	text-align:left;
+	overflow:hidden;
+	line-height:13px;
+	white-space:pre-wrap;
+}
+
+.mode_change{
+  padding:2px 6px;
+  border:1px solid gray;
+  background-color:#F0F0F0;
+  text-decoration:none;
+}
+
+
+.mode_change:hover{
+  background-color:rgb(255,204,51);
+  color:#000000;
+  text-decoration:none;
+}
+
+#save_msg{
+  float:right;
+  color:rgb(0,153,204);
+}
+
+
+.MediaCate {
+	margin: 6px;
+	float: left;
+	width: 140px;
+	height: 200px;
+	position: relative;
+	cursor: pointer;
+	padding:0px;
+  background-color:rgb(235,235,235);
+}
+
+.MediaVideo {
+	margin: 6px;
+	float: left;
+	width: 140px;
+	height: 200px;
+	position: relative;
+	cursor: pointer;
+	padding:0px;
+  background-color:rgb(255,255,255);
+}
+
+.tp_index_pic{
+	width:120px;
+	background-color: rgb(0,0,0);
+	margin:5px auto;
+	background-color: rgb(255,255,255);
+	border:1px solid #cfcfcf;
+	padding:6px;
+}
+
+
+.tp_cate_title{
+	width:130px;
+	padding:4px 2px 4px 2px;
+	text-align:center;
+}
+
+.tp_index_title{
+	width:130px;
+	padding:4px 2px 4px 2px;
+}
+
+.tp_index_title a{
+	color: rgb(0,112,240);
+	font-size: 12px;
+}
+
+.tp_index_creator{
+	color: #FF8C00;
+	overflow: hidden;
+	font-size: 11px;
+}
+
+.tp_index_date{
+	color: Gray;
+	overflow: hidden;
+	font-size: 10px;
+}
+
+.tp_index_counter{
+	overflow: hidden;
+	font-size: 11px;
+}
+
+
+
+
+div#code_results textarea{
+	width: 96%;
+	background-color: #FCFCFC;
+	color: rgb(153,153,255);
+	font-size: 11px;
+	padding:8px;
+}
+
+
+.set_code{
+	background-color: #000000;
+	color:rgb(153,153,255);
+	padding:2px 10px 2px 10px;
+}
+
+table.media{
+	background-color: #000000;
+	border:0px;
+	border-collapse: collapse;
+	width:auto;
+}
+
+td.media_file{
+	text-align:center;
+	vertical-align:top;
+	margin:auto;
+	padding:10px;
+}
+
+td.media_menu{
+
+}
+
+.media_title{
+	font-size: 25px;
+	border: 1px dotted Green;
+	padding: 4px 0px 4px 10px;
+	margin: 0px 0px 10px 0px;
+	background-color: #FCFCFC;
+}
+
+.media_content{
+	width: 100%;
+	height:200px;
+	overflow: auto;
+	background-color: #FFFFFF;
+}
+
+
+table#tp_index{
+}
+
+table#tp_index td{
+	padding: 4px;
+	background-color: rgb(240,240,240);
+}
+
+
+
+/************************** 表單表格樣式 **************************/
+
+/* 有表單的表格樣式 */
+table.form_tbl {
+	width: auto;
+	padding: 8px;
+	border-collapse: collapse;
+}
+/* 有表單的儲存格樣式 */
+table.form_tbl td {
+	padding: 3px;
+}
+/* 有表單的「表單標題」儲存格樣式 */
+table.form_tbl td.form {
+	font-weight: bold;
+	font-size: 110%;
+	background-color: #efefef;
+	color: rgb(127,0,0);
+	text-align: center;
+}
+/* 有表單的「標題」儲存格樣式 */
+table.form_tbl td.title {
+	background-color: transparent;
+	color: rgb(0,0,0);
+	text-align: right;
+	padding: 4px 4px 4px 20px;
+	vertical-align: middle;
+	border-bottom: 1px dotted rgb(150,150,150);
+}
+/* 有表單的「輸入欄位」儲存格樣式 */
+table.form_tbl td.col {
+	padding: 4px 6px 4px 6px;
+	background-color: transparent;
+	border-bottom: 1px dotted rgb(200,200,200);
+}
+/* 有表單的「工具列」儲存格樣式 */
+table.form_tbl td.bar {
+	text-align: center;
+}
+
+
+/************************** 一般表格樣式 **************************/
+
+/* 表格樣式 */
+table#tbl{
+	width: auto;
+	padding: 8px;
+	border-collapse: collapse;
+}
+
+/* 標題儲存格樣式 */
+table#tbl th {
+	padding: 5px;
+	border-bottom:1px solid rgb(192,192,192);
+	text-align:center;
+	vertical-align: middle;
+}
+
+/* 儲存格樣式 */
+table#tbl td {
+	padding: 5px;
+	border-bottom:1px solid rgb(192,192,192);
+	vertical-align: middle;
+}
+
+
+/* 標題儲存格樣式 */
+table#tbl th.title{
+	
+}
+
+
+
+/* 儲存格分頁樣式 */
+table#tbl td.bar {
+	padding: 5px;
+	background-color: rgb(243,243,243);
+	text-align: center;
+}
+
+
+table#tbl td.noline{
+  border:0px;
+}
+
+/************************** 3D圓角樣式 **************************/
+/*  立體圓角框  */
+.raised {
+	background: transparent;
+	width: auto;
+	margin: 20px;
+}
+.raised h1, .raised p {
+	margin: 0 10px;
+}
+.raised h1 {
+	color: rgb(51,102,255);
+	margin-bottom: 5px;
+	font-size: 2em;
+}
+.raised p {
+	padding-bottom: 0.5em;
+}
+.raised .b1, .raised .b2, .raised .b3, .raised .b4, .raised .b1b, .raised .b2b, .raised .b3b, .raised .b4b {
+	display: block;
+	overflow: hidden;
+	font-size: 1px;
+}
+.raised .b1, .raised .b2, .raised .b3, .raised .b1b, .raised .b2b, .raised .b3b {
+	height: 1px;
+}
+.raised .b2 {
+	background: #ccc;
+	border-left: 1px solid #fff;
+	border-right: 1px solid #eee;
+}
+.raised .b3 {
+	background: #ccc;
+	border-left: 1px solid #fff;
+	border-right: 1px solid #ddd;
+}
+.raised .b4 {
+	background: #ccc;
+	border-left: 1px solid #fff;
+	border-right: 1px solid #aaa;
+}
+.raised .b4b {
+	background: #fff;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #999;
+}
+.raised .b3b {
+	background: #fff;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #999;
+}
+.raised .b2b {
+	background: #fff;
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #999;
+}
+.raised .b1 {
+	margin: 0 5px;
+	background: #fff;
+}
+.raised .b2, .raised .b2b {
+	margin: 0 3px;
+	border-width: 0 2px;
+}
+.raised .b3, .raised .b3b {
+	margin: 0 2px;
+}
+.raised .b4, .raised .b4b {
+	height: 2px;
+	margin: 0 1px;
+}
+.raised .b1b {
+	margin: 0 5px;
+	background: #999;
+}
+.raised .boxcontent {
+	display: block;
+	background: #fff;
+	border-left: 1px solid #fff;
+	border-right: 1px solid #999;
+	background-image: url(images/panel.jpg);
+	background-repeat: repeat-x;
+	padding: 10px 25px 10px 25px;
+}
+/*  內嵌圓角框  */
+.inset {
+	background: transparent;
+	width: auto;
+	margin: 20px;
+}
+.inset h1, .inset p {
+	margin: 0 10px;
+}
+.inset h1 {
+	color: rgb(51,102,255);
+	margin-bottom: 5px;
+	font-size: 2em;
+}
+.inset p {
+	padding-bottom: 0.5em;
+}
+.inset .b1, .inset .b2, .inset .b3, .inset .b4, .inset .b1b, .inset .b2b, .inset .b3b, .inset .b4b {
+	display: block;
+	overflow: hidden;
+	font-size: 1px;
+}
+.inset .b1, .inset .b2, .inset .b3, .inset .b1b, .inset .b2b, .inset .b3b {
+	height: 1px;
+}
+.inset .b2 {
+	background: #ccc;
+	border-left: 1px solid #999;
+	border-right: 1px solid #aaa;
+}
+.inset .b3 {
+	background: #ccc;
+	border-left: 1px solid #999;
+	border-right: 1px solid #ddd;
+}
+.inset .b4 {
+	background: #ccc;
+	border-left: 1px solid #999;
+	border-right: 1px solid #eee;
+}
+.inset .b4b {
+	background: #fff;
+	border-left: 1px solid #aaa;
+	border-right: 1px solid #fff;
+}
+.inset .b3b {
+	background: #fff;
+	border-left: 1px solid #ddd;
+	border-right: 1px solid #fff;
+}
+.inset .b2b {
+	background: #fff;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #fff;
+}
+.inset .b1 {
+	margin: 0 5px;
+	background: #999;
+}
+.inset .b2, .inset .b2b {
+	margin: 0 3px;
+	border-width: 0 2px;
+}
+.inset .b3, .inset .b3b {
+	margin: 0 2px;
+}
+.inset .b4, .inset .b4b {
+	height: 2px;
+	margin: 0 1px;
+}
+.inset .b1b {
+	margin: 0 5px;
+	background: #fff;
+}
+.inset .boxcontent {
+	display: block;
+	background: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #fff;
+	background-image: url(images/panel.jpg);
+	background-repeat: repeat-x;
+	padding: 10px 25px 10px 25px;
+}
+/*  白底灰圓角框  */
+.corners {
+	background: transparent;
+	width: auto;
+	margin: 20px;
+}
+.corners h1, .inset p {
+	margin: 0 10px;
+}
+.corners h1 {
+	color: rgb(51,102,255);
+	margin-bottom: 5px;
+	font-size: 2em;
+}
+.corners p {
+	padding-bottom: 0.5em;
+}
+.corners .b1, .corners .b2, .corners .b3, .corners .b4, .corners .b1b, .corners .b2b, .corners .b3b, .corners .b4b {
+	display: block;
+	overflow: hidden;
+	font-size: 1px;
+}
+.corners .b1, .corners .b2, .corners .b3, .corners .b1b, .corners .b2b, .corners .b3b {
+	height: 1px;
+}
+.corners .b2 {
+	background: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+}
+.corners .b3 {
+	background: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+}
+.corners .b4 {
+	background: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+}
+.corners .b4b {
+	background: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+}
+.corners .b3b {
+	background: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+}
+.corners .b2b {
+	background: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+}
+.corners .b1 {
+	margin: 0 5px;
+	background: #999;
+}
+.corners .b2, .corners .b2b {
+	margin: 0 3px;
+	border-width: 0 2px;
+}
+.corners .b3, .corners .b3b {
+	margin: 0 2px;
+}
+.corners .b4, .corners .b4b {
+	height: 2px;
+	margin: 0 1px;
+}
+.corners .b1b {
+	margin: 0 5px;
+	background: #999;
+}
+.corners .boxcontent {
+	display: block;
+	background: #fff;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	background-repeat: repeat-x;
+	padding: 5px 10px 5px 10px;
+}
+

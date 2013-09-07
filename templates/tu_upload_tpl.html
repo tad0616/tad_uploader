@@ -1,0 +1,78 @@
+<link rel="stylesheet" type="text/css" media="screen" href="module.css" /><link rel="stylesheet" type="text/css" media="screen" href="iconize.css" />
+<{$bootstrap}>
+<{$jquery}>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var $tabs = $("#jquery-tabs<{$randStr}>").tabs();
+    var last_tab=$tabs.tabs("length")-1;
+    <{$to_batch_upload}>
+
+		<{$hide}>
+		$("#file_where").change(function() {
+			if ($("#file_where").val()=="up") {
+	       $("#file_up").show();
+	       $("#file_link").hide();
+			} else{
+	       $("#file_link").show();
+	       $("#file_up").hide();
+			}
+		});
+
+	});
+</script>
+
+<{$toolbar}>
+
+<div id="jquery-tabs<{$randStr}>">
+
+  <ul>
+      <li><a href="#fragment-1"><span><{$smarty.const._MA_TADUP_UPLOAD_ONE}></span></a></li>
+      <li><a href="jupload.php"><span><{$smarty.const._MI_TADUP_JAVA_UPLOAD}></span></a></li>
+      <li><a href="batch_upload.php"><span><{$smarty.const._MI_TADUP_BATCH_UPLOAD}></span></a></li>
+  </ul>
+  <div id="fragment-1">
+
+    <form action="uploads.php" method="post" id="myForm" enctype="multipart/form-data">
+      <div>
+      	<{if $cate_select}>
+          <{$smarty.const._MA_TADUP_OF_TADUP_SN}>
+          <select name="cat_sn" size=1>
+        	<{$cate_select}>
+        	</select>
+      	<{/if}>
+      	
+        <select name="cat_add_form" size=1>
+        <option value="0">在根目錄下<{$smarty.const._MA_TADUP_NEW_TADUP_SN}></option>
+        <option value="cat_sn">在左邊目錄下<{$smarty.const._MA_TADUP_NEW_TADUP_SN}></option>
+      	</select>
+      	
+        <input type="text" name="new_cat_sn" size="10">
+      </div>
+
+    	<div>
+      	<select id="file_where">
+      	<option value="up" <{$selected_up}>><{$smarty.const._MA_TADUP_UPLOAD}></option>
+      	<option value="link" <{$selected_link}>><{$smarty.const._MA_TADUP_LINK}></option>
+      	</select>
+
+    		<span id="file_up"><input type="file" name="upfile" size="30"></span>
+    		<span id="file_link"><input type="text" name="file_url" size="50" value="<{$file_url}>"></span>
+      </div>
+
+    	<div>
+        <{$smarty.const._MD_TADUP_FILE_DESC}>
+    	  <input type="text" name="cf_desc" size=30  value="<{$cf_desc}>">
+      </div>
+
+    	<{$up_time_col}>
+
+    	<div>
+        <input type="hidden" name="op" value="<{$op}>">
+      	<input type="hidden" name="cfsn" value="<{$cfsn}>">
+        <input type="submit" value="<{$smarty.const._MD_TADUP_SAVE}>">
+      </div>
+      
+    </form>
+  </div>
+</div>

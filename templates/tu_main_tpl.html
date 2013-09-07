@@ -1,0 +1,99 @@
+<link rel="stylesheet" type="text/css" media="screen" href="module.css" /><link rel="stylesheet" type="text/css" media="screen" href="iconize.css" />
+<{$bootstrap}>
+<{$jquery}>
+<{$toolbar}>
+
+<{if $up_power}>
+
+<script type="text/javascript" src="<{$xoops_url}>/modules/tad_uploader/class/miniAudioPlayer/inc/jquery.jplayer.min.js"></script>
+<script type="text/javascript" src="<{$xoops_url}>/modules/tad_uploader/class/miniAudioPlayer/inc/jquery.mb.miniPlayer.js"></script>
+<link rel="stylesheet" type="text/css" href="<{$xoops_url}>/modules/tad_uploader/class/miniAudioPlayer/css/miniplayer.css" title="style"  media="screen"/>
+
+<script language="JavaScript">
+function delete_catalog_func(cat_sn,of_cat_sn){
+	var sure = window.confirm("<{$smarty.const._MD_TADUP_DEL_CONFIRM}>");
+	if (!sure)	return;
+	location.href="index.php?op=delete_catalog&cat_sn=" + cat_sn + "&of_cat_sn=" + of_cat_sn;
+}
+
+
+$(document).ready(function()  {
+ $(".audio").mb_miniPlayer({
+				width:100,
+				inLine:true,
+        swfPath: "<{$xoops_url}>/modules/tad_uploader/class/miniAudioPlayer/inc/"
+			});
+/*
+  //***目錄排序****
+  $("#dir_sort").sortable({
+    opacity: 0.6, cursor: "move", axis:"y", update: function(e, ui) {
+      var href = "save_dir_sort.php";
+      $(this).sortable("refresh");
+      var sorted = $(this).sortable("serialize","id");
+      $.ajax({
+      type: "POST",url: href, data: sorted, success: function(msg) {
+        $("#save_msg").html(msg);
+        }
+      });
+    }
+  });
+
+  //***檔案排序****
+  $("#sort").sortable({
+    opacity: 0.6, cursor: "move", axis:"y", update: function(e, ui) {
+      var href = "save_file_sort.php";
+      $(this).sortable("refresh");
+      var sorted = $(this).sortable("serialize","id");
+      $.ajax({
+      type: "POST",url: href, data: sorted, success: function(msg) {
+        $("#save_msg").html(msg);
+        }
+      });
+    }
+  });
+*/
+});
+</script>
+<{/if}>
+
+<div id="save_msg" style="float:right"></div>
+
+<div style="float:right">
+	<a href="index.php?op=list_mode&list_mode=icon&of_cat_sn=<{$cat_sn}>"><img src="images/view_icon.png" align="absmiddle"></a>
+	<a href="index.php?op=list_mode&list_mode=more&of_cat_sn=<{$cat_sn}>"><img src="images/view_text.png" align="absmiddle"></a>
+</div>
+
+<{$path}>
+
+<{if $cat_desc}>
+  <div>
+  <{$cat_desc}>
+  </div>
+<{/if}>
+
+
+<div style="clear:both"></div>
+
+<form action="index.php" method="POST">
+	<table class="table-striped footable" id="filetbl">
+	<thead>
+	 <{$tr}>
+	</thead>
+	
+	<tbody>
+    <{$folder_list}>
+    <{$files_list}>
+  </tbody>
+  
+	</table>
+	
+	<table>
+  <tr><td>
+	<input name="cat_sn" type="hidden" value="<{$cat_sn}>">
+  <{$bar}>
+	<{$mdtool}>
+	</td></tr>
+  </table>
+</form>
+
+
