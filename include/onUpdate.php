@@ -7,7 +7,8 @@ function xoops_module_update_tad_uploader(&$module, $old_version) {
 		if(!chk_chk3()) go_update3();
 		if(!chk_chk4()) go_update4();
 		if(!chk_chk5()) go_update5();
-	 mk_dir(XOOPS_ROOT_PATH."/uploads/tad_uploader_batch");
+		if(chk_chk6()) go_update6();
+    mk_dir(XOOPS_ROOT_PATH."/uploads/tad_uploader_batch");
 
     return true;
 }
@@ -121,7 +122,73 @@ function go_update5(){
 	return true;
 }
 
+//檢查是否需要建立tad_uploader_files_center
+function chk_chk6(){
+	global $xoopsDB;
+	$sql="select count(*) from ".$xoopsDB->prefix("tad_uploader_files_center");
+	$result=$xoopsDB->query($sql);
+	if(empty($result)) return true;
+	return false;
+}
 
+//建立tad_uploader_files_center
+function go_update6(){
+	global $xoopsDB;
+  
+	$sql="CREATE TABLE IF NOT EXISTS `".$xoopsDB->prefix("tad_uploader_files_center")."` (
+  `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `col_name` varchar(255) NOT NULL default '',
+  `col_sn` smallint(5) unsigned NOT NULL default '0',
+  `sort` smallint(5) unsigned NOT NULL default '1',
+  `kind` enum('img','file') NOT NULL default 'img',
+  `file_name` varchar(255) NOT NULL default '',
+  `file_type` varchar(255) NOT NULL default '',
+  `file_size` int(10) unsigned NOT NULL default '0',
+  `description` text NOT NULL,
+  `counter` mediumint(8) unsigned NOT NULL default '0',
+  `original_filename` varchar(255) NOT NULL default '',
+  PRIMARY KEY (`files_sn`)
+) ENGINE=MyISAM ";
+	$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  
+  $os=(PATH_SEPARATOR==':')?"linux":"win";
+  
+  $sql="select * from ".$xoopsDB->prefix("tad_uploader_file")."";
+	$result=$xoopsDB->queryF($sql) or redirect_header(XOOPS_URL,3,  mysql_error());
+  while(list($cfsn ,$cat_sn ,$uid ,$cf_name ,$cf_desc ,$cf_type ,$cf_size ,$cf_count ,$up_date ,$file_url ,$cf_sort)=$xoopsDB->fetchRow($result)){
+  
+    $type=explode("/",$cf_type);
+    $kind=($type[0]=='image')?"img":"file";
+    $extarr=explode('.',$cf_name);
+    foreach($extarr as $val){
+      $ext=strtolower($val);
+    }
+    
+    $new_file_name="cfsn_{$cfsn}_1.{$ext}";
+    $from=XOOPS_ROOT_PATH."/uploads/tad_uploader/user_{$uid}/{$cfsn}_{$cf_name}";
+    $to=XOOPS_ROOT_PATH."/uploads/tad_uploader/user_{$uid}/{$kind}/{$new_file_name}";
+    
+    mk_dir(XOOPS_ROOT_PATH."/uploads/tad_uploader/user_{$uid}/{$kind}");
+    
+    if($os=="win" and _CHARSET=="UTF-8"){
+      $from=iconv(_CHARSET,"Big5",$from);
+      $to=iconv(_CHARSET,"Big5",$to);
+    }elseif($os=="linux" and _CHARSET=="Big5"){
+      $from=iconv(_CHARSET,"UTF-8",$from);
+      $to=iconv(_CHARSET,"UTF-8",$to);    
+    }
+    
+    
+    if(file_exists($from)){
+      if(rename($from,$to)){  
+        $sql2="insert into ".$xoopsDB->prefix("tad_uploader_files_center")." (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$new_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}')";
+        $xoopsDB->queryF($sql2) or redirect_header(XOOPS_URL,3,  mysql_error());
+      }
+    }
+  }
+  
+	return true;
+}
 
 //建立目錄
 function mk_dir($dir=""){

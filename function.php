@@ -35,6 +35,51 @@ if(!function_exists("randStr")){
   }
 }
 
+
+//新增資料到tad_uploader中
+function add_tad_uploader(){
+	global $xoopsDB,$xoopsUser,$TadUpFiles;
+
+  $myts = & MyTextSanitizer::getInstance();
+	
+	if(!empty($_POST['new_cat_sn'])){
+    $cat_sn=add_catalog("",$_POST['new_cat_sn'],"","1",$_POST['cat_sn'],$_POST['cat_add_form']);
+	}else{
+		$cat_sn=$_POST['cat_sn'];
+	}
+
+	$uid=$xoopsUser->uid();
+	//die(var_export($_FILES['upfile']));
+  
+  foreach($_FILES['upfile']['name'] as $i=>$name){
+    if(!empty($name)){
+
+      $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
+          
+      $sql = "insert into ".$xoopsDB->prefix("tad_uploader_file")." (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
+      values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$_FILES['upfile']['type'][$i]}','{$_FILES['upfile']['size'][$i]}','{$now}','{$cf_sort}')";
+    }elseif(!empty($file_url)){
+      $size=remote_file_size($file_url);
+      $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
+      $sql = "insert into ".$xoopsDB->prefix("tad_uploader_file")." (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,file_url,cf_sort)
+      values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$type}','{$size}','{$now}','{$file_url}','{$cf_sort}')";
+    }
+    
+    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5."<p>$sql</p>");
+    
+    //取得最後新增資料的流水編號
+    $cfsn=$xoopsDB->getInsertId();
+    
+    $TadUpFiles->set_dir('subdir',"/user_{$uid}");
+    $TadUpFiles->set_col("cfsn",$cfsn);
+    //die(var_export($TadUpFiles->get_path()));
+    
+    $TadUpFiles->upload_file('upfile');
+  }
+	return $cat_sn;
+}
+
+
 //找出目前資料夾應設順序
 function get_cat_max_sort($of_cat_sn=""){
 	global $xoopsDB;
@@ -340,7 +385,7 @@ function del_file($cfsn="",$del_sql=true){
 
 //下載檔案
 function dlfile($cfsn=""){
-	global $xoopsUser;
+	global $xoopsUser,$xoopsDB,$TadUpFiles;
 
 	$cf=get_catalog_file($cfsn);
 	if(!check_up_power("catalog",$cf['cat_sn'])){
@@ -358,18 +403,16 @@ function dlfile($cfsn=""){
 	if(!empty($cf['file_url'])){
     header("location:{$cf['file_url']}");
   }else{
-
-	 $real_file=get_file_name($cf['cf_name'],$cfsn);
-   //$real_file=(DIRECTORY_SEPARATOR == '\\')?iconv('UTF-8','Big5',$real_file):$real_file;
-   //$real_file=urlencode($real_file);
-	 $file=_TAD_UPLOADER_URL."/user_{$cf['uid']}/{$real_file}";
-
-
-	 if(file_exists(XOOPS_ROOT_PATH."/uploads/tad_uploader/user_{$cf['uid']}")){
-    header("location:{$file}");
-   }else{
-    die(_MD_TADUP_CANT_FIND_FILE.":{$file}");
-   }
+    $sql="select uid from ".$xoopsDB->prefix("tad_uploader_file")." where `cfsn`='$cfsn'";
+    $result = $xoopsDB->queryF($sql) or die($sql);
+    list($uid)=$xoopsDB->fetchRow($result);
+    $TadUpFiles->set_dir('subdir',"/user_{$uid}");
+    
+    $sql="select files_sn from ".$xoopsDB->prefix("tad_uploader_files_center")." where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
+    $result = $xoopsDB->queryF($sql) or die($sql);
+    list($files_sn)=$xoopsDB->fetchRow($result);
+    
+    return $files_sn;
   }
 	exit;
 }

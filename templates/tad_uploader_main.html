@@ -5,9 +5,6 @@
 
 <{if $up_power}>
 
-<script type="text/javascript" src="<{$xoops_url}>/modules/tad_uploader/class/miniAudioPlayer/inc/jquery.jplayer.min.js"></script>
-<script type="text/javascript" src="<{$xoops_url}>/modules/tad_uploader/class/miniAudioPlayer/inc/jquery.mb.miniPlayer.js"></script>
-<link rel="stylesheet" type="text/css" href="<{$xoops_url}>/modules/tad_uploader/class/miniAudioPlayer/css/miniplayer.css" title="style"  media="screen"/>
 
 <script language="JavaScript">
 function delete_catalog_func(cat_sn,of_cat_sn){
@@ -18,12 +15,7 @@ function delete_catalog_func(cat_sn,of_cat_sn){
 
 
 $(document).ready(function()  {
- $(".audio").mb_miniPlayer({
-				width:100,
-				inLine:true,
-        swfPath: "<{$xoops_url}>/modules/tad_uploader/class/miniAudioPlayer/inc/"
-			});
-/*
+
   //***目錄排序****
   $("#dir_sort").sortable({
     opacity: 0.6, cursor: "move", axis:"y", update: function(e, ui) {
@@ -51,7 +43,7 @@ $(document).ready(function()  {
       });
     }
   });
-*/
+
 });
 </script>
 <{/if}>
@@ -74,7 +66,7 @@ $(document).ready(function()  {
 
 <div style="clear:both"></div>
 
-<form action="index.php" method="POST">
+<form action="index.php" method="POST" enctype="multipart/form-data">
 	<table class="table-striped footable" id="filetbl">
 	<thead>
 	 <{$tr}>
@@ -89,11 +81,35 @@ $(document).ready(function()  {
 	
 	<table>
   <tr><td>
-	<input name="cat_sn" type="hidden" value="<{$cat_sn}>">
   <{$bar}>
-	<{$mdtool}>
 	</td></tr>
   </table>
+  
+  <{if $up_power}>
+    <div class="well">
+      <{if $files_list}>
+        <div>
+          <label class="span3"><{$smarty.const._MD_TADUP_SELECTED_MOVETO}></label>
+          <select name='new_cat_sn'>
+            <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>
+            <{$option}>
+          </select>
+        </div>
+        <div>
+          <label class="checkbox inline">
+            <input name="del_all_selected" type="checkbox" value="1"><{$smarty.const._MD_TADUP_SELECTED_DEL}>
+          </label>
+          
+        </div>
+      <{/if}>
+      <div>
+        <{$upform}>
+        <input name="op" type="hidden" value="save_files">
+        <input name="cat_sn" type="hidden" value="<{$cat_sn}>">
+        <button  type='submit' class='btn btn-primary'><{$smarty.const._TAD_GO}></button>
+      </div>
+    </div>
+  <{/if}>
 </form>
 
 

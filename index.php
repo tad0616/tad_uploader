@@ -6,14 +6,18 @@ if(empty($_SESSION['list_mode'])) $_SESSION['list_mode']=$xoopsModuleConfig['sho
 
 include XOOPS_ROOT_PATH."/header.php";
 
+include_once XOOPS_ROOT_PATH."/modules/tadtools/TadUpFiles.php" ;
+$TadUpFiles=new TadUpFiles("tad_uploader");
+
 /*-----------function區--------------*/
 
 
 //列出所有資料
 function list_all_data($the_cat_sn=0){
-	global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsModuleConfig,$isAdmin,$xoopsTpl,$interface_menu;
-
-  $mdtool=$sort_code=$up_tool=$del_js=$FooTableJS=$path="";
+	global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsModuleConfig,$isAdmin,$xoopsTpl,$TadUpFiles,$interface_menu;
+  
+  
+  $sort_code=$up_tool=$del_js=$FooTableJS=$path="";
 
   //目前路徑
   $arr=get_cate_path($the_cat_sn);
@@ -68,21 +72,17 @@ function list_all_data($the_cat_sn=0){
   //若有權限則可排序
   $jquery=get_jquery(true);
 
-  
+  $upform=$option="";
   if($check_up_power){
 
     //搬移的選單
     $disbale[]=$the_cat_sn;
-  	$option=get_cata_select($disbale);
-    $mdtool="<div>
-  	<input name='op' type='submit' value='"._MD_TADUP_SELECTED_DEL."'>
-  	"._MD_TADUP_SELECTED_MOVETO."<select name='new_cat_sn'>
-  	<option value=0>"._MD_TADUP_ROOT."</option>
-  	$option
-  	</select><input name='op' type='submit' value='"._MD_TADUP_MOVE."'></div>";
-  	
+  	$option=get_cata_select($disbale);	
 
+    $upform=$TadUpFiles->upform(true,'upfile',null,false);
 	}
+  $xoopsTpl->assign('upform',$upform);
+  $xoopsTpl->assign('option',$option);
 
   $sql = "select cat_desc from ".$xoopsDB->prefix("tad_uploader")." where cat_sn='{$the_cat_sn}'";
 	$result = $xoopsDB->query($sql);
@@ -112,6 +112,8 @@ function list_all_data($the_cat_sn=0){
 	$xoopsTpl->assign( "mdtool" , $mdtool) ;
 	$xoopsTpl->assign( "jquery" , $jquery) ;
 	$xoopsTpl->assign( "up_power" , $check_up_power) ;
+	$xoopsTpl->assign( "list_mode" , $_SESSION['list_mode']) ;
+	$xoopsTpl->assign( "only_show_desc" , $xoopsModuleConfig['only_show_desc']) ;
   
 }
 
@@ -186,7 +188,7 @@ function get_files_list($the_cat_sn="",$check_up_power="",$show_bar=true){
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR2);
 
 
-  $main="<tbody id='sort'>";
+  $main="";
 
 	while(list($cfsn,$cat_sn,$uid,$cf_name,$cf_desc,$cf_type,$cf_size,$cf_count,$up_date,$file_url)=$xoopsDB->fetchRow($result)){
 
@@ -228,14 +230,11 @@ function get_files_list($the_cat_sn="",$check_up_power="",$show_bar=true){
       $adm_tool=($isAdmin)?"<td><a href='uploads.php?cfsn=$cfsn'><img src='images/pencil.png' alt='"._TAD_EDIT."' title='"._TAD_EDIT."'></a></td>":"";
 
       $real_file=get_file_name($file_name,$cfsn);
-      //$mp3_player=substr($file_name,-3)=="mp3"?"<audio src='"._TAD_UPLOADER_URL."/user_{$uid}/{$real_file}' preload='auto' />":"";
       $mff=_TAD_UPLOADER_URL."/user_{$uid}/{$cfsn}_{$cf_name}";
-      //$mp3_player="<audio preload='auto'><source src='$mff'></audio>";
-      $mp3_player="<a id='m{$cfsn}' class='audio' href='$mff'>{$cf_name}</a>";
 
       $main.="
       <tr style='padding:6px' id='tr_{$cfsn}'>
-			<td style='width:100%;border-right:0px' $nowrap>{$file_name}{$mp3_player}</td>
+			<td style='width:100%;border-right:0px' $nowrap>{$file_name}</td>
 			<td class='cat_count' align='center' nowrap>$up_date</td>
 			<td class='cat_count' width=30>$size</td>
 			<td class='cat_count' align='center'>$cf_count</td>
@@ -262,10 +261,9 @@ function get_files_list($the_cat_sn="",$check_up_power="",$show_bar=true){
 		}
 	}
 	if($_SESSION['list_mode']!="more")$main.="<div style='clear:both;'></div>";
-	$main.="
-  </tbody>";
+
 	
-	$all['main']=$main;
+	$all['main']=($main)?"<tbody id='sort'>{$main}</tbody>":"";
 	$all['bar']=$bar;
   return $all;
 }
@@ -502,19 +500,21 @@ switch($op){
 	break;
 
 	case "dlfile":
-	dlfile($cfsn);
-	header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
+	$files_sn=dlfile($cfsn);
+  $TadUpFiles->add_file_counter($files_sn);
+  exit;
 	break;
 
-	case _MD_TADUP_SELECTED_DEL:
-	delfile($_POST['select_files']);
-	header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
-	break;
-
-
-	case _MD_TADUP_MOVE:
-	movefile($_POST['select_files'],$_POST['new_cat_sn']);
-	header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$new_cat_sn}");
+	case "save_files":
+    $uid=$xoopsUser->uid();
+    $cat_sn=add_tad_uploader();
+    
+    if($_POST['del_all_selected']){
+      delfile($_POST['select_files']);
+    }elseif(!empty($_POST['select_files'])){
+      movefile($_POST['select_files'],$_POST['new_cat_sn']);
+    }
+    header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
 	break;
 
   case "create_folder":
@@ -543,6 +543,7 @@ switch($op){
 	delete_catalog($cat_sn);
 	header("location:{$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
 	break;
+  
 
 	default:
 	list_all_data($of_cat_sn);

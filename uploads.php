@@ -131,7 +131,7 @@ function insert_tad_uploader(){
 
 
     $file_name=(DIRECTORY_SEPARATOR == '\\')?iconv('UTF-8','Big5',$_FILES['upfile']['name']):$_FILES['upfile']['name'];
-    $file_name=urlencode($file_name);
+    //$file_name=urlencode($file_name);
 
   	$file_handle = new upload($_FILES['upfile'],"zh_TW");
   	if ($file_handle->uploaded) {
