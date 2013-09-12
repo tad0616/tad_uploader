@@ -5,10 +5,6 @@ $xoopsOption['template_main'] = "tad_uploader_main.html";
 if(empty($_SESSION['list_mode'])) $_SESSION['list_mode']=$xoopsModuleConfig['show_mode'];
 
 include XOOPS_ROOT_PATH."/header.php";
-
-include_once XOOPS_ROOT_PATH."/modules/tadtools/TadUpFiles.php" ;
-$TadUpFiles=new TadUpFiles("tad_uploader");
-
 /*-----------function區--------------*/
 
 
@@ -16,6 +12,8 @@ $TadUpFiles=new TadUpFiles("tad_uploader");
 function list_all_data($the_cat_sn=0){
 	global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsModuleConfig,$isAdmin,$xoopsTpl,$TadUpFiles,$interface_menu;
   
+  $interface_menu["<i class='icon-th-large'></i>"]="op.php?op=list_mode&list_mode=icon&of_cat_sn={$the_cat_sn}";
+  $interface_menu["<i class='icon-list'></i>"]="op.php?op=list_mode&list_mode=more&of_cat_sn={$the_cat_sn}";
   
   $sort_code=$up_tool=$del_js=$FooTableJS=$path="";
 
@@ -43,46 +41,25 @@ function list_all_data($the_cat_sn=0){
 	}
 
 
-  //說明
-  $desc_title=($xoopsModuleConfig['only_show_desc']=='1')?"":"<th data-hide='phone'>"._MD_TADUP_FILE_DESC."</th>";
-  
-	//製作標題
-	$tr=($_SESSION['list_mode']=="more")?"
-  <tr class='success'>
-    <td data-class='expand'>
-    <input type='checkbox' id='u{$the_cat_sn}' onClick=\"$('#filetbl input:checkbox.u{$the_cat_sn}').attr('checked',$('#u{$the_cat_sn}').attr('checked'));\">
-    "._MD_TADUP_FILE_NAME."
-    </td>
-    <td data-hide='phone'>"._MD_TADUP_FILE_DATE."</td>
-    <td data-hide='phone' nowrap>"._MD_TADUP_FILE_SIZE."</td>
-    <td data-hide='phone' nowrap>"._MD_TADUP_FILE_COUNTER."</td>
-    {$desc_title}
-    <td data-hide='phone' nowrap>"._TAD_FUNCTION."</td>
-    </tr>":"<tr><td>";
-
-
   //底下目錄
   $folder_list=get_folder_list($the_cat_sn,$check_up_power);
 
 	//抓取該目錄底下的檔案
-	$files=get_files_list($the_cat_sn,$check_up_power,false);
-	$files_list=$files['main'];
-	$bar=$files['bar'];
+	$files_list=get_files_list($the_cat_sn,$check_up_power);
 
   //若有權限則可排序
   $jquery=get_jquery(true);
 
-  $upform=$option="";
+  $upform=$move_option=$menu_option="";
   if($check_up_power){
 
     //搬移的選單
     $disbale[]=$the_cat_sn;
-  	$option=get_cata_select($disbale);	
+  	$move_option=get_cata_select($disbale);	
+  	$menu_option=get_cata_select();	
 
     $upform=$TadUpFiles->upform(true,'upfile',null,false);
 	}
-  $xoopsTpl->assign('upform',$upform);
-  $xoopsTpl->assign('option',$option);
 
   $sql = "select cat_desc from ".$xoopsDB->prefix("tad_uploader")." where cat_sn='{$the_cat_sn}'";
 	$result = $xoopsDB->query($sql);
@@ -92,29 +69,32 @@ function list_all_data($the_cat_sn=0){
 	if(file_exists(XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php")){
     include_once XOOPS_ROOT_PATH."/modules/tadtools/FooTable.php";
     $FooTable = new FooTable();
-    $FooTableJS=$FooTable->render();
+    $FooTableJS=$FooTable->render(false);
   }
 	
-
 	//該資料夾屬性
-	$main.=get_catalog_attribute($the_cat_sn,$check_power,$check_up_power);
-
+	$main=get_catalog_attribute($the_cat_sn,$check_power,$check_up_power);
+  //die($main);
+  
+  $xoopsTpl->assign('upform',$upform);
+  $xoopsTpl->assign('move_option',$move_option);
+  $xoopsTpl->assign('menu_option',$menu_option);
+	$xoopsTpl->assign( "upload_max_filesize" ,ini_get('upload_max_filesize') ) ;
 	$xoopsTpl->assign( "path" , $path) ;
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
 	$xoopsTpl->assign( "FooTableJS" , $FooTableJS) ;
 	$xoopsTpl->assign( "cat_sn" , $the_cat_sn) ;
 	$xoopsTpl->assign( "cat_desc" , $cat_desc) ;
-	$xoopsTpl->assign( "tr" , $tr) ;
 	$xoopsTpl->assign( "folder_list" , $folder_list) ;
 	$xoopsTpl->assign( "files_list" , $files_list) ;
-	$xoopsTpl->assign( "bar" , $bar) ;
 	$xoopsTpl->assign( "mdtool" , $mdtool) ;
-	$xoopsTpl->assign( "jquery" , $jquery) ;
+	$xoopsTpl->assign( "jqueryui" , $jquery) ;
 	$xoopsTpl->assign( "up_power" , $check_up_power) ;
 	$xoopsTpl->assign( "list_mode" , $_SESSION['list_mode']) ;
 	$xoopsTpl->assign( "only_show_desc" , $xoopsModuleConfig['only_show_desc']) ;
-  
+	$xoopsTpl->assign( "icon_width" , '130px') ;
+
 }
 
 
@@ -126,7 +106,8 @@ function get_folder_list($the_cat_sn="",$check_up_power=""){
 	//die($sql);
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR1);
 
-  $main="<tbody id='dir_sort'>";
+  $main=$all="";
+  $i=0;
 	while(list($cat_sn,$cat_title,$cat_desc,$cat_enable,$uid,$of_cat_sn,$cat_share,$cat_sort,$cat_count)=$xoopsDB->fetchRow($result)){
 
 		//依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
@@ -137,62 +118,43 @@ function get_folder_list($the_cat_sn="",$check_up_power=""){
     //底下檔案數
   	$file_num=get_catfile_num($cat_sn);
     $lock=($cat_share=='1')?"":"_lock";
-    //$chkbox=($check_up_power)?"<input type='checkbox' disabled>":"";
-    $func=($check_up_power and empty($file_num))?"<a href=\"javascript:delete_catalog_func($cat_sn,$the_cat_sn);\"><img src='images/stop.png' alt='"._MD_TADUP_FOLDER_DEL."' title='"._MD_TADUP_FOLDER_DEL."' border='0' height='16' width='16' hspace=4 align='absmiddle'></a>":"";
-    
-    
-    //目錄列表狀態
-    if($_SESSION['list_mode']=='more'){
 
-      $cata_desc=($xoopsModuleConfig['only_show_desc']=='1')?"":"<td>$cat_desc</td>";
-
-      $main.="
-      <tr style='padding:6px' id='tr_{$cat_sn}'>
-      <td><img src='images/s_folder{$lock}.png' hspace='2' align='absmiddle'><a href='{$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}' class='file_title'>$cat_title</a></td>
-      <td class='file_num' colspan=2 align='right'>{$file_num} "._MD_TADUP_FILE."</td>
-      <td class='cat_count' align='center'>$cat_count</td>
-      {$cata_desc}
-      <td>$func</td>
-      </tr>";
-
-    }else{
-      //目錄圖示狀態
-  		$main.="
-  		<div style='display:inline;margin:2px;width:110px;height:130px;float:left;text-align:center'>
-  		<a href='{$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}'>
-  		<img src='images/folder{$lock}.gif'></a><br>
-  		{$chkbox}<a href='{$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}'>
-  		$cat_title</a>($file_num)
-      </div>
-  		";
-		}
+    $all[$i]['the_cat_sn']=$the_cat_sn;
+    $all[$i]['cat_sn']=$cat_sn;
+    $all[$i]['lock']=$lock;
+    $all[$i]['cat_title']=$cat_title;
+    $all[$i]['file_num']=$file_num;
+    $all[$i]['cat_count']=$cat_count;
+    $all[$i]['cat_desc']=$cat_desc;
+    $i++;
+      
 	}
-  $main.="</tbody>";
-	return $main;
+
+  
+	return $all;
 }
 
 
 //抓取該目錄底下的檔案
-function get_files_list($the_cat_sn="",$check_up_power="",$show_bar=true){
+function get_files_list($the_cat_sn="",$check_up_power=""){
 	global $xoopsDB,$xoopsModule,$xoopsUser,$xoopsModuleConfig,$isAdmin;
 
   //排序
 	$sql = "select cfsn,cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,cf_count,up_date,file_url from ".$xoopsDB->prefix("tad_uploader_file")."  where cat_sn='{$the_cat_sn}' order by cf_sort";
-
-  if($show_bar){
-    //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-  	$$no_bar=getPageBar($sql,$xoopsModuleConfig['page_show_num'], 10);
-    $bar=$PageBar['bar'];
-    $sql=$PageBar['sql'];
-  }
+  
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR2);
 
 
-  $main="";
-
+  $all="";
+  $i=0;
 	while(list($cfsn,$cat_sn,$uid,$cf_name,$cf_desc,$cf_type,$cf_size,$cf_count,$up_date,$file_url)=$xoopsDB->fetchRow($result)){
-
-		$pic=file_pic($cf_name);
+    $ff=get_file_by_cfsn($cfsn);
+    if($ff['kind']=="img"){      
+      list($width, $height, $type, $attr) = getimagesize(XOOPS_ROOT_PATH."/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['file_name']}");
+      $pic=XOOPS_URL."/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['file_name']}";
+    }else{
+      $pic="images/mime/".file_pic($cf_name);
+    }
 		//取得該檔案其他資料的值
     if($cf_size>1048576){
       $size=round(($cf_size/1048576),1)."M";
@@ -203,68 +165,33 @@ function get_files_list($the_cat_sn="",$check_up_power="",$show_bar=true){
     }
     $cf_desc=nl2br($cf_desc);
     $cf_desc=(empty($cf_desc))?$cf_name:$cf_desc;
-    $chkbox=($check_up_power)?"<input type='checkbox' name='select_files[{$cfsn}]' value='{$cf_name}' style='vertical-align:middle' class='u{$cat_sn}'>":"";
 
-    //檔案列表狀態
-		if($_SESSION['list_mode']=="more"){
-      if($xoopsModuleConfig['only_show_desc']=='1'){
-        if(!empty($cf_name)){
-          $fname=$cf_name;
-        }else{
-          $fname=basename($file_url);
-        }
-
-        $file_name="{$chkbox}
-        <a href='{$_SERVER['PHP_SELF']}?op=dlfile&cfsn={$cfsn}&cat_sn={$cat_sn}&name={$fname}' class='cf_desc'>$cf_desc</a>";
-        $file_desc="";
-        $nowrap="nowrap";
-      }else{
-        $file_name="{$chkbox}
-        <a href='{$_SERVER['PHP_SELF']}?op=dlfile&cfsn={$cfsn}&cat_sn={$cat_sn}&name={$fname}'>".xoops_substr($cf_name , 0 , 22 )."</a>";
-        $file_desc="<td style='padding:6px;'><div style='overflow: auto;width:100%;height: 30px;'>$cf_desc</div></td>";
-        $nowrap="nowrap";
+    $fname=strtolower($cf_name);
+    if($xoopsModuleConfig['only_show_desc']=='1'){
+      if(!empty($file_url)){
+        $fname=basename($file_url);
       }
+    }
 
-			$up_date=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($up_date)));
+    $up_date=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($up_date)));
 
-      $adm_tool=($isAdmin)?"<td><a href='uploads.php?cfsn=$cfsn'><img src='images/pencil.png' alt='"._TAD_EDIT."' title='"._TAD_EDIT."'></a></td>":"";
+    
+    $all[$i]['thumb_style']=($height > $width)?"width:85px;":"height:64px;max-width:85px;";
+    $all[$i]['pic']=($ff['kind']=="img")?$pic:"";
+    $all[$i]['fname']=($ff['kind']=="img")?"":$fname;
+    $all[$i]['cfsn']=$cfsn;
+    $all[$i]['cf_name']=$cf_name;
+    $all[$i]['up_date']=$up_date;
+    $all[$i]['size']=$size;
+    $all[$i]['cf_count']=$cf_count;
+    $all[$i]['cf_desc']=$cf_desc;
+    $i++;
 
-      $real_file=get_file_name($file_name,$cfsn);
-      $mff=_TAD_UPLOADER_URL."/user_{$uid}/{$cfsn}_{$cf_name}";
-
-      $main.="
-      <tr style='padding:6px' id='tr_{$cfsn}'>
-			<td style='width:100%;border-right:0px' $nowrap>{$file_name}</td>
-			<td class='cat_count' align='center' nowrap>$up_date</td>
-			<td class='cat_count' width=30>$size</td>
-			<td class='cat_count' align='center'>$cf_count</td>
-      $adm_tool
-      $file_desc
-			</tr>";
-		}else{
-      //檔案圖示狀態
-      if($xoopsModuleConfig['only_show_desc']=='1'){
-        $file_name=$cf_desc;
-      }else{
-        $file_name=$cf_name;
-      }
-
-			$main.="
-			<div style='display:inline;margin:2px;width:110px;height:130px;float:left;text-align:center'>
-			<center><a href='{$_SERVER['PHP_SELF']}?op=dlfile&cfsn={$cfsn}&cat_sn={$cat_sn}'>
-      <img src='images/mime/{$pic}' title='{$cf_desc}'></a></center>
-    	<div style='overflow: auto;width:100%;height: 50px;'>
-        $chkbox<a href='{$_SERVER['PHP_SELF']}?op=dlfile&cfsn={$cfsn}&cat_sn={$cat_sn}' style='font-size:11px'>{$file_name}</a>
-        </div>
-      </div>
-			";
-		}
 	}
-	if($_SESSION['list_mode']!="more")$main.="<div style='clear:both;'></div>";
+	//if($_SESSION['list_mode']!="more")$main.="<div style='clear:both;'></div>";
 
 	
-	$all['main']=($main)?"<tbody id='sort'>{$main}</tbody>":"";
-	$all['bar']=$bar;
+	//$all=($main)?"<tbody id='sort'>{$main}</tbody>":"";
   return $all;
 }
 
@@ -469,6 +396,51 @@ function update_catalog_count($cat_sn=""){
 	return $cat_sn;
 }
 
+
+
+//新增資料到tad_uploader中
+function add_tad_uploader(){
+	global $xoopsDB,$xoopsUser,$TadUpFiles;	
+  
+	if(!empty($_POST['creat_new_cat'])){
+    $cat_sn=add_catalog("",$_POST['creat_new_cat'],"","1",$_POST['cat_sn'],$_POST['cat_add_form']);
+	}else{
+		$cat_sn=$_POST['cat_sn'];
+	}
+
+  if(empty($_FILES['upfile']['name'][0]))return;
+
+  $myts = & MyTextSanitizer::getInstance();
+
+	$uid=$xoopsUser->uid();
+	$sort=1;
+  
+  foreach($_FILES['upfile']['name'] as $i=>$name){
+    if(!empty($name)){
+
+      $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
+          
+      $sql = "insert into ".$xoopsDB->prefix("tad_uploader_file")." (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
+      values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$_FILES['upfile']['type'][$i]}','{$_FILES['upfile']['size'][$i]}','{$now}','{$cf_sort}')";
+    }elseif(!empty($file_url)){
+      $size=remote_file_size($file_url);
+      $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
+      $sql = "insert into ".$xoopsDB->prefix("tad_uploader_file")." (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,file_url,cf_sort)
+      values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$type}','{$size}','{$now}','{$file_url}','{$cf_sort}')";
+    }
+    
+    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5."<p>$sql</p>");
+    
+    //取得最後新增資料的流水編號
+    $cfsn=$xoopsDB->getInsertId();
+    
+    $TadUpFiles->set_dir('subdir',"/user_{$uid}");
+    $TadUpFiles->set_col("cfsn",$cfsn);
+    $TadUpFiles->upload_one_file($name,$_FILES['upfile']['tmp_name'][$i],$_FILES['upfile']['type'][$i],$_FILES['upfile']['size'][$i]);
+    $sort++;
+  }
+	return $cat_sn;
+}
 /*-----------執行動作判斷區----------*/
 $op=(empty($_REQUEST['op']))?"":$_REQUEST['op'];
 $cat_sn=(empty($_REQUEST['cat_sn']))?0:intval($_REQUEST['cat_sn']);
@@ -478,11 +450,6 @@ $new_of_cat_sn=(empty($_REQUEST['new_of_cat_sn']))?0:intval($_REQUEST['new_of_ca
 $new_cat_sn=(empty($_REQUEST['new_cat_sn']))?0:intval($_REQUEST['new_cat_sn']);
 
 switch($op){
-
-  case "list_mode":
-  $_SESSION['list_mode']=$_GET['list_mode'];
-	header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
-  break;
 
 	case "update_data":
 	update_data($cat_sn);
@@ -509,7 +476,8 @@ switch($op){
     $uid=$xoopsUser->uid();
     $cat_sn=add_tad_uploader();
     
-    if($_POST['del_all_selected']){
+    if($_POST['del_all_selected']=='1'){
+      //die($_POST['select_files']);
       delfile($_POST['select_files']);
     }elseif(!empty($_POST['select_files'])){
       movefile($_POST['select_files'],$_POST['new_cat_sn']);

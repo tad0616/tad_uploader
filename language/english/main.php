@@ -59,9 +59,12 @@ define("_MD_TADUP_DB_ERROR4","Failed to replace tad_uploader data");
 define("_MD_TADUP_SET_FOLDER_POWER","Folder permission");
 define("_MD_TADUP_CAN_ACCESS_GROUPS2","<b>Visible</b> to groups");
 define("_MD_TADUP_CAN_UPLOADS_GROUPS","<b>Uploadable</b> to groups");
-define("_MD_TADUP_IS_SHARE","Share（No means a private folder visible and uploadable only for creater.）");
+define("_MD_TADUP_IS_SHARE","Share (No means a private folder visible and uploadable only for creater.)");
 define("_MD_TADUP_FILE_SORT","▲");
 define("_MD_TADUP_FILE_SORT_DESC","▼");
+define("_MD_TADUP_ROOT","/");
+define("_MD_TADUP_CREAT_NEW_CATE","Creat a sub-category from left category");
+
 
 //function
 define("_MD_TADUP_CANT_FIND","No Found");

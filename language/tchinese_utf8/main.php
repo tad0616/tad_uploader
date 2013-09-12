@@ -62,6 +62,9 @@ define("_MD_TADUP_CAN_UPLOADS_GROUPS","可<b>上傳</b>此資料夾的群組");
 define("_MD_TADUP_IS_SHARE","是否分享（若選「否」則該資料夾僅自己可見、可上傳）");
 define("_MD_TADUP_FILE_SORT","▲");
 define("_MD_TADUP_FILE_SORT_DESC","▼");
+define("_MD_TADUP_ROOT","在根目錄下");
+define("_MD_TADUP_CREAT_NEW_CATE","在左邊目錄下建立新目錄");
+
 
 //function
 define("_MD_TADUP_CANT_FIND","找不到");
