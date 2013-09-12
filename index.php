@@ -79,7 +79,10 @@ function list_all_data($the_cat_sn=0){
   $xoopsTpl->assign('upform',$upform);
   $xoopsTpl->assign('move_option',$move_option);
   $xoopsTpl->assign('menu_option',$menu_option);
+	$xoopsTpl->assign( "memory_limit" ,ini_get('memory_limit') ) ;
+	$xoopsTpl->assign( "post_max_size" ,ini_get('post_max_size') ) ;
 	$xoopsTpl->assign( "upload_max_filesize" ,ini_get('upload_max_filesize') ) ;
+	$xoopsTpl->assign( "max_execution_time" ,ini_get('max_execution_time') ) ;
 	$xoopsTpl->assign( "path" , $path) ;
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
@@ -150,11 +153,12 @@ function get_files_list($the_cat_sn="",$check_up_power=""){
 	while(list($cfsn,$cat_sn,$uid,$cf_name,$cf_desc,$cf_type,$cf_size,$cf_count,$up_date,$file_url)=$xoopsDB->fetchRow($result)){
     $ff=get_file_by_cfsn($cfsn);
     if($ff['kind']=="img"){      
-      list($width, $height, $type, $attr) = getimagesize(XOOPS_ROOT_PATH."/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['file_name']}");
-      $pic=XOOPS_URL."/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['file_name']}";
+      list($width, $height, $type, $attr) = getimagesize(XOOPS_ROOT_PATH."/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}");
+      $pic=XOOPS_URL."/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}";
     }else{
-      $pic="images/mime/".file_pic($cf_name);
+      $pic=XOOPS_URL."/modules/tad_uploader/images/mime/".file_pic($cf_name);
     }
+    //die($pic);
 		//取得該檔案其他資料的值
     if($cf_size>1048576){
       $size=round(($cf_size/1048576),1)."M";
@@ -177,7 +181,7 @@ function get_files_list($the_cat_sn="",$check_up_power=""){
 
     
     $all[$i]['thumb_style']=($height > $width)?"width:85px;":"height:64px;max-width:85px;";
-    $all[$i]['pic']=($ff['kind']=="img")?$pic:"";
+    $all[$i]['pic']=$pic;
     $all[$i]['fname']=($ff['kind']=="img")?"":$fname;
     $all[$i]['cfsn']=$cfsn;
     $all[$i]['cf_name']=$cf_name;
@@ -185,6 +189,7 @@ function get_files_list($the_cat_sn="",$check_up_power=""){
     $all[$i]['size']=$size;
     $all[$i]['cf_count']=$cf_count;
     $all[$i]['cf_desc']=$cf_desc;
+    $all[$i]['cat_sn']=$cat_sn;
     $i++;
 
 	}
@@ -403,9 +408,9 @@ function add_tad_uploader(){
 	global $xoopsDB,$xoopsUser,$TadUpFiles;	
   
 	if(!empty($_POST['creat_new_cat'])){
-    $cat_sn=add_catalog("",$_POST['creat_new_cat'],"","1",$_POST['cat_sn'],$_POST['cat_add_form']);
+    $cat_sn=add_catalog("",$_POST['creat_new_cat'],"","1",$_POST['cat_sn'],$_POST['add_to_cat']);
 	}else{
-		$cat_sn=$_POST['cat_sn'];
+		$cat_sn=$_POST['add_to_cat'];
 	}
 
   if(empty($_FILES['upfile']['name'][0]))return;
@@ -436,7 +441,7 @@ function add_tad_uploader(){
     
     $TadUpFiles->set_dir('subdir',"/user_{$uid}");
     $TadUpFiles->set_col("cfsn",$cfsn);
-    $TadUpFiles->upload_one_file($name,$_FILES['upfile']['tmp_name'][$i],$_FILES['upfile']['type'][$i],$_FILES['upfile']['size'][$i]);
+    $TadUpFiles->upload_one_file($name,$_FILES['upfile']['tmp_name'][$i],$_FILES['upfile']['type'][$i],$_FILES['upfile']['size'][$i],NULL,NULL,"",$_POST['desc'],true,true);
     $sort++;
   }
 	return $cat_sn;
@@ -468,7 +473,7 @@ switch($op){
 
 	case "dlfile":
 	$files_sn=dlfile($cfsn);
-  $TadUpFiles->add_file_counter($files_sn);
+  $TadUpFiles->add_file_counter($files_sn,true);
   exit;
 	break;
 
@@ -481,6 +486,7 @@ switch($op){
       delfile($_POST['select_files']);
     }elseif(!empty($_POST['select_files'])){
       movefile($_POST['select_files'],$_POST['new_cat_sn']);
+      $cat_sn=$_POST['new_cat_sn'];
     }
     header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
 	break;

@@ -1,4 +1,3 @@
-<link rel="stylesheet" type="text/css" media="screen" href="iconize.css" />
 <{$bootstrap}>
 <{$toolbar}>
 
@@ -25,6 +24,19 @@
         });
     }
     });
+    
+    $("#clickAll").click(function() {
+      if($("#clickAll").attr("checked")){
+        $(".u<{$cat_sn}>").each(function() {
+        $(this).attr("checked", true);
+        });
+      }else{
+       $(".u<{$cat_sn}>").each(function() {
+           $(this).attr("checked", false);
+       });          
+      }
+    });
+
 
   });
 
@@ -62,14 +74,23 @@
         <thead>
           <tr class="success">
             <th data-class="expand">
-            <input type="checkbox" id="u<{$cat_sn}>" onClick="$('#filetbl input:checkbox.u<{$cat_sn}>').attr('checked',$('#u<{$cat_sn}>').attr('checked'));">
-            <{$smarty.const._MD_TADUP_FILE_NAME}>
+              <label class="checkbox inline">
+              <input type="checkbox" id="clickAll"> <{$smarty.const._MD_TADUP_FILE_NAME}>
+              </lable>
             </th>
-            <th data-hide="phone" style="text-align:center;"><{$smarty.const._MD_TADUP_FILE_DATE}></th>
-            <th data-hide="phone" style="text-align:center;"><{$smarty.const._MD_TADUP_FILE_SIZE}></th>
-            <th data-hide="phone" style="text-align:center;"><{$smarty.const._MD_TADUP_FILE_COUNTER}></th>
+            <th data-hide="phone" style="text-align:center;">   
+              <{$smarty.const._MD_TADUP_FILE_DATE}>
+            </th>
+            <th data-hide="phone" style="text-align:center;">
+              <{$smarty.const._MD_TADUP_FILE_SIZE}>
+            </th>
+            <th data-hide="phone" style="text-align:center;">
+              <{$smarty.const._MD_TADUP_FILE_COUNTER}>
+            </th>
             <{if $up_power}>
-            <th data-hide="phone" style="text-align:center;"><{$smarty.const._TAD_FUNCTION}></th>
+              <th data-hide="phone" style="text-align:center;">
+                <{$smarty.const._TAD_FUNCTION}>
+              </th>
             <{/if}>
           </tr>
         </thead>
@@ -112,9 +133,9 @@
               <td><{$folder.cat_desc}></td>
             <{/if}>
             <{if $up_power}>
-              <td>
+              <td style="text-align:center;">
                 <{if $folder.file_num==0}>
-                  <a href="javascript:delete_catalog_func(<{$folder.cat_sn}>,<{$folder.the_cat_sn}>);" class="btn btn-mini btn-danger"><{$smarty.const._MD_TADUP_FOLDER_DEL}></a>
+                  <a href="javascript:delete_catalog_func(<{$folder.cat_sn}>,<{$folder.the_cat_sn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TAD_DEL}></a>
                 <{/if}>
               </td>
             <{/if}>
@@ -135,7 +156,7 @@
                   <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}>">
                 <{/if}>
                 <{if $file.pic}>
-                  <div style="width:24px;height:24px;background:#000 url(<{$file.pic}>);float:left;background-size:cover;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin-right:2px;"></div>
+                  <div style="width:24px;height:24px;background-image: url(<{$file.pic}>);float:left;background-size:cover;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin-right:2px;"></div>
                 <{/if}>
                 <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>&name=<{$file.fname}>">
                 <{if $only_show_desc=="1"}>
@@ -201,19 +222,18 @@
 
   <{if $up_power}>
     <div class="well">
-      <{$upload_max_filesize}>
+      
       <{if $files_list}>
-        <{if $folder_list}>
+        <{if $move_option}>
         <div>
           <label class="span3"><{$smarty.const._MD_TADUP_SELECTED_MOVETO}></label>
-          <{if $move_option}>
-            <select name='new_cat_sn'>
-              <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>
-              <{$move_option}>
-            </select>
-          <{/if}>
+          <select name='new_cat_sn'>
+            <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>
+            <{$move_option}>
+          </select>
         </div>
         <{/if}>
+        
         <div>
           <label class="checkbox inline">
             <input type="checkbox" name="del_all_selected"  value="1"><{$smarty.const._MD_TADUP_SELECTED_DEL}>
@@ -223,7 +243,7 @@
       <{/if}>
 
       <div class="row-fluid">
-        <select name="cat_add_form" size=1 class="span3">
+        <select name="add_to_cat" size=1 class="span3">
           <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
           <{$menu_option}>
       	</select>
@@ -234,5 +254,10 @@
         <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_GO}></button>
       </div>
     </div>
+    
+   <span class="help-block">
+   php.ini: memory_limit (<{$memory_limit}>) > post_max_size (<{$post_max_size}>) >      upload_max_filesize (<{$upload_max_filesize}>) ;
+    max_execution_time=<{$max_execution_time}>
+   </span>
   <{/if}>
 </form>

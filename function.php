@@ -288,10 +288,12 @@ function get_file_name($real_file_name="",$cfsn="") {
 
 //判別格式圖檔
 function file_pic($file){
-	$f=explode(".",$file);
-	$n=sizeof($f)-1;
-	if(!file_exists(XOOPS_ROOT_PATH."/modules/tad_uploader/images/mime/{$f[$n]}.png"))return "mime.png";
-	return "{$f[$n]}.png";
+  $extarr=explode('.',$file);
+  foreach($extarr as $val){
+    $ext=strtolower($val);
+  }
+	if(!file_exists(XOOPS_ROOT_PATH."/modules/tad_uploader/images/mime/{$ext}.png"))return "mime.png";
+	return "{$ext}.png";
 }
 
 //以流水號取得某目錄資料
