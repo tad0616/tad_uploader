@@ -70,8 +70,11 @@ function get_cata_select($disable_cat_sn=array(),$dbv=0,$of_cat_sn=0,$tab=""){
 	$option="";
 	$tab.="&nbsp;&nbsp;";
 
+  $disabled="";
 	while(list($cat_sn,$cat_title)=$xoopsDB->fetchRow($result)){
-		$disabled=(in_array($cat_sn,$disable_cat_sn))?"disabled":"";
+    if(is_array($disable_cat_sn)){
+      $disabled=(in_array($cat_sn,$disable_cat_sn))?"disabled":"";
+    }
 		if(!check_up_power("catalog_up",$cat_sn))continue;
 		$option.="<option value='$cat_sn' ".chk($cat_sn,$dbv,"","selected")." $disabled>{$tab}{$cat_title}</option>\n";
 		$option.=get_cata_select($disable_cat_sn,$dbv,$cat_sn,$tab);
@@ -192,19 +195,21 @@ function get_cate_path($csn="",$sub=false){
   global $xoopsDB;
 
   if(!$sub){
-      $home[_TAD_TO_MOD]=XOOPS_URL."/modules/tad_uploader/index.php";
+    $home[_TAD_TO_MOD]=XOOPS_URL."/modules/tad_uploader/index.php";
   }else{
-      $home=array();
+    $home=array();
   }
 
-    $sql = "select cat_title,of_cat_sn from ".$xoopsDB->prefix("tad_uploader")." where cat_sn='{$csn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-    list($title,$of_csn)=$xoopsDB->fetchRow($result);
+  $sql = "select cat_title,of_cat_sn from ".$xoopsDB->prefix("tad_uploader")." where cat_sn='{$csn}'";
+  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
+  list($title,$of_csn)=$xoopsDB->fetchRow($result);
 
-    $opt_sub=(!empty($of_csn))?get_cate_path($of_csn,true):"";
-
-    if(!empty($title)){
-      $opt[$title]=XOOPS_URL."/modules/tad_uploader/index.php?of_cat_sn=$csn";
+  $opt_sub=(!empty($of_csn))?get_cate_path($of_csn,true):"";
+  
+  $opt=$path="";
+  
+  if(!empty($title)){
+    $opt[$title]=XOOPS_URL."/modules/tad_uploader/index.php?of_cat_sn=$csn";
   }
   if(is_array($opt_sub)){
       $path=array_merge($home,$opt_sub,$opt);

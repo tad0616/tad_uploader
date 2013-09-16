@@ -1,12 +1,6 @@
 <?php
 include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
 
-define('_MI_TADUP_ADMIN_HOME',"Home");
-define("_MI_TADUP_ADMIN_HOME_DESC","Back to Home");
-define("_MI_TADUP_ADMIN_ABOUT" , "About");
-define("_MI_TADUP_ADMIN_ABOUT_DESC" , "About this module");
-
-
 define("_MI_TADUP_NAME","Tad Uploader");
 define("_MI_TADUP_DESC","Just a module for uploading files~");
 define("_MI_TADUP_ADMENU1", "Folder");
@@ -25,7 +19,4 @@ define("_MI_SHOW_MODE","Default display mode");
 define("_MI_SHOW_MODE_DESC","choose Icon or List as default display mode.");
 define("_MI_SHOW_MODE_MORE","List");
 define("_MI_SHOW_MODE_ICON","Icon");
-
-define("_MI_TADUP_TEMPLATE_DESC1","Template of index.php");
-define("_MI_TADUP_TEMPLATE_DESC2","Template of uploads.php");
 ?>

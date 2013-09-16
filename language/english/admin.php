@@ -21,23 +21,12 @@ define("_MA_TADUP_DB_ERROR3","Failed to get page data");
 define("_MA_TADUP_PAGE_BAR1","(Total %s) Page %s：");
 define("_MA_TADUP_FUNCTION","Function");
 define("_MA_TADUP_DEL_CONFIRM","Delete this folder? This operation will delete all files in thie folder!");
-define("_MA_TADUP_LIST_ALL_FILES","Display all files","%s file(s) in total");
+define("_MA_TADUP_LIST_ALL_FILES","Display all files");
 define("_MA_TADUP_AUTHOR","Creater");
 define("_MA_TADUP_FILE_COUNTER","Count");
 define("_MA_TADUP_EDIT","Edit");
 define("_MA_TADUP_DEL","Delete");
 
-define("_MD_TADUP_MENU","Menu");
-define("_MD_TADUP_PREV","Previous");
-define("_MD_TADUP_NEXT","Next");
-define("_MD_TADUP_FIRST","First");
-define("_MD_TADUP_LAST","End");
-define("_MD_TO_MOD","Back to Module");
-
-define("_MI_TADUP_ADMENU1", "Folder");
-define("_MI_TADUP_ADMENU2", "Permission");
-
-define("_MD_TADUP_CAN_ACCESS_GROUPS2","<b>Visible</b> to groups");
-define("_MD_TADUP_CAN_UPLOADS_GROUPS","<b>Uploadable</b> to groups");
-define("_MA_TADUP_ALL_OK","All Groups");
+define("_MA_TADUP_CAN_ACCESS_GROUPS2","<b>Visible</b> to groups");
+define("_MA_TADUP_CAN_UPLOADS_GROUPS","<b>Uploadable</b> to groups");
 ?>

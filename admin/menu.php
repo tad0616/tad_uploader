@@ -3,9 +3,9 @@ $adminmenu = array();
 $i = 1;
 $icon_dir=substr(XOOPS_VERSION,6,3)=='2.6'?"":"images/";
 
-$adminmenu[$i]['title'] = _MI_TADUP_ADMIN_HOME ;
+$adminmenu[$i]['title'] = _MI_TAD_ADMIN_HOME ;
 $adminmenu[$i]['link'] = 'admin/index.php' ;
-$adminmenu[$i]['desc'] = _MI_TADUP_ADMIN_HOME_DESC ;
+$adminmenu[$i]['desc'] = _MI_TAD_ADMIN_HOME_DESC ;
 $adminmenu[$i]['icon'] = 'images/admin/home.png' ;
 
 $i++;
@@ -21,8 +21,8 @@ $adminmenu[$i]['desc'] = _MI_TADUP_ADMENU2 ;
 $adminmenu[$i]['icon'] = "{$icon_dir}translations.png";
 
 $i++;
-$adminmenu[$i]['title'] = _MI_TADUP_ADMIN_ABOUT;
+$adminmenu[$i]['title'] = _MI_TAD_ADMIN_ABOUT;
 $adminmenu[$i]['link'] = 'admin/about.php';
-$adminmenu[$i]['desc'] = _MI_TADUP_ADMIN_ABOUT_DESC;
-$adminmenu[$i]['icon'] = 'images/admin/about.png';;
+$adminmenu[$i]['desc'] = _MI_TAD_ADMIN_ABOUT_DESC;
+$adminmenu[$i]['icon'] = 'images/admin/about.png';
 ?>

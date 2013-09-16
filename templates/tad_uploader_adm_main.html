@@ -13,7 +13,7 @@ function delete_catalog_func(cat_sn){
 }
 </script>
 
-<h2><{$title}></h2>
+<h2><{$smarty.const._MA_TADUP_LIST_ALL_FILES}></h2>
 
 <form action="main.php" method="POST" enctype="multipart/form-data">
 <div class="row-fluid">
@@ -56,14 +56,14 @@ function delete_catalog_func(cat_sn){
   
   <div class="span2">
     <div class="controls controls-row">
-      <label><{$smarty.const._MD_TADUP_CAN_ACCESS_GROUPS2}></label>
+      <label><{$smarty.const._MA_TADUP_CAN_ACCESS_GROUPS2}></label>
       <{$enable_group}>
     </div>
   </div>
   
   <div class="span2">
     <div class="controls controls-row">
-      <label><{$smarty.const._MD_TADUP_CAN_UPLOADS_GROUPS}></label>
+      <label><{$smarty.const._MA_TADUP_CAN_UPLOADS_GROUPS}></label>
       <{$enable_upload_group}>
     </div>
   </div>

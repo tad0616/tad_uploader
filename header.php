@@ -16,7 +16,7 @@ if ($xoopsUser) {
 $upload_powers=chk_cate_power("catalog_up");
 
 if(sizeof($upload_powers)>0 and $xoopsUser){
-	$interface_menu[_MA_TADUP_UPLOAD]="uploads.php{$and_sn}";
+	$interface_menu[_MD_TADUP_UPLOAD]="uploads.php{$and_sn}";
 }
 
 if($isAdmin){

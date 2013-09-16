@@ -47,11 +47,11 @@ function tad_uploader_batch_upload_form(){
 	<p>"._MA_TADUP_BATCH_UPLOAD_TO."<span style='color:red;'>"._TAD_UPLOADER_BATCH_DIR."</span></p>
   <form action='{$_SERVER['PHP_SELF']}' method='post' id='myForm' enctype='multipart/form-data'>
   <table class='form_tbl' style='width:100%;'>
-	<tr><td class='title'>"._MA_TADUP_OF_TADUP_SN."</td>
+	<tr><td class='title'>"._MD_TADUP_SELECT_FOLDER."</td>
 	<td class='col'><select name='cat_sn' size=1>
 	$cate_select
 	</select>
-	"._MA_TADUP_NEW_TADUP_SN."<input type='text' name='new_cat_sn' size='10'></td></tr>
+	"._MD_TADUP_CREATE_NEW_FOLDER."<input type='text' name='new_cat_sn' size='10'></td></tr>
   </table>
   <table class='form_tbl'>
   <tr>

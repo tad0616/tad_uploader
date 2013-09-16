@@ -89,26 +89,31 @@ $modversion['blocks'][1]['options'] = "10";
 
 
 //---模組偏好設定---//
-$modversion['config'][1]['name'] = 'page_show_num';
-$modversion['config'][1]['title'] = '_MI_PAGE_SHOW_NUM';
-$modversion['config'][1]['description'] = '_MI_PAGE_SHOW_NUM_DESC';
-$modversion['config'][1]['formtype'] = 'texbox';
-$modversion['config'][1]['valuetype'] = 'int';
-$modversion['config'][1]['default'] = "16";
+$i=1;
+/*
+$modversion['config'][$i]['name'] = 'page_show_num';
+$modversion['config'][$i]['title'] = '_MI_PAGE_SHOW_NUM';
+$modversion['config'][$i]['description'] = '_MI_PAGE_SHOW_NUM_DESC';
+$modversion['config'][$i]['formtype'] = 'texbox';
+$modversion['config'][$i]['valuetype'] = 'int';
+$modversion['config'][$i]['default'] = "16";
 
-$modversion['config'][2]['name'] = 'only_show_desc';
-$modversion['config'][2]['title'] = '_MI_ONLY_SHOW_DESC';
-$modversion['config'][2]['description'] = '_MI_ONLY_SHOW_DESC_DESC';
-$modversion['config'][2]['formtype'] = 'yesno';
-$modversion['config'][2]['valuetype'] = 'int';
-$modversion['config'][2]['default'] = "1";
+$i++;
+*/
+$modversion['config'][$i]['name'] = 'only_show_desc';
+$modversion['config'][$i]['title'] = '_MI_ONLY_SHOW_DESC';
+$modversion['config'][$i]['description'] = '_MI_ONLY_SHOW_DESC_DESC';
+$modversion['config'][$i]['formtype'] = 'yesno';
+$modversion['config'][$i]['valuetype'] = 'int';
+$modversion['config'][$i]['default'] = "1";
 
-$modversion['config'][3]['name'] = 'show_mode';
-$modversion['config'][3]['title'] = "_MI_SHOW_MODE";
-$modversion['config'][3]['description'] = '_MI_SHOW_MODE_DESC';
-$modversion['config'][3]['formtype'] = 'select';
-$modversion['config'][3]['valuetype'] = 'text';
-$modversion['config'][3]['options'] = array(
+$i++;
+$modversion['config'][$i]['name'] = 'show_mode';
+$modversion['config'][$i]['title'] = "_MI_SHOW_MODE";
+$modversion['config'][$i]['description'] = '_MI_SHOW_MODE_DESC';
+$modversion['config'][$i]['formtype'] = 'select';
+$modversion['config'][$i]['valuetype'] = 'text';
+$modversion['config'][$i]['options'] = array(
 											_MI_SHOW_MODE_MORE=>'more',
 											_MI_SHOW_MODE_ICON=>'icon'
 											);

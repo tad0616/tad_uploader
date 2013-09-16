@@ -21,24 +21,14 @@ define("_MA_TADUP_DB_ERROR3","無法取得分頁資料");
 define("_MA_TADUP_PAGE_BAR1","共 %s 頁，目前在第 %s 頁：");
 define("_MA_TADUP_FUNCTION","功能");
 define("_MA_TADUP_DEL_CONFIRM","確定要刪除此資料夾？底下的所有資料夾及檔案都會被刪除喔！");
-define("_MA_TADUP_LIST_ALL_FILES","列出所有資料夾中文件","共 %s 筆資料");
+define("_MA_TADUP_LIST_ALL_FILES","列出所有資料夾中文件");
 define("_MA_TADUP_AUTHOR","建立者");
 define("_MA_TADUP_FILE_COUNTER","人氣值");
 define("_MA_TADUP_EDIT","編輯");
 define("_MA_TADUP_DEL","刪除");
 
-define("_MD_TADUP_MENU","選單");
-define("_MD_TADUP_PREV","上一頁");
-define("_MD_TADUP_NEXT","下一頁");
-define("_MD_TADUP_FIRST","第一頁");
-define("_MD_TADUP_LAST","最後頁");
-define("_MD_TO_MOD","回使用者介面");
 
-define("_MI_TADUP_ADMENU1", "資料夾設定");
-define("_MI_TADUP_ADMENU2", "細部權限設定");
-
-define("_MD_TADUP_CAN_ACCESS_GROUPS2","可<b>讀取</b>群組");
-define("_MD_TADUP_CAN_UPLOADS_GROUPS","可<b>上傳</b>群組");
-define("_MA_TADUP_ALL_OK","所有群組");
+define("_MA_TADUP_CAN_ACCESS_GROUPS2","可<b>讀取</b>群組");
+define("_MA_TADUP_CAN_UPLOADS_GROUPS","可<b>上傳</b>群組");
 
 ?>

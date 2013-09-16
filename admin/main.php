@@ -25,9 +25,6 @@ function list_catalog($the_cat_sn=""){
 	$treetable=new treetable(false,"cat_sn","of_cat_sn","#tbl","save_drag.php",".folder","#save_msg",false,".sort","save_sort.php","#save_msg2");
 	$treetable_code=$treetable->render();
 		
-	$title=sprintf(_MA_TADUP_LIST_ALL_FILES,$total);
-	
-	$xoopsTpl->assign('title',$title);
 	$xoopsTpl->assign('jquery_path',$jquery_path);
 	$xoopsTpl->assign('treetable_code',$treetable_code);
 	//$xoopsTpl->assign('catalog_form',$catalog_form);
@@ -45,7 +42,9 @@ function get_cata_data($of_cat_sn=0,$level=0,$i="0"){
   
 	$sql = "select * from ".$xoopsDB->prefix("tad_uploader")." where of_cat_sn='$of_cat_sn' order by `cat_sort`";
 	$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADUP_DB_ERROR1);
-
+  
+  $data="";
+  $i=0;
 	while(list($cat_sn,$cat_title,$cat_desc,$cat_enable,$uid,$of_cat_sn,$cat_share,$cat_sort,$cat_count)=$xoopsDB->fetchRow($result)){
   
 		$cat_desc=nl2br($cat_desc);

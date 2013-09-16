@@ -1,11 +1,6 @@
 <?php
 include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language']}/modinfo_common.php";
 
-define('_MI_TADUP_ADMIN_HOME',"首頁");
-define("_MI_TADUP_ADMIN_HOME_DESC","回首頁");
-define("_MI_TADUP_ADMIN_ABOUT" , "關於");
-define("_MI_TADUP_ADMIN_ABOUT_DESC" , "關於此模組");
-
 define("_MI_TADUP_NAME","網路硬碟");
 define("_MI_TADUP_DESC","就是上傳模組囉～");
 define("_MI_TADUP_ADMENU1", "資料夾設定");
@@ -24,7 +19,4 @@ define("_MI_SHOW_MODE","預設顯示模式");
 define("_MI_SHOW_MODE_DESC","看是要以圖示或者詳細列表最為預設的顯示模式");
 define("_MI_SHOW_MODE_MORE","詳細列表");
 define("_MI_SHOW_MODE_ICON","圖示");
-
-define("_MI_TADUP_TEMPLATE_DESC1","index.php 首頁的樣板");
-define("_MI_TADUP_TEMPLATE_DESC2","uploads.php上傳頁的樣板");
 ?>

@@ -10,7 +10,9 @@ include_once XOOPS_ROOT_PATH.'/class/xoopsform/grouppermform.php';
 /*-----------function區--------------*/
 $module_id = $xoopsModule->getVar('mid');
 
-$main="";
+$jquery_path=get_jquery(true);  //TadTools引入jquery ui
+$xoopsTpl->assign('jquery_path', $jquery_path);
+
 
 //抓取所有資料夾
 
@@ -20,26 +22,24 @@ while(list($cat_sn,$cat_title)=$xoopsDB->fetchRow($result)){
 	$item_list[$cat_sn]=$cat_title;
 }
 
-
-$title_of_form = _MA_TADUP_SET_ACCESS_POWER;
-$perm_name = 'catalog';
-$formi = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name,$perm_desc);
+$perm_desc="";
+$formi = new XoopsGroupPermForm("", $module_id, 'catalog',$perm_desc);
 foreach ($item_list as $item_id => $item_name) {
 	$formi->addItem($item_id, $item_name);
 }
 
-$main.=$formi->render();
+$main1=$formi->render();
+$xoopsTpl->assign('main1', $main1);
 
-$title_of_form = _MA_TADUP_SET_UPLOAD_POWER;
-$perm_name = 'catalog_up';
-$formi = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name,$perm_desc);
+
+$formi = new XoopsGroupPermForm("", $module_id, 'catalog_up',$perm_desc);
 foreach ($item_list as $item_id => $item_name) {
 	$formi->addItem($item_id, $item_name);
 }
 
-$main.=$formi->render();
+$main2=$formi->render();
+$xoopsTpl->assign('main2', $main2);
 
 /*-----------秀出結果區--------------*/
-echo $main;
 include_once 'footer.php';
 ?>

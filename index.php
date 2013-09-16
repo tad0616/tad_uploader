@@ -56,7 +56,7 @@ function list_all_data($the_cat_sn=0){
     //搬移的選單
     $disbale[]=$the_cat_sn;
   	$move_option=get_cata_select($disbale);	
-  	$menu_option=get_cata_select();	
+  	$menu_option=get_cata_select("",$the_cat_sn);	
 
     $upform=$TadUpFiles->upform(true,'upfile',null,false);
 	}
@@ -91,7 +91,6 @@ function list_all_data($the_cat_sn=0){
 	$xoopsTpl->assign( "cat_desc" , $cat_desc) ;
 	$xoopsTpl->assign( "folder_list" , $folder_list) ;
 	$xoopsTpl->assign( "files_list" , $files_list) ;
-	$xoopsTpl->assign( "mdtool" , $mdtool) ;
 	$xoopsTpl->assign( "jqueryui" , $jquery) ;
 	$xoopsTpl->assign( "up_power" , $check_up_power) ;
 	$xoopsTpl->assign( "list_mode" , $_SESSION['list_mode']) ;
@@ -179,8 +178,11 @@ function get_files_list($the_cat_sn="",$check_up_power=""){
 
     $up_date=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($up_date)));
 
-    
-    $all[$i]['thumb_style']=($height > $width)?"width:85px;":"height:64px;max-width:85px;";
+    if($ff['kind']=="img"){
+      $all[$i]['thumb_style']=($height > $width)?"width:85px;":"height:64px;max-width:85px;";
+    }else{
+      $all[$i]['thumb_style']="";
+    }
     $all[$i]['pic']=$pic;
     $all[$i]['fname']=($ff['kind']=="img")?"":$fname;
     $all[$i]['cfsn']=$cfsn;
@@ -225,7 +227,7 @@ function get_catalog_attribute($cat_sn="",$check_power=false,$check_up_power=fal
       <input type='text' name='cat_title' size=12 value='"._MD_TADUP_NEW_FOLDER."'>
 			<INPUT type='hidden' name='of_cat_sn' value='{$cat_sn}'>
 			<INPUT type='hidden' name='op' value='create_folder'>
-			<INPUT type='submit' value='"._MD_TADUP_SUBMIT."'>
+			<INPUT type='submit' value='"._TAD_SUBMIT."'>
 			</FORM>
 			</td>
 			";
@@ -250,7 +252,7 @@ function get_catalog_attribute($cat_sn="",$check_power=false,$check_up_power=fal
 				<input type='text' name='new_cat_title' size=12 value='{$cat['cat_title']}'>
 				<INPUT type='hidden' name='cat_sn' value='{$cat_sn}'>
 				<INPUT type='hidden' name='op' value='new_cat_title'>
-				<INPUT type='submit' value='"._MD_TADUP_SUBMIT."'>
+				<INPUT type='submit' value='"._TAD_SUBMIT."'>
 				</FORM>
 				</td>
 	       </tr>
@@ -373,7 +375,7 @@ function set_group_power(){
   $form->addElement(new XoopsFormRadioYN(_MD_TADUP_IS_SHARE, 'cat_share', true));
   $form->addElement(new XoopsFormHidden('op', 'save_power'));
   $form->addElement(new XoopsFormHidden('cat_sn', $_GET['of_cat_sn']));
-  $form->addElement(new XoopsFormButton('', '', _MD_TADUP_SUBMIT, 'submit'));
+  $form->addElement(new XoopsFormButton('', '', _TAD_SUBMIT, 'submit'));
   $main=$form->render();
   return $main;
 }
@@ -477,14 +479,19 @@ switch($op){
   exit;
 	break;
 
+  
+  case"del_file":
+  del_file($cfsn);
+  header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
+  break;
+  
 	case "save_files":
     $uid=$xoopsUser->uid();
     $cat_sn=add_tad_uploader();
     
-    if($_POST['del_all_selected']=='1'){
-      //die($_POST['select_files']);
+    if($_POST['all_selected']=='all_del'){
       delfile($_POST['select_files']);
-    }elseif(!empty($_POST['select_files'])){
+    }elseif($_POST['all_selected']=='all_move'){
       movefile($_POST['select_files'],$_POST['new_cat_sn']);
       $cat_sn=$_POST['new_cat_sn'];
     }
@@ -525,16 +532,5 @@ switch($op){
 }
 
 /*-----------秀出結果區--------------*/
-
-//$xoopsTpl->assign( "push" , push_url($xoopsModuleConfig['use_social_tools']));
-$xoopsTpl->assign( "xoops_module_header" , $xoops_module_header);
-$xoopsTpl->assign( "xoops_pagetitle",$file['title']);
-if (is_object($xoTheme)) {
-    $xoTheme->addMeta( 'meta', 'keywords', $file['title']);
-    $xoTheme->addMeta( 'meta', 'description', $file['info']) ;
-} else {
-    $xoopsTpl->assign('xoops_meta_keywords','keywords',$file['title']);
-    $xoopsTpl->assign('xoops_meta_description', $file['info']);
-}
 include_once XOOPS_ROOT_PATH.'/footer.php';
 ?>
