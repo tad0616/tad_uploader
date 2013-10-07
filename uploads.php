@@ -50,7 +50,7 @@ function uploads_tabs($cat_sn="",$cfsn=""){
     $hide="$('#file_up').hide();";
 		$selected_link="selected";
 	}
-	
+
   $xoopsTpl->assign( "bootstrap" , get_bootstrap()) ;
   $xoopsTpl->assign( "toolbar" , toolbar_bootstrap($interface_menu)) ;
   $xoopsTpl->assign( "randStr" , $randStr) ;
@@ -89,7 +89,7 @@ function insert_tad_uploader(){
 	global $xoopsDB,$xoopsUser;
 
   $myts = & MyTextSanitizer::getInstance();
-	
+
 	if(!empty($_POST['new_cat_sn'])){
     $cat_sn=add_catalog("",$_POST['new_cat_sn'],"","1",$_POST['cat_sn'],$_POST['cat_add_form']);
 	}else{
@@ -97,7 +97,7 @@ function insert_tad_uploader(){
 	}
 
 	$uid=$xoopsUser->getVar('uid');
-	
+
 	//$now=xoops_getUserTimestamp(time());
 
 	if(!empty($_POST['file_url'])){
@@ -117,14 +117,14 @@ function insert_tad_uploader(){
 
   	$name=$_FILES['upfile']['name'];
     $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
-  	    
+
   	$sql = "insert into ".$xoopsDB->prefix("tad_uploader_file")." (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
   	values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$_FILES['upfile']['type']}','{$_FILES['upfile']['size']}','{$now}','{$cf_sort}')";
   	$xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5);
 
   	//取得最後新增資料的流水編號
   	$cfsn=$xoopsDB->getInsertId();
-	
+
     include_once XOOPS_ROOT_PATH."/modules/tadtools/upload/class.upload.php";
   	set_time_limit(0);
     ini_set('memory_limit', '500M');
@@ -197,12 +197,12 @@ function update_tad_uploader($cfsn=""){
 	}else{
 		$uptime="";
 	}
-	
+
 
 	if(!empty($_FILES['upfile']['name'])){
     //先刪掉原有檔案
     del_file($cfsn,false);
-    
+
   	$name=$_FILES['upfile']['name'];
 
   	$sql = "update ".$xoopsDB->prefix("tad_uploader_file")." set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_type='{$_FILES['upfile']['type']}',cf_size='{$_FILES['upfile']['size']}' {$uptime} where cfsn='$cfsn'";
@@ -318,7 +318,7 @@ switch($op){
 	$cat_sn=update_tad_uploader($cfsn);
 	header("location: index.php?of_cat_sn={$cat_sn}");
 	break;
-	
+
 
 	default:
 	uploads_tabs($cat_sn,$cfsn);
