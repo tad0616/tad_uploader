@@ -1,10 +1,10 @@
 <?php
 function xoops_module_install_tad_uploader(&$module) {
 
-	mk_dir(XOOPS_ROOT_PATH."/uploads/tad_uploader");
-	mk_dir(XOOPS_ROOT_PATH."/uploads/tad_uploader_batch");
+  mk_dir(XOOPS_ROOT_PATH."/uploads/tad_uploader");
+  mk_dir(XOOPS_ROOT_PATH."/uploads/tad_uploader_batch");
 
-	return true;
+  return true;
 }
 
 //建立目錄

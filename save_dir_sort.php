@@ -7,7 +7,7 @@
 
 /*-----------引入檔案區--------------*/
 include_once "header.php";
-$updateRecordsArray 	= $_POST['tr'];
+$updateRecordsArray   = $_POST['tr'];
 
 $sort = 1;
 foreach ($updateRecordsArray as $recordIDValue) {

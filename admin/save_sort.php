@@ -7,7 +7,7 @@
 
 /*-----------引入檔案區--------------*/
 include "../../../include/cp_header.php";
-$updateRecordsArray 	= $_POST['node-'];
+$updateRecordsArray   = $_POST['node-'];
 
 $sort = 1;
 foreach ($updateRecordsArray as $recordIDValue) {
