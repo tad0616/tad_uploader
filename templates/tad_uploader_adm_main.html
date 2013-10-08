@@ -29,8 +29,8 @@ function delete_catalog_func(cat_sn){
     <div class="controls controls-row">
       <label class="span3 text-right"><{$smarty.const._MA_TADUP_FOLDER_NAME}></label>
       <input type="text" name="cat_title" value="<{$cat_title}>" class="span8" placeholder="<{$smarty.const._MA_TADUP_FOLDER_NAME}>">
-    </div>  
-    
+    </div>
+
     <div class="controls controls-row">
       <label class="span3 text-right"><{$smarty.const._MA_TADUP_ENABLE}></label>
       <label class="radio inline">
@@ -40,7 +40,7 @@ function delete_catalog_func(cat_sn){
         <input type="radio" name="cat_enable" id="cat_enable0" value="0" <{if $cat_enable=="0"}>checked<{/if}>><{$smarty.const._NO}>
       </label>
     </div>
-    
+
     <div class="controls controls-row">
       <label class="span3 text-right"><{$smarty.const._MA_TADUP_SHARE}></label>
       <label class="radio inline">
@@ -50,17 +50,17 @@ function delete_catalog_func(cat_sn){
         <input type="radio" name="cat_share" id="cat_share0" value="0" <{if $cat_share=="0"}>checked<{/if}>><{$smarty.const._NO}>
       </label>
     </div>
-    
-    
+
+
   </div>
-  
+
   <div class="span2">
     <div class="controls controls-row">
       <label><{$smarty.const._MA_TADUP_CAN_ACCESS_GROUPS2}></label>
       <{$enable_group}>
     </div>
   </div>
-  
+
   <div class="span2">
     <div class="controls controls-row">
       <label><{$smarty.const._MA_TADUP_CAN_UPLOADS_GROUPS}></label>
@@ -81,10 +81,10 @@ function delete_catalog_func(cat_sn){
   <input type="hidden" name="op" value="add_catalog">
   <button type="submit" class="btn btn-primary"><{$smarty.const._MA_TADUP_SAVE}></button>
 </div>
-    
-  
+
+
 </form>
-  
+
 <div id="save_msg" style="float:right;"></div>
 <div id="save_msg2" style="float:right;"></div>
 
@@ -103,7 +103,7 @@ function delete_catalog_func(cat_sn){
       <td>
         <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/move_s.png" class="folder" alt="<{$smarty.const._MA_TREETABLE_MOVE_PIC}>" title="<{$smarty.const._MA_TREETABLE_MOVE_PIC}>">
         <span class="folder">
-          <a href="<{$xoops_url}>/modules/tad_uploader/main.php?of_cat_sn=<{$cate.cat_sn}>"><{$cate.cat_title}></a>
+          <a href="<{$xoops_url}>/modules/tad_uploader/index.php?of_cat_sn=<{$cate.cat_sn}>"><{$cate.cat_title}></a>
         </span>
       </td>
       <td><{$cate.uid_name}></td>
@@ -111,9 +111,9 @@ function delete_catalog_func(cat_sn){
       <td align="center"><{$cate.share}></td>
       <td><{$cate.cat_count}></td>
       <td>
-      
+
       <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/updown_s.png" style="cursor: s-resize;" alt="<{$smarty.const._MA_TREETABLE_SORT_PIC}>" title="<{$smarty.const._MA_TREETABLE_SORT_PIC}>">
-      
+
       <a href="javascript:delete_catalog_func(<{$cate.cat_sn}>);" class="btn btn-mini btn-danger"><{$smarty.const._MA_TADUP_DEL}></a>
       <a href="main.php?op=catalog_form&cat_sn=<{$cate.cat_sn}>" class="btn btn-mini btn-warning"><{$smarty.const._MA_TADUP_EDIT}></a>
       </td>
