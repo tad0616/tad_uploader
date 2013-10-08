@@ -24,7 +24,7 @@
         });
     }
     });
-    
+
     $("#clickAll").click(function() {
       if($("#clickAll").attr("checked")){
         $(".u<{$cat_sn}>").each(function() {
@@ -33,7 +33,7 @@
       }else{
        $(".u<{$cat_sn}>").each(function() {
            $(this).attr("checked", false);
-       });          
+       });
       }
     });
 
@@ -84,7 +84,7 @@
               <input type="checkbox" id="clickAll"> <{$smarty.const._MD_TADUP_FILE_NAME}>
               </label>
             </th>
-            <th data-hide="phone" style="text-align:center;" nowrap>   
+            <th data-hide="phone" style="text-align:center;" nowrap>
               <{$smarty.const._MD_TADUP_FILE_DATE}>
             </th>
             <th data-hide="phone" style="text-align:center;" nowrap>
@@ -93,11 +93,11 @@
             <th data-hide="phone" style="text-align:center;" nowrap>
               <{$smarty.const._MD_TADUP_FILE_COUNTER}>
             </th>
-            
+
             <{if $only_show_desc!="1"}>
               <th data-hide="phone"><{$smarty.const._MD_TADUP_FILE_DESC}></th>
             <{/if}>
-              
+
             <{if $up_power}>
               <th data-hide="phone" style="text-align:center;">
                 <{$smarty.const._TAD_FUNCTION}>
@@ -136,7 +136,7 @@
               <img src="images/s_folder<{$folder.lock}>.png" hspace="2" align="absmiddle"><a href="index.php?of_cat_sn=<{$folder.cat_sn}>"><{$folder.cat_title}></a>
               <{if $up_power}>
                 </label>
-              <{/if}>  
+              <{/if}>
             </td>
             <td style="font-size:11px;text-align:center;"><{$folder.file_num}><{$smarty.const._MD_TADUP_FILE}></td>
             <td style="font-size:11px;text-align:center;"><{$folder.cat_count}></td>
@@ -184,14 +184,14 @@
               <td style="font-size:11px;text-align:center;"><{$file.up_date}></td>
               <td style="font-size:11px;text-align:center;"><{$file.size}></td>
               <td style="font-size:11px;text-align:center;"><{$file.cf_count}></td>
-              
+
               <{if $only_show_desc!="1"}>
                 <td style="font-size:12px;">
                 <{if $file.cf_desc!=$file.cf_name}>
                 <{$file.cf_desc}>
                 <{/if}></td>
               <{/if}>
-            
+
               <{if $up_power}>
                 <td style="text-align:center;">
                    <a href="javascript:delete_file_func(<{$file.cfsn}>,<{$cat_sn}>);" class="btn btn-mini btn-danger"><{$smarty.const._TAD_DEL}></a>
@@ -241,7 +241,7 @@
   <{/if}>
 
   <{if $up_power}>
-    <div class="well"> 
+    <div class="well">
       <{if $files_list}>
         <div>
           <label class="radio inline">
@@ -263,7 +263,7 @@
       <{/if}>
 
       <div class="row-fluid">
-        <label class="span2">  
+        <label class="span2">
           <{$smarty.const._MD_TADUP_SELECT_FOLDER}><{$smarty.const._TAD_FOR}>
         </label>
         <select name="add_to_cat" size=1 class="span3">
@@ -272,19 +272,20 @@
       	</select>
         <input type="text" name="creat_new_cat" class="span3" placeholder="<{$smarty.const._MD_TADUP_CREAT_NEW_CATE}>">
       </div>
-      
+
       <div class="row-fluid">
-        <label class="span2"> 
+        <label class="span2">
           <{$smarty.const._MD_TADUP_SELECT_FILES}><{$smarty.const._TAD_FOR}>
         </label>
         <{$upform}>
+        <input type="text" name="cf_desc" class="span5"  value="<{$cf_desc}>" placeholder="<{$smarty.const._MD_TADUP_FILE_DESC}>">
         <input name="op" type="hidden" value="save_files">
         <input name="cat_sn" type="hidden" value="<{$cat_sn}>">
         <button type="button" class="btn"><{$smarty.const._TAD_RESET}></button>
         <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_GO}></button>
       </div>
     </div>
-    
+
     <span class="help-block text-right">
     php.ini: memory_limit (<{$memory_limit}>) > post_max_size (<{$post_max_size}>) >      upload_max_filesize (<{$upload_max_filesize}>) ;
     max_execution_time=<{$max_execution_time}>

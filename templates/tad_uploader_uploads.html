@@ -9,18 +9,18 @@
     var last_tab=$tabs.tabs("length")-1;
     <{$to_batch_upload}>
 
-		<{$hide}>
-		$("#file_where").change(function() {
-			if ($("#file_where").val()=="up") {
-	       $("#file_up").show();
-	       $("#file_link").hide();
-			} else{
-	       $("#file_link").show();
-	       $("#file_up").hide();
-			}
-		});
+    <{$hide}>
+    $("#file_where").change(function() {
+      if ($("#file_where").val()=="up") {
+         $("#file_up").show();
+         $("#file_link").hide();
+      } else{
+         $("#file_link").show();
+         $("#file_up").hide();
+      }
+    });
 
-	});
+  });
 </script>
 
 <{$toolbar}>
@@ -35,45 +35,41 @@
   <div id="fragment-1">
 
     <form action="uploads.php" method="post" id="myForm" enctype="multipart/form-data">
+      <div class="row-fluid">
+        <label class="span2">
+          <{$smarty.const._MD_TADUP_SELECT_FOLDER}><{$smarty.const._TAD_FOR}>
+        </label>
+        <select name="add_to_cat" size=1 class="span3">
+          <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
+          <{$cate_select}>
+        </select>
+        <input type="text" name="creat_new_cat" class="span3" placeholder="<{$smarty.const._MD_TADUP_CREAT_NEW_CATE}>">
+      </div>
+
+
+      <div class="row-fluid">
+        <select id="file_where">
+        <option value="up" <{$selected_up}>><{$smarty.const._MD_TADUP_UPLOAD}></option>
+        <option value="link" <{$selected_link}>><{$smarty.const._MD_TADUP_LINK}></option>
+        </select>
+
+        <span id="file_up"><{$upform}></span>
+        <span id="file_link"><input type="text" name="file_url" size="50" value="<{$file_url}>"></span>
+      </div>
+
       <div>
-      	<{if $cate_select}>
-          <{$smarty.const._MD_TADUP_SELECT_FOLDER}>
-          <select name="cat_sn" size=1>
-        	<{$cate_select}>
-        	</select>
-      	<{/if}>
-      	
-        <select name="cat_add_form" size=1>
-        <option value="0">在根目錄下<{$smarty.const._MD_TADUP_CREATE_NEW_FOLDER}></option>
-        <option value="cat_sn">在左邊目錄下<{$smarty.const._MD_TADUP_CREATE_NEW_FOLDER}></option>
-      	</select>
-      	
-        <input type="text" name="new_cat_sn" size="10">
-      </div>
-
-    	<div>
-      	<select id="file_where">
-      	<option value="up" <{$selected_up}>><{$smarty.const._MD_TADUP_UPLOAD}></option>
-      	<option value="link" <{$selected_link}>><{$smarty.const._MD_TADUP_LINK}></option>
-      	</select>
-
-    		<span id="file_up"><input type="file" name="upfile" size="30"></span>
-    		<span id="file_link"><input type="text" name="file_url" size="50" value="<{$file_url}>"></span>
-      </div>
-
-    	<div>
         <{$smarty.const._MD_TADUP_FILE_DESC}>
-    	  <input type="text" name="cf_desc" size=30  value="<{$cf_desc}>">
+        <input type="text" name="cf_desc" size=30  value="<{$cf_desc}>">
       </div>
 
-    	<{$up_time_col}>
+      <{$up_time_col}>
 
-    	<div>
+      <div>
         <input type="hidden" name="op" value="<{$op}>">
-      	<input type="hidden" name="cfsn" value="<{$cfsn}>">
+        <input type="hidden" name="cfsn" value="<{$cfsn}>">
         <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TADUP_SAVE}></button>
       </div>
-      
+
     </form>
   </div>
 </div>
