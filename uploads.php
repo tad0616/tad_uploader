@@ -130,36 +130,18 @@ function update_tad_uploader($cfsn=""){
 
   if(!empty($_FILES['upfile']['name'])){
     //先刪掉原有檔案
-    del_file($cfsn,false);
+    $TadUpFiles->set_dir('subdir',"/user_{$uid}");
+    $TadUpFiles->set_col("cfsn",$cfsn);
+    $TadUpFiles->del_files();
+
 
     $name=$_FILES['upfile']['name'];
 
     $sql = "update ".$xoopsDB->prefix("tad_uploader_file")." set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_type='{$_FILES['upfile']['type']}',cf_size='{$_FILES['upfile']['size']}' {$uptime} where cfsn='$cfsn'";
     $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5);
 
-    $TadUpFiles->set_dir('subdir',"/user_{$uid}");
-    $TadUpFiles->set_col("cfsn",$cfsn);
     $TadUpFiles->upload_one_file($name,$_FILES['upfile']['tmp_name'][$i],$_FILES['upfile']['type'][$i],$_FILES['upfile']['size'][$i],NULL,NULL,"",$cf_desc,true,true);
-    /*
-    include_once XOOPS_ROOT_PATH."/modules/tadtools/upload/class.upload.php";
-    set_time_limit(0);
-    ini_set('memory_limit', '500M');
 
-    $file_handle = new upload($_FILES['upfile'],"zh_TW");
-    if ($file_handle->uploaded) {
-        $file_handle->file_safe_name = false;
-        $file_handle->auto_create_dir = true;
-        $file_handle->file_name_body_pre   = "{$cfsn}_";
-        $file_handle->process(_TAD_UPLOADER_DIR);
-        if ($file_handle->processed) {
-            $file_handle->clean();
-        } else {
-            $sql = "delete from ".$xoopsDB->prefix("tad_uploader_file")." where cfsn='{$cfsn}'";
-            $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
-            redirect_header($_SERVER['PHP_SELF'],3, "Error:".$file_handle->error);
-        }
-     }
-*/
   }elseif(!empty($file_url)){
     $size=remote_file_size($file_url);
 
