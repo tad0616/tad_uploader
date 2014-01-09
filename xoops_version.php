@@ -17,7 +17,7 @@ $modversion['dirname']		= basename(dirname(__FILE__));
 
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2013/09/08';
+$modversion['release_date'] = '2013/10/08';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -57,7 +57,7 @@ $modversion['onUninstall'] = "include/onUninstall.php";
 
 //---使用者主選單設定---//
 $modversion['hasMain'] = 1;
-	
+
 
 //---樣板設定---//
 $modversion['templates'] = array();
@@ -79,12 +79,12 @@ $modversion['templates'][$i]['description'] = 'tad_uploader_adm_power.html';
 
 
 //---區塊設定---//
-$modversion['blocks'][1]['file'] = "catalog_block_1.php";
+$modversion['blocks'][1]['file'] = "tad_uploader_block_1.php";
 $modversion['blocks'][1]['name'] = _MI_TADUP_BNAME1;
 $modversion['blocks'][1]['description'] = _MI_TADUP_BDESC1;
-$modversion['blocks'][1]['show_func'] = "catalog_b_show_1";
-$modversion['blocks'][1]['template'] = "catalog_block_1.html";
-$modversion['blocks'][1]['edit_func'] = "catalog_b_edit_1";
+$modversion['blocks'][1]['show_func'] = "tad_uploader_b_show_1";
+$modversion['blocks'][1]['template'] = "tad_uploader_block_1.html";
+$modversion['blocks'][1]['edit_func'] = "tad_uploader_b_edit_1";
 $modversion['blocks'][1]['options'] = "10";
 
 

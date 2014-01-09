@@ -1,5 +1,5 @@
 <?php
-/*-----------¤Ş¤JÀÉ®×°Ï--------------*/
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
 include "header.php";
 $xoopsOption['template_main'] = "tad_uploader_uploads.html";
 
@@ -7,7 +7,7 @@ if(sizeof($upload_powers) <= 0 or empty($xoopsUser)){
   redirect_header(XOOPS_URL."/user.php",3, _MD_TADUP_NO_EDIT_POWER);
 }
 include XOOPS_ROOT_PATH."/header.php";
-/*-----------function°Ï--------------*/
+/*-----------functionå€--------------*/
 
 
 function uploads_tabs($cat_sn="",$cfsn=""){
@@ -21,14 +21,14 @@ function uploads_tabs($cat_sn="",$cfsn=""){
     $to_batch_upload='$tabs.tabs("select", last_tab);';
   }
 
-  //§ì¨ú¹w³]­È
+  //æŠ“å–é è¨­å€¼
   if(!empty($cfsn)){
     $DBV=get_tad_uploader_file($cfsn);
   }else{
     $DBV=array();
   }
 
-  //¹w³]­È³]©w
+  //é è¨­å€¼è¨­å®š
 
   $cfsn=(!isset($DBV['cfsn']))?$cfsn:$DBV['cfsn'];
   $cat_sn=(!isset($DBV['cat_sn']))?$cat_sn:$DBV['cat_sn'];
@@ -77,7 +77,7 @@ function uploads_tabs($cat_sn="",$cfsn=""){
 
 
 
-//¨ú±o³æ¤@ÀÉ®×¸ê®Æ
+//å–å¾—å–®ä¸€æª”æ¡ˆè³‡æ–™
 function get_tad_uploader_file($cfsn=""){
   global $xoopsDB;
   if(empty($cfsn))return;
@@ -91,7 +91,7 @@ function get_tad_uploader_file($cfsn=""){
 
 
 
-//§ó·s¸ê®Æ¨ìtad_uploader¤¤
+//æ›´æ–°è³‡æ–™åˆ°tad_uploaderä¸­
 function update_tad_uploader($cfsn=""){
   global $xoopsDB,$xoopsUser,$TadUpFiles;
 
@@ -104,8 +104,6 @@ function update_tad_uploader($cfsn=""){
   }
 
   $uid=$xoopsUser->getVar('uid');
-
-  //$now=xoops_getUserTimestamp(time());
 
   if(!empty($_POST['file_url'])){
     $file_url=$myts->addSlashes($_POST['file_url']);
@@ -128,20 +126,22 @@ function update_tad_uploader($cfsn=""){
   }
 
 
-  if(!empty($_FILES['upfile']['name'])){
-    //¥ı§R±¼­ì¦³ÀÉ®×
+  if(!empty($_FILES['upfile']['name'][0])){
+    
+    //å…ˆåˆªæ‰åŸæœ‰æª”æ¡ˆ
     $TadUpFiles->set_dir('subdir',"/user_{$uid}");
     $TadUpFiles->set_col("cfsn",$cfsn);
     $TadUpFiles->del_files();
 
 
-    $name=$_FILES['upfile']['name'];
+    foreach($_FILES['upfile']['name'] as $i=>$name){
+      $name=$_FILES['upfile']['name'][0];
 
-    $sql = "update ".$xoopsDB->prefix("tad_uploader_file")." set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_type='{$_FILES['upfile']['type']}',cf_size='{$_FILES['upfile']['size']}' {$uptime} where cfsn='$cfsn'";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5);
+      $sql = "update ".$xoopsDB->prefix("tad_uploader_file")." set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_type='{$_FILES['upfile']['type'][$i]}',cf_size='{$_FILES['upfile']['size'][$i]}' {$uptime} where cfsn='$cfsn'";
+      $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5);
 
-    $TadUpFiles->upload_one_file($name,$_FILES['upfile']['tmp_name'][$i],$_FILES['upfile']['type'][$i],$_FILES['upfile']['size'][$i],NULL,NULL,"",$cf_desc,true,true);
-
+      $TadUpFiles->upload_one_file($name,$_FILES['upfile']['tmp_name'][$i],$_FILES['upfile']['type'][$i],$_FILES['upfile']['size'][$i],NULL,NULL,"",$cf_desc,true,true);
+    }
   }elseif(!empty($file_url)){
     $size=remote_file_size($file_url);
 
@@ -150,13 +150,14 @@ function update_tad_uploader($cfsn=""){
   }else{
 
     $sql = "update ".$xoopsDB->prefix("tad_uploader_file")." set cat_sn='{$cat_sn}',cf_desc='{$cf_desc}' {$uptime} where cfsn='$cfsn'";
+
     $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5);
   }
 
   return $cat_sn;
 }
 
-//¨ú±o»·ºİÀÉ®×ªº¤j¤p
+//å–å¾—é ç«¯æª”æ¡ˆçš„å¤§å°
 function remote_file_size ($url){
   $head = "";
   $url_p = parse_url($url);
@@ -215,20 +216,20 @@ function remote_file_size ($url){
   }
   return $return;
 }
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
 $op = (empty($_REQUEST['op']))? "":$_REQUEST['op'];
 $cfsn = (empty($_REQUEST['cfsn']))? "":$_REQUEST['cfsn'];
 $cat_sn = (empty($_REQUEST['cat_sn']))? "":$_REQUEST['cat_sn'];
 
 switch($op){
 
-  //·s¼W¸ê®Æ
+  //æ–°å¢è³‡æ–™
   case "insert_tad_uploader":
   $cat_sn=add_tad_uploader();
   header("location: index.php?of_cat_sn={$cat_sn}");
   break;
 
-  //§ó·s¸ê®Æ
+  //æ›´æ–°è³‡æ–™
   case "update_tad_uploader";
   $cat_sn=update_tad_uploader($cfsn);
   header("location: index.php?of_cat_sn={$cat_sn}");
@@ -241,7 +242,7 @@ switch($op){
 
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæœå€--------------*/
 
 
 include_once XOOPS_ROOT_PATH.'/footer.php';
