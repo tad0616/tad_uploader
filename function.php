@@ -52,7 +52,7 @@ function add_tad_uploader(){
     $cat_sn=$_POST['add_to_cat'];
   }
 
-  if(empty($_FILES['upfile']['name'][0]))return;
+  if(empty($_FILES['upfile']['name'][0]))  return $cat_sn;
 
   $myts = & MyTextSanitizer::getInstance();
 
@@ -274,8 +274,9 @@ function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$
     $uid=$xoopsUser->getVar('uid');
   }
 
-  if($cat_add_form!='cat_sn'){
-    $of_cat_sn=0;
+  $of_cat_sn=0;
+  if(!empty($cat_add_form)){
+    $of_cat_sn=$cat_add_form;
   }
 
   if($cat_share=="auto"){

@@ -171,7 +171,7 @@ $cat_sn=(empty($_REQUEST['cat_sn']))?"":intval($_REQUEST['cat_sn']);
 
 switch($op){
   case "add_catalog":
-  add_catalog($cat_sn,$_POST['cat_title'],$_POST['cat_desc'],$_POST['cat_enable'],$_POST['of_cat_sn'],$_POST['cat_add_form'],$_POST['cat_share'],$_POST['cat_sort'],$_POST['cat_count'],$_POST['catalog'],$_POST['catalog_up']);
+  add_catalog($cat_sn,$_POST['cat_title'],$_POST['cat_desc'],$_POST['cat_enable'],$_POST['of_cat_sn'],$_POST['add_to_cat'],$_POST['cat_share'],$_POST['cat_sort'],$_POST['cat_count'],$_POST['catalog'],$_POST['catalog_up']);
   header("location: ".$_SERVER['PHP_SELF']);
   break;
 

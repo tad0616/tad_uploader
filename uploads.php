@@ -98,7 +98,7 @@ function update_tad_uploader($cfsn=""){
   $myts = & MyTextSanitizer::getInstance();
 
   if(!empty($_POST['new_cat_sn'])){
-    $cat_sn=add_catalog("",$_POST['new_cat_sn'],"","1",$_POST['cat_sn'],$_POST['cat_add_form']);
+    $cat_sn=add_catalog("",$_POST['new_cat_sn'],"","1",$_POST['cat_sn'],$_POST['add_to_cat']);
   }else{
     $cat_sn=$_POST['cat_sn'];
   }

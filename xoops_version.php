@@ -117,6 +117,6 @@ $modversion['config'][$i]['options'] = array(
 											_MI_SHOW_MODE_MORE=>'more',
 											_MI_SHOW_MODE_ICON=>'icon'
 											);
-$modversion['config'][3]['default'] = 'more';
+$modversion['config'][$i]['default'] = 'more';
 
 ?>
