@@ -16,6 +16,8 @@ if($xoopsUser){
 define("_TAD_UPLOADER_DIR",XOOPS_ROOT_PATH."/uploads/tad_uploader/user_{$uid_dir}");
 define("_TAD_UPLOADER_BATCH_DIR",XOOPS_ROOT_PATH."/uploads/tad_uploader_batch/user_{$uid_dir}");
 define("_TAD_UPLOADER_URL",XOOPS_URL."/uploads/tad_uploader");
+mk_dir(_TAD_UPLOADER_BATCH_DIR);
+
 
 //取亂數
 if(!function_exists("randStr")){
@@ -236,7 +238,7 @@ function chk_cate_power($kind=""){
 
 
 //取得路徑
-function get_cate_path($csn="",$sub=false){
+function get_tad_uploader_cate_path($csn="",$sub=false){
   global $xoopsDB;
 
   if(!$sub){
@@ -249,7 +251,7 @@ function get_cate_path($csn="",$sub=false){
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, mysql_error());
   list($title,$of_csn)=$xoopsDB->fetchRow($result);
 
-  $opt_sub=(!empty($of_csn))?get_cate_path($of_csn,true):"";
+  $opt_sub=(!empty($of_csn))?get_tad_uploader_cate_path($of_csn,true):"";
 
   $opt=$path="";
 
@@ -274,7 +276,7 @@ function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$
     $uid=$xoopsUser->getVar('uid');
   }
 
-  $of_cat_sn=0;
+  //$of_cat_sn=0;
   if(!empty($cat_add_form)){
     $of_cat_sn=$cat_add_form;
   }
@@ -634,21 +636,4 @@ if(!function_exists('mime_content_type')) {
     }
 }
 
-//圓角文字框
-function div_3d($title="",$main="",$kind="raised",$style=""){
-
-  $h1=(empty($title))?"":"<h1>$title</h1>";
-
-  $main="<table style='width:auto;{$style}'><tr><td>
-  <div class='{$kind}'>
-  $h1
-  <b class='b1'></b><b class='b2'></b><b class='b3'></b><b class='b4'></b>
-  <div class='boxcontent'>
-  $main
-  </div>
-  <b class='b4b'></b><b class='b3b'></b><b class='b2b'></b><b class='b1b'></b>
-  </div>
-  </td></tr></table>";
-  return $main;
-}
 ?>

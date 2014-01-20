@@ -18,7 +18,7 @@ function list_all_data($the_cat_sn=0){
   $sort_code=$up_tool=$del_js=$FooTableJS=$path="";
 
   //目前路徑
-  $arr=get_cate_path($the_cat_sn);
+  $arr=get_tad_uploader_cate_path($the_cat_sn);
   if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/jBreadCrumb.php")){
     redirect_header("index.php",3, _MA_NEED_TADTOOLS);
   }

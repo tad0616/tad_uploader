@@ -105,13 +105,13 @@ function catalog_form($cat_sn=""){
   }
 
   //預設值設定
-  $cat_sn=(!isset($DBV['cat_sn']))?"":$DBV['cat_sn'];
+  $cat_sn=(!isset($DBV['cat_sn']))?$cat_sn:$DBV['cat_sn'];
   $cat_title=(!isset($DBV['cat_title']))?"":$DBV['cat_title'];
   $cat_desc=(!isset($DBV['cat_desc']))?"":$DBV['cat_desc'];
   $cat_enable=(!isset($DBV['cat_enable']))?"1":$DBV['cat_enable'];
   $uid=(!isset($DBV['uid']))?"":$DBV['uid'];
   $of_cat_sn=(!isset($DBV['of_cat_sn']))?"":$DBV['of_cat_sn'];
-  $cata_select=get_cata_select(array(),$of_cat_sn);
+  $cata_select=get_cata_select(array($cat_sn),$of_cat_sn);
   $cat_share=(!isset($DBV['cat_share']))?"1":$DBV['cat_share'];
   $cat_count=(!isset($DBV['cat_count']))?"":$DBV['cat_count'];
 
@@ -167,11 +167,12 @@ function get_catalog_all(){
 
 /*-----------執行動作判斷區----------*/
 $op = (!isset($_REQUEST['op']))? "":$_REQUEST['op'];
-$cat_sn=(empty($_REQUEST['cat_sn']))?"":intval($_REQUEST['cat_sn']);
+$cat_sn=isset($_REQUEST['cat_sn'])?intval($_REQUEST['cat_sn']):"";
+$of_cat_sn=isset($_REQUEST['of_cat_sn'])?intval($_REQUEST['of_cat_sn']):"";
 
 switch($op){
   case "add_catalog":
-  add_catalog($cat_sn,$_POST['cat_title'],$_POST['cat_desc'],$_POST['cat_enable'],$_POST['of_cat_sn'],$_POST['add_to_cat'],$_POST['cat_share'],$_POST['cat_sort'],$_POST['cat_count'],$_POST['catalog'],$_POST['catalog_up']);
+  add_catalog($cat_sn,$_POST['cat_title'],$_POST['cat_desc'],$_POST['cat_enable'],$of_cat_sn,$_POST['add_to_cat'],$_POST['cat_share'],$_POST['cat_sort'],$_POST['cat_count'],$_POST['catalog'],$_POST['catalog_up']);
   header("location: ".$_SERVER['PHP_SELF']);
   break;
 

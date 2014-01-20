@@ -196,7 +196,7 @@ function go_update6(){
 
     if(file_exists($from)){
       if(rename($from,$to)){
-        $sql2="insert into ".$xoopsDB->prefix("tad_uploader_files_center")." (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'user_{$uid}')";
+        $sql2="insert into ".$xoopsDB->prefix("tad_uploader_files_center")." (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
         $xoopsDB->queryF($sql2) or redirect_header(XOOPS_URL,3,  mysql_error());
         $fp = fopen($readme, 'w');
         fwrite($fp, $cf_name);

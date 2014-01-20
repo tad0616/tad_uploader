@@ -16,71 +16,82 @@ function delete_catalog_func(cat_sn){
 <h2><{$smarty.const._MA_TADUP_LIST_ALL_FILES}></h2>
 
 <form action="main.php" method="POST" enctype="multipart/form-data">
-<div class="row-fluid">
-  <div class="span5">
-    <div class="controls controls-row">
-      <label class="span3 text-right"><{$smarty.const._MA_TADUP_FATHER_FOLDER}></label>
-      <select name="of_cat_sn" class="span8">
-        <option></option>
-        <{$cata_select}>
-      </select>
+  <div class="row-fluid">
+
+    <div class="span5">
+
+      <div class="row-fluid">
+        <label class="span3 text-right"><{$smarty.const._MA_TADUP_FATHER_FOLDER}></label>
+        <div class="span8">
+          <select name="of_cat_sn" class="span12">
+            <option></option>
+            <{$cata_select}>
+          </select>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <label class="span3 text-right"><{$smarty.const._MA_TADUP_FOLDER_NAME}></label>
+        <div class="span8">
+          <input type="text" name="cat_title" value="<{$cat_title}>" class="span12" placeholder="<{$smarty.const._MA_TADUP_FOLDER_NAME}>">
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <label class="span3 text-right"><{$smarty.const._MA_TADUP_ENABLE}></label>
+        <div class="span8">
+          <label class="radio inline">
+            <input type="radio" name="cat_enable" id="cat_enable1" value="1" <{if $cat_enable=="1"}>checked<{/if}>><{$smarty.const._YES}>
+          </label>
+          <label class="radio inline">
+            <input type="radio" name="cat_enable" id="cat_enable0" value="0" <{if $cat_enable=="0"}>checked<{/if}>><{$smarty.const._NO}>
+          </label>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <label class="span3 text-right"><{$smarty.const._MA_TADUP_SHARE}></label>
+        <div class="span8">
+          <label class="radio inline">
+            <input type="radio" name="cat_share" id="cat_share1" value="1" <{if $cat_share=="1"}>checked<{/if}>><{$smarty.const._YES}>
+          </label>
+          <label class="radio inline">
+            <input type="radio" name="cat_share" id="cat_share0" value="0" <{if $cat_share=="0"}>checked<{/if}>><{$smarty.const._NO}>
+          </label>
+        </div>
+      </div>
     </div>
 
-    <div class="controls controls-row">
-      <label class="span3 text-right"><{$smarty.const._MA_TADUP_FOLDER_NAME}></label>
-      <input type="text" name="cat_title" value="<{$cat_title}>" class="span8" placeholder="<{$smarty.const._MA_TADUP_FOLDER_NAME}>">
+    <div class="span2">
+      <div class="row-fluid">
+        <label><{$smarty.const._MA_TADUP_CAN_ACCESS_GROUPS2}></label>
+        <{$enable_group}>
+      </div>
     </div>
 
-    <div class="controls controls-row">
-      <label class="span3 text-right"><{$smarty.const._MA_TADUP_ENABLE}></label>
-      <label class="radio inline">
-        <input type="radio" name="cat_enable" id="cat_enable1" value="1" <{if $cat_enable=="1"}>checked<{/if}>><{$smarty.const._YES}>
-      </label>
-      <label class="radio inline">
-        <input type="radio" name="cat_enable" id="cat_enable0" value="0" <{if $cat_enable=="0"}>checked<{/if}>><{$smarty.const._NO}>
-      </label>
+    <div class="span2">
+      <div class="row-fluid">
+        <label><{$smarty.const._MA_TADUP_CAN_UPLOADS_GROUPS}></label>
+        <{$enable_upload_group}>
+      </div>
     </div>
 
-    <div class="controls controls-row">
-      <label class="span3 text-right"><{$smarty.const._MA_TADUP_SHARE}></label>
-      <label class="radio inline">
-        <input type="radio" name="cat_share" id="cat_share1" value="1" <{if $cat_share=="1"}>checked<{/if}>><{$smarty.const._YES}>
-      </label>
-      <label class="radio inline">
-        <input type="radio" name="cat_share" id="cat_share0" value="0" <{if $cat_share=="0"}>checked<{/if}>><{$smarty.const._NO}>
-      </label>
+    <div class="span3">
+      <div class="row-fluid">
+        <label><{$smarty.const._MA_TADUP_FOLDER_DESC}></label>
+        <textarea name="cat_desc" class="span12" style="height:70px;font-size:12px"><{$cat_desc}></textarea>
+      </div>
     </div>
-
 
   </div>
 
-  <div class="span2">
-    <div class="controls controls-row">
-      <label><{$smarty.const._MA_TADUP_CAN_ACCESS_GROUPS2}></label>
-      <{$enable_group}>
-    </div>
+  <div class="row-fluid text-center">
+    <input type="hidden" name="cat_sn" value="<{$cat_sn}>">
+    <input type="hidden" name="cat_sort" value="<{$cat_sort}>">
+    <input type="hidden" name="cat_count" value="<{$cat_count}>">
+    <input type="hidden" name="op" value="add_catalog">
+    <button type="submit" class="btn btn-primary"><{$smarty.const._MA_TADUP_SAVE}></button>
   </div>
-
-  <div class="span2">
-    <div class="controls controls-row">
-      <label><{$smarty.const._MA_TADUP_CAN_UPLOADS_GROUPS}></label>
-      <{$enable_upload_group}>
-    </div>
-  </div>
-  <div class="span3">
-    <div class="controls controls-row">
-      <label><{$smarty.const._MA_TADUP_FOLDER_DESC}></label>
-      <textarea name="cat_desc" class="span12" style="height:70px;font-size:12px"><{$cat_desc}></textarea>
-  </div>
-</div>
-
-<div class="text-center">
-  <input type="hidden" name="cat_sn" value="<{$cat_sn}>">
-  <input type="hidden" name="cat_sort" value="<{$cat_sort}>">
-  <input type="hidden" name="cat_count" value="<{$cat_count}>">
-  <input type="hidden" name="op" value="add_catalog">
-  <button type="submit" class="btn btn-primary"><{$smarty.const._MA_TADUP_SAVE}></button>
-</div>
 
 
 </form>

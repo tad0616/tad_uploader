@@ -42,13 +42,13 @@
 
   function delete_catalog_func(cat_sn,of_cat_sn){
     var sure = window.confirm("<{$smarty.const._MD_TADUP_DEL_CONFIRM}>");
-    if (!sure)	return;
+    if (!sure)  return;
     location.href="index.php?op=delete_catalog&cat_sn=" + cat_sn + "&of_cat_sn=" + of_cat_sn;
   }
 
   function delete_file_func(cfsn,of_cat_sn){
     var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
-    if (!sure)	return;
+    if (!sure)  return;
     location.href="index.php?op=del_file&cfsn=" + cfsn + "&of_cat_sn=" + of_cat_sn;
   }
 
@@ -242,53 +242,70 @@
 
   <{if $up_power}>
     <div class="well">
+      <div class="row-fluid">
       <{if $files_list}>
-        <div>
+        <div class="span5">
           <label class="radio inline">
             <input type="radio" name="all_selected"  value="all_del"><{$smarty.const._MD_TADUP_SELECTED_DEL}>
           </label>
         </div>
 
         <{if $move_option}>
-          <div>
-            <label class="radio inline span3">
+          <label class="radio inline span3">
             <input type="radio" name="all_selected"  value="all_move"><{$smarty.const._MD_TADUP_SELECTED_MOVETO}>
-            </label>
-            <select name='new_cat_sn'>
+          </label>
+          <div class="span4">
+            <select name="new_cat_sn" class="span12">
               <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>
               <{$move_option}>
             </select>
           </div>
         <{/if}>
       <{/if}>
+      </div>
 
       <div class="row-fluid">
         <label class="span2">
           <{$smarty.const._MD_TADUP_SELECT_FOLDER}><{$smarty.const._TAD_FOR}>
         </label>
-        <select name="add_to_cat" size=1 class="span3">
-          <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
-          <{$menu_option}>
-      	</select>
-        <input type="text" name="creat_new_cat" class="span3" placeholder="<{$smarty.const._MD_TADUP_CREAT_NEW_CATE}>">
+
+        <div class="span4">
+          <select name="add_to_cat" size=1 class="span12">
+            <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
+            <{$menu_option}>
+          </select>
+        </div>
+
+        <div class="span6">
+          <input type="text" name="creat_new_cat" class="span12" placeholder="<{$smarty.const._MD_TADUP_CREAT_NEW_CATE}>">
+        </div>
       </div>
 
       <div class="row-fluid">
         <label class="span2">
           <{$smarty.const._MD_TADUP_SELECT_FILES}><{$smarty.const._TAD_FOR}>
         </label>
-        <{$upform}>
-        <input type="text" name="cf_desc" class="span5"  value="<{$cf_desc}>" placeholder="<{$smarty.const._MD_TADUP_FILE_DESC}>">
-        <input name="op" type="hidden" value="save_files">
-        <input name="cat_sn" type="hidden" value="<{$cat_sn}>">
-        <button type="button" class="btn"><{$smarty.const._TAD_RESET}></button>
-        <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_GO}></button>
+
+        <div class="span4">
+          <{$upform}>
+        </div>
+
+        <div class="span4">
+          <input type="text" name="cf_desc" class="span12"  value="<{$cf_desc}>" placeholder="<{$smarty.const._MD_TADUP_FILE_DESC}>">
+        </div>
+
+        <div class="span2">
+          <input name="op" type="hidden" value="save_files">
+          <input name="cat_sn" type="hidden" value="<{$cat_sn}>">
+          <button type="button" class="btn"><{$smarty.const._TAD_RESET}></button>
+          <button type="submit" class="btn btn-primary"><{$smarty.const._TAD_GO}></button>
+        </div>
       </div>
     </div>
 
-    <span class="help-block text-right">
+    <div class="alert alert-info">
     php.ini: memory_limit (<{$memory_limit}>) > post_max_size (<{$post_max_size}>) >      upload_max_filesize (<{$upload_max_filesize}>) ;
     max_execution_time=<{$max_execution_time}>
-    </span>
+    </div>
   <{/if}>
 </form>

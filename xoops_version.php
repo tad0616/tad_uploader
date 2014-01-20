@@ -39,6 +39,7 @@ $modversion['sqlfile']['mysql'] = "sql/mysql.sql";
 $modversion['tables'][1] = "tad_uploader";
 $modversion['tables'][2] = "tad_uploader_file";
 $modversion['tables'][3] = "tad_uploader_dl_log";
+$modversion['tables'][4] = "tad_uploader_files_center";
 
 //---管理介面設定---//
 $modversion['hasAdmin'] = 1;
