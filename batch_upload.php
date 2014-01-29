@@ -20,7 +20,7 @@ switch($op){
 
 //批次上傳表單
 function tad_uploader_batch_upload_form($cat_sn=""){
-  global $xoopsDB,$xoopsModuleConfig,$ok_video_ext,$ok_image_ext;
+  global $xoopsDB,$xoopsModuleConfig,$ok_video_ext,$ok_image_ext,$isAdmin;
 
   $cate_select=get_tad_uploader_cate_option(0,0,$cat_sn,1,false);
 
@@ -33,13 +33,12 @@ function tad_uploader_batch_upload_form($cat_sn=""){
       $file=auto_charset($file,'web');
 
       $f=explode(".",$file);
+      foreach($f as $part){
+        $ext=strtolower($part);
+      }
+      $len=(strlen($ext) + 1) * -1;
+      $filename=substr($file,0,$len);
 
-      $filename=$f[0];
-
-      //$filename=auto_charset($filename);
-
-
-      $ext=strtolower($f[1]);
       $tr.="
       <tr>
         <td><label class='checkbox'><input type='checkbox' name='files[$filename]' value='{$file}' checked>{$file}</label></td>
@@ -49,7 +48,8 @@ function tad_uploader_batch_upload_form($cat_sn=""){
     closedir($dh);
   }
 
-  $cate_select=to_utf8($cate_select);
+  $root=$isAdmin?"<option value=''>"._MD_TADUP_ROOT."</div>":"";
+
 
   $main="
   <form action='{$_SERVER['PHP_SELF']}' method='post' id='myForm' enctype='multipart/form-data'>
@@ -61,6 +61,7 @@ function tad_uploader_batch_upload_form($cat_sn=""){
     <label class='span2'>"._MD_TADUP_SELECT_FOLDER."</label>
     <div class='span4'>
       <select name='cat_sn' size=1 class='span12'>
+        $root
         $cate_select
       </select>
     </div>

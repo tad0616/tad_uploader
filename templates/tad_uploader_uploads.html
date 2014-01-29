@@ -39,35 +39,58 @@
         <label class="span2">
           <{$smarty.const._MD_TADUP_SELECT_FOLDER}><{$smarty.const._TAD_FOR}>
         </label>
-        <select name="add_to_cat" size=1 class="span3">
-          <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
-          <{$cate_select}>
-        </select>
-        <input type="text" name="creat_new_cat" class="span3" placeholder="<{$smarty.const._MD_TADUP_CREAT_NEW_CATE}>">
+
+        <div class="span4">
+          <select name="add_to_cat" size=1 class="span12">
+            <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
+            <{$cate_select}>
+          </select>
+        </div>
+
+        <div class="span6">
+          <input type="text" name="creat_new_cat" class="span12" placeholder="<{$smarty.const._MD_TADUP_CREAT_NEW_CATE}>">
+        </div>
       </div>
 
 
       <div class="row-fluid">
-        <select id="file_where">
-        <option value="up" <{$selected_up}>><{$smarty.const._MD_TADUP_UPLOAD}></option>
-        <option value="link" <{$selected_link}>><{$smarty.const._MD_TADUP_LINK}></option>
-        </select>
+        <div class="span2">
+          <select id="file_where" class="span12">
+            <option value="up" <{$selected_up}>><{$smarty.const._MD_TADUP_UPLOAD}></option>
+            <option value="link" <{$selected_link}>><{$smarty.const._MD_TADUP_LINK}></option>
+          </select>
+        </div>
 
-        <span id="file_up"><{$upform}></span>
-        <span id="file_link"><input type="text" name="file_url" size="50" value="<{$file_url}>"></span>
+        <div id="file_up" class="span10">
+          <{$upform}>
+        </div>
+
+        <div id="file_link" class="span10">
+          <input type="text" name="file_url" class="span12" value="<{$file_url}>" placeholder="<{$smarty.const._MD_TADUP_INPUT_LINK}>">
+        </div>
       </div>
 
-      <div>
-        <{$smarty.const._MD_TADUP_FILE_DESC}>
-        <input type="text" name="cf_desc" size=30  value="<{$cf_desc}>">
+      <div class="row-fluid">
+        <label class="span2">
+          <{$smarty.const._MD_TADUP_FILE_DESC}>
+        </label>
+        <div class="span10">
+          <input type="text" name="cf_desc" class="span12"  value="<{$cf_desc}>">
+        </div>
       </div>
 
-      <{$up_time_col}>
 
-      <div>
-        <input type="hidden" name="op" value="<{$op}>">
-        <input type="hidden" name="cfsn" value="<{$cfsn}>">
-        <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TADUP_SAVE}></button>
+      <div class="row-fluid">
+        <div class="span12 text-right">
+          <{if $cfsn}>
+            <label class="checkbox inline">
+            <input type="checkbox" name="new_date" value="1"><{$smarty.const._MD_TADUP_UPDATE_TO_NEW_DATE}>
+            </label>
+          <{/if}>
+          <input type="hidden" name="op" value="<{$op}>">
+          <input type="hidden" name="cfsn" value="<{$cfsn}>">
+          <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TADUP_SAVE}></button>
+        </div>
       </div>
 
     </form>

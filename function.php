@@ -28,7 +28,7 @@ if(!function_exists("randStr")){
       case 'CHAR':
         $chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'; break;
       case 'NUMBER':
-      $chars='0123456789'; break;
+        $chars='0123456789'; break;
       default :
         $chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       break;
@@ -48,15 +48,19 @@ if(!function_exists("randStr")){
 function add_tad_uploader(){
   global $xoopsDB,$xoopsUser,$TadUpFiles;
 
+  $myts =& MyTextSanitizer::getInstance();
+  $file_url=isset($_POST['file_url'])?$myts->addSlashes($_POST['file_url']):"";
+  $myts->addSlashes();
+
   if(!empty($_POST['creat_new_cat'])){
     $cat_sn=add_catalog("",$_POST['creat_new_cat'],"","1",$_POST['cat_sn'],$_POST['add_to_cat']);
   }else{
     $cat_sn=$_POST['add_to_cat'];
   }
 
-  if(empty($_FILES['upfile']['name'][0]))  return $cat_sn;
-
-  $myts = & MyTextSanitizer::getInstance();
+  if(empty($_FILES['upfile']['name'][0]) and empty($file_url)){
+    return $cat_sn;
+  }
 
   $uid=$xoopsUser->uid();
   $sort=1;
@@ -64,13 +68,22 @@ function add_tad_uploader(){
   $cf_desc=$myts->addSlashes($_POST['cf_desc']);
   $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
 
+
   if(!empty($file_url)){
     $size=remote_file_size($file_url);
-    $now=date("Y-m-d H:i:s",xoops_getUserTimestamp(time()));
+    if(empty($cf_desc)){
+      $cf_desc=get_basename($file_url);
+    }
     $sql = "insert into ".$xoopsDB->prefix("tad_uploader_file")." (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,file_url,cf_sort)
     values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$type}','{$size}','{$now}','{$file_url}','{$cf_sort}')";
+    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5."<p>$sql</p>");
+
   }else{
     foreach($_FILES['upfile']['name'] as $i=>$name){
+
+      if(empty($cf_desc)){
+        $cf_desc=$name;
+      }
 
       $sql = "insert into ".$xoopsDB->prefix("tad_uploader_file")." (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
       values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$_FILES['upfile']['type'][$i]}','{$_FILES['upfile']['size'][$i]}','{$now}','{$cf_sort}')";
@@ -87,6 +100,67 @@ function add_tad_uploader(){
     }
   }
   return $cat_sn;
+}
+
+
+//取得遠端檔案的大小
+function remote_file_size ($url){
+  $head = "";
+  $url_p = parse_url($url);
+  $host = $url_p["host"];
+  if(!preg_match("/[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/",$host)){
+    // a domain name was given, not an IP
+    $ip=gethostbyname($host);
+    if(!preg_match("/[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/",$ip)){
+      //domain could not be resolved
+      return -1;
+    }
+  }
+  $port = intval($url_p["port"]);
+  if(!$port) $port=80;
+  $path = $url_p["path"];
+  //echo "Getting " . $host . ":" . $port . $path . " ...";
+
+  $fp = fsockopen($host, $port, $errno, $errstr, 20);
+  if(!$fp) {
+    return false;
+    } else {
+    fputs($fp, "HEAD "  . $url  . " HTTP/1.1\r\n");
+    fputs($fp, "HOST: " . $host . "\r\n");
+    fputs($fp, "User-Agent: http://www.example.com/my_application\r\n");
+    fputs($fp, "Connection: close\r\n\r\n");
+    $headers = "";
+    while (!feof($fp)) {
+      $headers .= fgets ($fp, 128);
+      }
+    }
+  fclose ($fp);
+  //echo $errno .": " . $errstr . "<br />";
+  $return = -2;
+  $arr_headers = explode("\n", $headers);
+  // echo "HTTP headers for <a href='" . $url . "'>..." . substr($url,strlen($url)-20). "</a>:";
+  // echo "<div class='http_headers'>";
+  foreach($arr_headers as $header) {
+    // if (trim($header)) echo trim($header) . "<br />";
+    $s1 = "HTTP/1.1";
+    $s2 = "Content-Length: ";
+    $s3 = "Location: ";
+    if(substr(strtolower ($header), 0, strlen($s1)) == strtolower($s1)) $status = substr($header, strlen($s1));
+    if(substr(strtolower ($header), 0, strlen($s2)) == strtolower($s2)) $size   = substr($header, strlen($s2));
+    if(substr(strtolower ($header), 0, strlen($s3)) == strtolower($s3)) $newurl = substr($header, strlen($s3));
+    }
+  // echo "</div>";
+  if(intval($size) > 0) {
+    $return=strval($size);
+  } else {
+    $return=$status;
+  }
+  // echo intval($status) .": [" . $newurl . "]<br />";
+  if (intval($status)==302 && strlen($newurl) > 0) {
+    // 302 redirect: get HTTP HEAD of new URL
+    $return=remote_file_size($newurl);
+  }
+  return $return;
 }
 
 //找出目前資料夾應設順序

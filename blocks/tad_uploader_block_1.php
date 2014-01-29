@@ -4,6 +4,8 @@
 function tad_uploader_b_show_1($options){
   global $xoopsDB;
 
+  include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
+
   $sql="select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from ".$xoopsDB->prefix("tad_uploader_file")." as a left join ".$xoopsDB->prefix("tad_uploader")." as b on a.cat_sn=b.cat_sn where b.cat_share='1'  order by a.up_date desc limit 0,{$options[0]}";
 
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MB_TADUP_DB_ERROR2);
@@ -15,9 +17,9 @@ function tad_uploader_b_show_1($options){
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
     if(!check_up_power("catalog",$cat_sn))  continue;
 
-    $cf_name=empty($cf_name)?$file_url:$cf_name;
+    $cf_name=empty($cf_name)?get_basename($file_url):$cf_name;
 
-    $link[$i]['title']=$cf_desc;
+    $link[$i]['title']=empty($cf_desc)?$cf_name:$cf_desc;
     $link[$i]['cfsn']=$cfsn;
     $link[$i]['cat_sn']=$cat_sn;
     $link[$i]['cf_name']=$cf_name;

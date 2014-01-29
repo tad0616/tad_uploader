@@ -54,4 +54,6 @@ define("_MD_TADUP_LINK","連結檔案");
 
 define("_MD_TADUP_UPDATE_DATE","更新日期");
 define("_MD_TADUP_UPDATE_TO_NEW_DATE","更新到目前日期");
+define("_MD_TADUP_INPUT_LINK","請輸入檔案連結位置");
+
 ?>

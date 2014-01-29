@@ -54,4 +54,6 @@ define("_MD_TADUP_LINK","Link to");
 
 define("_MD_TADUP_UPDATE_DATE","Modify Date");
 define("_MD_TADUP_UPDATE_TO_NEW_DATE","YES");
+define("_MD_TADUP_INPUT_LINK","Please input file url.");
+
 ?>

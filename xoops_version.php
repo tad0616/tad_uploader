@@ -17,7 +17,7 @@ $modversion['dirname']		= basename(dirname(__FILE__));
 
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2013/10/08';
+$modversion['release_date'] = '2014/01/20';
 $modversion['module_website_url'] = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -46,6 +46,10 @@ $modversion['hasAdmin'] = 1;
 $modversion['adminindex'] = "admin/index.php";
 $modversion['adminmenu'] = "admin/menu.php";
 
+//---搜尋設定---//
+$modversion['hasSearch'] = 1;
+$modversion['search']['file'] = "include/tad_uploader_search.php";
+$modversion['search']['func'] = "tad_uploader_search";
 
 //---啟動後台管理界面選單---//
 $modversion['system_menu'] = 1;

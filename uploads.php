@@ -39,9 +39,7 @@ function uploads_tabs($cat_sn="",$cfsn=""){
   $cate_select=get_tad_uploader_cate_option(0,0,$cat_sn,1,false);
 
   $op=(empty($cfsn))?"insert_tad_uploader":"update_tad_uploader";
-  //$op="replace_tad_uploader";
-  $up_time_col=empty($cfsn)?"":"<div>"._MD_TADUP_UPDATE_DATE."
-  <input type='checkbox' name='new_date' value='1'>"._MD_TADUP_UPDATE_TO_NEW_DATE."</div>";
+
 
   if(empty($file_url)){
     $hide="$('#file_link').hide();";
@@ -70,7 +68,6 @@ function uploads_tabs($cat_sn="",$cfsn=""){
   $xoopsTpl->assign( "selected_up" , $selected_up) ;
   $xoopsTpl->assign( "selected_link" , $selected_link) ;
   $xoopsTpl->assign( "cf_desc" , $cf_desc) ;
-  $xoopsTpl->assign( "up_time_col" , $up_time_col) ;
   $xoopsTpl->assign( "op" , $op) ;
   $xoopsTpl->assign( "cfsn" , $cfsn) ;
 }
@@ -100,7 +97,7 @@ function update_tad_uploader($cfsn=""){
   if(!empty($_POST['new_cat_sn'])){
     $cat_sn=add_catalog("",$_POST['new_cat_sn'],"","1",$_POST['cat_sn'],$_POST['add_to_cat']);
   }else{
-    $cat_sn=$_POST['cat_sn'];
+    $cat_sn=$_POST['add_to_cat'];
   }
 
   $uid=$xoopsUser->getVar('uid');
@@ -125,9 +122,9 @@ function update_tad_uploader($cfsn=""){
     $uptime="";
   }
 
-
+  //die(var_export($_FILES));
   if(!empty($_FILES['upfile']['name'][0])){
-    
+
     //先刪掉原有檔案
     $TadUpFiles->set_dir('subdir',"/user_{$uid}");
     $TadUpFiles->set_col("cfsn",$cfsn);
@@ -144,8 +141,8 @@ function update_tad_uploader($cfsn=""){
     }
   }elseif(!empty($file_url)){
     $size=remote_file_size($file_url);
-
     $sql = "update ".$xoopsDB->prefix("tad_uploader_file")." set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_size='{$size}' {$uptime},file_url='{$file_url}' where cfsn='$cfsn'";
+
     $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5);
   }else{
 
@@ -157,69 +154,10 @@ function update_tad_uploader($cfsn=""){
   return $cat_sn;
 }
 
-//取得遠端檔案的大小
-function remote_file_size ($url){
-  $head = "";
-  $url_p = parse_url($url);
-  $host = $url_p["host"];
-  if(!preg_match("/[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/",$host)){
-    // a domain name was given, not an IP
-    $ip=gethostbyname($host);
-    if(!preg_match("/[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/",$ip)){
-      //domain could not be resolved
-      return -1;
-    }
-  }
-  $port = intval($url_p["port"]);
-  if(!$port) $port=80;
-  $path = $url_p["path"];
-  //echo "Getting " . $host . ":" . $port . $path . " ...";
-
-  $fp = fsockopen($host, $port, $errno, $errstr, 20);
-  if(!$fp) {
-    return false;
-    } else {
-    fputs($fp, "HEAD "  . $url  . " HTTP/1.1\r\n");
-    fputs($fp, "HOST: " . $host . "\r\n");
-    fputs($fp, "User-Agent: http://www.example.com/my_application\r\n");
-    fputs($fp, "Connection: close\r\n\r\n");
-    $headers = "";
-    while (!feof($fp)) {
-      $headers .= fgets ($fp, 128);
-      }
-    }
-  fclose ($fp);
-  //echo $errno .": " . $errstr . "<br />";
-  $return = -2;
-  $arr_headers = explode("\n", $headers);
-  // echo "HTTP headers for <a href='" . $url . "'>..." . substr($url,strlen($url)-20). "</a>:";
-  // echo "<div class='http_headers'>";
-  foreach($arr_headers as $header) {
-    // if (trim($header)) echo trim($header) . "<br />";
-    $s1 = "HTTP/1.1";
-    $s2 = "Content-Length: ";
-    $s3 = "Location: ";
-    if(substr(strtolower ($header), 0, strlen($s1)) == strtolower($s1)) $status = substr($header, strlen($s1));
-    if(substr(strtolower ($header), 0, strlen($s2)) == strtolower($s2)) $size   = substr($header, strlen($s2));
-    if(substr(strtolower ($header), 0, strlen($s3)) == strtolower($s3)) $newurl = substr($header, strlen($s3));
-    }
-  // echo "</div>";
-  if(intval($size) > 0) {
-    $return=strval($size);
-  } else {
-    $return=$status;
-  }
-  // echo intval($status) .": [" . $newurl . "]<br />";
-  if (intval($status)==302 && strlen($newurl) > 0) {
-    // 302 redirect: get HTTP HEAD of new URL
-    $return=remote_file_size($newurl);
-  }
-  return $return;
-}
 /*-----------執行動作判斷區----------*/
 $op = (empty($_REQUEST['op']))? "":$_REQUEST['op'];
-$cfsn = (empty($_REQUEST['cfsn']))? "":$_REQUEST['cfsn'];
-$cat_sn = (empty($_REQUEST['cat_sn']))? "":$_REQUEST['cat_sn'];
+$cfsn = (empty($_REQUEST['cfsn']))? "":intval($_REQUEST['cfsn']);
+$cat_sn = (empty($_REQUEST['cat_sn']))? "":intval($_REQUEST['cat_sn']);
 
 switch($op){
 
