@@ -110,7 +110,7 @@ function delete_catalog_func(cat_sn){
   </tr>
   <tbody class="sort">
     <{foreach from=$get_cata_data item=cate}>
-      <tr id="node-_<{$cate.cat_sn}>" <{$cate.class}> style="letter-spacing: 0em;">
+      <tr data-tt-id="<{$cate.cat_sn}>" <{$cate.parent}> id="node-_<{$cate.cat_sn}>" <{$cate.class}> style="letter-spacing: 0em;">
       <td>
         <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/move_s.png" class="folder" alt="<{$smarty.const._MA_TREETABLE_MOVE_PIC}>" title="<{$smarty.const._MA_TREETABLE_MOVE_PIC}>">
         <span class="folder">

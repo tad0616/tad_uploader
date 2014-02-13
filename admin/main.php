@@ -64,10 +64,12 @@ function get_cata_data($of_cat_sn=0,$level=0,$i="0"){
 
 
     $class=(empty($of_cat_sn))?"":"class='child-of-node-_{$of_cat_sn}'";
+    $parent=empty($of_cat_sn)?"":"data-tt-parent-id='$of_cat_sn'";
 
     //echo "<div>{$i} - {$level} - {$cat_title}</div>";
 
     $data[$i]['class']=$class;
+    $data[$i]['parent']=$parent;
     $data[$i]['cat_sort']=$cat_sort;
     $data[$i]['cat_title']=$cat_title;
     $data[$i]['cat_desc']=$cat_desc;
