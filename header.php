@@ -9,8 +9,8 @@ $and_sn=(empty($to_cat_sn))?"":"?cat_sn=$to_cat_sn";
 $interface_menu[_TAD_TO_MOD]="index.php";
 $isAdmin=false;
 if ($xoopsUser) {
-    $module_id = $xoopsModule->getVar('mid');
-    $isAdmin=$xoopsUser->isAdmin($module_id);
+  $module_id = $xoopsModule->getVar('mid');
+  $isAdmin=$xoopsUser->isAdmin($module_id);
 }
 
 $upload_powers=chk_cate_power("catalog_up");

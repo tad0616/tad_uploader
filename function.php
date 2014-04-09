@@ -1,5 +1,5 @@
 <?php
-//¤Ş¤JTadToolsªº¨ç¦¡®w
+//å¼•å…¥TadToolsçš„å‡½å¼åº«
 if(!file_exists(XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php")){
  redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50",3, _TAD_NEED_TADTOOLS);
 }
@@ -20,7 +20,7 @@ mk_dir(_TAD_UPLOADER_BATCH_DIR);
 
 
 
-//·s¼W¸ê®Æ¨ìtad_uploader¤¤
+//æ–°å¢è³‡æ–™åˆ°tad_uploaderä¸­
 function add_tad_uploader(){
   global $xoopsDB,$xoopsUser,$TadUpFiles;
 
@@ -66,7 +66,7 @@ function add_tad_uploader(){
 
       $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5."<p>$sql</p>");
 
-      //¨ú±o³Ì«á·s¼W¸ê®Æªº¬y¤ô½s¸¹
+      //å–å¾—æœ€å¾Œæ–°å¢è³‡æ–™çš„æµæ°´ç·¨è™Ÿ
       $cfsn=$xoopsDB->getInsertId();
 
       $TadUpFiles->set_dir('subdir',"/user_{$uid}");
@@ -79,7 +79,7 @@ function add_tad_uploader(){
 }
 
 
-//¨ú±o»·ºİÀÉ®×ªº¤j¤p
+//å–å¾—é ç«¯æª”æ¡ˆçš„å¤§å°
 function remote_file_size ($url){
   $head = "";
   $url_p = parse_url($url);
@@ -139,7 +139,7 @@ function remote_file_size ($url){
   return $return;
 }
 
-//§ä¥X¥Ø«e¸ê®Æ§¨À³³]¶¶§Ç
+//æ‰¾å‡ºç›®å‰è³‡æ–™å¤¾æ‡‰è¨­é †åº
 function get_cat_max_sort($of_cat_sn=""){
   global $xoopsDB;
   $sql = "select max(cat_sort) from ".$xoopsDB->prefix("tad_uploader")." where of_cat_sn='{$of_cat_sn}'";
@@ -149,7 +149,7 @@ function get_cat_max_sort($of_cat_sn=""){
 }
 
 
-//§ä¥X¥Ø«e¸ê®Æ§¨À³³]¶¶§Ç
+//æ‰¾å‡ºç›®å‰è³‡æ–™å¤¾æ‡‰è¨­é †åº
 function get_file_max_sort($cat_sn=""){
   global $xoopsDB;
   $sql = "select max(cf_sort) from ".$xoopsDB->prefix("tad_uploader_file")." where cat_sn='{$cat_sn}'";
@@ -159,7 +159,7 @@ function get_file_max_sort($cat_sn=""){
 }
 
 
-//¨ú±oÃş§O¤U©Ô¿ï³æ
+//å–å¾—é¡åˆ¥ä¸‹æ‹‰é¸å–®
 function get_cata_select($disable_cat_sn=array(),$dbv=0,$of_cat_sn=0,$tab=""){
   global $xoopsDB;
   $sql = "select cat_sn,cat_title from ".$xoopsDB->prefix("tad_uploader")." where of_cat_sn='$of_cat_sn' and cat_enable='1'";
@@ -181,7 +181,7 @@ function get_cata_select($disable_cat_sn=array(),$dbv=0,$of_cat_sn=0,$tab=""){
 }
 
 
-//¨ú±o¥Ø¿ı¤U©Ô¿ï³æ
+//å–å¾—ç›®éŒ„ä¸‹æ‹‰é¸å–®
 function get_tad_uploader_cate_option($of_cat_sn=0,$level=0,$v="",$show_dot='1',$optgroup=true,$chk_view='1'){
   global $xoopsDB;
   $dot=($show_dot=='1')?str_repeat("--",$level):"";
@@ -217,11 +217,11 @@ function get_tad_uploader_cate_option($of_cat_sn=0,$level=0,$v="",$show_dot='1',
 }
 
 
-//ÀË¬d¦³µLÅv­­
+//æª¢æŸ¥æœ‰ç„¡æ¬Šé™
 function check_up_power($kind="catalog",$cat_sn=""){
     global $xoopsUser,$xoopsModule,$isAdmin;
 
-    //¨ú±o¥Ø«e¨Ï¥ÎªÌªº¸s²Õ½s¸¹
+    //å–å¾—ç›®å‰ä½¿ç”¨è€…çš„ç¾¤çµ„ç·¨è™Ÿ
     if($xoopsUser) {
       $uid=$xoopsUser->getVar('uid');
       $groups=$xoopsUser->getGroups();
@@ -230,19 +230,19 @@ function check_up_power($kind="catalog",$cat_sn=""){
       $groups = XOOPS_GROUP_ANONYMOUS;
     }
 
-    //­Y¨S¤À¨É¡A«h¬İ¬İ¬O§_¬O¦Û¤vªº¸ê®Æ§¨§Y¥i¡C
+    //è‹¥æ²’åˆ†äº«ï¼Œå‰‡çœ‹çœ‹æ˜¯å¦æ˜¯è‡ªå·±çš„è³‡æ–™å¤¾å³å¯ã€‚
     $catalog=get_catalog($cat_sn);
     if(($catalog['cat_share']=='0' and $catalog['uid']!=$uid) and !$isAdmin ) return false;
 
-    //¨ú±o¼Ò²Õ½s¸¹
+    //å–å¾—æ¨¡çµ„ç·¨è™Ÿ
     $module_id = $xoopsModule->getVar('mid');
 
-    //¨ú±o¸s²ÕÅv­­¥\¯à
+    //å–å¾—ç¾¤çµ„æ¬Šé™åŠŸèƒ½
     $gperm_handler =& xoops_gethandler('groupperm');
 
-    //Åv­­¶µ¥Ø½s¸¹
+    //æ¬Šé™é …ç›®ç·¨è™Ÿ
     $perm_itemid = intval($cat_sn);
-    //¨Ì¾Ú¸Ó¸s²Õ¬O§_¹ï¸ÓÅv­­¶µ¥Ø¦³¨Ï¥ÎÅv¤§§PÂ_ ¡A°µ¤£¦P¤§³B²z
+    //ä¾æ“šè©²ç¾¤çµ„æ˜¯å¦å°è©²æ¬Šé™é …ç›®æœ‰ä½¿ç”¨æ¬Šä¹‹åˆ¤æ–· ï¼Œåšä¸åŒä¹‹è™•ç†
 
     if(empty($cat_sn)){
       if($kind=="catalog"){
@@ -257,7 +257,7 @@ function check_up_power($kind="catalog",$cat_sn=""){
     return false;
 }
 
-//§PÂ_¬Y¤H¦b­ş¨ÇÃş§O¤¤¦³Æ[¬İ©Îµoªí(upload)ªºÅv§Q
+//åˆ¤æ–·æŸäººåœ¨å“ªäº›é¡åˆ¥ä¸­æœ‰è§€çœ‹æˆ–ç™¼è¡¨(upload)çš„æ¬Šåˆ©
 function chk_cate_power($kind=""){
   global $xoopsDB,$xoopsUser,$xoopsModule,$isAdmin;
   $module_id = $xoopsModule->getVar('mid');
@@ -287,7 +287,7 @@ function chk_cate_power($kind=""){
 
 
 
-//¨ú±o¸ô®|
+//å–å¾—è·¯å¾‘
 function get_tad_uploader_cate_path($csn="",$sub=false){
   global $xoopsDB;
 
@@ -319,7 +319,7 @@ function get_tad_uploader_cate_path($csn="",$sub=false){
 }
 
 
-//¨ú¥N/·s¼Wcatalog²{¦³¸ê®Æ
+//å–ä»£/æ–°å¢catalogç¾æœ‰è³‡æ–™
 function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$of_cat_sn="0",$cat_add_form=0,$cat_share="auto",$cat_sort="0",$cat_count="0",$catalog=array(1,2,3),$catalog_up=array(1)){
   global $xoopsDB,$xoopsUser,$xoopsModule;
   if($xoopsUser){
@@ -344,11 +344,11 @@ function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$
   values('{$the_cat_sn}','{$cat_title}','{$cat_desc}','{$cat_enable}','{$uid}','{$of_cat_sn}','{$cat_share}','{$cat_sort}','{$cat_count}')";
   $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADUP_DB_ERROR2);
 
-  //¨ú±o³Ì«á·s¼W¸ê®Æªº¬y¤ô½s¸¹
+  //å–å¾—æœ€å¾Œæ–°å¢è³‡æ–™çš„æµæ°´ç·¨è™Ÿ
   $cat_sn=$xoopsDB->getInsertId();
   if(empty($cat_sn))$cat_sn=$the_cat_sn;
 
-  //¼g¤JÅv­­
+  //å¯«å…¥æ¬Šé™
   saveItem_Permissions($catalog, $cat_sn, 'catalog');
   saveItem_Permissions($catalog_up, $cat_sn, 'catalog_up');
 
@@ -357,7 +357,7 @@ function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$
 
 
 
-//Àx¦sÅv­­
+//å„²å­˜æ¬Šé™
 function saveItem_Permissions($groups, $itemid, $perm_name) {
   global $xoopsModule;
   $module_id = $xoopsModule->getVar('mid');
@@ -374,9 +374,9 @@ function saveItem_Permissions($groups, $itemid, $perm_name) {
   }
 }
 
-/********************ÀÉ®×³B²z*******************/
+/********************æª”æ¡ˆè™•ç†*******************/
 
-//¨ú±o¤W¶ÇÀÉ¦W
+//å–å¾—ä¸Šå‚³æª”å
 function get_file_name($real_file_name="",$cfsn="") {
   $f=explode(".",$real_file_name);
   $ln=sizeof($f)-1;
@@ -389,7 +389,7 @@ function get_file_name($real_file_name="",$cfsn="") {
 
 
 
-//§P§O®æ¦¡¹ÏÀÉ
+//åˆ¤åˆ¥æ ¼å¼åœ–æª”
 function file_pic($file){
   $extarr=explode('.',$file);
   foreach($extarr as $val){
@@ -399,7 +399,7 @@ function file_pic($file){
   return "{$ext}.png";
 }
 
-//¥H¬y¤ô¸¹¨ú±o¬Y¥Ø¿ı¸ê®Æ
+//ä»¥æµæ°´è™Ÿå–å¾—æŸç›®éŒ„è³‡æ–™
 function get_catalog($cat_sn=""){
   global $xoopsDB;
   if(empty($cat_sn))return;
@@ -410,7 +410,7 @@ function get_catalog($cat_sn=""){
 }
 
 
-//¥H¬y¤ô¸¹¨ú±o¬Yµ§ÀÉ®×¸ê®Æ
+//ä»¥æµæ°´è™Ÿå–å¾—æŸç­†æª”æ¡ˆè³‡æ–™
 function get_file($cfsn=""){
   global $xoopsDB;
   if(empty($cfsn))return;
@@ -420,7 +420,7 @@ function get_file($cfsn=""){
   return $data;
 }
 
-//§R°£ÀÉ®×
+//åˆªé™¤æª”æ¡ˆ
 function delfile($select_files){
   global $xoopsDB,$TadUpFiles;
   if(empty($select_files)){
@@ -431,7 +431,7 @@ function delfile($select_files){
   }
 }
 
-//§R°£¤@­ÓÀÉ®×
+//åˆªé™¤ä¸€å€‹æª”æ¡ˆ
 function del_file($cfsn="",$del_sql=true){
   global $xoopsDB,$TadUpFiles;
   if(empty($cfsn))return;
@@ -442,13 +442,13 @@ function del_file($cfsn="",$del_sql=true){
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR7);
   }
   $TadUpFiles->set_dir('subdir',"/user_{$file['uid']}");
-  $TadUpFiles->set_col('cfsn',$cfsn); //­Y­n¾ã­Ó§R°£
+  $TadUpFiles->set_col('cfsn',$cfsn); //è‹¥è¦æ•´å€‹åˆªé™¤
   $TadUpFiles->del_files();
 
 
 }
 
-//¤U¸üÀÉ®×
+//ä¸‹è¼‰æª”æ¡ˆ
 function dlfile($cfsn=""){
   global $xoopsUser,$xoopsDB,$TadUpFiles;
 
@@ -456,14 +456,13 @@ function dlfile($cfsn=""){
   if(!check_up_power("catalog",$cf['cat_sn'])){
     redirect_header("index.php",3, _MD_TADUP_NO_ACCESS_POWER);
   }
-
   if($xoopsUser){
     $uid=$xoopsUser->getVar("uid");
     add_dl_log($cfsn,$uid);
   }
-
-  //§ó·s¤H®ğ­È
+  //æ›´æ–°äººæ°£å€¼
   update_catalog_file_count($cfsn);
+
 
   if(!empty($cf['file_url'])){
     header("location:{$cf['file_url']}");
@@ -490,7 +489,7 @@ function get_file_by_cfsn($cfsn=""){
   return $file;
 }
 
-//¤U¸ü¬ö¿ı
+//ä¸‹è¼‰ç´€éŒ„
 function add_dl_log($cfsn="",$uid=""){
   global $xoopsDB;
   if(empty($cfsn))return;
@@ -507,7 +506,7 @@ function add_dl_log($cfsn="",$uid=""){
 
 }
 
-//¥H¬y¤ô¸¹¨ú±o¬Yµ§catalog_file¸ê®Æ
+//ä»¥æµæ°´è™Ÿå–å¾—æŸç­†catalog_fileè³‡æ–™
 function get_catalog_file($cfsn=""){
   global $xoopsDB;
   if(empty($cfsn))return;
@@ -517,7 +516,7 @@ function get_catalog_file($cfsn=""){
   return $data;
 }
 
-//§ó·sÀÉ®×¤H®ğ­È
+//æ›´æ–°æª”æ¡ˆäººæ°£å€¼
 function update_catalog_file_count($cfsn=""){
   global $xoopsDB;
   $sql = "update ".$xoopsDB->prefix("tad_uploader_file")." set  cf_count = cf_count+1 where cfsn='$cfsn'";
@@ -525,7 +524,7 @@ function update_catalog_file_count($cfsn=""){
   return $cfsn;
 }
 
-//§ó·sÀÉ®×¸ê®Æ
+//æ›´æ–°æª”æ¡ˆè³‡æ–™
 function update_catalog_file($cfsn="",$col_name="",$col_value=""){
   global $xoopsDB,$xoopsUser;
 
@@ -536,7 +535,7 @@ function update_catalog_file($cfsn="",$col_name="",$col_value=""){
 }
 
 
-//§R°£¥Ø¿ı
+//åˆªé™¤ç›®éŒ„
 function delete_catalog($cat_sn=""){
   global $xoopsDB,$xoopsUser,$xoopsModule,$isAdmin;
 
@@ -553,40 +552,40 @@ function delete_catalog($cat_sn=""){
 
 
 
-  //§ä¥X©ÒÄİ¸ê®Æ§¨
+  //æ‰¾å‡ºæ‰€å±¬è³‡æ–™å¤¾
   $sql = "select cat_sn from ".$xoopsDB->prefix("tad_uploader")." where of_cat_sn='{$cat_sn}' $where";
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR2);
   while(list($sub_cat_sn)=$xoopsDB->fetchRow($result)){
     delete_catalog($sub_cat_sn);
   }
 
-  //§ä¥X©ÒÄİÀÉ®×
+  //æ‰¾å‡ºæ‰€å±¬æª”æ¡ˆ
   $sql = "select cfsn,cf_name from ".$xoopsDB->prefix("tad_uploader_file")." where cat_sn='{$cat_sn}'";
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR2);
   while(list($cfsn,$cf_name)=$xoopsDB->fetchRow($result)){
     $flies[$cfsn]=$cf_name;
   }
 
-  //§R°£©ÒÄİÀÉ®×
+  //åˆªé™¤æ‰€å±¬æª”æ¡ˆ
   if(!empty($flies)) delfile($flies);
 
-  //¨ú±o¬Y¸ê®Æ§¨ÀÉ®×¼Æ
+  //å–å¾—æŸè³‡æ–™å¤¾æª”æ¡ˆæ•¸
   $get_catfile_num=get_catfile_num($cat_sn);
-  //¨ú±o¬Y¸ê®Æ§¨ÀÉ®×¼Æ
+  //å–å¾—æŸè³‡æ–™å¤¾æª”æ¡ˆæ•¸
   $get_subcat_num=get_subcat_num($cat_sn);
   $total=$get_catfile_num+$get_subcat_num;
 
   if($total>0){
     redirect_header($_SERVER['PHP_SELF'],3, sprintf(_MD_TADUP_CANT_DELETE1,$get_subcat_num,$get_catfile_num));
   }else{
-    //§R±¼«ü©w¸ê®Æ§¨
+    //åˆªæ‰æŒ‡å®šè³‡æ–™å¤¾
     $sql = "delete from ".$xoopsDB->prefix("tad_uploader")." where cat_sn='$cat_sn' $where";
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR8);
   }
 }
 
 
-//¨ú±o¬Y¸ê®Æ§¨ÀÉ®×¼Æ
+//å–å¾—æŸè³‡æ–™å¤¾æª”æ¡ˆæ•¸
 function get_catfile_num($cat_sn=0){
   global $xoopsDB;
   if(empty($cat_sn))return;
@@ -600,7 +599,7 @@ function get_catfile_num($cat_sn=0){
 }
 
 
-//¨ú±o¬Y¸ê®Æ§¨¥Ø¿ı¼Æ
+//å–å¾—æŸè³‡æ–™å¤¾ç›®éŒ„æ•¸
 function get_subcat_num($cat_sn=0){
   global $xoopsDB;
 
