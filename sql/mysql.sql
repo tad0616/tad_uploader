@@ -3,7 +3,7 @@ CREATE TABLE `tad_uploader` (
   `cat_title` varchar(255) NOT NULL default '',
   `cat_desc` text NOT NULL,
   `cat_enable` enum('1','0') NOT NULL default '1',
-  `uid` smallint(5) unsigned NOT NULL default '0',
+  `uid` mediumint(8) unsigned NOT NULL default '0',
   `of_cat_sn` smallint(5) unsigned NOT NULL default '0',
   `cat_share` enum('1','0') NOT NULL default '1',
   `cat_sort` smallint(6) NOT NULL default '0',
@@ -16,7 +16,7 @@ CREATE TABLE `tad_uploader` (
 CREATE TABLE `tad_uploader_file` (
   `cfsn` smallint(5) unsigned NOT NULL auto_increment,
   `cat_sn` smallint(5) unsigned NOT NULL default '0',
-  `uid` smallint(5) unsigned NOT NULL default '0',
+  `uid` mediumint(8) unsigned NOT NULL default '0',
   `cf_name` varchar(255) NOT NULL default '',
   `cf_desc` text NOT NULL,
   `cf_type` varchar(255) NOT NULL default '',
@@ -32,7 +32,7 @@ CREATE TABLE `tad_uploader_file` (
 
 CREATE TABLE `tad_uploader_dl_log` (
   `log_sn` smallint(5) unsigned NOT NULL auto_increment,
-  `uid` smallint(5) unsigned NOT NULL default '0',
+  `uid` mediumint(8) unsigned NOT NULL default '0',
   `dl_time` datetime NOT NULL default '0000-00-00 00:00:00',
   `from_ip` varchar(15) NOT NULL default '',
   `cfsn` smallint(5) unsigned NOT NULL default '0',
