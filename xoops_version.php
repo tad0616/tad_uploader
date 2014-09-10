@@ -8,7 +8,7 @@ $modversion['name'] = _MI_TADUP_NAME;
 $modversion['version']	= '3.1';
 $modversion['description'] = _MI_TADUP_DESC;
 $modversion['author'] = 'Tad(tad0616@gmail.com)';
-$modversion['credits']	= "";
+$modversion['credits']	= _MI_TADUP_CREDITS;
 $modversion['help'] = 'page=help';
 $modversion['license'] = 'GNU GPL 2.0';
 $modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html/';

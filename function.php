@@ -352,7 +352,32 @@ function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$
   saveItem_Permissions($catalog, $cat_sn, 'catalog');
   saveItem_Permissions($catalog_up, $cat_sn, 'catalog_up');
 
+
+  get_path_belong($cat_sn, $catalog , $catalog_up ,$cat_enable,$cat_share) ;
   return $cat_sn;
+}
+
+
+
+//以下目錄屬性相同
+function get_path_belong($cat_sn , $catalog , $catalog_up , $cat_enable, $cat_share ){
+  global $xoopsDB ;
+  $sql = " SELECT cat_sn FROM " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='$cat_sn' " ;
+
+
+  $result = $xoopsDB->query($sql) or die( $sql );
+  while($row= $xoopsDB->fetchArray($result)){
+    $sn =$row['cat_sn'] ;
+    //
+    $sql2 = " UPDATE " . $xoopsDB->prefix("tad_uploader") . " set cat_enable ='$cat_enable' ,cat_share ='$cat_share' where cat_sn = '$sn' " ;
+    $xoopsDB->queryF($sql2) or die($sql2."<br>". mysql_error());
+
+    //寫入權限
+    saveItem_Permissions($catalog, $sn, 'catalog');
+    saveItem_Permissions($catalog_up, $sn, 'catalog_up');
+    get_path_belong($sn , $catalog , $catalog_up, $cat_enable, $cat_share) ;
+  }
+
 }
 
 
