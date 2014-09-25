@@ -60,11 +60,11 @@ function add_tad_uploader(){
       if(empty($cf_desc)){
         $cf_desc=$name;
       }
-
+      $cf_sort=intval($cf_sort);
       $sql = "insert into ".$xoopsDB->prefix("tad_uploader_file")." (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
       values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$_FILES['upfile']['type'][$i]}','{$_FILES['upfile']['size'][$i]}','{$now}','{$cf_sort}')";
-
-      $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5."<p>$sql</p>");
+      //die($sql);
+      $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MD_TADUP_DB_ERROR5."<p>$sql</p>");
 
       //取得最後新增資料的流水編號
       $cfsn=$xoopsDB->getInsertId();
