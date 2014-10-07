@@ -399,6 +399,20 @@ function saveItem_Permissions($groups, $itemid, $perm_name) {
   }
 }
 
+//取回權限的函數
+function getItem_Permissions($itemid ,$gperm_name ) {
+  global $xoopsModule , $xoopsDB;
+  $module_id = $xoopsModule->getVar('mid');
+  $sql = " SELECT gperm_groupid FROM " . $xoopsDB->prefix("group_permission") . " where gperm_modid='$module_id' and gperm_itemid ='$itemid' and gperm_name='$gperm_name' " ;
+  //echo $sql ;
+  $result = $xoopsDB->query($sql) or die( mysql_error() );
+  while($row=$xoopsDB->fetchArray($result)){
+    $data[]=$row['gperm_groupid'] ;
+  }
+  return $data ;
+}
+
+
 /********************檔案處理*******************/
 
 //取得上傳檔名

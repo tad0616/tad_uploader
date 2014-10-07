@@ -23,7 +23,7 @@ function delete_catalog_func(cat_sn){
       <div class="row-fluid">
         <label class="span3 text-right"><{$smarty.const._MA_TADUP_FATHER_FOLDER}></label>
         <div class="span8">
-          <select name="of_cat_sn" class="span12">
+          <select name="of_cat_sn" class="span12" id= "of_cat_sn" >
             <option></option>
             <{$cata_select}>
           </select>
@@ -132,3 +132,38 @@ function delete_catalog_func(cat_sn){
     <{/foreach}>
   </tbody>
 </table>
+
+<script type="text/javascript">
+   $(document).on("change", "#of_cat_sn", function(){
+ 
+        var of_cat_sn = $(this).val() ;
+        //alert(of_cat_sn) ;
+        set_permit(of_cat_sn) ;
+  }) ;
+
+   function set_permit(of_cat_sn) {
+       $.ajax({
+              url: 'ajax_get_permit.php',
+              type: 'GET',
+              dateType:'json', //接收資料格式
+              data: { of_cat_sn: of_cat_sn  },
+
+               success: function(data){
+                //  alert(data);
+                  var json_obj = jQuery.parseJSON(data) ;
+
+$.each(json_obj.catalog, function(index, json) { 
+  　　　　　　　　alert(json) ;
+  　　　　　　});                   
+                },
+
+                 error:function(xhr, ajaxOptions, thrownError){
+                    alert('error:' + xhr.status);
+                    alert(thrownError);
+                 }
+       })  
+
+   }
+
+
+</script>
