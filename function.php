@@ -320,7 +320,7 @@ function get_tad_uploader_cate_path($csn="",$sub=false){
 
 
 //取代/新增catalog現有資料
-function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$of_cat_sn="0",$cat_add_form=0,$cat_share="auto",$cat_sort="0",$cat_count="0",$catalog=array(1,2,3),$catalog_up=array(1)){
+function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$of_cat_sn="0",$cat_add_form=0,$cat_share="auto",$cat_sort="0",$cat_count="0",$catalog=array(1,2,3),$catalog_up=array(1) ,$is_back=0){
   global $xoopsDB,$xoopsUser,$xoopsModule;
   if($xoopsUser){
     $uid=$xoopsUser->getVar('uid');
@@ -330,6 +330,14 @@ function add_catalog($the_cat_sn="",$cat_title="",$cat_desc="",$cat_enable="1",$
   if(!empty($cat_add_form)){
     $of_cat_sn=$cat_add_form;
   }
+
+//有上層目錄，新增目錄時，而且在前台時($is_back=0) , 依上層權限  
+if ($of_cat_sn and $the_cat_sn==''  and $is_back==0 ) {
+  $catalog = getItem_Permissions($of_cat_sn , 'catalog' ) ;
+  $catalog_up = getItem_Permissions($of_cat_sn , 'catalog_up' ) ;
+}
+
+
 
   if($cat_share=="auto"){
     if(empty($of_cat_sn)){
