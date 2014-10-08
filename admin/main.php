@@ -1,13 +1,13 @@
 <?php
-/*-----------¤Þ¤JÀÉ®×°Ï--------------*/
+/*-----------å¼•å…¥æª”æ¡ˆå€--------------*/
 $xoopsOption['template_main'] = "tad_uploader_adm_main.html";
 include_once "header.php";
 include_once "../function.php";
 
-/*-----------function°Ï--------------*/
+/*-----------functionå€--------------*/
 
 
-//¦C¥X©Ò¦³catalog¸ê®Æ
+//åˆ—å‡ºæ‰€æœ‰catalogè³‡æ–™
 function list_catalog($the_cat_sn=""){
   global $xoopsDB,$xoopsTpl;
   catalog_form($the_cat_sn);
@@ -41,7 +41,7 @@ function list_catalog($the_cat_sn=""){
 }
 
 
-//¨ú±o©Ò¦³¸ê®Æ§¨¦Cªí
+//å–å¾—æ‰€æœ‰è³‡æ–™å¤¾åˆ—è¡¨
 function get_cata_data($of_cat_sn=0,$level=0,$i="0"){
   global $xoopsDB,$xoopsTpl;
   $old_level=$level;
@@ -51,7 +51,7 @@ function get_cata_data($of_cat_sn=0,$level=0,$i="0"){
   $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MA_TADUP_DB_ERROR1);
 
   $data="";
-  //$i=0;(¤£¥i¥Î¡A§_«h¯Á¤Þ·|­«½Æ)
+  //$i=0;(ä¸å¯ç”¨ï¼Œå¦å‰‡ç´¢å¼•æœƒé‡è¤‡)
   while(list($cat_sn,$cat_title,$cat_desc,$cat_enable,$uid,$of_cat_sn,$cat_share,$cat_sort,$cat_count)=$xoopsDB->fetchRow($result)){
 
     $cat_desc=nl2br($cat_desc);
@@ -94,19 +94,19 @@ function get_cata_data($of_cat_sn=0,$level=0,$i="0"){
   return $all;
 }
 
-//catalog½s¿èªí³æ
+//catalogç·¨è¼¯è¡¨å–®
 function catalog_form($cat_sn=""){
   global $xoopsDB,$xoopsModule,$xoopsTpl;
   include_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
 
-  //§ì¨ú¹w³]­È
+  //æŠ“å–é è¨­å€¼
   if(!empty($cat_sn)){
     $DBV=get_catalog($cat_sn);
   }else{
     $DBV=array();
   }
 
-  //¹w³]­È³]©w
+  //é è¨­å€¼è¨­å®š
   $cat_sn=(!isset($DBV['cat_sn']))?$cat_sn:$DBV['cat_sn'];
   $cat_title=(!isset($DBV['cat_title']))?"":$DBV['cat_title'];
   $cat_desc=(!isset($DBV['cat_desc']))?"":$DBV['cat_desc'];
@@ -128,14 +128,14 @@ function catalog_form($cat_sn=""){
   if(empty($read_group))$read_group=array(1,2,3);
   if(empty($post_group))$post_group=array(1);
 
-  //¥i¨£¸s²Õ
+  //å¯è¦‹ç¾¤çµ„
   $SelectGroup_name = new XoopsFormSelectGroup("", "catalog", true,$read_group, 6, true);
-  $SelectGroup_name->setExtra("class='span12'");
+  $SelectGroup_name->setExtra("class='span12' id='view_group' ");
   $enable_group = $SelectGroup_name->render();
 
-  //¥i¤W¶Ç¸s²Õ
+  //å¯ä¸Šå‚³ç¾¤çµ„
   $SelectGroup_name = new XoopsFormSelectGroup("", "catalog_up", true,$post_group, 6, true);
-  $SelectGroup_name->setExtra("class='span12'");
+  $SelectGroup_name->setExtra("class='span12'  id='upload_group'  ");
   $enable_upload_group = $SelectGroup_name->render();
 
 
@@ -154,7 +154,7 @@ function catalog_form($cat_sn=""){
 
 
 
-//¨ú±ocatalog©Ò¦³¸ê®Æ°}¦C
+//å–å¾—catalogæ‰€æœ‰è³‡æ–™é™£åˆ—
 function get_catalog_all(){
   global $xoopsDB;
   $sql = "select * from ".$xoopsDB->prefix("tad_uploader");
@@ -167,18 +167,18 @@ function get_catalog_all(){
 
 
 
-/*-----------°õ¦æ°Ê§@§PÂ_°Ï----------*/
+/*-----------åŸ·è¡Œå‹•ä½œåˆ¤æ–·å€----------*/
 $op = (!isset($_REQUEST['op']))? "":$_REQUEST['op'];
 $cat_sn=isset($_REQUEST['cat_sn'])?intval($_REQUEST['cat_sn']):"";
 $of_cat_sn=isset($_REQUEST['of_cat_sn'])?intval($_REQUEST['of_cat_sn']):"";
 
 switch($op){
   case "add_catalog":
-  add_catalog($cat_sn,$_POST['cat_title'],$_POST['cat_desc'],$_POST['cat_enable'],$of_cat_sn,$_POST['add_to_cat'],$_POST['cat_share'],$_POST['cat_sort'],$_POST['cat_count'],$_POST['catalog'],$_POST['catalog_up']);
+  add_catalog($cat_sn,$_POST['cat_title'],$_POST['cat_desc'],$_POST['cat_enable'],$of_cat_sn,$_POST['add_to_cat'],$_POST['cat_share'],$_POST['cat_sort'],$_POST['cat_count'],$_POST['catalog'],$_POST['catalog_up'] ,'admin');
   header("location: ".$_SERVER['PHP_SELF']);
   break;
 
-  //§R°£¸ê®Æ
+  //åˆªé™¤è³‡æ–™
   case "delete_catalog";
   delete_catalog($cat_sn);
   header("location: ".$_SERVER['PHP_SELF']);
@@ -190,6 +190,6 @@ switch($op){
   break;
 }
 
-/*-----------¨q¥Xµ²ªG°Ï--------------*/
+/*-----------ç§€å‡ºçµæžœå€--------------*/
 include_once 'footer.php';
 ?>
