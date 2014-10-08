@@ -134,13 +134,14 @@ function delete_catalog_func(cat_sn){
 </table>
 
 <script type="text/javascript">
+   //上層目錄做選擇時
    $(document).on("change", "#of_cat_sn", function(){
- 
         var of_cat_sn = $(this).val() ;
         //alert(of_cat_sn) ;
         set_permit(of_cat_sn) ;
   }) ;
 
+   //取回上層目錄權限，指定權限
    function set_permit(of_cat_sn) {
        $.ajax({
               url: 'ajax_get_permit.php',
@@ -149,12 +150,15 @@ function delete_catalog_func(cat_sn){
               data: { of_cat_sn: of_cat_sn  },
 
                success: function(data){
-                //  alert(data);
+ 
                   var json_obj = jQuery.parseJSON(data) ;
-
-$.each(json_obj.catalog, function(index, json) { 
-  　　　　　　　　alert(json) ;
-  　　　　　　});                   
+                  //讀取權
+                  var view_g =  json_obj.catalog.split(',') ;
+                  $('#view_group').val(   view_g ) ;
+                  //上傳權
+                   var up_g =  json_obj.catalog_up.split(',') ;
+                   $('#upload_group').val(   up_g ) ;
+ 
                 },
 
                  error:function(xhr, ajaxOptions, thrownError){
