@@ -170,11 +170,12 @@ function get_files_list($the_cat_sn="",$check_up_power=""){
     $cf_desc=(empty($cf_desc))?$cf_name:$cf_desc;
 
     $fname=strtolower($cf_name);
-    if($xoopsModuleConfig['only_show_desc']=='1'){
+    //if($xoopsModuleConfig['only_show_desc']=='1'){
       if(!empty($file_url)){
         $fname=basename($file_url);
+        $cf_name=$fname ;						//當為連結檔案時，取得連結檔名
       }
-    }
+    //}
 
     $up_date=date("Y-m-d H:i:s",xoops_getUserTimestamp(strtotime($up_date)));
 
