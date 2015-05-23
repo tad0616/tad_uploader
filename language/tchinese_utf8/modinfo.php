@@ -3,6 +3,10 @@ include_once XOOPS_ROOT_PATH."/modules/tadtools/language/{$xoopsConfig['language
 
 define("_MI_TADUP_NAME","網路硬碟");
 define("_MI_TADUP_DESC","就是上傳模組囉～");
+<<<<<<< HEAD
+=======
+define("_MI_TADUP_CREDITS","林朝敏老師 (prolin99@gmail.com)");
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 define("_MI_TADUP_ADMENU1", "資料夾設定");
 define("_MI_TADUP_ADMENU2", "細部權限設定");
 

@@ -1,16 +1,20 @@
 <?php
+<<<<<<< HEAD
 //  ------------------------------------------------------------------------ //
 // 本模組由 吳弘凱(tad0616@gmail.com) 製作
 // 製作日期：2008-02-06
 // $Id: main.php,v 1.1 2008/05/14 01:27:37 tad Exp $
 // ------------------------------------------------------------------------- //
 
+=======
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 define("_MD_TADUP_UPLOAD","Upload");
 
 //index.php
 define("_MD_TADUP_NO_ACCESS_POWER","You have no permission to read this folder.");
 define("_MD_TADUP_FILE_DESC","Description");
 define("_MD_TADUP_DEL_CONFIRM","Delete this folder? This operation will delete all files in thie folder!");
+<<<<<<< HEAD
 define("_MD_TADUP_LIST_ALL_FILES","Display all files");
 define("_MD_TADUP_NOW_PATH","Path：");
 define("_MD_TADUP_ROOT","Root");
@@ -23,11 +27,22 @@ define("_MD_TADUP_PAGE_BAR1","(Total %s) Page %s ：");
 
 define("_MD_TADUP_SELECTED_DEL","Delete selected file");
 define("_MD_TADUP_SELECTED_EDIT","Edit selected file");
+=======
+define("_MD_TADUP_ROOT","Root");
+define("_MD_TADUP_DB_ERROR1","Failed to get tad_uploader data.");
+define("_MD_TADUP_FILE","File");
+define("_MD_TADUP_DB_ERROR2","Failed to get tad_uploader_file data.");
+
+define("_MD_TADUP_SELECTED_DEL","Delete selected file");
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 define("_MD_TADUP_SELECTED_MOVETO","Move selected file to：");
 define("_MD_TADUP_MOVE","Move");
 define("_MD_TADUP_FILE_NAME","Filename");
 define("_MD_TADUP_FILE_DATE","Date");
+<<<<<<< HEAD
 define("_MD_TADUP_FILE_TYPE","Type");
+=======
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 define("_MD_TADUP_FILE_SIZE","Size");
 define("_MD_TADUP_FILE_COUNTER","Count");
 define("_MD_TADUP_CREATE_FOLDER","Create a new folder：");
@@ -35,6 +50,7 @@ define("_MD_TADUP_NEW_FOLDER","new_folder");
 define("_MD_TADUP_FOLDER_MOVE","Move this folder to：");
 define("_MD_TADUP_FOLDER_RENAME","Rename this folder：");
 define("_MD_TADUP_FOLDER_DEL","Delete \"%s\" folder");
+<<<<<<< HEAD
 define("_MD_TADUP_OPEN_UPLOADER","Display uploader");
 define("_MD_TADUP_DESC_EMPTY","No description, just key in now.");
 define("_MD_TADUP_SAVE","Save");
@@ -53,13 +69,22 @@ define("_MD_TADUP_NO_FILE","File doesn't exist!");
 define("_MD_TADUP_NO_FILE_DATA","No file data!");
 define("_MD_TADUP_NO_SELECTED_FILE","No selected file(s)");
 define("_MD_TADUP_MODIFY_INTERFACE","Edit file in folder - %s");
+=======
+define("_MD_TADUP_SAVE","Save");
+define("_MD_TADUP_CAN_ACCESS_GROUPS","■ Visible to groups：");
+define("_MD_TADUP_DB_ERROR3","Failed to update tad_uploader data");
+define("_MD_TADUP_NO_SELECTED_FILE","No selected file(s)");
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 define("_MD_TADUP_DB_ERROR4","Failed to replace tad_uploader data");
 define("_MD_TADUP_SET_FOLDER_POWER","Folder permission");
 define("_MD_TADUP_CAN_ACCESS_GROUPS2","<b>Visible</b> to groups");
 define("_MD_TADUP_CAN_UPLOADS_GROUPS","<b>Uploadable</b> to groups");
 define("_MD_TADUP_IS_SHARE","Share (No means a private folder visible and uploadable only for creater.)");
+<<<<<<< HEAD
 define("_MD_TADUP_FILE_SORT","▲");
 define("_MD_TADUP_FILE_SORT_DESC","▼");
+=======
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 define("_MD_TADUP_CREAT_NEW_CATE","Creat a sub-category from left category");
 
 
@@ -83,4 +108,9 @@ define("_MD_TADUP_LINK","Link to");
 
 define("_MD_TADUP_UPDATE_DATE","Modify Date");
 define("_MD_TADUP_UPDATE_TO_NEW_DATE","YES");
+<<<<<<< HEAD
+=======
+define("_MD_TADUP_INPUT_LINK","Please input file url.");
+
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 ?>
