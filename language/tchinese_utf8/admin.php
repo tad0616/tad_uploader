@@ -6,13 +6,28 @@ define("_TAD_NEED_TADTOOLS"," 需要 tadtools 模組，可至<a href='http://www
 define("_MA_TADUP_DB_ERROR1","無法取得tad_uploader資料");
 define("_MA_TADUP_SET_ACCESS_POWER","請設定各個群組可讀取使用的資料夾");
 define("_MA_TADUP_SET_UPLOAD_POWER","請設定各個群組可上傳的資料夾");
+<<<<<<< HEAD
+
+//index.php
+define("_MA_TADUP_CREATE_FOLDER","建立新的資料夾");
 define("_MA_TADUP_FOLDER_NAME","資料夾名稱");
 define("_MA_TADUP_FOLDER_DESC","資料夾描述");
 define("_MA_TADUP_FATHER_FOLDER","所屬資料夾");
+define("_MA_TADUP_FOLDER_SORT","資料夾排序");
+=======
+define("_MA_TADUP_FOLDER_NAME","資料夾名稱");
+define("_MA_TADUP_FOLDER_DESC","資料夾描述");
+define("_MA_TADUP_FATHER_FOLDER","所屬資料夾");
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 define("_MA_TADUP_ENABLE","是否啟用");
 define("_MA_TADUP_SHARE","是否共享");
 define("_MA_TADUP_SAVE","儲存");
 define("_MA_TADUP_DB_ERROR2","無法取代tad_uploader中的資料");
+<<<<<<< HEAD
+define("_MA_TADUP_DB_ERROR3","無法取得分頁資料");
+define("_MA_TADUP_PAGE_BAR1","共 %s 頁，目前在第 %s 頁：");
+=======
+>>>>>>> 1aaca4ddf96329f2477c5a3f1d61a4fe462bb717
 define("_MA_TADUP_FUNCTION","功能");
 define("_MA_TADUP_DEL_CONFIRM","確定要刪除此資料夾？底下的所有資料夾及檔案都會被刪除喔！");
 define("_MA_TADUP_LIST_ALL_FILES","列出所有資料夾中文件");

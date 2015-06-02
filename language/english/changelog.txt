@@ -1,65 +1,65 @@
-==================================================================
-Tad Uploader 3.2 版修正項目（20140925釋出）
-==================================================================
-1.修正預設呈現模式不正確的問題（預設為表格式呈現）
-2.修正下載時在某些windows環境下中文檔名無法正確下載的bug（需搭配tadtools 2.2以上）
-3.修正子目錄權限不正確的問題（感謝林朝敏老師提供）
-4.修改程式，使之符合無障礙網頁規範
-5.修正在MySQL嚴格模式下無法新增事件的問題
+================================================== ================
+Tad Uploader Version 3.2 Bug Fixes (20,140,925 release)
+================================================== ================
+1. Fixed default rendering mode is not the right question (default tabular presentation)
+2. Fixed download windows environment in certain documents were not properly download bug (to be with the tadtools 2.2 above)
+3. Fix the subdirectory permissions are incorrect (thanks Lin Chaomin teacher provided)
+4. Modify the program so that it conforms with WCAG
+5. Fixed in MySQL strict mode can not issue new event
 
-==================================================================
-Tad Uploader 3.1 版修正項目（20140217釋出）
-==================================================================
-1.修正後台分類管理，樹狀表格無法拖曳和展開縮放的bug
-2.精簡 randStr() 函數，直接取用 tadtools 中的 randStr()
-3.新增update.php工具，針對2.0升3.0時檔案轉換失敗（檔案無法下載）者，可獨立處理這部份。
+================================================== ================
+Tad Uploader Version 3.1 Bug Fixes (20,140,217 release)
+================================================== ================
+1. Amend classification management background, tree form can not drag and expand the scaling bug
+2. Compact randStr () function, direct access tadtools in randStr ()
+3. Add update.php tool for 2.0 liters 3.0 file conversion fails (File can not be downloaded) who can independently handle this part.
 
-==================================================================
-Tad Uploader 3.0 正式版修正項目（20140120釋出）
-==================================================================
-1.修正更新時，檔案會不見的問題。
-2.精簡不必要的CSS檔或圖檔及語系
-3.區塊沒內容時會完全隱藏
-4.修正預設呈現模式不正確的問題
-5.修正快速建立分類時，無法正確放到子分類下的問題。
-6.修正修改分類時，所屬分類會失效的問題。
-7.修正批次匯入無法使用的問題
-8.批次匯入已可匯入中文檔（需搭配tadtools 2.06）
-9.修正移除模組後無法重裝的問題
-10.修正無法加入檔案連結的bug
-11.加入搜尋功能
+================================================== ================
+Tad Uploader 3.0 official version amended project (20,140,120 release)
+================================================== ================
+1. Fixed update file will not see the problem.
+2. streamline unnecessary CSS file or image file and Languages
+3. The block will be completely hidden when not content
+4. Fixed the default rendering mode is not the right questions
+5. Fixed quickly establish classification, unable to put the problem in sub-categories correctly.
+6. Fixed modify classification, category will be failure.
+7. Fixed the problem can not be used to import batches
+8. Batch Import import documents already available (to be with the tadtools 2.06)
+9. Fixed unable to remove the problem after reloading modules
+10. Fixed the bug can not join File Links
+11. Join Search function
 
-==================================================================
-Tad Uploader 3.0 RC1版修正項目（20131028釋出）
-==================================================================
- 1.分類頁面加入說明文字的呈現。
- 2.改為支援bootstrap
- 3.改為精細樣板
- 4.將「分類」一詞改為目錄 5.強制檔案都要放到目錄（分類）下（更新時，會自動建立一個不分類目錄，並將沒有分類的檔案放到不分類目錄下）
+================================================== ================
+Tad Uploader Version 3.0 RC1 amend item (20,131,028 release)
+================================================== ================
+ 1. category page presents added captions.
+ 2. changed bootstrap support
+ 3. read the fine model
+ 4. "Categories" word to the directory file be placed into the directory 5. Force (classification) at (time update, will not automatically create a classified directory and files put under no classified Not classified directory)
 
-Tad Uploader 2.0.1 版修正項目（20120626釋出）
-==================================================================
- 1.修正開放給別的群組上傳時，分類顯示不正確的問題。
- 2.修正修改檔案時，檔案會消失的問題。
- 3.修正一堆bug...
+Tad Uploader Version 2.0.1 Bug Fixes (20,120,626 release)
+================================================== ================
+ 1. Fixed open to other groups uploaded, classified display is not the right questions.
+ 2. The amendments modify the file, the file will go away.
+ 3. Fixed a bunch of bug ...
 
-Tad Uploader 2.0 RC3 版修正項目（2011-04-10釋出）
-==================================================================
- 1.修正大檔上傳無法正確傳檔問題。
- 2.加上批次上傳功能
- 3.將檔案依照不同使用者放到不同資料夾，避免資料夾過大，也比較容易區分是誰上傳的檔案。
- 4.修正刪除功能無法刪除實體檔案問題    5.修正在「不公開資料夾」底下建立新資料夾時，無法繼承父資料夾不公開之屬性問題（以後不公開資料夾下的子資料夾，預設也會是不公開的）
- 6.減少一些不必要的圖示檔案
+Tad Uploader version 2.0 RC3 amend item (2011-04-10 release)
+================================================== ================
+ 1. Fix the problem file upload large files can not be correctly transmitted.
+ 2. Add the batch upload feature
+ 3. Place the file into separate folders according to different user folder to avoid too large, but also relatively easy to distinguish who upload files.
+ 4. Fixed delete function can not be deleted file problem 5. entity fixed in time "without public folders" under the establishment of a new folder, you can not inherit the parent folder property issue is not public (after private folder under the subfolder, pre- set will not be published)
+ 6. Reduce the number of unnecessary illustrated archive
 
-Tad Uploader 2.0 RC2 版修正項目（2011-04-07釋出）
-==================================================================
- 1.修正直接上傳無法連結檔案的問題。
- 2.調整前台下方管理界面之排版，並修正部份語系問題。
+Tad Uploader Version 2.0 RC2 amend item (2011-04-07 release)
+================================================== ================
+ 1. Amend not link directly upload files problems.
+ 2. Adjust the layout of the management interface underneath the front desk, and fix part of the language problem.
 
-Tad Uploader 2.0 RC1 版修正項目（2011-04-06釋出）
-==================================================================
- 1.後台改用直接拖曳方式來進行目錄分類與排序，並調整整個後台管理版面。
- 2.前台部份，管理員可以用拖曳方式進行檔案或目錄排序。
- 3.前台界面大改，改為較清爽界面
- 4.新增「直接連結」，檔案可放置在別處主機。
- 5.新增java上傳方式，可多檔上傳，或者傳輸大檔案。
+Tad Uploader Version 2.0 RC1 amended project (release 2011-04-06)
+================================================== ================
+ 1. Background to switch to direct drag and drop to classify and sort the directory, and adjust the layout of the entire backstage management.
+ 2. The reception part, the administrator can use drag and drop with the file or directory sort.
+ 3. The front interface big change, instead the more refreshing Interface
+ 4. New "Direct Link" host file can be placed elsewhere.
+ 5. New java uploads can upload multiple files, or to transfer large files.
