@@ -12,7 +12,7 @@
   <h2><{$smarty.const._MA_TADUP_LIST_ALL_FILES}></h2>
 
   <form action="main.php" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
-    <div class="row">
+    <div class="row-fluid">
       <div class="span5">
 
         <div class="control-group">
@@ -41,10 +41,10 @@
             <{$smarty.const._MA_TADUP_ENABLE}>
           </label>
           <div class="span8 controls">
-            <label class="radio-inline">
+            <label class="radio inline">
               <input type="radio" name="cat_enable" id="cat_enable1" value="1" <{if $cat_enable=="1"}>checked<{/if}>><{$smarty.const._YES}>
             </label>
-            <label class="radio-inline">
+            <label class="radio inline">
               <input type="radio" name="cat_enable" id="cat_enable0" value="0" <{if $cat_enable=="0"}>checked<{/if}>><{$smarty.const._NO}>
             </label>
           </div>
@@ -56,10 +56,10 @@
             <{$smarty.const._MA_TADUP_SHARE}>
           </label>
           <div class="span8 controls">
-            <label class="radio-inline">
+            <label class="radio inline">
               <input type="radio" name="cat_share" id="cat_share1" value="1" <{if $cat_share=="1"}>checked<{/if}>><{$smarty.const._YES}>
             </label>
-            <label class="radio-inline">
+            <label class="radio inline">
               <input type="radio" name="cat_share" id="cat_share0" value="0" <{if $cat_share=="0"}>checked<{/if}>><{$smarty.const._NO}>
             </label>
           </div>
@@ -67,21 +67,21 @@
       </div>
 
       <div class="span2">
-        <div class="row">
+        <div class="row-fluid">
           <label><{$smarty.const._MA_TADUP_CAN_ACCESS_GROUPS2}></label>
           <{$enable_group}>
         </div>
       </div>
 
       <div class="span2">
-        <div class="row">
+        <div class="row-fluid">
           <label><{$smarty.const._MA_TADUP_CAN_UPLOADS_GROUPS}></label>
           <{$enable_upload_group}>
         </div>
       </div>
 
       <div class="span3">
-        <div class="row">
+        <div class="row-fluid">
           <label><{$smarty.const._MA_TADUP_FOLDER_DESC}></label>
           <textarea name="cat_desc" class="span12" style="height:120px;font-size:12px"><{$cat_desc}></textarea>
         </div>
