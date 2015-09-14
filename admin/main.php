@@ -172,7 +172,7 @@ $of_cat_sn = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
 
 switch ($op) {
     case "add_catalog":
-        add_catalog($cat_sn, $_POST['cat_title'], $_POST['cat_desc'], $_POST['cat_enable'], $of_cat_sn, $_POST['add_to_cat'], $_POST['cat_share'], $_POST['cat_sort'], $_POST['cat_count'], $_POST['catalog'], $_POST['catalog_up']);
+        add_catalog($cat_sn, $_POST['cat_title'], $_POST['cat_desc'], $_POST['cat_enable'], $of_cat_sn, $_POST['add_to_cat'], $_POST['cat_share'], $_POST['cat_sort'], $_POST['cat_count'], $_POST['catalog'], $_POST['catalog_up'], 'admin');
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
         break;
