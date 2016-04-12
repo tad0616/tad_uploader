@@ -1,4 +1,10 @@
 ==================================================================
+Tad Uploader Version 3.3.2 Bug Fixes (016-04-13 release)
+==================================================================
+1.Fixed upload multiple files at the same filename problem
+
+
+==================================================================
 Tad Uploader Version 3.3.1 Bug Fixes (2015-07-28 release)
 ==================================================================
 1.Adjust the layout of the management interface.

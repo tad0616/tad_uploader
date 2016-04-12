@@ -1,7 +1,7 @@
 <?php
 //引入TadTools的函式庫
 if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php")) {
-    redirect_header("http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50", 3, _TAD_NEED_TADTOOLS);
+    redirect_header("http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1", 3, _TAD_NEED_TADTOOLS);
 }
 include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
@@ -52,9 +52,10 @@ function add_tad_uploader()
         $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5 . "<p>$sql</p>");
 
     } else {
+        // die(var_export($_FILES));
         foreach ($_FILES['upfile']['name'] as $i => $name) {
 
-            if (empty($cf_desc)) {
+            if (empty($_POST['cf_desc'])) {
                 $cf_desc = $name;
             }
             $cf_sort = intval($cf_sort);
@@ -68,7 +69,7 @@ function add_tad_uploader()
 
             $TadUpFiles->set_dir('subdir', "/user_{$uid}");
             $TadUpFiles->set_col("cfsn", $cfsn);
-            $TadUpFiles->upload_one_file($name, $_FILES['upfile']['tmp_name'][$i], $_FILES['upfile']['type'][$i], $_FILES['upfile']['size'][$i], null, null, "", $_POST['desc'], true, true);
+            $TadUpFiles->upload_one_file($name, $_FILES['upfile']['tmp_name'][$i], $_FILES['upfile']['type'][$i], $_FILES['upfile']['size'][$i], null, null, "", $_cf_desc, true, true);
             $sort++;
         }
     }
