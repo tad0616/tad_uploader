@@ -20,7 +20,7 @@ function list_all_data($the_cat_sn = 0)
     $sort_code = $up_tool = $del_js = $FooTableJS = $path = "";
 
     //目前路徑
-    $arr = get_tad_uploader_cate_path($the_cat_sn);
+    $arr = get_tad_uploader_BreadCrumb_path($the_cat_sn);
     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/jBreadCrumb.php")) {
         redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
     }
@@ -30,7 +30,7 @@ function list_all_data($the_cat_sn = 0)
 
     //新增人氣值
     if (!empty($the_cat_sn)) {
-        update_catalog_count($the_cat_sn);
+        update_tad_uploader_count($the_cat_sn);
     }
 
     //權限檢查
@@ -62,9 +62,9 @@ function list_all_data($the_cat_sn = 0)
         $upform      = $TadUpFiles->upform(true, 'upfile', null, false);
     }
 
-    $sql            = "select cat_desc from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='{$the_cat_sn}'";
-    $result         = $xoopsDB->query($sql);
-    list($cat_desc) = $xoopsDB->fetchRow($result);
+    $sql                        = "select cat_desc,of_cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='{$the_cat_sn}'";
+    $result                     = $xoopsDB->query($sql);
+    list($cat_desc, $of_cat_sn) = $xoopsDB->fetchRow($result);
 
     if (file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/FooTable.php")) {
         include_once XOOPS_ROOT_PATH . "/modules/tadtools/FooTable.php";
@@ -73,7 +73,7 @@ function list_all_data($the_cat_sn = 0)
     }
 
     //該資料夾屬性
-    $main = get_catalog_attribute($the_cat_sn, $check_power, $check_up_power);
+    $main = get_tad_uploader_attribute($the_cat_sn, $check_power, $check_up_power);
     //die($main);
 
     $xoopsTpl->assign('upform', $upform);
@@ -97,6 +97,14 @@ function list_all_data($the_cat_sn = 0)
     $xoopsTpl->assign("only_show_desc", $xoopsModuleConfig['only_show_desc']);
     $xoopsTpl->assign("icon_width", '130px');
 
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php")) {
+        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
+    }
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
+    $sweet_alert = new sweet_alert();
+    $sweet_alert->render("delete_tad_uploader_func", "index.php?op=delete_tad_uploader&of_cat_sn={$the_cat_sn}&cat_sn=", 'cat_sn');
+    $sweet_alert2 = new sweet_alert();
+    $sweet_alert2->render("delete_file_func", "index.php?op=del_file&of_cat_sn={$the_cat_sn}&cfsn=", 'cfsn');
 }
 
 //抓取底下目錄
@@ -200,12 +208,12 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
 }
 
 //該資料夾屬性
-function get_catalog_attribute($cat_sn = "", $check_power = false, $check_up_power = false)
+function get_tad_uploader_attribute($cat_sn = "", $check_power = false, $check_up_power = false)
 {
     global $xoopsUser, $xoopsModule, $col_intf, $isAdmin;
 
-    //以流水號取得某筆catalog資料
-    $cat = get_catalog($cat_sn);
+    //以流水號取得某筆tad_uploader資料
+    $cat = get_tad_uploader($cat_sn);
     //取得某資料夾檔案數
     //$get_catfile_num=get_catfile_num($cat_sn);
     //取得某資料夾檔案數
@@ -260,7 +268,7 @@ function get_catalog_attribute($cat_sn = "", $check_power = false, $check_up_pow
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
     $cat_title = (empty($cat_sn)) ? _MD_TADUP_ROOT : $cat['cat_title'];
 
-    $admin = ($isAdmin) ? "<img src='images/stop.png' alt='" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "' title='" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "' border='0' height='16' width='16' hspace=4 align='absmiddle'><a href=\"javascript:delete_catalog_func({$cat_sn},{$cat['of_cat_sn']});\">" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "</a>" : "";
+    $admin = ($isAdmin) ? "<img src='images/stop.png' alt='" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "' title='" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "' border='0' height='16' width='16' hspace=4 align='absmiddle'><a href=\"javascript:delete_tad_uploader_func({$cat_sn},{$cat['of_cat_sn']});\">" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "</a>" : "";
 
     $main = "
   <table style='width:auto' id='t'>
@@ -275,8 +283,8 @@ function get_catalog_attribute($cat_sn = "", $check_power = false, $check_up_pow
     return $main;
 }
 
-//更新catalog某一筆資料
-function update_catalog($col_name = "", $col_val = "", $cat_sn = "")
+//更新tad_uploader某一筆資料
+function update_tad_uploader($col_name = "", $col_val = "", $cat_sn = "")
 {
     global $xoopsDB;
     $sql = "update " . $xoopsDB->prefix("tad_uploader") . " set  $col_name = '{$col_val}' where cat_sn='$cat_sn'";
@@ -284,13 +292,13 @@ function update_catalog($col_name = "", $col_val = "", $cat_sn = "")
     return $cat_sn;
 }
 
-//更新catalog_data現有資料
+//更新tad_uploader_data現有資料
 function update_data($cat_sn = "")
 {
     global $xoopsDB;
 
     foreach ($_POST['cf_desc'] as $cfsn => $cf_desc) {
-        $cfsn = update_catalog_file($cfsn, "cf_desc", $cf_desc);
+        $cfsn = update_tad_uploader_file($cfsn, "cf_desc", $cf_desc);
     }
 
     return $cdsn;
@@ -342,7 +350,7 @@ function movefile($select_files = array(), $new_cat_sn = "")
     }
 
     foreach ($select_files as $cfsn => $cf_name) {
-        update_catalog_file($cfsn, "cat_sn", $new_cat_sn);
+        update_tad_uploader_file($cfsn, "cat_sn", $new_cat_sn);
     }
 }
 
@@ -383,18 +391,18 @@ function save_power()
 {
     global $xoopsModule;
     $gperm_modid       = $xoopsModule->getVar('mid');
-    $groupperm_handler = &xoops_gethandler('groupperm');
+    $groupperm_handler = xoops_gethandler('groupperm');
     foreach ($_POST['catalog'] as $gperm_groupid) {
         $groupperm_handler->addRight('catalog', $_POST['cat_sn'], $gperm_groupid, $gperm_modid);
     }
     foreach ($_POST['catalog_up'] as $gperm_groupid) {
         $groupperm_handler->addRight('catalog_up', $_POST['cat_sn'], $gperm_groupid, $gperm_modid);
     }
-    update_catalog("cat_share", $_POST['cat_share'], $_POST['cat_sn']);
+    update_tad_uploader("cat_share", $_POST['cat_share'], $_POST['cat_sn']);
 }
 
 //更新目錄人氣值
-function update_catalog_count($cat_sn = "")
+function update_tad_uploader_count($cat_sn = "")
 {
     global $xoopsDB;
     $sql = "update " . $xoopsDB->prefix("tad_uploader") . " set  cat_count = cat_count+1 where cat_sn='{$cat_sn}'";
@@ -420,13 +428,13 @@ switch ($op) {
         break;
 
     case "new_of_cat_sn":
-        update_catalog("of_cat_sn", $new_of_cat_sn, $cat_sn);
+        update_tad_uploader("of_cat_sn", $new_of_cat_sn, $cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$new_of_cat_sn}");
         exit;
         break;
 
     case "new_cat_title":
-        update_catalog("cat_title", $_POST['new_cat_title'], $cat_sn);
+        update_tad_uploader("cat_title", $_POST['new_cat_title'], $cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
         break;
@@ -445,7 +453,7 @@ switch ($op) {
 
     case "save_files":
         $uid    = $xoopsUser->uid();
-        $cat_sn = add_tad_uploader();
+        $cat_sn = add_tad_uploader_file();
 
         if ($_POST['all_selected'] == 'all_del') {
             delfile($_POST['select_files']);
@@ -474,14 +482,14 @@ switch ($op) {
         break;
 
     case "save_cat_desc":
-        update_catalog("cat_desc", $_POST['cat_desc'], $cat_sn);
+        update_tad_uploader("cat_desc", $_POST['cat_desc'], $cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
         break;
 
     //刪除資料
-    case "delete_catalog";
-        delete_catalog($cat_sn);
+    case "delete_tad_uploader";
+        delete_tad_uploader($cat_sn);
         header("location:{$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
         exit;
         break;

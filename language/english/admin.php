@@ -20,6 +20,11 @@ define('_MA_TADUP_AUTHOR', 'Tad (tad0616@gmail.com)');
 define('_MA_TADUP_FILE_COUNTER', 'Count');
 define('_MA_TADUP_EDIT', 'Edit');
 define('_MA_TADUP_DEL', 'Delete');
+define('_MA_TADUP_ADD_FORM', 'Add Folder');
+define('_MA_TADUP_FILE_NAME', 'Filename');
+define('_MA_TADUP_FILE_DATE', 'Date');
+define('_MA_TADUP_FILE_SIZE', 'Size');
+define('_MA_TADUP_EMPTY', 'Empty');
 
 define('_MA_TADUP_CAN_ACCESS_GROUPS2', '<b>Visible</b> to groups');
 define('_MA_TADUP_CAN_UPLOADS_GROUPS', '<b>Uploadable</b> to groups');

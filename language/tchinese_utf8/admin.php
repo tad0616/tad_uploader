@@ -20,6 +20,11 @@ define('_MA_TADUP_AUTHOR', '建立者');
 define('_MA_TADUP_FILE_COUNTER', '人氣值');
 define('_MA_TADUP_EDIT', '編輯');
 define('_MA_TADUP_DEL', '刪除');
+define('_MA_TADUP_ADD_FORM', '新增資料夾');
+define('_MA_TADUP_FILE_NAME', '檔案名稱');
+define('_MA_TADUP_FILE_DATE', '日期');
+define('_MA_TADUP_FILE_SIZE', '大小');
+define('_MA_TADUP_EMPTY', '尚無資料');
 
 define('_MA_TADUP_CAN_ACCESS_GROUPS2', '可<b>讀取</b>群組');
 define('_MA_TADUP_CAN_UPLOADS_GROUPS', '可<b>上傳</b>群組');

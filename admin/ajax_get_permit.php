@@ -2,23 +2,22 @@
 /*-----------引入檔案區--------------*/
 include_once "header.php";
 include_once "../function.php";
- 
+
 /*-----------function區--------------*/
- $catalog = array(1,2,3) ;
-$catalog_up= array(1) ;
- 
+$tad_uploader    = array(1, 2, 3);
+$tad_uploader_up = array(1);
+
 //上層權限
-$of_cat_sn = intval($_GET['of_cat_sn']) ;
- if ($of_cat_sn ) {
-   $catalog = getItem_Permissions($of_cat_sn , 'catalog' ) ;
-  $catalog_up = getItem_Permissions($of_cat_sn , 'catalog_up' ) ;
- }
- 
-$data['catalog'] = join(','  , $catalog ) ;
-$data['catalog_up'] = join(',' , $catalog_up ) ;
+$of_cat_sn = intval($_GET['of_cat_sn']);
+if ($of_cat_sn) {
+    $tad_uploader    = getItem_Permissions($of_cat_sn, 'catalog');
+    $tad_uploader_up = getItem_Permissions($of_cat_sn, 'catalog_up');
+}
+
+$data['tad_uploader']    = join(',', $tad_uploader);
+$data['tad_uploader_up'] = join(',', $tad_uploader_up);
 /*
-$data['catalog'] =  $catalog  ;
-$data['catalog_up']  = $catalog_up  ;
-*/
-echo json_encode($data,JSON_FORCE_OBJECT);  
- 
+$data['tad_uploader'] =  $tad_uploader  ;
+$data['tad_uploader_up']  = $tad_uploader_up  ;
+ */
+echo json_encode($data, JSON_FORCE_OBJECT);

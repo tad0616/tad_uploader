@@ -97,7 +97,7 @@ function go_update1()
   `cfsn` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`log_sn`)
   )";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     return true;
 }
@@ -119,7 +119,7 @@ function go_update2()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_uploader_file") . " ADD `file_url` varchar(255) NOT NULL  default '' after `up_date`";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $xoopsDB->error());
     return true;
 }
 
@@ -140,7 +140,7 @@ function go_update3()
 {
     global $xoopsDB;
     $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_uploader_file") . " ADD `cf_sort` smallint(5) unsigned NOT NULL default '0'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, mysql_error());
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $xoopsDB->error());
     return true;
 }
 
@@ -234,12 +234,12 @@ function go_update6()
   `sub_dir` varchar(255) NOT NULL default '',
   PRIMARY KEY (`files_sn`)
 ) ENGINE=MyISAM ";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $xoopsDB->queryF($sql) or web_error($sql);
 
     $os = (PATH_SEPARATOR == ':') ? "linux" : "win";
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where `cf_name`!=''";
-    $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
+    $result = $xoopsDB->queryF($sql) or web_error($sql);
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
 
         if (empty($cf_name)) {
@@ -277,7 +277,7 @@ function go_update6()
         if (file_exists($from)) {
             if (rename($from, $to)) {
                 $sql2 = "insert into " . $xoopsDB->prefix("tad_uploader_files_center") . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
-                $xoopsDB->queryF($sql2) or redirect_header(XOOPS_URL, 3, mysql_error());
+                $xoopsDB->queryF($sql2) or web_error($sql2);
                 $fp = fopen($readme, 'w');
                 fwrite($fp, $cf_name);
                 fclose($fp);

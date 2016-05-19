@@ -39,18 +39,6 @@
 
   });
 
-  function delete_catalog_func(cat_sn,of_cat_sn){
-    var sure = window.confirm("<{$smarty.const._MD_TADUP_DEL_CONFIRM}>");
-    if (!sure)  return;
-    location.href="index.php?op=delete_catalog&cat_sn=" + cat_sn + "&of_cat_sn=" + of_cat_sn;
-  }
-
-  function delete_file_func(cfsn,of_cat_sn){
-    var sure = window.confirm("<{$smarty.const._TAD_DEL_CONFIRM}>");
-    if (!sure)  return;
-    location.href="index.php?op=del_file&cfsn=" + cfsn + "&of_cat_sn=" + of_cat_sn;
-  }
-
   </script>
 <{/if}>
 
@@ -146,7 +134,7 @@
             <{if $up_power}>
               <td style="text-align:center;">
                 <{if $folder.file_num==0}>
-                  <a href="javascript:delete_catalog_func(<{$folder.cat_sn}>,<{$folder.the_cat_sn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                  <a href="javascript:delete_tad_uploader_func(<{$folder.cat_sn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                 <{/if}>
               </td>
             <{/if}>
@@ -220,7 +208,7 @@
 
               <{if $up_power}>
                 <td style="text-align:center;">
-                   <a href="javascript:delete_file_func(<{$file.cfsn}>,<{$cat_sn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                   <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                   <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
                 </td>
               <{/if}>

@@ -31,7 +31,7 @@ class ModuleAdmin
     public function __construct()
     {
         global $xoopsModule;
-        $this->_obj = &$xoopsModule;
+        $this->_obj = $xoopsModule;
         echo "<style type=\"text/css\" media=\"screen\">@import \"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname', 'e') . "/css/admin.css\";</style>";
 
     }
@@ -123,10 +123,10 @@ class ModuleAdmin
                 if ($value != '') {
                     $line .= '<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
                               <input type="hidden" name="cmd" value="_s-xclick">
-                              <input type="hidden" name="hosted_button_id" value="'     . $value . '">
+                              <input type="hidden" name="hosted_button_id" value="' . $value . '">
                               <input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
                               <img alt="" border="0" src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" width="1" height="1">
-                              </form>'    ;
+                              </form>';
                 }
                 $line .= "</div>\n";
                 $line .= "</td>\n</tr>\n</table>\n";
@@ -270,7 +270,7 @@ class ModuleAdmin
         }
         if ($this->_obj->getInfo('help')) {
             $ret .= "<a href=\"" . $pathsystem . "help.php?mid=" . $this->_obj->getVar('mid', 's') . "&amp;" . $this->_obj->getInfo('help') . "\" title=\"" . _AM_SYSTEM_HELP . "\">" .
-            "<img width=\"32px\" src=\"" . $path . "images/admin/help.png\" alt=\"" . _AM_SYSTEM_HELP . "\" /> ";
+                "<img width=\"32px\" src=\"" . $path . "images/admin/help.png\" alt=\"" . _AM_SYSTEM_HELP . "\" /> ";
             $ret .= "<span>" . _AM_SYSTEM_HELP . "</span>";
             $ret .= "</a>";
         }

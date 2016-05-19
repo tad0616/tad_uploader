@@ -1,5 +1,13 @@
 ==================================================================
-Tad Uploader Version 3.3.2 Bug Fixes (016-04-13 release)
+Tad Uploader Version 3.4 Bug Fixes (2016-05-18 釋出)
+==================================================================
+1. Support PHP7
+2. Remove BootStrap2
+3. Modify the Management Interface
+
+
+==================================================================
+Tad Uploader Version 3.3.2 Bug Fixes (2016-04-13 release)
 ==================================================================
 1.Fixed upload multiple files at the same filename problem
 

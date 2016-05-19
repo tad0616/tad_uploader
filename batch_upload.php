@@ -104,7 +104,7 @@ function tad_uploader_batch_import()
     global $xoopsDB, $xoopsUser, $xoopsModuleConfig, $TadUpFiles;
 
     if (!empty($_POST['new_cat_sn'])) {
-        $cat_sn = add_catalog("", $_POST['new_cat_sn'], "", "1", $_POST['cat_sn'], $_POST['cat_add_form']);
+        $cat_sn = add_tad_uploader("", $_POST['new_cat_sn'], "", "1", $_POST['cat_sn'], $_POST['cat_add_form']);
     } else {
         $cat_sn = $_POST['cat_sn'];
     }
@@ -130,7 +130,7 @@ function tad_uploader_batch_import()
         $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
         $sql = "insert into " . $xoopsDB->prefix("tad_uploader_file") . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
     values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
-        $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+        $xoopsDB->query($sql) or web_error($sql);
         //取得最後新增資料的流水編號
         $cfsn = $xoopsDB->getInsertId();
 

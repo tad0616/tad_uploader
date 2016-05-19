@@ -1,13 +1,10 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "../../../include/cp_header.php";
-$updateRecordsArray = $_POST['node-'];
 
-$sort = 1;
-foreach ($updateRecordsArray as $recordIDValue) {
-    $sql = "update " . $xoopsDB->prefix("tad_uploader") . " set `cat_sort`='{$sort}' where `cat_sn`='{$recordIDValue}'";
-    $xoopsDB->queryF($sql) or die("Save Sort Fail! (" . date("Y-m-d H:i:s", xoops_getUserTimestamp(time())) . ")");
-    $sort++;
-}
+$cat_sn = intval($_POST['cat_sn']);
+$sort   = intval($_POST['sort']);
+$sql    = "update " . $xoopsDB->prefix("tad_uploader") . " set `cat_sort`='{$sort}' where cat_sn='{$cat_sn}'";
+$xoopsDB->queryF($sql) or die("Save Sort Fail! (" . date("Y-m-d H:i:s") . ")");
 
-echo "Save Sort OK! (" . date("Y-m-d H:i:s", xoops_getUserTimestamp(time())) . ")";
+echo "Save Sort OK! (" . date("Y-m-d H:i:s") . ") ";

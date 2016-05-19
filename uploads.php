@@ -67,30 +67,15 @@ function uploads_tabs($cat_sn = "", $cfsn = "")
     $xoopsTpl->assign("cfsn", $cfsn);
 }
 
-//取得單一檔案資料
-function get_tad_uploader_file($cfsn = "")
-{
-    global $xoopsDB;
-    if (empty($cfsn)) {
-        return;
-    }
-
-    $sql = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where cfsn='$cfsn'";
-
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
-    $data   = $xoopsDB->fetchArray($result);
-    return $data;
-}
-
 //更新資料到tad_uploader中
 function update_tad_uploader($cfsn = "")
 {
     global $xoopsDB, $xoopsUser, $TadUpFiles;
 
-    $myts = &MyTextSanitizer::getInstance();
+    $myts = MyTextSanitizer::getInstance();
 
     if (!empty($_POST['new_cat_sn'])) {
-        $cat_sn = add_catalog("", $_POST['new_cat_sn'], "", "1", $_POST['cat_sn'], $_POST['add_to_cat']);
+        $cat_sn = add_tad_uploader("", $_POST['new_cat_sn'], "", "1", $_POST['cat_sn'], $_POST['add_to_cat']);
     } else {
         $cat_sn = $_POST['add_to_cat'];
     }
@@ -157,7 +142,7 @@ switch ($op) {
 
     //新增資料
     case "insert_tad_uploader":
-        $cat_sn = add_tad_uploader();
+        $cat_sn = add_tad_uploader_file();
         header("location: index.php?of_cat_sn={$cat_sn}");
         exit;
         break;

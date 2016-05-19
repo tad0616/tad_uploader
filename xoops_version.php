@@ -5,7 +5,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADUP_NAME;
-$modversion['version']     = '3.32';
+$modversion['version']     = '3.4';
 $modversion['description'] = _MI_TADUP_DESC;
 $modversion['author']      = 'Tad(tad0616@gmail.com)';
 $modversion['credits']     = _MI_TADUP_CREDITS;
@@ -16,7 +16,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2016/04/13';
+$modversion['release_date']        = '2016/05/18';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -63,32 +63,16 @@ $modversion['hasMain'] = 1;
 //---樣板設定---//
 $modversion['templates']                    = array();
 $i                                          = 1;
-$modversion['templates'][$i]['file']        = 'tad_uploader_index.html';
-$modversion['templates'][$i]['description'] = 'tad_uploader_index.html';
-
-$i++;
 $modversion['templates'][$i]['file']        = 'tad_uploader_index_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_uploader_index_b3.html';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'tad_uploader_uploads.html';
-$modversion['templates'][$i]['description'] = 'tad_uploader_uploads.html';
 
 $i++;
 $modversion['templates'][$i]['file']        = 'tad_uploader_uploads_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_uploader_uploads_b3.html';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_uploader_adm_main.html';
-$modversion['templates'][$i]['description'] = 'tad_uploader_adm_main.html';
-
-$i++;
 $modversion['templates'][$i]['file']        = 'tad_uploader_adm_main_b3.html';
 $modversion['templates'][$i]['description'] = 'tad_uploader_adm_main_b3.html';
-
-$i++;
-$modversion['templates'][$i]['file']        = 'tad_uploader_adm_power.html';
-$modversion['templates'][$i]['description'] = 'tad_uploader_adm_power.html';
 
 $i++;
 $modversion['templates'][$i]['file']        = 'tad_uploader_adm_power_b3.html';
