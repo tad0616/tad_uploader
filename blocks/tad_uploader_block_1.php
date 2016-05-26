@@ -28,10 +28,7 @@ function tad_uploader_b_show_1($options)
         $link[$i]['cf_name'] = $cf_name;
         $i++;
     }
-    $block['link']              = $link;
-    $block['bootstrap_version'] = $_SESSION['bootstrap'];
-    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
-    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
+    $block['link'] = $link;
 
     return $block;
 }

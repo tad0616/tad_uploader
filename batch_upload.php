@@ -20,12 +20,6 @@ switch ($op) {
 function tad_uploader_batch_upload_form($cat_sn = "")
 {
     global $xoopsDB, $xoopsModuleConfig, $ok_video_ext, $ok_image_ext, $isAdmin;
-    $row          = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
-    $span         = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
-    $group        = $_SESSION['bootstrap'] == '3' ? 'form-group' : 'control-group';
-    $controls     = $_SESSION['bootstrap'] == '3' ? '' : ' controls';
-    $form_control = $_SESSION['bootstrap'] == '3' ? 'form-control' : 'span12';
-
     $cate_select = get_tad_uploader_cate_option(0, 0, $cat_sn, 1, false);
 
     $i  = 0;
@@ -62,12 +56,12 @@ function tad_uploader_batch_upload_form($cat_sn = "")
           " . _MA_TADUP_BATCH_UPLOAD_TO . "<span style='color:red;'>" . _TAD_UPLOADER_BATCH_DIR . "</span>
         </div>
 
-        <div class='{$group}'>
-          <label class='{$span}2 control-label'>
+        <div class='form-group'>
+          <label class='col-md-2 control-label'>
             " . _MD_TADUP_SELECT_FOLDER . "
           </label>
-          <div class='col-md-4{$controls}'>
-            <select name='cat_sn' size=1 class='{$form_control}'>
+          <div class='col-md-4'>
+            <select name='cat_sn' size=1 class='form-control'>
               $root
               $cate_select
             </select>
@@ -75,8 +69,8 @@ function tad_uploader_batch_upload_form($cat_sn = "")
           <label class='col-md-2 control-label'>
             " . _MD_TADUP_CREATE_NEW_FOLDER . "
           </label>
-          <div class='col-md-4{$controls}'>
-            <input type='text' name='new_cat_sn' class='{$form_control}'>
+          <div class='col-md-4'>
+            <input type='text' name='new_cat_sn' class='form-control'>
           </div>
         </div>
 
@@ -89,7 +83,7 @@ function tad_uploader_batch_upload_form($cat_sn = "")
             $tr
         </table>
 
-        <div class='{$row} text-center'>
+        <div class='row text-center'>
             <input type='hidden' name='op' value='import'>
             <button type='submit' class='btn btn-primary'>" . _MA_BATCH_SAVE . "</button>
         </div>

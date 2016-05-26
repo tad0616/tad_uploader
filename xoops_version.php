@@ -5,7 +5,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADUP_NAME;
-$modversion['version']     = '3.4';
+$modversion['version']     = '3.41';
 $modversion['description'] = _MI_TADUP_DESC;
 $modversion['author']      = 'Tad(tad0616@gmail.com)';
 $modversion['credits']     = _MI_TADUP_CREDITS;
@@ -16,7 +16,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2016/05/18';
+$modversion['release_date']        = '2016/05/26';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
