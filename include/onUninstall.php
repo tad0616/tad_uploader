@@ -2,10 +2,10 @@
 function xoops_module_uninstall_tad_uploader(&$module)
 {
     global $xoopsDB;
-    $date = date("Ymd");
+    $date = date('Ymd');
 
-    rename(XOOPS_ROOT_PATH . "/uploads/tad_uploader", XOOPS_ROOT_PATH . "/uploads/tad_uploader_bak_{$date}");
-    rename(XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch", XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch_bak_{$date}");
+    rename(XOOPS_ROOT_PATH . '/uploads/tad_uploader', XOOPS_ROOT_PATH . "/uploads/tad_uploader_bak_{$date}");
+    rename(XOOPS_ROOT_PATH . '/uploads/tad_uploader_batch', XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch_bak_{$date}");
 
     return true;
 }
@@ -21,9 +21,9 @@ function delete_directory($dirname)
     }
 
     while ($file = readdir($dir_handle)) {
-        if ($file != "." && $file != "..") {
-            if (!is_dir($dirname . "/" . $file)) {
-                unlink($dirname . "/" . $file);
+        if ($file != '.' && $file != '..') {
+            if (!is_dir($dirname . '/' . $file)) {
+                unlink($dirname . '/' . $file);
             } else {
                 delete_directory($dirname . '/' . $file);
             }
@@ -34,7 +34,7 @@ function delete_directory($dirname)
     return true;
 }
 
-function full_copy($source = "", $target = "")
+function full_copy($source = '', $target = '')
 {
     if (is_dir($source)) {
         @mkdir($target);
