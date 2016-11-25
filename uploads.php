@@ -3,7 +3,7 @@
 include __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = set_bootstrap('tad_uploader_uploads.html');
 
-if (count($upload_powers) <= 0 or empty($xoopsUser)) {
+if (count($upload_powers) <= 0 || empty($xoopsUser)) {
     redirect_header(XOOPS_URL . '/user.php', 3, _MD_TADUP_NO_EDIT_POWER);
 }
 include XOOPS_ROOT_PATH . '/header.php';
@@ -77,7 +77,7 @@ function get_tad_uploader_file($cfsn = '')
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where cfsn='$cfsn'";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
+    $result = $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
@@ -128,7 +128,7 @@ function update_tad_uploader($cfsn = '')
             $name = $_FILES['upfile']['name'][0];
 
             $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_type='{$_FILES['upfile']['type'][$i]}',cf_size='{$_FILES['upfile']['size'][$i]}' {$uptime} where cfsn='$cfsn'";
-            $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
+            $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
 
             $TadUpFiles->upload_one_file($name, $_FILES['upfile']['tmp_name'][$i], $_FILES['upfile']['type'][$i], $_FILES['upfile']['size'][$i], null, null, '', $cf_desc, true, true);
         }
@@ -136,11 +136,11 @@ function update_tad_uploader($cfsn = '')
         $size = remote_file_size($file_url);
         $sql  = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_size='{$size}' {$uptime},file_url='{$file_url}' where cfsn='$cfsn'";
 
-        $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
+        $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
     } else {
         $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_desc='{$cf_desc}' {$uptime} where cfsn='$cfsn'";
 
-        $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
+        $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
     }
 
     return $cat_sn;

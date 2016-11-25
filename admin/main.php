@@ -14,7 +14,7 @@ function list_catalog($the_cat_sn = '')
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . '';
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
+    $result = $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
 
     $jquery_path = get_jquery(true);
 
@@ -48,7 +48,7 @@ function get_cata_data($of_cat_sn = 0, $level = 0, $i = '0')
     $level++;
 
     $sql    = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='$of_cat_sn' order by `cat_sort`";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
+    $result = $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
 
     $data = '';
     //$i=0;(不可用，否則索引會重複)
@@ -158,7 +158,7 @@ function get_catalog_all()
 {
     global $xoopsDB;
     $sql    = 'select * from ' . $xoopsDB->prefix('tad_uploader');
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
+    $result = $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }

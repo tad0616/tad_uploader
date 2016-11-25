@@ -9,7 +9,7 @@ function tad_uploader_b_show_1($options)
 
     $sql = 'select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from ' . $xoopsDB->prefix('tad_uploader_file') . ' as a left join ' . $xoopsDB->prefix('tad_uploader') . " as b on a.cat_sn=b.cat_sn where b.cat_share='1'  order by a.up_date desc limit 0,{$options[0]}";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MB_TADUP_DB_ERROR2);
+    $result = $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MB_TADUP_DB_ERROR2);
 
     $block = '';
     $i     = 0;
@@ -94,7 +94,7 @@ if (!function_exists('check_up_power')) {
                 }
             }
         } else {
-            if ($gpermHandler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
+            if ($gpermHandler->checkRight($kind, $cat_sn, $groups, $module_id) || $isAdmin) {
                 return true;
             }
         }

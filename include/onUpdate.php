@@ -96,7 +96,7 @@ function go_update1()
   `cfsn` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`log_sn`)
   )';
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
+    $xoopsDB->queryF($sql) || redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
 
     return true;
 }
@@ -118,7 +118,7 @@ function go_update2()
 {
     global $xoopsDB;
     $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_uploader_file') . " ADD `file_url` varchar(255) NOT NULL  default '' after `up_date`";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $GLOBALS['xoopsDB']->error());
+    $xoopsDB->queryF($sql) || redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $GLOBALS['xoopsDB']->error());
     return true;
 }
 
@@ -139,7 +139,7 @@ function go_update3()
 {
     global $xoopsDB;
     $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_uploader_file') . " ADD `cf_sort` smallint(5) unsigned NOT NULL default '0'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $GLOBALS['xoopsDB']->error());
+    $xoopsDB->queryF($sql) || redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $GLOBALS['xoopsDB']->error());
     return true;
 }
 
@@ -158,7 +158,7 @@ function go_update4()
     mk_dir($dir . '_batch');
 
     $sql    = 'select cfsn,uid,cf_name from ' . $xoopsDB->prefix('tad_uploader_file') . " where file_url=''";
-    $result = $xoopsDB->query($sql) or die($sql);
+    $result = $xoopsDB->query($sql) || die($sql);
 
     while (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result)) {
         //搬移影片檔
@@ -233,12 +233,12 @@ function go_update6()
   `sub_dir` varchar(255) NOT NULL default '',
   PRIMARY KEY (`files_sn`)
 ) ENGINE=MyISAM ";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
+    $xoopsDB->queryF($sql) || redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
 
     $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
     $sql    = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cf_name`!=''";
-    $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
+    $result = $xoopsDB->queryF($sql) || redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
         if (empty($cf_name)) {
             continue;
@@ -264,10 +264,10 @@ function go_update6()
             $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
         }
 
-        if ($os === 'win' and _CHARSET === 'UTF-8') {
+        if ($os === 'win' && _CHARSET === 'UTF-8') {
             $from = iconv(_CHARSET, 'Big5', $from);
             $to   = iconv(_CHARSET, 'Big5', $to);
-        } elseif ($os === 'linux' and _CHARSET === 'Big5') {
+        } elseif ($os === 'linux' && _CHARSET === 'Big5') {
             $from = iconv(_CHARSET, 'UTF-8', $from);
             $to   = iconv(_CHARSET, 'UTF-8', $to);
         }
@@ -275,7 +275,7 @@ function go_update6()
         if (file_exists($from)) {
             if (rename($from, $to)) {
                 $sql2 = 'insert into ' . $xoopsDB->prefix('tad_uploader_files_center') . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
-                $xoopsDB->queryF($sql2) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
+                $xoopsDB->queryF($sql2) || redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
                 $fp = fopen($readme, 'w');
                 fwrite($fp, $cf_name);
                 fclose($fp);
@@ -352,7 +352,7 @@ function thumbnail($filename = '', $thumb_name = '', $type = 'image/jpeg', $widt
 
     // Load
     $thumb = imagecreatetruecolor($newwidth, $newheight);
-    if ($type === 'image/jpeg' or $type === 'image/jpg' or $type === 'image/pjpg' or $type === 'image/pjpeg') {
+    if ($type === 'image/jpeg' || $type === 'image/jpg' || $type === 'image/pjpg' || $type === 'image/pjpeg') {
         $source = imagecreatefromjpeg($filename);
         $type   = 'image/jpeg';
     } elseif ($type === 'image/png') {

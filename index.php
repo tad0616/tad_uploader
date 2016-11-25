@@ -105,7 +105,7 @@ function get_folder_list($the_cat_sn = '', $check_up_power = '')
 
     $sql = 'select cat_sn,cat_title,cat_desc,cat_enable,uid,of_cat_sn,cat_share,cat_sort,cat_count from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='{$the_cat_sn}' and cat_enable='1' order by cat_sort";
     //die($sql);
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
+    $result = $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
 
     $main = $all = '';
     $i    = 0;
@@ -141,7 +141,7 @@ function get_files_list($the_cat_sn = '', $check_up_power = '')
     //排序
     $sql = 'select cfsn,cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,cf_count,up_date,file_url from ' . $xoopsDB->prefix('tad_uploader_file') . "  where cat_sn='{$the_cat_sn}' order by cf_sort";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
+    $result = $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
 
     $all = '';
     $i   = 0;
@@ -278,7 +278,7 @@ function update_catalog($col_name = '', $col_val = '', $cat_sn = '')
 {
     global $xoopsDB;
     $sql = 'update ' . $xoopsDB->prefix('tad_uploader') . " set  $col_name = '{$col_val}' where cat_sn='$cat_sn'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
+    $xoopsDB->queryF($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
     return $cat_sn;
 }
 
@@ -303,7 +303,7 @@ function find_path($cat_sn = '')
     }
 
     $sql    = 'select cat_sn,cat_title,of_cat_sn from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='$cat_sn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
+    $result = $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
 
     while (list($cat_sn, $cat_title, $of_cat_sn) = $xoopsDB->fetchRow($result)) {
         $cat_sn_array = $cat_sn . "'>" . $cat_title;
@@ -355,7 +355,7 @@ function create_folder($cat_title = '', $of_cat_sn = '')
 
     $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader') . " (cat_title,cat_enable,uid,of_cat_sn,cat_share,cat_sort)
   values('{$cat_title}','1','{$uid}','{$of_cat_sn}','1','0')";
-    $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR4);
+    $xoopsDB->query($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR4);
 
     //取得最後新增資料的流水編號
     $cat_sn = $xoopsDB->getInsertId();
@@ -396,7 +396,7 @@ function update_catalog_count($cat_sn = '')
 {
     global $xoopsDB;
     $sql = 'update ' . $xoopsDB->prefix('tad_uploader') . " set  cat_count = cat_count+1 where cat_sn='{$cat_sn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
+    $xoopsDB->queryF($sql) || redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
     return $cat_sn;
 }
 
