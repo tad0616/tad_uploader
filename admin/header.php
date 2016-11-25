@@ -17,7 +17,7 @@
  * @version      $Id $
  **/
 
-include '../../../include/cp_header.php';
+include __DIR__ . '/../../../include/cp_header.php';
 
 defined('FRAMEWORKS_ART_FUNCTIONS_INI') || include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.ini.php';
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
@@ -33,7 +33,7 @@ if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
 }
 if (file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/include/beforeheader.php")) {
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/include/beforeheader.php";
-    $xoopsOption['template_main'] = set_bootstrap();
+    $GLOBALS['xoopsOption']['template_main'] = set_bootstrap();
 }
 xoops_cp_header();
 

@@ -198,7 +198,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = "", $show
     $level += 1;
 
     $sql    = "select count(*),cat_sn from " . $xoopsDB->prefix("tad_uploader_file") . " group by cat_sn";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
     while (list($count, $cat_sn) = $xoopsDB->fetchRow($result)) {
         $cate_count[$cat_sn] = $count;
     }
@@ -206,7 +206,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = "", $show
     $option = ($of_cat_sn) ? "" : "";
     $sql    = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$of_cat_sn}' order by cat_sort";
     //die($sql);
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
 
     if ($chk_view) {
         $ok_cat = chk_cate_power('catalog_up');
@@ -249,7 +249,7 @@ function check_up_power($kind = "catalog", $cat_sn = "")
     $module_id = $xoopsModule->getVar('mid');
 
     //取得群組權限功能
-    $gperm_handler = &xoops_gethandler('groupperm');
+    $gpermHandler =  xoops_getHandler('groupperm');
 
     //權限項目編號
     $perm_itemid = intval($cat_sn);
@@ -264,7 +264,7 @@ function check_up_power($kind = "catalog", $cat_sn = "")
             }
         }
     } else {
-        if ($gperm_handler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
+        if ($gpermHandler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
             return true;
         }
     }
@@ -291,7 +291,7 @@ function chk_cate_power($kind = "")
 
     $sql = "select gperm_itemid from " . $xoopsDB->prefix("group_permission") . " where gperm_modid='$module_id' and gperm_name='$kind' and gperm_groupid in ($gsn_arr)";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
 
     while (list($gperm_itemid) = $xoopsDB->fetchRow($result)) {
         $ok_cat[] = $gperm_itemid;
@@ -312,7 +312,7 @@ function get_tad_uploader_cate_path($csn = "", $sub = false)
     }
 
     $sql                  = "select cat_title,of_cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='{$csn}'";
-    $result               = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result               = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
     list($title, $of_csn) = $xoopsDB->fetchRow($result);
 
     $opt_sub = (!empty($of_csn)) ? get_tad_uploader_cate_path($of_csn, true) : "";
@@ -387,7 +387,7 @@ function get_path_belong($cat_sn, $catalog, $catalog_up, $cat_enable, $cat_share
         $sn = $row['cat_sn'];
         //
         $sql2 = " UPDATE " . $xoopsDB->prefix("tad_uploader") . " set cat_enable ='$cat_enable' ,cat_share ='$cat_share' where cat_sn = '$sn' ";
-        $xoopsDB->queryF($sql2) or die($sql2 . "<br>" . mysql_error());
+        $xoopsDB->queryF($sql2) or die($sql2 . "<br>" . $GLOBALS['xoopsDB']->error());
 
         //寫入權限
         saveItem_Permissions($catalog, $sn, 'catalog');
@@ -401,15 +401,15 @@ function saveItem_Permissions($groups, $itemid, $perm_name)
 {
     global $xoopsModule;
     $module_id     = $xoopsModule->getVar('mid');
-    $gperm_handler = &xoops_gethandler('groupperm');
+    $gpermHandler =  xoops_getHandler('groupperm');
 
     // First, if the permissions are already there, delete them
-    $gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
+    $gpermHandler->deleteByModule($module_id, $perm_name, $itemid);
 
     // Save the new permissions
     if (count($groups) > 0) {
         foreach ($groups as $group_id) {
-            $gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
+            $gpermHandler->addRight($perm_name, $itemid, $group_id, $module_id);
         }
     }
 }
@@ -421,7 +421,7 @@ function getItem_Permissions($itemid, $gperm_name)
     $module_id = $xoopsModule->getVar('mid');
     $sql       = " SELECT gperm_groupid FROM " . $xoopsDB->prefix("group_permission") . " where gperm_modid='$module_id' and gperm_itemid ='$itemid' and gperm_name='$gperm_name' ";
     //echo $sql ;
-    $result = $xoopsDB->query($sql) or die(mysql_error());
+    $result = $xoopsDB->query($sql) or die($GLOBALS['xoopsDB']->error());
     while ($row = $xoopsDB->fetchArray($result)) {
         $data[] = $row['gperm_groupid'];
     }

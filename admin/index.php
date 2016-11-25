@@ -17,8 +17,8 @@
  * @version      $Id $
  **/
 
-require_once '../../../include/cp_header.php';
-include 'header.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+include __DIR__ . '/header.php';
 
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 

@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_uploader_adm_main.html";
+$GLOBALS['xoopsOption']['template_main'] = "tad_uploader_adm_main.html";
 include_once "header.php";
 include_once "../function.php";
 
@@ -119,9 +119,9 @@ function catalog_form($cat_sn = "")
     $cat_sort     = (!isset($DBV['cat_sort'])) ? $cat_max_sort : $DBV['cat_sort'];
 
     $mod_id             = $xoopsModule->getVar('mid');
-    $moduleperm_handler = &xoops_gethandler('groupperm');
-    $read_group         = $moduleperm_handler->getGroupIds("catalog", $cat_sn, $mod_id);
-    $post_group         = $moduleperm_handler->getGroupIds("catalog_up", $cat_sn, $mod_id);
+    $modulepermHandler =  xoops_getHandler('groupperm');
+    $read_group         = $modulepermHandler->getGroupIds("catalog", $cat_sn, $mod_id);
+    $post_group         = $modulepermHandler->getGroupIds("catalog_up", $cat_sn, $mod_id);
 
     if (empty($read_group)) {
         $read_group = array(1, 2, 3);
@@ -189,4 +189,4 @@ switch ($op) {
 }
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+include_once __DIR__ . '/footer.php';

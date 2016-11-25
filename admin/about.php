@@ -17,12 +17,12 @@
  * @version      $Id $
  **/
 
-include '../../../include/cp_header.php';
-include '../../../class/xoopsformloader.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include __DIR__ . '/../../../class/xoopsformloader.php';
 xoops_cp_header();
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 
-$module_info = &$module_handler->get($xoopsModule->getVar("mid"));
+$module_info =  $moduleHandler->get($xoopsModule->getVar("mid"));
 
 $module_info = '<div id="about">
 				<label>' . _AM_XDIR_ABOUT_DESCRIPTION . '</label><text>' . $module_info->getInfo("description") . '</text><br />

@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_uploader_adm_power.html";
+$GLOBALS['xoopsOption']['template_main'] = "tad_uploader_adm_power.html";
 include_once "header.php";
 include_once "../function.php";
 include_once XOOPS_ROOT_PATH . "/Frameworks/art/functions.php";
@@ -39,4 +39,4 @@ $main2 = $formi->render();
 $xoopsTpl->assign('main2', $main2);
 
 /*-----------秀出結果區--------------*/
-include_once 'footer.php';
+include_once __DIR__ . '/footer.php';

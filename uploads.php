@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_uploader_uploads.html");
+$GLOBALS['xoopsOption']['template_main'] = set_bootstrap("tad_uploader_uploads.html");
 
 if (sizeof($upload_powers) <= 0 or empty($xoopsUser)) {
     redirect_header(XOOPS_URL . "/user.php", 3, _MD_TADUP_NO_EDIT_POWER);
@@ -77,7 +77,7 @@ function get_tad_uploader_file($cfsn = "")
 
     $sql = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where cfsn='$cfsn'";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
     $data   = $xoopsDB->fetchArray($result);
     return $data;
 }

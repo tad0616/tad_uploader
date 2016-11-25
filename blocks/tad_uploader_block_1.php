@@ -65,8 +65,8 @@ if (!function_exists("check_up_power")) {
         global $xoopsUser;
 
         //取得模組編號
-        $modhandler  = &xoops_gethandler('module');
-        $xoopsModule = &$modhandler->getByDirname("tad_uploader");
+        $moduleHandler  =  xoops_getHandler('module');
+        $xoopsModule = &$moduleHandler->getByDirname("tad_uploader");
         $module_id   = $xoopsModule->getVar('mid');
 
         //取得目前使用者的群組編號
@@ -80,7 +80,7 @@ if (!function_exists("check_up_power")) {
         }
 
         //取得群組權限功能
-        $gperm_handler = &xoops_gethandler('groupperm');
+        $gpermHandler =  xoops_getHandler('groupperm');
 
         //權限項目編號
         $perm_itemid = intval($cat_sn);
@@ -94,7 +94,7 @@ if (!function_exists("check_up_power")) {
                 }
             }
         } else {
-            if ($gperm_handler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
+            if ($gpermHandler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
                 return true;
             }
         }

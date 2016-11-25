@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_uploader_index.html");
+$GLOBALS['xoopsOption']['template_main'] = set_bootstrap("tad_uploader_index.html");
 if (empty($_SESSION['list_mode'])) {
     $_SESSION['list_mode'] = $xoopsModuleConfig['show_mode'];
 }
@@ -380,12 +380,12 @@ function save_power()
 {
     global $xoopsModule;
     $gperm_modid       = $xoopsModule->getVar('mid');
-    $groupperm_handler = &xoops_gethandler('groupperm');
+    $grouppermHandler =  xoops_getHandler('groupperm');
     foreach ($_POST['catalog'] as $gperm_groupid) {
-        $groupperm_handler->addRight('catalog', $_POST['cat_sn'], $gperm_groupid, $gperm_modid);
+        $grouppermHandler->addRight('catalog', $_POST['cat_sn'], $gperm_groupid, $gperm_modid);
     }
     foreach ($_POST['catalog_up'] as $gperm_groupid) {
-        $groupperm_handler->addRight('catalog_up', $_POST['cat_sn'], $gperm_groupid, $gperm_modid);
+        $grouppermHandler->addRight('catalog_up', $_POST['cat_sn'], $gperm_groupid, $gperm_modid);
     }
     update_catalog("cat_share", $_POST['cat_share'], $_POST['cat_sn']);
 }

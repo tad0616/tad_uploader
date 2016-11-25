@@ -22,7 +22,7 @@ function chk_cate_path($cat_sn, $of_cat_sn)
     global $xoopsDB;
     //抓出子目錄的編號
     $sql    = "select cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, mysql_error());
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
     while (list($sub_cat_sn) = $xoopsDB->fetchRow($result)) {
         if (chk_cate_path($sub_cat_sn, $of_cat_sn)) {
             return true;
