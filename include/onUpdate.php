@@ -235,7 +235,7 @@ function go_update6()
 ) ENGINE=MyISAM ";
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
 
-    $os = (PATH_SEPARATOR == ':') ? 'linux' : 'win';
+    $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
     $sql    = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cf_name`!=''";
     $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
@@ -245,8 +245,8 @@ function go_update6()
         }
 
         $type     = explode('/', $cf_type);
-        $kind     = ($type[0] == 'image') ? 'img' : 'file';
-        $kind_dir = ($kind == 'img') ? 'image' : 'file';
+        $kind     = ($type[0] === 'image') ? 'img' : 'file';
+        $kind_dir = ($kind === 'img') ? 'image' : 'file';
         $extarr   = explode('.', $cf_name);
         foreach ($extarr as $val) {
             $ext = strtolower($val);
@@ -259,15 +259,15 @@ function go_update6()
         $readme         = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}_info.txt";
 
         mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
-        if ($kind == 'img') {
+        if ($kind === 'img') {
             mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
             $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
         }
 
-        if ($os == 'win' and _CHARSET == 'UTF-8') {
+        if ($os === 'win' and _CHARSET === 'UTF-8') {
             $from = iconv(_CHARSET, 'Big5', $from);
             $to   = iconv(_CHARSET, 'Big5', $to);
-        } elseif ($os == 'linux' and _CHARSET == 'Big5') {
+        } elseif ($os === 'linux' and _CHARSET === 'Big5') {
             $from = iconv(_CHARSET, 'UTF-8', $from);
             $to   = iconv(_CHARSET, 'UTF-8', $to);
         }
@@ -309,7 +309,7 @@ function full_copy($source = '', $target = '')
         @mkdir($target);
         $d = dir($source);
         while (false !== ($entry = $d->read())) {
-            if ($entry == '.' || $entry == '..') {
+            if ($entry === '.' || $entry === '..') {
                 continue;
             }
 
@@ -352,13 +352,13 @@ function thumbnail($filename = '', $thumb_name = '', $type = 'image/jpeg', $widt
 
     // Load
     $thumb = imagecreatetruecolor($newwidth, $newheight);
-    if ($type == 'image/jpeg' or $type == 'image/jpg' or $type == 'image/pjpg' or $type == 'image/pjpeg') {
+    if ($type === 'image/jpeg' or $type === 'image/jpg' or $type === 'image/pjpg' or $type === 'image/pjpeg') {
         $source = imagecreatefromjpeg($filename);
         $type   = 'image/jpeg';
-    } elseif ($type == 'image/png') {
+    } elseif ($type === 'image/png') {
         $source = imagecreatefrompng($filename);
         $type   = 'image/png';
-    } elseif ($type == 'image/gif') {
+    } elseif ($type === 'image/gif') {
         $source = imagecreatefromgif($filename);
         $type   = 'image/gif';
     }

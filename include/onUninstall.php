@@ -21,7 +21,7 @@ function delete_directory($dirname)
     }
 
     while ($file = readdir($dir_handle)) {
-        if ($file != '.' && $file != '..') {
+        if ($file !== '.' && $file !== '..') {
             if (!is_dir($dirname . '/' . $file)) {
                 unlink($dirname . '/' . $file);
             } else {
@@ -40,7 +40,7 @@ function full_copy($source = '', $target = '')
         @mkdir($target);
         $d = dir($source);
         while (false !== ($entry = $d->read())) {
-            if ($entry == '.' || $entry == '..') {
+            if ($entry === '.' || $entry === '..') {
                 continue;
             }
 

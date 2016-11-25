@@ -86,7 +86,7 @@ if (!function_exists('check_up_power')) {
         $perm_itemid = (int)$cat_sn;
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
         if (empty($cat_sn)) {
-            if ($kind == 'catalog') {
+            if ($kind === 'catalog') {
                 return true;
             } else {
                 if ($isAdmin) {

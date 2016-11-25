@@ -147,7 +147,7 @@ function get_files_list($the_cat_sn = '', $check_up_power = '')
     $i   = 0;
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url) = $xoopsDB->fetchRow($result)) {
         $ff = get_file_by_cfsn($cfsn);
-        if ($ff['kind'] == 'img') {
+        if ($ff['kind'] === 'img') {
             list($width, $height, $type, $attr) = getimagesize(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}");
             $pic                                = XOOPS_URL . "/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}";
         } else {
@@ -174,13 +174,13 @@ function get_files_list($the_cat_sn = '', $check_up_power = '')
 
         $up_date = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($up_date)));
 
-        if ($ff['kind'] == 'img') {
+        if ($ff['kind'] === 'img') {
             $all[$i]['thumb_style'] = ($height > $width) ? 'width:85px;' : 'height:64px;max-width:85px;';
         } else {
             $all[$i]['thumb_style'] = '';
         }
         $all[$i]['pic']      = $pic;
-        $all[$i]['fname']    = ($ff['kind'] == 'img') ? '' : $fname;
+        $all[$i]['fname']    = ($ff['kind'] === 'img') ? '' : $fname;
         $all[$i]['cfsn']     = $cfsn;
         $all[$i]['cf_name']  = $cf_name;
         $all[$i]['up_date']  = $up_date;
@@ -445,9 +445,9 @@ switch ($op) {
         $uid    = $xoopsUser->uid();
         $cat_sn = add_tad_uploader();
 
-        if ($_POST['all_selected'] == 'all_del') {
+        if ($_POST['all_selected'] === 'all_del') {
             delfile($_POST['select_files']);
-        } elseif ($_POST['all_selected'] == 'all_move') {
+        } elseif ($_POST['all_selected'] === 'all_move') {
             movefile($_POST['select_files'], $_POST['new_cat_sn']);
             $cat_sn = $_POST['new_cat_sn'];
         }
