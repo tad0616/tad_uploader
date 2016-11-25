@@ -321,7 +321,7 @@ function get_path($cat_sn = '')
     $cat_sn_str   = find_path($cat_sn);
     $cat_sn_array = explode('||', $cat_sn_str);
     $path         = '';
-    for ($i = sizeof($cat_sn_array); $i >= 0; $i--) {
+    for ($i = count($cat_sn_array); $i >= 0; $i--) {
         if (empty($cat_sn_array[$i])) {
             continue;
         }
