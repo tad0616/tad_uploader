@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
-include_once "header.php";
-include_once "../function.php";
+include_once 'header.php';
+include_once '../function.php';
  
 /*-----------function區--------------*/
  $catalog = array(1,2,3) ;

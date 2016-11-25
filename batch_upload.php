@@ -1,12 +1,12 @@
 <?php
-include_once "header.php";
+include_once 'header.php';
 include_once "language/{$xoopsConfig['language']}/batch.php";
 
-$op     = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
+$op     = (empty($_REQUEST['op'])) ? '' : $_REQUEST['op'];
 $cat_sn = (isset($_REQUEST['cat_sn'])) ? intval($_REQUEST['cat_sn']) : 0;
 
 switch ($op) {
-    case "import":
+    case 'import':
         $cat_sn = tad_uploader_batch_import();
         header("location:index.php?of_cat_sn=$cat_sn");
         break;
@@ -17,7 +17,7 @@ switch ($op) {
 }
 
 //批次上傳表單
-function tad_uploader_batch_upload_form($cat_sn = "")
+function tad_uploader_batch_upload_form($cat_sn = '')
 {
     global $xoopsDB, $xoopsModuleConfig, $ok_video_ext, $ok_image_ext, $isAdmin;
     $row          = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
@@ -29,7 +29,7 @@ function tad_uploader_batch_upload_form($cat_sn = "")
     $cate_select = get_tad_uploader_cate_option(0, 0, $cat_sn, 1, false);
 
     $i  = 0;
-    $tr = "";
+    $tr = '';
     if ($dh = opendir(_TAD_UPLOADER_BATCH_DIR)) {
         while (($file = readdir($dh)) !== false) {
             if (strlen($file) <= 2) {
@@ -38,7 +38,7 @@ function tad_uploader_batch_upload_form($cat_sn = "")
 
             $file = auto_charset($file, 'web');
 
-            $f = explode(".", $file);
+            $f = explode('.', $file);
             foreach ($f as $part) {
                 $ext = strtolower($part);
             }
@@ -54,7 +54,7 @@ function tad_uploader_batch_upload_form($cat_sn = "")
         closedir($dh);
     }
 
-    $root = $isAdmin ? "<option value=''>" . _MD_TADUP_ROOT . "</div>" : "";
+    $root = $isAdmin ? "<option value=''>" . _MD_TADUP_ROOT . '</div>' : '';
 
     $main = "
     <form action='{$_SERVER['PHP_SELF']}' method='post' id='myForm' enctype='multipart/form-data'>
@@ -83,17 +83,17 @@ function tad_uploader_batch_upload_form($cat_sn = "")
 
         <table class='table table-striped table-hover'>
             <tr>
-            <th>" . _MD_TADUP_FILE_NAME . "</th>
-            <th>" . _MD_TADUP_FILE_DESC . "</th>
+            <th>" . _MD_TADUP_FILE_NAME . '</th>
+            <th>' . _MD_TADUP_FILE_DESC . "</th>
             </tr>
             $tr
         </table>
 
         <div class='{$row} text-center'>
             <input type='hidden' name='op' value='import'>
-            <button type='submit' class='btn btn-primary'>" . _MA_BATCH_SAVE . "</button>
+            <button type='submit' class='btn btn-primary'>" . _MA_BATCH_SAVE . '</button>
         </div>
-    </form>";
+    </form>';
 
     return $main;
 }
@@ -104,7 +104,7 @@ function tad_uploader_batch_import()
     global $xoopsDB, $xoopsUser, $xoopsModuleConfig, $TadUpFiles;
 
     if (!empty($_POST['new_cat_sn'])) {
-        $cat_sn = add_catalog("", $_POST['new_cat_sn'], "", "1", $_POST['cat_sn'], $_POST['cat_add_form']);
+        $cat_sn = add_catalog('', $_POST['new_cat_sn'], '', '1', $_POST['cat_sn'], $_POST['cat_add_form']);
     } else {
         $cat_sn = $_POST['cat_sn'];
     }
@@ -127,8 +127,8 @@ function tad_uploader_batch_import()
         $cf_sort = get_file_max_sort($cat_sn);
         $size    = filesize($file_src);
 
-        $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
-        $sql = "insert into " . $xoopsDB->prefix("tad_uploader_file") . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
+        $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+        $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader_file') . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
     values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
         $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, $GLOBALS['xoopsDB']->error());
         //取得最後新增資料的流水編號
@@ -141,7 +141,7 @@ function tad_uploader_batch_import()
 
         //複製匯入單一檔案：
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
-        $TadUpFiles->set_col("cfsn", $cfsn);
+        $TadUpFiles->set_col('cfsn', $cfsn);
         $TadUpFiles->import_one_file($file_src, $new_filename, null, null, null, $_POST['cf_desc'][$filename], true, true);
 
         unlink($file_src);

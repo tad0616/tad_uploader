@@ -28,7 +28,7 @@ function xoops_module_update_tad_uploader(&$module, $old_version)
     }
 
     chk_tad_uploader_block();
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch");
+    mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_uploader_batch');
 
     return true;
 }
@@ -48,22 +48,22 @@ function chk_tad_uploader_block()
     }
 
     //找出目前所有的樣板檔
-    $sql = "SELECT bid,name,visible,show_func,template FROM `" . $xoopsDB->prefix("newblocks") . "`
+    $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
     WHERE `dirname` = 'tad_uploader' ORDER BY `func_num`";
     $result = $xoopsDB->query($sql);
     while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
         //假如現有的區塊和樣板對不上就刪掉
         if ($template != $tpl_file_arr[$show_func]) {
-            $sql = "delete from " . $xoopsDB->prefix("newblocks") . " where bid='{$bid}'";
+            $sql = 'delete from ' . $xoopsDB->prefix('newblocks') . " where bid='{$bid}'";
             $xoopsDB->queryF($sql);
 
             //連同樣板以及樣板實體檔案也要刪掉
-            $sql = "delete from " . $xoopsDB->prefix("tplfile") . " as a
-            left join " . $xoopsDB->prefix("tplsource") . "  as b on a.tpl_id=b.tpl_id
+            $sql = 'delete from ' . $xoopsDB->prefix('tplfile') . ' as a
+            left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
             where a.tpl_refid='$bid' and a.tpl_module='tad_uploader' and a.tpl_type='block'";
             $xoopsDB->queryF($sql);
         } else {
-            $sql = "update " . $xoopsDB->prefix("tplfile") . "
+            $sql = 'update ' . $xoopsDB->prefix('tplfile') . "
             set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
             where tpl_refid='{$bid}'";
             $xoopsDB->queryF($sql);
@@ -75,7 +75,7 @@ function chk_tad_uploader_block()
 function chk_chk1()
 {
     global $xoopsDB;
-    $sql    = "select count(*) from " . $xoopsDB->prefix("tad_uploader_dl_log");
+    $sql    = 'select count(*) from ' . $xoopsDB->prefix('tad_uploader_dl_log');
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return true;
@@ -88,14 +88,14 @@ function chk_chk1()
 function go_update1()
 {
     global $xoopsDB;
-    $sql = "CREATE TABLE IF NOT EXISTS " . $xoopsDB->prefix("tad_uploader_dl_log") . " (
+    $sql = 'CREATE TABLE IF NOT EXISTS ' . $xoopsDB->prefix('tad_uploader_dl_log') . ' (
   `log_sn` smallint(5) unsigned NOT NULL auto_increment,
   `uid` smallint(5) unsigned NOT NULL,
   `dl_time` datetime NOT NULL,
   `from_ip` varchar(15) NOT NULL,
   `cfsn` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`log_sn`)
-  )";
+  )';
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
 
     return true;
@@ -105,7 +105,7 @@ function go_update1()
 function chk_chk2()
 {
     global $xoopsDB;
-    $sql    = "select count(`file_url`) from " . $xoopsDB->prefix("tad_uploader_file");
+    $sql    = 'select count(`file_url`) from ' . $xoopsDB->prefix('tad_uploader_file');
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -117,8 +117,8 @@ function chk_chk2()
 function go_update2()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_uploader_file") . " ADD `file_url` varchar(255) NOT NULL  default '' after `up_date`";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $GLOBALS['xoopsDB']->error());
+    $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_uploader_file') . " ADD `file_url` varchar(255) NOT NULL  default '' after `up_date`";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $GLOBALS['xoopsDB']->error());
     return true;
 }
 
@@ -126,7 +126,7 @@ function go_update2()
 function chk_chk3()
 {
     global $xoopsDB;
-    $sql    = "select count(`cf_sort`) from " . $xoopsDB->prefix("tad_uploader_file");
+    $sql    = 'select count(`cf_sort`) from ' . $xoopsDB->prefix('tad_uploader_file');
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -138,14 +138,14 @@ function chk_chk3()
 function go_update3()
 {
     global $xoopsDB;
-    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_uploader_file") . " ADD `cf_sort` smallint(5) unsigned NOT NULL default '0'";
-    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $GLOBALS['xoopsDB']->error());
+    $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_uploader_file') . " ADD `cf_sort` smallint(5) unsigned NOT NULL default '0'";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $GLOBALS['xoopsDB']->error());
     return true;
 }
 
 function chk_chk4()
 {
-    if (is_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch")) {
+    if (is_dir(XOOPS_ROOT_PATH . '/uploads/tad_uploader_batch')) {
         return true;
     }
     return false;
@@ -154,10 +154,10 @@ function chk_chk4()
 function go_update4()
 {
     global $xoopsDB;
-    $dir = XOOPS_ROOT_PATH . "/uploads/tad_uploader";
-    mk_dir($dir . "_batch");
+    $dir = XOOPS_ROOT_PATH . '/uploads/tad_uploader';
+    mk_dir($dir . '_batch');
 
-    $sql    = "select cfsn,uid,cf_name from " . $xoopsDB->prefix("tad_uploader_file") . " where file_url=''";
+    $sql    = 'select cfsn,uid,cf_name from ' . $xoopsDB->prefix('tad_uploader_file') . " where file_url=''";
     $result = $xoopsDB->query($sql) or die($sql);
 
     while (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result)) {
@@ -174,7 +174,7 @@ function go_update4()
 function chk_chk5()
 {
     global $xoopsDB;
-    $sql    = "select count(*) from " . $xoopsDB->prefix("tad_uploader_file") . " where cat_sn=0";
+    $sql    = 'select count(*) from ' . $xoopsDB->prefix('tad_uploader_file') . ' where cat_sn=0';
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return false;
@@ -187,11 +187,11 @@ function go_update5()
 {
     global $xoopsDB, $xoopsUser;
     $uid = $xoopsUser->uid();
-    $sql = "insert into " . $xoopsDB->prefix("tad_uploader") . " (`cat_title`, `cat_desc`, `cat_enable`, `uid`, `of_cat_sn`, `cat_share`, `cat_sort`, `cat_count`) VALUES ('" . _MD_TADUP_ROOT . "' , '' , '1' , '$uid' , 0 , 1 , 0 , 0)";
+    $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader') . " (`cat_title`, `cat_desc`, `cat_enable`, `uid`, `of_cat_sn`, `cat_share`, `cat_sort`, `cat_count`) VALUES ('" . _MD_TADUP_ROOT . "' , '' , '1' , '$uid' , 0 , 1 , 0 , 0)";
     $xoopsDB->queryF($sql);
     $cat_sn = $xoopsDB->getInsertId();
 
-    $sql = "update " . $xoopsDB->prefix("tad_uploader_file") . " set `cat_sn`='$cat_sn' where `cat_sn`= 0 ";
+    $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set `cat_sn`='$cat_sn' where `cat_sn`= 0 ";
     $xoopsDB->queryF($sql);
     return true;
 }
@@ -200,7 +200,7 @@ function go_update5()
 function chk_chk6()
 {
     global $xoopsDB;
-    $sql    = "select count(*) from " . $xoopsDB->prefix("tad_uploader_files_center");
+    $sql    = 'select count(*) from ' . $xoopsDB->prefix('tad_uploader_files_center');
     $result = $xoopsDB->query($sql);
     if (empty($result)) {
         return true;
@@ -217,7 +217,7 @@ function go_update6()
     //取消上傳時間限制
     set_time_limit(0);
 
-    $sql = "CREATE TABLE IF NOT EXISTS `" . $xoopsDB->prefix("tad_uploader_files_center") . "` (
+    $sql = 'CREATE TABLE IF NOT EXISTS `' . $xoopsDB->prefix('tad_uploader_files_center') . "` (
   `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `col_name` varchar(255) NOT NULL default '',
   `col_sn` smallint(5) unsigned NOT NULL default '0',
@@ -235,18 +235,18 @@ function go_update6()
 ) ENGINE=MyISAM ";
     $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
 
-    $os = (PATH_SEPARATOR == ':') ? "linux" : "win";
+    $os = (PATH_SEPARATOR == ':') ? 'linux' : 'win';
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where `cf_name`!=''";
+    $sql    = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cf_name`!=''";
     $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
         if (empty($cf_name)) {
             continue;
         }
 
-        $type     = explode("/", $cf_type);
-        $kind     = ($type[0] == 'image') ? "img" : "file";
-        $kind_dir = ($kind == 'img') ? "image" : "file";
+        $type     = explode('/', $cf_type);
+        $kind     = ($type[0] == 'image') ? 'img' : 'file';
+        $kind_dir = ($kind == 'img') ? 'image' : 'file';
         $extarr   = explode('.', $cf_name);
         foreach ($extarr as $val) {
             $ext = strtolower($val);
@@ -264,17 +264,17 @@ function go_update6()
             $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
         }
 
-        if ($os == "win" and _CHARSET == "UTF-8") {
-            $from = iconv(_CHARSET, "Big5", $from);
-            $to   = iconv(_CHARSET, "Big5", $to);
-        } elseif ($os == "linux" and _CHARSET == "Big5") {
-            $from = iconv(_CHARSET, "UTF-8", $from);
-            $to   = iconv(_CHARSET, "UTF-8", $to);
+        if ($os == 'win' and _CHARSET == 'UTF-8') {
+            $from = iconv(_CHARSET, 'Big5', $from);
+            $to   = iconv(_CHARSET, 'Big5', $to);
+        } elseif ($os == 'linux' and _CHARSET == 'Big5') {
+            $from = iconv(_CHARSET, 'UTF-8', $from);
+            $to   = iconv(_CHARSET, 'UTF-8', $to);
         }
 
         if (file_exists($from)) {
             if (rename($from, $to)) {
-                $sql2 = "insert into " . $xoopsDB->prefix("tad_uploader_files_center") . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
+                $sql2 = 'insert into ' . $xoopsDB->prefix('tad_uploader_files_center') . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
                 $xoopsDB->queryF($sql2) or redirect_header(XOOPS_URL, 3, $GLOBALS['xoopsDB']->error());
                 $fp = fopen($readme, 'w');
                 fwrite($fp, $cf_name);
@@ -287,7 +287,7 @@ function go_update6()
 }
 
 //建立目錄
-function mk_dir($dir = "")
+function mk_dir($dir = '')
 {
     //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
@@ -303,7 +303,7 @@ function mk_dir($dir = "")
 }
 
 //拷貝目錄
-function full_copy($source = "", $target = "")
+function full_copy($source = '', $target = '')
 {
     if (is_dir($source)) {
         @mkdir($target);
@@ -339,7 +339,7 @@ function rename_win($oldfile, $newfile)
 }
 
 //做縮圖
-function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $width = "120")
+function thumbnail($filename = '', $thumb_name = '', $type = 'image/jpeg', $width = '120')
 {
     ini_set('memory_limit', '50M');
     // Get new sizes
@@ -352,21 +352,21 @@ function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $widt
 
     // Load
     $thumb = imagecreatetruecolor($newwidth, $newheight);
-    if ($type == "image/jpeg" or $type == "image/jpg" or $type == "image/pjpg" or $type == "image/pjpeg") {
+    if ($type == 'image/jpeg' or $type == 'image/jpg' or $type == 'image/pjpg' or $type == 'image/pjpeg') {
         $source = imagecreatefromjpeg($filename);
-        $type   = "image/jpeg";
-    } elseif ($type == "image/png") {
+        $type   = 'image/jpeg';
+    } elseif ($type == 'image/png') {
         $source = imagecreatefrompng($filename);
-        $type   = "image/png";
-    } elseif ($type == "image/gif") {
+        $type   = 'image/png';
+    } elseif ($type == 'image/gif') {
         $source = imagecreatefromgif($filename);
-        $type   = "image/gif";
+        $type   = 'image/gif';
     }
 
     // Resize
     imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $old_width, $old_height);
 
-    header("Content-type: image/png");
+    header('Content-type: image/png');
     imagepng($thumb, $thumb_name);
 
     return;
