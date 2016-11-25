@@ -22,7 +22,7 @@ function add_tad_uploader()
 {
     global $xoopsDB, $xoopsUser, $TadUpFiles;
 
-    $myts     = &MyTextSanitizer::getInstance();
+    $myts     =  MyTextSanitizer::getInstance();
     $file_url = isset($_POST['file_url']) ? $myts->addSlashes($_POST['file_url']) : "";
     $myts->addSlashes();
 
