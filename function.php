@@ -55,7 +55,7 @@ function add_tad_uploader()
             if (empty($cf_desc)) {
                 $cf_desc = $name;
             }
-            $cf_sort = intval($cf_sort);
+            $cf_sort = (int)$cf_sort;
             $sql     = 'insert into ' . $xoopsDB->prefix('tad_uploader_file') . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
       values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$_FILES['upfile']['type'][$i]}','{$_FILES['upfile']['size'][$i]}','{$now}','{$cf_sort}')";
             //die($sql);
@@ -87,7 +87,7 @@ function remote_file_size($url)
             return -1;
         }
     }
-    $port = intval($url_p['port']);
+    $port = (int)$url_p['port'];
     if (!$port) {
         $port = 80;
     }
@@ -132,13 +132,13 @@ function remote_file_size($url)
         }
     }
     // echo "</div>";
-    if (intval($size) > 0) {
-        $return = strval($size);
+    if ((int)$size > 0) {
+        $return = (string)$size;
     } else {
         $return = $status;
     }
     // echo intval($status) .": [" . $newurl . "]<br />";
-    if (intval($status) == 302 && strlen($newurl) > 0) {
+    if ((int)$status == 302 && strlen($newurl) > 0) {
         // 302 redirect: get HTTP HEAD of new URL
         $return = remote_file_size($newurl);
     }
@@ -254,7 +254,7 @@ function check_up_power($kind = 'catalog', $cat_sn = '')
     $gpermHandler =  xoops_getHandler('groupperm');
 
     //權限項目編號
-    $perm_itemid = intval($cat_sn);
+    $perm_itemid = (int)$cat_sn;
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
 
     if (empty($cat_sn)) {

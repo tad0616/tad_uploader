@@ -2,8 +2,8 @@
 /*-----------引入檔案區--------------*/
 include '../../../include/cp_header.php';
 
-$of_cat_sn = intval(str_replace('node-_', '', $_POST['of_cat_sn']));
-$cat_sn    = intval(str_replace('node-_', '', $_POST['cat_sn']));
+$of_cat_sn = (int)str_replace('node-_', '', $_POST['of_cat_sn']);
+$cat_sn    = (int)str_replace('node-_', '', $_POST['cat_sn']);
 
 if ($of_cat_sn == $cat_sn) {
     die(_MA_TREETABLE_MOVE_ERROR1 . '(' . date('Y-m-d H:i:s', xoops_getUserTimestamp(time())) . ')');
