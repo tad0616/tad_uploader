@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
+include __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = set_bootstrap('tad_uploader_uploads.html');
 
 if (count($upload_powers) <= 0 or empty($xoopsUser)) {

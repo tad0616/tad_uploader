@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include_once 'header.php';
+include_once __DIR__ . '/header.php';
 
 $updateRecordsArray = $_POST['tr'];
 $sort               = 1;

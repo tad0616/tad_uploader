@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include '../../../include/cp_header.php';
+include __DIR__ . '/../../../include/cp_header.php';
 
 $of_cat_sn = (int)str_replace('node-_', '', $_POST['of_cat_sn']);
 $cat_sn    = (int)str_replace('node-_', '', $_POST['cat_sn']);

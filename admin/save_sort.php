@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include '../../../include/cp_header.php';
+include __DIR__ . '/../../../include/cp_header.php';
 $updateRecordsArray = $_POST['node-'];
 
 $sort = 1;

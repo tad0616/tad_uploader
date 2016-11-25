@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
+include __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = set_bootstrap('tad_uploader_index.html');
 if (empty($_SESSION['list_mode'])) {
     $_SESSION['list_mode'] = $xoopsModuleConfig['show_mode'];

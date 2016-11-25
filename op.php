@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
+include __DIR__ . '/header.php';
 
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
