@@ -253,7 +253,7 @@ class ModuleAdmin
         $this->_obj->loadAdminMenu();
         $ret = "<div class=\"rmmenuicon\">\n";
         foreach (array_keys($this->_obj->adminmenu) as $i) {
-            if ($this->_obj->adminmenu[$i]['link'] != 'admin/index.php') {
+            if ($this->_obj->adminmenu[$i]['link'] !== 'admin/index.php') {
                 if (isset($this->_obj->adminmenu[$i]['menu'])) {
                     $ret .= "<a href=\"../" . $this->_obj->adminmenu[$i]['link'] . "\" title=\"" . $this->_obj->adminmenu[$i]['title'] . "\">" .
                     "<img src=\"" . $path . $this->_obj->adminmenu[$i]['menu'] . "\" alt=\"" . $this->_obj->adminmenu[$i]['title'] . "\" />";
@@ -316,7 +316,7 @@ class ModuleAdmin
         $ret  = "<table>\n<tr>\n";
         $ret .= "<td width=\"50%\">\n";
         $ret .= $this->renderLabel();
-        if ($type == 'line') {
+        if ($type === 'line') {
             $ret .= $this->_itemChangelogLabel;
         } else {
             $ret .= "</td>\n";

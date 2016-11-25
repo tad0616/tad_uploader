@@ -17,7 +17,7 @@ function uploads_tabs($cat_sn = "", $cfsn = "")
     $jquery_path = get_jquery(true);
     $randStr     = randStr();
 
-    if ($_REQUEST['op'] == 'to_batch_upload') {
+    if ($_REQUEST['op'] === 'to_batch_upload') {
         $to_batch_upload = '$tabs.tabs("select", last_tab);';
     }
 
