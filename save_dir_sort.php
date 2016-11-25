@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include_once 'header.php';
+include_once __DIR__ . '/header.php';
 
 $sort = 1;
 foreach ($updateRecordsArray as $recordIDValue) {
