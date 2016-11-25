@@ -42,7 +42,7 @@
   </script>
 <{/if}>
 
-<div id="save_msg" style="float:right"></div>
+<div id="save_msg" style="float:right;"></div>
 
 <{$jqueryui}>
 
@@ -51,7 +51,7 @@
   <{$path}>
 </div>
 
-<div style="clear:both"></div>
+<div style="clear:both;"></div>
 
 <{if $cat_desc}>
   <div class="well"><{$cat_desc}></div>
@@ -100,10 +100,10 @@
     <{if $folder_list}>
       <{if $list_mode=="icon"}>
 
-        <ul id="dir_sort" style="display:inline">
+        <ul id="dir_sort" style="display:inline;">
         <{foreach from=$folder_list item=folder}>
-          <li id="tr_<{$folder.cat_sn}>" style="display:inline;margin:2px;width:<{$icon_width}>;height:130px;float:left;">
-            <a href="index.php?of_cat_sn=<{$folder.cat_sn}>" style="display:block;height:64px;overflow:hidden;margin:0px auto;text-align:center">
+          <li id="tr_<{$folder.cat_sn}>" style="display:inline;margin:2px;width:<{$icon_width;}>;height:130px;float:left;">
+            <a href="index.php?of_cat_sn=<{$folder.cat_sn}>" style="display:block;height:64px;overflow:hidden;margin:0px auto;text-align:center;">
             <img src="images/folder<{$folder.lock}>.gif" alt="folder">
             </a>
             <div style="overflow: hidden;width:100%;height:50px;text-align:center;">
@@ -147,11 +147,11 @@
 
     <{if $files_list}>
       <{if $list_mode=="icon"}>
-        <ul id="sort" style="display:inline">
+        <ul id="sort" style="display:inline;">
           <{foreach from=$files_list item=file}>
-            <li id="tr_<{$file.cfsn}>" style="display:inline;margin:2px;width:<{$icon_width}>;height:130px;float:left;">
-              <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>" style="display:block;height:64px;overflow:hidden;margin:0px auto;text-align:center">
-              <img src="<{$file.pic}>" alt="<{$file.cf_desc}>" title="<{$file.cf_desc}>" class="img-rounded" style="<{$file.thumb_style}>">
+            <li id="tr_<{$file.cfsn}>" style="display:inline;margin:2px;width:<{$icon_width;}>;height:130px;float:left;">
+              <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>" style="display:block;height:64px;overflow:hidden;margin:0px auto;text-align:center;">
+              <img src="<{$file.pic}>" alt="<{$file.cf_desc}>" title="<{$file.cf_desc}>" class="img-rounded" style="<{$file.thumb_style;}>">
               </a>
 
               <div style="overflow: hidden;width:100%;height:50px;text-align:center;">
