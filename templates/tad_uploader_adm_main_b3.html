@@ -1,0 +1,172 @@
+<link href="<{$xoops_url}>/modules/tadtools/css/font-awesome/css/font-awesome.css" rel="stylesheet">
+<div class="container-fluid">
+  <{$treetable_code}>
+  <script type="text/javascript">
+  function delete_catalog_func(cat_sn){
+    var sure = window.confirm("<{$smarty.const._MA_TADUP_DEL_CONFIRM}>");
+    if (!sure)  return;
+    location.href="main.php?op=delete_catalog&cat_sn=" + cat_sn;
+  }
+  </script>
+
+  <h2><{$smarty.const._MA_TADUP_LIST_ALL_FILES}></h2>
+
+  <form action="main.php" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
+    <div class="row">
+      <div class="col-md-5">
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">
+            <{$smarty.const._MA_TADUP_FATHER_FOLDER}>
+          </label>
+          <div class="col-md-8">
+            <select name="of_cat_sn" class="form-control" id= "of_cat_sn">
+              <option value=""></option>
+              <{$cata_select}>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">
+            <{$smarty.const._MA_TADUP_FOLDER_NAME}>
+          </label>
+          <div class="col-md-8">
+            <input type="text" name="cat_title" value="<{$cat_title}>" class="form-control" placeholder="<{$smarty.const._MA_TADUP_FOLDER_NAME}>">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">
+            <{$smarty.const._MA_TADUP_ENABLE}>
+          </label>
+          <div class="col-md-8">
+            <label class="radio-inline">
+              <input type="radio" name="cat_enable" id="cat_enable1" value="1" <{if $cat_enable=="1"}>checked<{/if}>><{$smarty.const._YES}>
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="cat_enable" id="cat_enable0" value="0" <{if $cat_enable=="0"}>checked<{/if}>><{$smarty.const._NO}>
+            </label>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-md-3 control-label">
+            <{$smarty.const._MA_TADUP_SHARE}>
+          </label>
+          <div class="col-md-8">
+            <label class="radio-inline">
+              <input type="radio" name="cat_share" id="cat_share1" value="1" <{if $cat_share=="1"}>checked<{/if}>><{$smarty.const._YES}>
+            </label>
+            <label class="radio-inline">
+              <input type="radio" name="cat_share" id="cat_share0" value="0" <{if $cat_share=="0"}>checked<{/if}>><{$smarty.const._NO}>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="row">
+          <label><{$smarty.const._MA_TADUP_CAN_ACCESS_GROUPS2}></label>
+          <{$enable_group}>
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="row">
+          <label><{$smarty.const._MA_TADUP_CAN_UPLOADS_GROUPS}></label>
+          <{$enable_upload_group}>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="row">
+          <label><{$smarty.const._MA_TADUP_FOLDER_DESC}></label>
+          <textarea name="cat_desc" class="form-control" style="height:120px;font-size:12px"><{$cat_desc}></textarea>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row text-center">
+      <input type="hidden" name="cat_sn" value="<{$cat_sn}>">
+      <input type="hidden" name="cat_sort" value="<{$cat_sort}>">
+      <input type="hidden" name="cat_count" value="<{$cat_count}>">
+      <input type="hidden" name="op" value="add_catalog">
+      <button type="submit" class="btn btn-primary"><{$smarty.const._MA_TADUP_SAVE}></button>
+    </div>
+  </form>
+
+  <div id="save_msg" style="float:right;"></div>
+  <div id="save_msg2" style="float:right;"></div>
+
+  <{if $get_cata_data}>
+    <table id="tbl" class="table table-striped table-bordered table-hover">
+      <tr>
+        <th><{$smarty.const._MA_TADUP_FOLDER_NAME}></th>
+        <th><{$smarty.const._MA_TADUP_AUTHOR}></th>
+        <th><{$smarty.const._MA_TADUP_ENABLE}></th>
+        <th><{$smarty.const._MA_TADUP_SHARE}></th>
+        <th><{$smarty.const._MA_TADUP_FILE_COUNTER}></th>
+        <th><{$smarty.const._MA_TADUP_FUNCTION}></th>
+      </tr>
+      <tbody class="sort">
+        <{foreach from=$get_cata_data item=cate}>
+          <tr data-tt-id="<{$cate.cat_sn}>" <{$cate.parent}> id="node-_<{$cate.cat_sn}>" <{$cate.class}> style="letter-spacing: 0em;">
+          <td>
+            <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/move_s.png" class="folder" alt="<{$smarty.const._MA_TREETABLE_MOVE_PIC}>" title="<{$smarty.const._MA_TREETABLE_MOVE_PIC}>">
+            <span class="folder">
+              <a href="<{$xoops_url}>/modules/tad_uploader/index.php?of_cat_sn=<{$cate.cat_sn}>"><{$cate.cat_title}></a>
+            </span>
+          </td>
+          <td><{$cate.uid_name}></td>
+          <td align="center"><{$cate.enable}></td>
+          <td align="center"><{$cate.share}></td>
+          <td><{$cate.cat_count}></td>
+          <td>
+
+          <img src="<{$xoops_url}>/modules/tadtools/treeTable/images/updown_s.png" style="cursor: s-resize;" alt="<{$smarty.const._MA_TREETABLE_SORT_PIC}>" title="<{$smarty.const._MA_TREETABLE_SORT_PIC}>">
+
+          <a href="javascript:delete_catalog_func(<{$cate.cat_sn}>);" class="btn btn-xs btn-danger"><{$smarty.const._MA_TADUP_DEL}></a>
+          <a href="main.php?op=catalog_form&cat_sn=<{$cate.cat_sn}>" class="btn btn-xs btn-warning"><{$smarty.const._MA_TADUP_EDIT}></a>
+          </td>
+          </tr>
+        <{/foreach}>
+      </tbody>
+    </table>
+  <{/if}>
+</div>
+
+<script type="text/javascript">
+   //上層目錄做選擇時
+   $(document).on("change", "#of_cat_sn", function(){
+        var of_cat_sn = $(this).val() ;
+        //alert(of_cat_sn) ;
+        set_permit(of_cat_sn) ;
+  }) ;
+   //取回上層目錄權限，指定權限
+   function set_permit(of_cat_sn) {
+       $.ajax({
+              url: 'ajax_get_permit.php',
+              type: 'GET',
+              dateType:'json', //接收資料格式
+              data: { of_cat_sn: of_cat_sn  },
+               success: function(data){
+
+                  var json_obj = jQuery.parseJSON(data) ;
+                  //讀取權
+                  var view_g =  json_obj.catalog.split(',') ;
+                  $('#view_group').val(   view_g ) ;
+                  //上傳權
+                   var up_g =  json_obj.catalog_up.split(',') ;
+                   $('#upload_group').val(   up_g ) ;
+
+                },
+                 error:function(xhr, ajaxOptions, thrownError){
+                    alert('error:' + xhr.status);
+                    alert(thrownError);
+                 }
+       })
+   }
+</script>
