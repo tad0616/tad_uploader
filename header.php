@@ -14,7 +14,7 @@ if ($xoopsUser) {
 
 $upload_powers = chk_cate_power('catalog_up');
 
-if (count($upload_powers) > 0 and $xoopsUser) {
+if (count($upload_powers) > 0 && $xoopsUser) {
     $interface_menu[_MD_TADUP_UPLOAD] = "uploads.php{$and_sn}";
 }
 
