@@ -31,7 +31,6 @@ function chk_cate_path($cat_sn, $of_cat_sn)
         if ($sub_cat_sn == $of_cat_sn) {
             return true;
         }
-
     }
     return false;
 }

@@ -69,7 +69,6 @@ function chk_tad_uploader_block()
             $xoopsDB->queryF($sql);
         }
     }
-
 }
 
 //檢查是否需要更新
@@ -241,7 +240,6 @@ function go_update6()
     $sql    = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where `cf_name`!=''";
     $result = $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL, 3, mysql_error());
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
-
         if (empty($cf_name)) {
             continue;
         }
@@ -343,7 +341,6 @@ function rename_win($oldfile, $newfile)
 //做縮圖
 function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $width = "120")
 {
-
     ini_set('memory_limit', '50M');
     // Get new sizes
     list($old_width, $old_height) = getimagesize($filename);

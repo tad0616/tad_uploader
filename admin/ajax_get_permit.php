@@ -9,16 +9,15 @@ $catalog_up= array(1) ;
  
 //上層權限
 $of_cat_sn = intval($_GET['of_cat_sn']) ;
- if ($of_cat_sn ) {
-   $catalog = getItem_Permissions($of_cat_sn , 'catalog' ) ;
-  $catalog_up = getItem_Permissions($of_cat_sn , 'catalog_up' ) ;
+ if ($of_cat_sn) {
+     $catalog = getItem_Permissions($of_cat_sn, 'catalog') ;
+     $catalog_up = getItem_Permissions($of_cat_sn, 'catalog_up') ;
  }
  
-$data['catalog'] = join(','  , $catalog ) ;
-$data['catalog_up'] = join(',' , $catalog_up ) ;
+$data['catalog'] = join(',', $catalog) ;
+$data['catalog_up'] = join(',', $catalog_up) ;
 /*
 $data['catalog'] =  $catalog  ;
 $data['catalog_up']  = $catalog_up  ;
 */
-echo json_encode($data,JSON_FORCE_OBJECT);  
- 
+echo json_encode($data, JSON_FORCE_OBJECT);

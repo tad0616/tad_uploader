@@ -96,7 +96,6 @@ function list_all_data($the_cat_sn = 0)
     $xoopsTpl->assign("list_mode", $_SESSION['list_mode']);
     $xoopsTpl->assign("only_show_desc", $xoopsModuleConfig['only_show_desc']);
     $xoopsTpl->assign("icon_width", '130px');
-
 }
 
 //抓取底下目錄
@@ -129,7 +128,6 @@ function get_folder_list($the_cat_sn = "", $check_up_power = "")
         $all[$i]['cat_count']  = $cat_count;
         $all[$i]['cat_desc']   = $cat_desc;
         $i++;
-
     }
 
     return $all;
@@ -191,7 +189,6 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
         $all[$i]['cf_desc']  = $cf_desc;
         $all[$i]['cat_sn']   = $cat_sn;
         $i++;
-
     }
     //if($_SESSION['list_mode']!="more")$main.="<div style='clear:both;'></div>";
 
@@ -480,7 +477,7 @@ switch ($op) {
         break;
 
     //刪除資料
-    case "delete_catalog";
+    case "delete_catalog":
         delete_catalog($cat_sn);
         header("location:{$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
         exit;

@@ -39,7 +39,6 @@ function tad_uploader_b_show_1($options)
 //區塊編輯函式
 function tad_uploader_b_edit_1($options)
 {
-
     $form = "
   " . _MB_TADUP_CATALOG_B_EDIT_1_BITEM0 . "
   <INPUT type='text' name='options[0]' value='{$options[0]}'>
@@ -93,13 +92,11 @@ if (!function_exists("check_up_power")) {
                 if ($isAdmin) {
                     return true;
                 }
-
             }
         } else {
             if ($gperm_handler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
                 return true;
             }
-
         }
 
         return false;

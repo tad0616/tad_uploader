@@ -53,7 +53,6 @@ function get_cata_data($of_cat_sn = 0, $level = 0, $i = "0")
     $data = "";
     //$i=0;(不可用，否則索引會重複)
     while (list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result)) {
-
         $cat_desc = nl2br($cat_desc);
         $uid_name = XoopsUser::getUnameFromId($uid, 1);
         $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
@@ -178,7 +177,7 @@ switch ($op) {
         break;
 
     //刪除資料
-    case "delete_catalog";
+    case "delete_catalog":
         delete_catalog($cat_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;

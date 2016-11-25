@@ -50,10 +50,8 @@ function add_tad_uploader()
         $sql = "insert into " . $xoopsDB->prefix("tad_uploader_file") . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,file_url,cf_sort)
     values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$type}','{$size}','{$now}','{$file_url}','{$cf_sort}')";
         $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5 . "<p>$sql</p>");
-
     } else {
         foreach ($_FILES['upfile']['name'] as $i => $name) {
-
             if (empty($cf_desc)) {
                 $cf_desc = $name;
             }
@@ -132,7 +130,6 @@ function remote_file_size($url)
         if (substr(strtolower($header), 0, strlen($s3)) == strtolower($s3)) {
             $newurl = substr($header, strlen($s3));
         }
-
     }
     // echo "</div>";
     if (intval($size) > 0) {
@@ -216,7 +213,6 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = "", $show
     }
 
     while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
-
         $selected = ($v == $cat_sn) ? "selected" : "";
         if (empty($cate_count[$cat_sn]) and $optgroup) {
             $option .= ($chk_view and !in_array($cat_sn, $ok_cat)) ? "" : "<optgroup label='{$cat_title}' style='font-style: normal;color:black;'>" . get_tad_uploader_cate_option($cat_sn, $level, $v, "0") . "</optgroup>";
@@ -225,7 +221,6 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = "", $show
             $option .= ($chk_view and !in_array($cat_sn, $ok_cat)) ? "" : "<option value='{$cat_sn}' $selected >{$dot}{$cat_title} ($counter)</option>";
             $option .= get_tad_uploader_cate_option($cat_sn, $level, $v, $show_dot, $optgroup, $chk_view);
         }
-
     }
     return $option;
 }
@@ -267,13 +262,11 @@ function check_up_power($kind = "catalog", $cat_sn = "")
             if ($isAdmin) {
                 return true;
             }
-
         }
     } else {
         if ($gperm_handler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
             return true;
         }
-
     }
 
     return false;
@@ -401,7 +394,6 @@ function get_path_belong($cat_sn, $catalog, $catalog_up, $cat_enable, $cat_share
         saveItem_Permissions($catalog_up, $sn, 'catalog_up');
         get_path_belong($sn, $catalog, $catalog_up, $cat_enable, $cat_share);
     }
-
 }
 
 //儲存權限
@@ -523,7 +515,6 @@ function del_file($cfsn = "", $del_sql = true)
     $TadUpFiles->set_dir('subdir', "/user_{$file['uid']}");
     $TadUpFiles->set_col('cfsn', $cfsn); //若要整個刪除
     $TadUpFiles->del_files();
-
 }
 
 //下載檔案
@@ -586,7 +577,6 @@ function add_dl_log($cfsn = "", $uid = "")
     $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
     $sql = "insert into " . $xoopsDB->prefix("tad_uploader_dl_log") . " (`uid`,`dl_time`,`from_ip`,`cfsn`) values('{$uid}','{$now}','{$myip}','{$cfsn}')";
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, "add log error");
-
 }
 
 //以流水號取得某筆catalog_file資料
@@ -704,10 +694,8 @@ function get_subcat_num($cat_sn = 0)
 }
 
 if (!function_exists('mime_content_type')) {
-
     function mime_content_type($filename)
     {
-
         $mime_types = array(
 
             'txt'  => 'text/plain',
