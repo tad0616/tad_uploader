@@ -1,6 +1,6 @@
 <?php
-include_once "../../tadtools/language/{$xoopsConfig['language']}/admin_common.php";
-define('_TAD_NEED_TADTOOLS', "This module needs TadTools module. You can download TadTools from <a href='http://www.tad0616.net/modules/tad_uploader/index.php?of_cat_sn=50' target='_blank'>Tad's web</a>.");
+include_once '../../tadtools/language/' . $xoopsConfig['language'] . '/admin_common.php';
+define('_TAD_NEED_TADTOOLS', 'This module needs TadTools module. You can download TadTools from <a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS EasyGO</a>.');
 
 //power.php
 define('_MA_TADUP_DB_ERROR1', 'Failed to get tad_uploader data');
@@ -16,7 +16,7 @@ define('_MA_TADUP_DB_ERROR2', 'Failed to replace tad_uploader data');
 define('_MA_TADUP_FUNCTION', 'Function');
 define('_MA_TADUP_DEL_CONFIRM', 'Delete this folder? This operation will delete all files in this folder!');
 define('_MA_TADUP_LIST_ALL_FILES', 'Display all files');
-define('_MA_TADUP_AUTHOR','Tad (tad0616@gmail.com)');
+define('_MA_TADUP_AUTHOR', 'Tad (tad0616@gmail.com)');
 define('_MA_TADUP_FILE_COUNTER', 'Count');
 define('_MA_TADUP_EDIT', 'Edit');
 define('_MA_TADUP_DEL', 'Delete');

@@ -1,93 +1,107 @@
 <?php
 
-//°Ï¶ô¥D¨ç¦¡ (³Ì·s¤W¶Ç¤å¥ó)
-function tad_uploader_b_show_1($options){
-  global $xoopsDB;
+//å€å¡Šä¸»å‡½å¼ (æœ€æ–°ä¸Šå‚³æ–‡ä»¶)
+function tad_uploader_b_show_1($options)
+{
+    global $xoopsDB;
 
-  include_once XOOPS_ROOT_PATH."/modules/tadtools/tad_function.php";
+    include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
-  $sql="select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from ".$xoopsDB->prefix("tad_uploader_file")." as a left join ".$xoopsDB->prefix("tad_uploader")." as b on a.cat_sn=b.cat_sn where b.cat_share='1'  order by a.up_date desc limit 0,{$options[0]}";
+    $sql = "select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from " . $xoopsDB->prefix("tad_uploader_file") . " as a left join " . $xoopsDB->prefix("tad_uploader") . " as b on a.cat_sn=b.cat_sn where b.cat_share='1'  order by a.up_date desc limit 0,{$options[0]}";
 
-  $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'],3, _MB_TADUP_DB_ERROR2);
+    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MB_TADUP_DB_ERROR2);
 
-  $block="";
-  $i=0;
-  while(list($cfsn,$cat_sn,$cf_name,$cf_desc,$file_url)=$xoopsDB->fetchRow($result)){
+    $block = "";
+    $i     = 0;
+    while (list($cfsn, $cat_sn, $cf_name, $cf_desc, $file_url) = $xoopsDB->fetchRow($result)) {
 
-    //¨Ì¾Ú¸Ó¸s²Õ¬O§_¹ï¸ÓÅv­­¶µ¥Ø¦³¨Ï¥ÎÅv¤§§PÂ_ ¡A°µ¤£¦P¤§³B²z
-    if(!check_up_power("catalog",$cat_sn))  continue;
+        //ä¾æ“šè©²ç¾¤çµ„æ˜¯å¦å°è©²æ¬Šé™é …ç›®æœ‰ä½¿ç”¨æ¬Šä¹‹åˆ¤æ–· ï¼Œåšä¸åŒä¹‹è™•ç†
+        if (!check_up_power("catalog", $cat_sn)) {
+            continue;
+        }
 
-    $cf_name=empty($cf_name)?get_basename($file_url):$cf_name;
+        $cf_name = empty($cf_name) ? get_basename($file_url) : $cf_name;
 
-    $link[$i]['title']=empty($cf_desc)?$cf_name:$cf_desc;
-    $link[$i]['cfsn']=$cfsn;
-    $link[$i]['cat_sn']=$cat_sn;
-    $link[$i]['cf_name']=$cf_name;
-    $i++;
-  }
-  $block['link']=$link;
-  return $block;
+        $link[$i]['title']   = empty($cf_desc) ? $cf_name : $cf_desc;
+        $link[$i]['cfsn']    = $cfsn;
+        $link[$i]['cat_sn']  = $cat_sn;
+        $link[$i]['cf_name'] = $cf_name;
+        $i++;
+    }
+    $block['link']              = $link;
+    $block['bootstrap_version'] = $_SESSION['bootstrap'];
+    $block['row']               = $_SESSION['bootstrap'] == '3' ? 'row' : 'row-fluid';
+    $block['span']              = $_SESSION['bootstrap'] == '3' ? 'col-md-' : 'span';
+
+    return $block;
 }
 
-//°Ï¶ô½s¿è¨ç¦¡
-function tad_uploader_b_edit_1($options){
+//å€å¡Šç·¨è¼¯å‡½å¼
+function tad_uploader_b_edit_1($options)
+{
 
-  $form="
-  "._MB_TADUP_CATALOG_B_EDIT_1_BITEM0."
+    $form = "
+  " . _MB_TADUP_CATALOG_B_EDIT_1_BITEM0 . "
   <INPUT type='text' name='options[0]' value='{$options[0]}'>
   ";
-  return $form;
+    return $form;
 }
 
-//§P§O®æ¦¡¹ÏÀÉ
-function chk_file_pic($file){
-  $f=explode(".",$file);
-  $n=sizeof($f)-1;
-  if(!file_exists(XOOPS_ROOT_PATH."/modules/tad_uploader/images/mime/{$f[$n]}.png"))return "mime.png";
-  return "{$f[$n]}.png";
+//åˆ¤åˆ¥æ ¼å¼åœ–æª”
+function chk_file_pic($file)
+{
+    $f = explode(".", $file);
+    $n = sizeof($f) - 1;
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tad_uploader/images/mime/{$f[$n]}.png")) {
+        return "mime.png";
+    }
+
+    return "{$f[$n]}.png";
 }
 
+if (!function_exists("check_up_power")) {
+    //æª¢æŸ¥æœ‰ç„¡ä¸Šå‚³æ¬Šåˆ©
+    function check_up_power($kind = "catalog", $cat_sn = "")
+    {
+        global $xoopsUser;
 
+        //å–å¾—æ¨¡çµ„ç·¨è™Ÿ
+        $modhandler  = &xoops_gethandler('module');
+        $xoopsModule = &$modhandler->getByDirname("tad_uploader");
+        $module_id   = $xoopsModule->getVar('mid');
 
-if(!function_exists("check_up_power")){
-  //ÀË¬d¦³µL¤W¶ÇÅv§Q
-  function check_up_power($kind="catalog",$cat_sn=""){
-      global $xoopsUser;
-
-      //¨ú±o¼Ò²Õ½s¸¹
-      $modhandler = &xoops_gethandler('module');
-      $xoopsModule = &$modhandler->getByDirname("tad_uploader");
-      $module_id = $xoopsModule->getVar('mid');
-
-
-
-      //¨ú±o¥Ø«e¨Ï¥ÎªÌªº¸s²Õ½s¸¹
-      if($xoopsUser) {
-        $groups = $xoopsUser->getGroups();
-        $isAdmin=$xoopsUser->isAdmin($module_id);
-        $uid=$xoopsUser->getVar('uid');
-      }else{
-        $groups = XOOPS_GROUP_ANONYMOUS;
-        $isAdmin=false;
-      }
-
-      //¨ú±o¸s²ÕÅv­­¥\¯à
-      $gperm_handler =& xoops_gethandler('groupperm');
-
-      //Åv­­¶µ¥Ø½s¸¹
-      $perm_itemid = intval($cat_sn);
-      //¨Ì¾Ú¸Ó¸s²Õ¬O§_¹ï¸ÓÅv­­¶µ¥Ø¦³¨Ï¥ÎÅv¤§§PÂ_ ¡A°µ¤£¦P¤§³B²z
-      if(empty($cat_sn)){
-        if($kind=="catalog"){
-          return true;
-        }else{
-          if($isAdmin) return true;
+        //å–å¾—ç›®å‰ä½¿ç”¨è€…çš„ç¾¤çµ„ç·¨è™Ÿ
+        if ($xoopsUser) {
+            $groups  = $xoopsUser->getGroups();
+            $isAdmin = $xoopsUser->isAdmin($module_id);
+            $uid     = $xoopsUser->getVar('uid');
+        } else {
+            $groups  = XOOPS_GROUP_ANONYMOUS;
+            $isAdmin = false;
         }
-      }else{
-        if($gperm_handler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) return true;
-      }
 
-      return false;
-  }
+        //å–å¾—ç¾¤çµ„æ¬Šé™åŠŸèƒ½
+        $gperm_handler = &xoops_gethandler('groupperm');
+
+        //æ¬Šé™é …ç›®ç·¨è™Ÿ
+        $perm_itemid = intval($cat_sn);
+        //ä¾æ“šè©²ç¾¤çµ„æ˜¯å¦å°è©²æ¬Šé™é …ç›®æœ‰ä½¿ç”¨æ¬Šä¹‹åˆ¤æ–· ï¼Œåšä¸åŒä¹‹è™•ç†
+        if (empty($cat_sn)) {
+            if ($kind == "catalog") {
+                return true;
+            } else {
+                if ($isAdmin) {
+                    return true;
+                }
+
+            }
+        } else {
+            if ($gperm_handler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
 }
-?>
