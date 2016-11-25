@@ -3,7 +3,7 @@
 include 'header.php';
 $GLOBALS['xoopsOption']['template_main'] = set_bootstrap('tad_uploader_uploads.html');
 
-if (sizeof($upload_powers) <= 0 or empty($xoopsUser)) {
+if (count($upload_powers) <= 0 or empty($xoopsUser)) {
     redirect_header(XOOPS_URL . '/user.php', 3, _MD_TADUP_NO_EDIT_POWER);
 }
 include XOOPS_ROOT_PATH . '/header.php';

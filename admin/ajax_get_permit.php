@@ -14,8 +14,8 @@ $of_cat_sn = intval($_GET['of_cat_sn']) ;
      $catalog_up = getItem_Permissions($of_cat_sn, 'catalog_up') ;
  }
  
-$data['catalog'] = join(',', $catalog) ;
-$data['catalog_up'] = join(',', $catalog_up) ;
+$data['catalog'] = implode(',', $catalog) ;
+$data['catalog_up'] = implode(',', $catalog_up) ;
 /*
 $data['catalog'] =  $catalog  ;
 $data['catalog_up']  = $catalog_up  ;

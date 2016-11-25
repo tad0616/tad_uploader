@@ -50,7 +50,7 @@ function tad_uploader_b_edit_1($options)
 function chk_file_pic($file)
 {
     $f = explode('.', $file);
-    $n = sizeof($f) - 1;
+    $n = count($f) - 1;
     if (!file_exists(XOOPS_ROOT_PATH . "/modules/tad_uploader/images/mime/{$f[$n]}.png")) {
         return 'mime.png';
     }

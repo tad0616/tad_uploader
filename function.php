@@ -99,10 +99,10 @@ function remote_file_size($url)
     if (!$fp) {
         return false;
     } else {
-        fputs($fp, 'HEAD ' . $url . " HTTP/1.1\r\n");
-        fputs($fp, 'HOST: ' . $host . "\r\n");
-        fputs($fp, "User-Agent: http://www.example.com/my_application\r\n");
-        fputs($fp, "Connection: close\r\n\r\n");
+        fwrite($fp, 'HEAD ' . $url . " HTTP/1.1\r\n");
+        fwrite($fp, 'HOST: ' . $host . "\r\n");
+        fwrite($fp, "User-Agent: http://www.example.com/my_application\r\n");
+        fwrite($fp, "Connection: close\r\n\r\n");
         $headers = '';
         while (!feof($fp)) {
             $headers .= fgets($fp, 128);
@@ -435,7 +435,7 @@ function getItem_Permissions($itemid, $gperm_name)
 function get_file_name($real_file_name = '', $cfsn = '')
 {
     $f   = explode('.', $real_file_name);
-    $ln  = sizeof($f) - 1;
+    $ln  = count($f) - 1;
     $sub = $f[$ln];
     if ($sub == 'php') {
         $real_file_name .= 's';
