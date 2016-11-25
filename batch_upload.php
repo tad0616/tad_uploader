@@ -139,7 +139,6 @@ function tad_uploader_batch_import()
         $TadUpFiles->import_one_file($file_src, $new_filename, null, null, null, $_POST['cf_desc'][$filename], true, true);
 
         unlink($file_src);
-
     }
 
     //刪除其他多餘檔案

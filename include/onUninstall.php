@@ -27,7 +27,6 @@ function delete_directory($dirname)
             } else {
                 delete_directory($dirname . '/' . $file);
             }
-
         }
     }
     closedir($dir_handle);

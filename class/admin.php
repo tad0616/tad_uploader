@@ -16,7 +16,6 @@
 
 class ModuleAdmin
 {
-
     public $_itemButton          = array();
     public $_itemLabel           = array();
     public $_itemLineLabel       = array();
@@ -33,7 +32,6 @@ class ModuleAdmin
         global $xoopsModule;
         $this->_obj = $xoopsModule;
         echo "<style type=\"text/css\" media=\"screen\">@import \"" . XOOPS_URL . "/modules/" . $xoopsModule->getVar('dirname', 'e') . "/css/admin.css\";</style>";
-
     }
 
     public function addItemButton($title, $link, $icon = 'add', $extra = '')
@@ -44,7 +42,6 @@ class ModuleAdmin
         $ret['extra']        = $extra;
         $this->_itemButton[] = $ret;
         return true;
-
     }
 
     public function renderButton($position = "right", $delimeter = "&nbsp;")
