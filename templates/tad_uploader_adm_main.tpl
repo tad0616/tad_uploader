@@ -1,10 +1,8 @@
 <div class="container-fluid">
   <div id="save_msg"></div>
   <div class="row">
-    <div class="col-md-3">
-      <{$sweet_alert_code}>
+    <div class="col-sm-3">
       <{$ztree_code}>
-      <{$sweet_alert_cate_code}>
 
       <{if $cat_sn!="" and $op!="tad_uploader_cate_form"}>
         <div>
@@ -21,15 +19,15 @@
         <a href="main.php?op=tad_uploader_cate_form" class="btn btn-info btn-block"><{$smarty.const._MA_TADUP_ADD_FORM}></a>
       </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-sm-9">
       <{if $cat_sn!="" and $op!="tad_uploader_cate_form"}>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-sm-4">
             <h3>
               <{$cate.cat_title}>
             </h3>
           </div>
-          <div class="col-md-8 text-right">
+          <div class="col-sm-8 text-right">
             <div style="margin-top: 10px;">
               <{if $op!="tad_uploader_cate_form" and $cat_sn}>
                 <a href="javascript:delete_tad_uploader_func(<{$cate.cat_sn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><{$smarty.const._TAD_DEL}></a>
@@ -41,7 +39,7 @@
 
         <{if $cate.cat_desc}>
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-sm-12">
               <div class="alert alert-success"><{$cate.cat_desc}></div>
             </div>
           </div>
@@ -55,13 +53,13 @@
 
         <form action="main.php" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
           <div class="row">
-            <div class="col-md-5">
+            <div class="col-sm-5">
 
               <div class="form-group">
-                <label class="col-md-3 control-label">
+                <label class="col-sm-3 control-label">
                   <{$smarty.const._MA_TADUP_FATHER_FOLDER}>
                 </label>
-                <div class="col-md-8">
+                <div class="col-sm-8">
                   <select name="of_cat_sn" class="form-control" id= "of_cat_sn">
                     <option value=""></option>
                     <{$cata_select}>
@@ -70,19 +68,19 @@
               </div>
 
               <div class="form-group">
-                <label class="col-md-3 control-label">
+                <label class="col-sm-3 control-label">
                   <{$smarty.const._MA_TADUP_FOLDER_NAME}>
                 </label>
-                <div class="col-md-8">
+                <div class="col-sm-8">
                   <input type="text" name="cat_title" value="<{$cat_title}>" class="form-control" placeholder="<{$smarty.const._MA_TADUP_FOLDER_NAME}>">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-md-3 control-label">
+                <label class="col-sm-3 control-label">
                   <{$smarty.const._MA_TADUP_ENABLE}>
                 </label>
-                <div class="col-md-8">
+                <div class="col-sm-8">
                   <label class="radio-inline">
                     <input type="radio" name="cat_enable" id="cat_enable1" value="1" <{if $cat_enable=="1"}>checked<{/if}>><{$smarty.const._YES}>
                   </label>
@@ -94,10 +92,10 @@
 
 
               <div class="form-group">
-                <label class="col-md-3 control-label">
+                <label class="col-sm-3 control-label">
                   <{$smarty.const._MA_TADUP_SHARE}>
                 </label>
-                <div class="col-md-8">
+                <div class="col-sm-8">
                   <label class="radio-inline">
                     <input type="radio" name="cat_share" id="cat_share1" value="1" <{if $cat_share=="1"}>checked<{/if}>><{$smarty.const._YES}>
                   </label>
@@ -108,21 +106,21 @@
               </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-sm-2">
               <div class="row">
                 <label><{$smarty.const._MA_TADUP_CAN_ACCESS_GROUPS2}></label>
                 <{$enable_group}>
               </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-sm-2">
               <div class="row">
                 <label><{$smarty.const._MA_TADUP_CAN_UPLOADS_GROUPS}></label>
                 <{$enable_upload_group}>
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-sm-3">
               <div class="row">
                 <label><{$smarty.const._MA_TADUP_FOLDER_DESC}></label>
                 <textarea name="cat_desc" class="form-control" style="height:120px;font-size:12px"><{$cat_desc}></textarea>

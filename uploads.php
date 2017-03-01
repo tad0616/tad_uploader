@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_uploader_uploads.html");
+$xoopsOption['template_main'] = "tad_uploader_uploads.tpl";
 
 if (sizeof($upload_powers) <= 0 or empty($xoopsUser)) {
     redirect_header(XOOPS_URL . "/user.php", 3, _MD_TADUP_NO_EDIT_POWER);

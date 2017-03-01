@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_uploader_adm_main.html";
+$xoopsOption['template_main'] = "tad_uploader_adm_main.tpl";
 include_once "header.php";
 include_once "../function.php";
 
@@ -74,8 +74,11 @@ function list_tad_uploader($cat_sn = "")
         redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
     }
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
-    $sweet_alert      = new sweet_alert();
-    $sweet_alert_code = $sweet_alert->render("delete_tad_uploader_func", "main.php?op=delete_tad_uploader&cat_sn=", 'cat_sn');
+    $sweet_alert = new sweet_alert();
+    $sweet_alert->render("delete_tad_uploader_func", "main.php?op=delete_tad_uploader&cat_sn=", 'cat_sn');
+    $sweet_alert2 = new sweet_alert();
+    $sweet_alert2->render("delete_file_func", "main.php?op=del_file&cat_sn={$cat_sn}&cfsn=", 'cfsn');
+
     // $xoopsTpl->assign('sweet_alert_code', $sweet_alert_code);
 }
 
@@ -187,6 +190,7 @@ include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op        = system_CleanVars($_REQUEST, 'op', '', 'string');
 $cat_sn    = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
 $of_cat_sn = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
+$cfsn      = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
 
 switch ($op) {
     case "add_tad_uploader":
@@ -194,20 +198,23 @@ switch ($op) {
         add_tad_uploader($cat_sn, $_POST['cat_title'], $_POST['cat_desc'], $_POST['cat_enable'], $of_cat_sn, $_POST['add_to_cat'], $_POST['cat_share'], $_POST['cat_sort'], $_POST['cat_count'], $_POST['catalog'], $_POST['catalog_up'], 'admin');
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //刪除資料
     case "delete_tad_uploader";
         delete_tad_uploader($cat_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //輸入表格
     case "tad_uploader_cate_form":
         list_tad_uploader_cate_tree($cat_sn);
         tad_uploader_cate_form($cat_sn);
         break;
+
+    case "del_file":
+        del_file($cfsn);
+        header("location: {$_SERVER['PHP_SELF']}?cat_sn={$cat_sn}");
+        exit;
 
     default:
         list_tad_uploader_cate_tree($cat_sn);

@@ -572,7 +572,7 @@ function del_file($cfsn = "", $del_sql = true)
     }
 
     $file = get_file($cfsn);
-
+    // die(var_export($file));
     if ($del_sql) {
         $sql = "delete from " . $xoopsDB->prefix("tad_uploader_file") . " where cfsn='$cfsn'";
         $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR7);

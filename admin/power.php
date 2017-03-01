@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_uploader_adm_power.html";
+$xoopsOption['template_main'] = "tad_uploader_adm_power.tpl";
 include_once "header.php";
 include_once "../function.php";
 include_once XOOPS_ROOT_PATH . "/Frameworks/art/functions.php";

@@ -57,19 +57,19 @@ function tad_uploader_batch_upload_form($cat_sn = "")
         </div>
 
         <div class='form-group'>
-          <label class='col-md-2 control-label'>
+          <label class='col-sm-2 control-label'>
             " . _MD_TADUP_SELECT_FOLDER . "
           </label>
-          <div class='col-md-4'>
+          <div class='col-sm-4'>
             <select name='cat_sn' size=1 class='form-control'>
               $root
               $cate_select
             </select>
           </div>
-          <label class='col-md-2 control-label'>
+          <label class='col-sm-2 control-label'>
             " . _MD_TADUP_CREATE_NEW_FOLDER . "
           </label>
-          <div class='col-md-4'>
+          <div class='col-sm-4'>
             <input type='text' name='new_cat_sn' class='form-control'>
           </div>
         </div>

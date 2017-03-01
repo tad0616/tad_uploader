@@ -5,7 +5,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADUP_NAME;
-$modversion['version']     = '3.41';
+$modversion['version']     = '3.51';
 $modversion['description'] = _MI_TADUP_DESC;
 $modversion['author']      = 'Tad(tad0616@gmail.com)';
 $modversion['credits']     = _MI_TADUP_CREDITS;
@@ -16,7 +16,7 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2016/05/26';
+$modversion['release_date']        = '2017/01/07';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
@@ -63,27 +63,27 @@ $modversion['hasMain'] = 1;
 //---樣板設定---//
 $modversion['templates']                    = array();
 $i                                          = 1;
-$modversion['templates'][$i]['file']        = 'tad_uploader_index_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_uploader_index_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_uploader_index.tpl';
+$modversion['templates'][$i]['description'] = 'tad_uploader_index.tpl';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_uploader_uploads_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_uploader_uploads_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_uploader_uploads.tpl';
+$modversion['templates'][$i]['description'] = 'tad_uploader_uploads.tpl';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_uploader_adm_main_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_uploader_adm_main_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_uploader_adm_main.tpl';
+$modversion['templates'][$i]['description'] = 'tad_uploader_adm_main.tpl';
 
 $i++;
-$modversion['templates'][$i]['file']        = 'tad_uploader_adm_power_b3.html';
-$modversion['templates'][$i]['description'] = 'tad_uploader_adm_power_b3.html';
+$modversion['templates'][$i]['file']        = 'tad_uploader_adm_power.tpl';
+$modversion['templates'][$i]['description'] = 'tad_uploader_adm_power.tpl';
 
 //---區塊設定---//
 $modversion['blocks'][1]['file']        = "tad_uploader_block_1.php";
 $modversion['blocks'][1]['name']        = _MI_TADUP_BNAME1;
 $modversion['blocks'][1]['description'] = _MI_TADUP_BDESC1;
 $modversion['blocks'][1]['show_func']   = "tad_uploader_b_show_1";
-$modversion['blocks'][1]['template']    = "tad_uploader_block_1.html";
+$modversion['blocks'][1]['template']    = "tad_uploader_block_1.tpl";
 $modversion['blocks'][1]['edit_func']   = "tad_uploader_b_edit_1";
 $modversion['blocks'][1]['options']     = "10";
 

@@ -27,6 +27,10 @@ function xoops_module_update_tad_uploader(&$module, $old_version)
         go_update6();
     }
 
+    if (chk_chk7()) {
+        go_update7();
+    }
+
     chk_tad_uploader_block();
     mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch");
 
@@ -284,6 +288,30 @@ function go_update6()
             }
         }
     }
+
+    return true;
+}
+
+//修改分類名稱欄位名稱
+function chk_chk7()
+{
+    global $xoopsDB;
+    $sql          = "SHOW Fields FROM " . $xoopsDB->prefix("tad_uploader_file") . " where `Field`='cf_size' and `Type` like 'bigint%'";
+    $result       = $xoopsDB->queryF($sql) or web_error($sql);
+    list($Fields) = $xoopsDB->fetchRow($result);
+
+    if (empty($Fields)) {
+        return true;
+    }
+
+    return false;
+}
+
+function go_update7()
+{
+    global $xoopsDB;
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_uploader_file") . " CHANGE `cf_size` `cf_size` bigint unsigned NOT NULL DEFAULT '0'";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $xoopsDB->error());
 
     return true;
 }

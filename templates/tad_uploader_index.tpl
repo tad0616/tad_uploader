@@ -229,17 +229,17 @@
     <div class="well">
       <div class="form-group">
       <{if $files_list}>
-        <div class="col-md-5">
+        <div class="col-sm-5">
           <label class="radio-inline">
             <input type="radio" name="all_selected"  value="all_del"><{$smarty.const._MD_TADUP_SELECTED_DEL}>
           </label>
         </div>
 
         <{if $move_option}>
-          <label class="radio-inline col-md-3">
+          <label class="radio-inline col-sm-3">
             <input type="radio" name="all_selected"  value="all_move"><{$smarty.const._MD_TADUP_SELECTED_MOVETO}>
           </label>
-          <div class="col-md-4">
+          <div class="col-sm-4">
             <select name="new_cat_sn" class="form-control">
               <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>
               <{$move_option}>
@@ -250,29 +250,29 @@
       </div>
 
       <div class="form-group">
-        <label class="col-md-2 control-label">
+        <label class="col-sm-2 control-label">
           <{$smarty.const._MD_TADUP_SELECT_FOLDER}><{$smarty.const._TAD_FOR}>
         </label>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <select name="add_to_cat" size=1 class="form-control">
             <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
             <{$menu_option}>
           </select>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
           <input type="text" name="creat_new_cat" class="form-control" placeholder="<{$smarty.const._MD_TADUP_CREAT_NEW_CATE}>">
         </div>
       </div>
 
 
       <div class="form-group">
-        <label class="col-md-2 control-label">
+        <label class="col-sm-2 control-label">
           <{$smarty.const._MD_TADUP_SELECT_FILES}><{$smarty.const._TAD_FOR}>
         </label>
-        <div class="col-md-4">
+        <div class="col-sm-4">
           <{$upform}>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
           <input type="text" name="cf_desc" class="form-control"  value="<{$cf_desc}>" placeholder="<{$smarty.const._MD_TADUP_FILE_DESC}>">
         </div>
       </div>

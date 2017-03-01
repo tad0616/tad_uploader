@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_uploader_index.html");
+$xoopsOption['template_main'] = "tad_uploader_index.tpl";
 if (empty($_SESSION['list_mode'])) {
     $_SESSION['list_mode'] = $xoopsModuleConfig['show_mode'];
 }
@@ -165,13 +165,17 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
         }
         //die($pic);
         //取得該檔案其他資料的值
-        if ($cf_size > 1048576) {
-            $size = round(($cf_size / 1048576), 1) . "M";
-        } elseif ($cf_size > 1024) {
-            $size = round(($cf_size / 1024), 1) . "K";
-        } else {
-            $size = $cf_size . "bytes";
-        }
+        // if ($cf_size > 1073741824) {
+        //     $size = round(($cf_size / 1073741824), 1) . "G";
+        // } elseif ($cf_size > 1048576) {
+        //     $size = round(($cf_size / 1048576), 1) . "M";
+        // } elseif ($cf_size > 1024) {
+        //     $size = round(($cf_size / 1024), 1) . "K";
+        // } else {
+        //     $size = $cf_size . "bytes";
+        // }
+
+        $size    = roundsize($cf_size);
         $cf_desc = nl2br($cf_desc);
         $cf_desc = (empty($cf_desc)) ? $cf_name : $cf_desc;
 
@@ -205,6 +209,16 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
 
     //$all=($main)?"<tbody id='sort'>{$main}</tbody>":"";
     return $all;
+}
+
+function roundsize($size)
+{
+    $i   = 0;
+    $iec = array('B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB');
+    while (($size / 1024) > 1) {
+        $size = $size / 1024;
+        $i++;}
+    return (round($size, 1) . " " . $iec[$i]);
 }
 
 //該資料夾屬性
