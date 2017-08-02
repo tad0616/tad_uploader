@@ -143,15 +143,24 @@ switch ($op) {
     //新增資料
     case "insert_tad_uploader":
         $cat_sn = add_tad_uploader_file();
-        header("location: index.php?of_cat_sn={$cat_sn}");
-        exit;
+
+        if (check_up_power("catalog", $cat_sn)) {
+            header("location: index.php?of_cat_sn={$cat_sn}");
+            exit;
+        } else {
+            redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+        }
         break;
 
     //更新資料
     case "update_tad_uploader";
         $cat_sn = update_tad_uploader($cfsn);
-        header("location: index.php?of_cat_sn={$cat_sn}");
-        exit;
+        if (check_up_power("catalog", $cat_sn)) {
+            header("location: index.php?of_cat_sn={$cat_sn}");
+            exit;
+        } else {
+            redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+        }
         break;
 
     default:

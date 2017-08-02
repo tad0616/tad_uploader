@@ -67,27 +67,28 @@
       <table class="footable" id="filetbl">
         <thead>
           <tr class="success">
-            <th data-class="expand" colspan=2>
-              <label class="checkbox-inline">
+            <th id="h1" data-class="expand" colspan=2>
+              <label class="sr-only" for="clickAll">clickAll</label>
+              <div class="checkbox-inline">
                 <input type="checkbox" id="clickAll"> <{$smarty.const._MD_TADUP_FILE_NAME}>
-              </label>
+              </div>
             </th>
-            <th data-hide="phone" style="text-align:center;" nowrap>
+            <th id="h2" data-hide="phone" style="text-align:center;" nowrap>
               <{$smarty.const._MD_TADUP_FILE_DATE}>
             </th>
-            <th data-hide="phone" style="text-align:center;" nowrap>
+            <th id="h3" data-hide="phone" style="text-align:center;" nowrap>
               <{$smarty.const._MD_TADUP_FILE_SIZE}>
             </th>
-            <th data-hide="phone" style="text-align:center;" nowrap>
+            <th id="h4" data-hide="phone" style="text-align:center;" nowrap>
               <{$smarty.const._MD_TADUP_FILE_COUNTER}>
             </th>
 
             <{if $only_show_desc!="1"}>
-              <th data-hide="phone"><{$smarty.const._MD_TADUP_FILE_DESC}></th>
+              <th id="h5" data-hide="phone"><{$smarty.const._MD_TADUP_FILE_DESC}></th>
             <{/if}>
 
             <{if $up_power}>
-              <th data-hide="phone" style="text-align:center;">
+              <th id="h6" data-hide="phone" style="text-align:center;">
                 <{$smarty.const._TAD_FUNCTION}>
               </th>
             <{/if}>
@@ -117,7 +118,7 @@
         <tbody id="dir_sort">
         <{foreach from=$folder_list item=folder}>
           <tr id="tr_<{$folder.cat_sn}>">
-            <td colspan=3>
+            <td headers="h1" colspan=3>
               <{if $up_power}>
                 <label>
               <{/if}>
@@ -126,13 +127,13 @@
                 </label>
               <{/if}>
             </td>
-            <td style="font-size:11px;text-align:center;"><{$folder.file_num}><{$smarty.const._MD_TADUP_FILE}></td>
-            <td style="font-size:11px;text-align:center;"><{$folder.cat_count}></td>
+            <td headers="h3" style="font-size:11px;text-align:center;"><{$folder.file_num}><{$smarty.const._MD_TADUP_FILE}></td>
+            <td headers="h4" style="font-size:11px;text-align:center;"><{$folder.cat_count}></td>
             <{if $only_show_desc!="1"}>
-              <td style="font-size:12px;"><{$folder.cat_desc}></td>
+              <td headers="h5" style="font-size:12px;"><{$folder.cat_desc}></td>
             <{/if}>
             <{if $up_power}>
-              <td style="text-align:center;">
+              <td headers="h6" style="text-align:center;">
                 <{if $folder.file_num==0}>
                   <a href="javascript:delete_tad_uploader_func(<{$folder.cat_sn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                 <{/if}>
@@ -178,12 +179,12 @@
         <tbody id="sort">
           <{foreach from=$files_list item=file}>
             <tr id="tr_<{$file.cfsn}>">
-              <td style="max-width: 16px;">
+              <td headers="h1" style="max-width: 16px;">
                 <{if $up_power}>
                   <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}>">
                 <{/if}>
               </td>
-              <td nowrap>
+              <td headers="h2" nowrap>
                 <{if $file.pic}>
                   <div style="width:24px;height:24px;background-image: url(<{$file.pic}>);float:left;background-size:cover;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin-right:2px;"></div>
                 <{/if}>
@@ -195,19 +196,19 @@
                 <{/if}>
                 </a>
               </td>
-              <td style="font-size:11px;text-align:center;"><{$file.up_date}></td>
-              <td style="font-size:11px;text-align:center;"><{$file.size}></td>
+              <td headers="h3" style="font-size:11px;text-align:center;"><{$file.up_date}></td>
+              <td headers="h4" style="font-size:11px;text-align:center;"><{$file.size}></td>
               <td style="font-size:11px;text-align:center;"><{$file.cf_count}></td>
 
               <{if $only_show_desc!="1"}>
-                <td style="font-size:12px;">
+                <td headers="h5" style="font-size:12px;">
                 <{if $file.cf_desc!=$file.cf_name}>
                 <{$file.cf_desc}>
                 <{/if}></td>
               <{/if}>
 
               <{if $up_power}>
-                <td style="text-align:center;">
+                <td headers="h6" style="text-align:center;">
                    <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                   <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
                 </td>
@@ -226,6 +227,19 @@
   <{/if}>
 
   <{if $up_power}>
+    <script type="text/javascript">
+      $(document).ready(function() {
+          $("form").submit(function(event) {
+              var path = $(this).find("select[name='add_to_cat']").val();
+              var new_cate = $(this).find("input[name='creat_new_cat']").val();
+              if(path == 0 && new_cate.length == 0) {
+                  swal("根目錄不能上傳喔，請重新選擇目錄或新增目錄")
+                  return false;
+              }
+              return true;
+          });
+      });
+  </script>
     <div class="well">
       <div class="form-group">
       <{if $files_list}>

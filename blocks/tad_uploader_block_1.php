@@ -7,9 +7,10 @@ function tad_uploader_b_show_1($options)
 
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
-    $sql = "select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from " . $xoopsDB->prefix("tad_uploader_file") . " as a left join " . $xoopsDB->prefix("tad_uploader") . " as b on a.cat_sn=b.cat_sn where b.cat_share='1'  order by a.up_date desc limit 0,{$options[0]}";
+    $and_cat_sn = empty($options[1]) ? '' : "and b.cat_sn in({$options[1]})";
+    $sql        = "select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from " . $xoopsDB->prefix("tad_uploader_file") . " as a left join " . $xoopsDB->prefix("tad_uploader") . " as b on a.cat_sn=b.cat_sn where b.cat_share='1'  $and_cat_sn order by a.up_date desc limit 0,{$options[0]}";
 
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MB_TADUP_DB_ERROR2);
+    $result = $xoopsDB->query($sql) or web_error($sql);
 
     $block = "";
     $i     = 0;
@@ -37,10 +38,18 @@ function tad_uploader_b_show_1($options)
 function tad_uploader_b_edit_1($options)
 {
 
+    $options1_1 = ($options[1] == "1") ? "checked" : "";
+    $options1_0 = ($options[1] == "0") ? "checked" : "";
+    $option     = block_uploader_cate($options[1]);
+
     $form = "
-  " . _MB_TADUP_tad_uploader_B_EDIT_1_BITEM0 . "
-  <INPUT type='text' name='options[0]' value='{$options[0]}'>
-  ";
+    {$option['js']}
+      " . _MB_TADUP_SHOW_NUM . "
+      <INPUT type='text' name='options[0]' value='{$options[0]}'><br>
+    " . _MB_TADUP_SHOW_CATE . "
+      {$option['form']}
+      <INPUT type='hidden' name='options[1]' id='bb' value='{$options[1]}'><br>
+      ";
     return $form;
 }
 
@@ -100,5 +109,43 @@ if (!function_exists("check_up_power")) {
         }
 
         return false;
+    }
+}
+
+//取得所有類別標題
+if (!function_exists("block_uploader_cate")) {
+    function block_uploader_cate($selected = "")
+    {
+        global $xoopsDB;
+
+        if (!empty($selected)) {
+            $sc = explode(",", $selected);
+        }
+
+        $js = "<script>
+            function bbv(){
+              i=0;
+              var arr = new Array();";
+
+        $sql    = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where cat_enable='1' order by cat_sort";
+        $result = $xoopsDB->query($sql);
+        $option = "";
+        while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
+
+            $js .= "if(document.getElementById('c{$cat_sn}').checked){
+               arr[i] = document.getElementById('c{$cat_sn}').value;
+               i++;
+              }";
+            $ckecked = (in_array($cat_sn, $sc)) ? "checked" : "";
+            $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$cat_sn}' value='{$cat_sn}' class='bbv' onChange=bbv() $ckecked><label for='c{$cat_sn}'>$cat_title</label></span> ";
+        }
+
+        $js .= "document.getElementById('bb').value=arr.join(',');
+    }
+    </script>";
+
+        $main['js']   = $js;
+        $main['form'] = $option;
+        return $main;
     }
 }

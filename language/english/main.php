@@ -54,3 +54,6 @@ define('_MD_TADUP_LINK', 'Link to');
 define('_MD_TADUP_UPDATE_DATE', 'Modify Date');
 define('_MD_TADUP_UPDATE_TO_NEW_DATE', 'YES');
 define('_MD_TADUP_INPUT_LINK', 'Please input file URL.');
+define('_MD_TADUP_CANT_UP2ROOT', 'The root directory can not be uploaded. Please re-select the directory or add the directory.');
+
+define('_MD_TADUP_UPLOADED_AND_NO_POWER', 'Uploaded successfully, but this folder is not open to read.');

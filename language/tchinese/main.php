@@ -54,3 +54,5 @@ define('_MD_TADUP_LINK', '連結檔案');
 define('_MD_TADUP_UPDATE_DATE', '更新日期');
 define('_MD_TADUP_UPDATE_TO_NEW_DATE', '更新到目前日期');
 define('_MD_TADUP_INPUT_LINK', '請輸入檔案連結位置');
+define('_MD_TADUP_CANT_UP2ROOT', '根目錄不能上傳喔，請重新選擇目錄或新增目錄');
+define('_MD_TADUP_UPLOADED_AND_NO_POWER', '上傳成功，但此資料夾並不開放讀取。');

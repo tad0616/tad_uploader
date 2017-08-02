@@ -587,6 +587,9 @@ function del_file($cfsn = "", $del_sql = true)
 function dlfile($cfsn = "")
 {
     global $xoopsUser, $xoopsDB, $TadUpFiles;
+    if (empty($cfsn)) {
+        return;
+    }
 
     $cf = get_tad_uploader_file($cfsn);
     if (!check_up_power("catalog", $cf['cat_sn'])) {

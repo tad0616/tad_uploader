@@ -163,17 +163,6 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
         } else {
             $pic = XOOPS_URL . "/modules/tad_uploader/images/mime/" . file_pic($cf_name);
         }
-        //die($pic);
-        //取得該檔案其他資料的值
-        // if ($cf_size > 1073741824) {
-        //     $size = round(($cf_size / 1073741824), 1) . "G";
-        // } elseif ($cf_size > 1048576) {
-        //     $size = round(($cf_size / 1048576), 1) . "M";
-        // } elseif ($cf_size > 1024) {
-        //     $size = round(($cf_size / 1024), 1) . "K";
-        // } else {
-        //     $size = $cf_size . "bytes";
-        // }
 
         $size    = roundsize($cf_size);
         $cf_desc = nl2br($cf_desc);

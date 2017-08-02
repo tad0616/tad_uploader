@@ -5,7 +5,7 @@ $modversion = array();
 
 //---模組基本資訊---//
 $modversion['name']        = _MI_TADUP_NAME;
-$modversion['version']     = '3.51';
+$modversion['version']     = '3.53';
 $modversion['description'] = _MI_TADUP_DESC;
 $modversion['author']      = 'Tad(tad0616@gmail.com)';
 $modversion['credits']     = _MI_TADUP_CREDITS;
@@ -16,13 +16,13 @@ $modversion['image']       = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname']     = basename(dirname(__FILE__));
 
 //---模組狀態資訊---//
-$modversion['release_date']        = '2017/01/07';
+$modversion['release_date']        = '2017/08/02';
 $modversion['module_website_url']  = 'http://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status']       = 'release';
 $modversion['author_website_url']  = 'http://tad0616.net/';
 $modversion['author_website_name'] = _MI_TAD_WEB;
-$modversion['min_php']             = 5.3;
+$modversion['min_php']             = 5.4;
 $modversion['min_xoops']           = '2.5';
 
 //---paypal資訊---//
@@ -85,7 +85,7 @@ $modversion['blocks'][1]['description'] = _MI_TADUP_BDESC1;
 $modversion['blocks'][1]['show_func']   = "tad_uploader_b_show_1";
 $modversion['blocks'][1]['template']    = "tad_uploader_block_1.tpl";
 $modversion['blocks'][1]['edit_func']   = "tad_uploader_b_edit_1";
-$modversion['blocks'][1]['options']     = "10";
+$modversion['blocks'][1]['options']     = "10|";
 
 //---模組偏好設定---//
 $i = 1;
