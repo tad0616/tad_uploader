@@ -20,15 +20,15 @@ function tad_uploader_search($queryarray, $andor, $limit, $offset, $userid)
             $sql .= " $andor ";
             $sql .= "(`cf_name` LIKE '%{$queryarray[$i]}%' OR  `cf_desc` LIKE '%{$queryarray[$i]}%' )";
         }
-        $sql .= ") ";
+        $sql .= ') ';
     }
-    $sql .= "ORDER BY  `cf_sort` DESC";
+    $sql .= 'ORDER BY  `cf_sort` DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
     $ret    = array();
     $i      = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        $ret[$i]['image'] = "images/folder.png";
-        $ret[$i]['link']  = "index.php?op=dlfile&cfsn=" . $myrow['cfsn'];
+        $ret[$i]['image'] = 'images/folder.png';
+        $ret[$i]['link']  = 'index.php?op=dlfile&cfsn=' . $myrow['cfsn'];
         $ret[$i]['title'] = $myrow['cf_name'];
         $ret[$i]['time']  = strtotime($myrow['up_date']);
         $ret[$i]['uid']   = $myrow['uid'];

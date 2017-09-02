@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package      Tad Uploader
  * @since        2.5.0
@@ -17,8 +17,8 @@
  * @version      $Id $
  **/
 
-include '../../../include/cp_header.php';
-include '../../../class/xoopsformloader.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include __DIR__ . '/../../../class/xoopsformloader.php';
 xoops_cp_header();
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 
@@ -35,7 +35,7 @@ $module_info = '<div id="about">
 $about_admin = new ModuleAdmin();
 $about_admin->addLabel($xoopsModule->getVar("name"));
 $about_admin->addLabel(_AM_XDIR_ABOUT_MODULE_INFO);
-$about_admin->addLineLabel($xoopsModule->getVar("name"), '', '6KJ7RW5DR3VTJ', '', 'module');
+$about_admin->addLineLabel($xoopsModule->getVar("name"), '', 'xoopsfoundation@gmail.com', '', 'module');
 $about_admin->addLineLabel(_AM_XDIR_ABOUT_MODULE_INFO, $module_info, '', '', 'information');
 $about_admin->addChangelogLabel(_AM_XDIR_ABOUT_CHANGELOG);
 

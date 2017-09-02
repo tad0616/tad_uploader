@@ -394,7 +394,7 @@ function save_power()
 {
     global $xoopsModule;
     $gperm_modid       = $xoopsModule->getVar('mid');
-    $groupperm_handler = xoops_gethandler('groupperm');
+    $groupperm_handler = xoops_getHandler('groupperm');
     foreach ($_POST['catalog'] as $gperm_groupid) {
         $groupperm_handler->addRight('catalog', $_POST['cat_sn'], $gperm_groupid, $gperm_modid);
     }

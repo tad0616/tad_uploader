@@ -72,7 +72,7 @@ if (!function_exists("check_up_power")) {
         global $xoopsUser;
 
         //取得模組編號
-        $modhandler  = xoops_gethandler('module');
+        $modhandler  = xoops_getHandler('module');
         $xoopsModule = $modhandler->getByDirname("tad_uploader");
         $module_id   = $xoopsModule->getVar('mid');
 
@@ -87,10 +87,10 @@ if (!function_exists("check_up_power")) {
         }
 
         //取得群組權限功能
-        $gperm_handler = xoops_gethandler('groupperm');
+        $gperm_handler = xoops_getHandler('groupperm');
 
         //權限項目編號
-        $perm_itemid = intval($cat_sn);
+        $perm_itemid = (int)$cat_sn;
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
         if (empty($cat_sn)) {
             if ($kind == "catalog") {
@@ -127,7 +127,7 @@ if (!function_exists("block_uploader_cate")) {
               i=0;
               var arr = new Array();";
 
-        $sql    = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where cat_enable='1' order by cat_sort";
+        $sql    = "SELECT cat_sn,cat_title FROM " . $xoopsDB->prefix("tad_uploader") . " WHERE cat_enable='1' ORDER BY cat_sort";
         $result = $xoopsDB->query($sql);
         $option = "";
         while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {

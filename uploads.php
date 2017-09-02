@@ -17,7 +17,7 @@ function uploads_tabs($cat_sn = "", $cfsn = "")
     $jquery_path = get_jquery(true);
     $randStr     = randStr();
 
-    if ($_REQUEST['op'] == 'to_batch_upload') {
+    if ($_REQUEST['op'] === 'to_batch_upload') {
         $to_batch_upload = '$tabs.tabs("select", last_tab);';
     }
 
@@ -123,7 +123,6 @@ function update_tad_uploader($cfsn = "")
 
         $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
     } else {
-
         $sql = "update " . $xoopsDB->prefix("tad_uploader_file") . " set cat_sn='{$cat_sn}',cf_desc='{$cf_desc}' {$uptime} where cfsn='$cfsn'";
 
         $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
@@ -153,7 +152,7 @@ switch ($op) {
         break;
 
     //更新資料
-    case "update_tad_uploader";
+    case "update_tad_uploader":
         $cat_sn = update_tad_uploader($cfsn);
         if (check_up_power("catalog", $cat_sn)) {
             header("location: index.php?of_cat_sn={$cat_sn}");
