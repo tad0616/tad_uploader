@@ -305,7 +305,7 @@ function check_up_power($kind = "catalog", $cat_sn = "")
     $module_id = $xoopsModule->getVar('mid');
 
     //取得群組權限功能
-    $gperm_handler = xoops_gethandler('groupperm');
+    $gperm_handler = xoops_getHandler('groupperm');
 
     //權限項目編號
     $perm_itemid = intval($cat_sn);
@@ -458,7 +458,7 @@ function saveItem_Permissions($groups, $itemid, $perm_name)
 {
     global $xoopsModule;
     $module_id     = $xoopsModule->getVar('mid');
-    $gperm_handler = xoops_gethandler('groupperm');
+    $gperm_handler = xoops_getHandler('groupperm');
 
     // First, if the permissions are already there, delete them
     $gperm_handler->deleteByModule($module_id, $perm_name, $itemid);

@@ -141,7 +141,7 @@ function tad_uploader_cate_form($cat_sn = "")
     $cat_sort     = (!isset($DBV['cat_sort'])) ? $cat_max_sort : $DBV['cat_sort'];
 
     $mod_id             = $xoopsModule->getVar('mid');
-    $moduleperm_handler = xoops_gethandler('groupperm');
+    $moduleperm_handler = xoops_getHandler('groupperm');
     $read_group         = $moduleperm_handler->getGroupIds("catalog", $cat_sn, $mod_id);
     $post_group         = $moduleperm_handler->getGroupIds("catalog_up", $cat_sn, $mod_id);
 

@@ -72,7 +72,7 @@ if (!function_exists("check_up_power")) {
         global $xoopsUser;
 
         //取得模組編號
-        $modhandler  = xoops_gethandler('module');
+        $modhandler  = xoops_getHandler('module');
         $xoopsModule = $modhandler->getByDirname("tad_uploader");
         $module_id   = $xoopsModule->getVar('mid');
 
@@ -87,7 +87,7 @@ if (!function_exists("check_up_power")) {
         }
 
         //取得群組權限功能
-        $gperm_handler = xoops_gethandler('groupperm');
+        $gperm_handler = xoops_getHandler('groupperm');
 
         //權限項目編號
         $perm_itemid = (int)$cat_sn;
