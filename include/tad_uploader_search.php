@@ -10,9 +10,9 @@ function tad_uploader_search($queryarray, $andor, $limit, $offset, $userid)
         }
         $queryarray = $arr;
     }
-    $sql = 'SELECT `cfsn`,`cf_name`,`up_date`, `uid` FROM ' . $xoopsDB->prefix('tad_uploader_file') . ' WHERE 1';
+    $sql = "SELECT `cfsn`,`cf_name`,`up_date`, `uid` FROM " . $xoopsDB->prefix("tad_uploader_file") . " WHERE 1";
     if ($userid != 0) {
-        $sql .= ' AND uid=' . $userid . ' ';
+        $sql .= " AND uid=" . $userid . " ";
     }
     if (is_array($queryarray) && $count = count($queryarray)) {
         $sql .= " AND ((`cf_name` LIKE '%{$queryarray[0]}%'  OR `cf_desc` LIKE '%{$queryarray[0]}%' )";

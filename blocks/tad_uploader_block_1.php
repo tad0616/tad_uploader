@@ -127,7 +127,7 @@ if (!function_exists("block_uploader_cate")) {
               i=0;
               var arr = new Array();";
 
-        $sql    = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where cat_enable='1' order by cat_sort";
+        $sql    = "SELECT cat_sn,cat_title FROM " . $xoopsDB->prefix("tad_uploader") . " WHERE cat_enable='1' ORDER BY cat_sort";
         $result = $xoopsDB->query($sql);
         $option = "";
         while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {

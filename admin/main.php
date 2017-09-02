@@ -11,7 +11,7 @@ function list_tad_uploader_cate_tree($def_cat_sn = "")
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql    = "select cat_sn , count(*) from " . $xoopsDB->prefix("tad_uploader_file") . " group by cat_sn";
+    $sql    = "SELECT cat_sn , count(*) FROM " . $xoopsDB->prefix("tad_uploader_file") . " GROUP BY cat_sn";
     $result = $xoopsDB->query($sql);
     while (list($cat_sn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$cat_sn] = $counter;
@@ -21,7 +21,7 @@ function list_tad_uploader_cate_tree($def_cat_sn = "")
 
     $data[] = "{ id:0, pId:0, name:'All', url:'main.php', target:'_self', open:true}";
 
-    $sql    = "select cat_sn,of_cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . "  order by cat_sort";
+    $sql = "SELECT cat_sn,of_cat_sn,cat_title FROM " . $xoopsDB->prefix("tad_uploader") . "  ORDER BY cat_sort";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($cat_sn, $of_cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_cat_sn == $cat_sn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
@@ -59,7 +59,7 @@ function list_tad_uploader($cat_sn = "")
     $total   = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or web_error($sql);
-    $files  = '';
+    $files = '';
     while ($all = $xoopsDB->fetchArray($result)) {
         $files[] = $all;
     }
@@ -87,7 +87,7 @@ function get_cate_data($cat_sn = 0)
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql    = "select * from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='$cat_sn'";
+    $sql = "select * from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='$cat_sn'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
 
     $data = "";
@@ -179,9 +179,9 @@ function tad_uploader_cate_form($cat_sn = "")
 function get_tad_uploader_all()
 {
     global $xoopsDB;
-    $sql    = "select * from " . $xoopsDB->prefix("tad_uploader");
+    $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_uploader");
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
-    $data   = $xoopsDB->fetchArray($result);
+    $data = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -200,7 +200,7 @@ switch ($op) {
         exit;
 
     //刪除資料
-    case "delete_tad_uploader";
+    case "delete_tad_uploader":
         delete_tad_uploader($cat_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
