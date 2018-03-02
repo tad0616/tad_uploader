@@ -63,9 +63,9 @@ function get_tad_uploader_cate_path($the_cat_sn = "", $include_self = true)
 function get_tad_uploader_sub_cate($cat_sn = "0")
 {
     global $xoopsDB;
-    $sql = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
-    $cat_sn_arr = "";
+    $sql        = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}'";
+    $result     = $xoopsDB->query($sql) or web_error($sql);
+    $cat_sn_arr = array();
     while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $cat_sn_arr[$cat_sn] = $cat_title;
     }
@@ -79,7 +79,6 @@ function add_tad_uploader_file()
 
     $myts     = MyTextSanitizer::getInstance();
     $file_url = isset($_POST['file_url']) ? $myts->addSlashes($_POST['file_url']) : "";
-    $myts->addSlashes();
 
     if (!empty($_POST['creat_new_cat'])) {
         $cat_sn = add_tad_uploader("", $_POST['creat_new_cat'], "", "1", $_POST['cat_sn'], $_POST['add_to_cat']);
@@ -132,7 +131,6 @@ function add_tad_uploader_file()
 //取得遠端檔案的大小
 function remote_file_size($url)
 {
-    $head  = "";
     $url_p = parse_url($url);
     $host  = $url_p["host"];
     if (!preg_match("/[0-9]*\.[0-9]*\.[0-9]*\.[0-9]*/", $host)) {
@@ -205,8 +203,8 @@ function remote_file_size($url)
 function get_cat_max_sort($of_cat_sn = "")
 {
     global $xoopsDB;
-    $sql = "select max(cat_sort) from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$of_cat_sn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
+    $sql            = "select max(cat_sort) from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$of_cat_sn}'";
+    $result         = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
     list($max_sort) = $xoopsDB->fetchRow($result);
     return $max_sort + 1;
 }
@@ -215,8 +213,8 @@ function get_cat_max_sort($of_cat_sn = "")
 function get_file_max_sort($cat_sn = "")
 {
     global $xoopsDB;
-    $sql = "select max(cf_sort) from " . $xoopsDB->prefix("tad_uploader_file") . " where cat_sn='{$cat_sn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
+    $sql            = "select max(cf_sort) from " . $xoopsDB->prefix("tad_uploader_file") . " where cat_sn='{$cat_sn}'";
+    $result         = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
     list($max_sort) = $xoopsDB->fetchRow($result);
     return $max_sort + 1;
 }
@@ -225,10 +223,10 @@ function get_file_max_sort($cat_sn = "")
 function get_cata_select($disable_cat_sn = array(), $dbv = 0, $of_cat_sn = 0, $tab = "")
 {
     global $xoopsDB;
-    $sql = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='$of_cat_sn' and cat_enable='1'";
+    $sql    = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='$of_cat_sn' and cat_enable='1'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
     $option = "";
-    $tab    .= "&nbsp;&nbsp;";
+    $tab .= "&nbsp;&nbsp;";
 
     $disabled = "";
     while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
@@ -250,10 +248,10 @@ function get_cata_select($disable_cat_sn = array(), $dbv = 0, $of_cat_sn = 0, $t
 function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = "", $show_dot = '1', $optgroup = true, $chk_view = '1')
 {
     global $xoopsDB;
-    $dot   = ($show_dot == '1') ? str_repeat("--", $level) : "";
+    $dot = ($show_dot == '1') ? str_repeat("--", $level) : "";
     $level += 1;
 
-    $sql = "SELECT count(*),cat_sn FROM " . $xoopsDB->prefix("tad_uploader_file") . " GROUP BY cat_sn";
+    $sql    = "SELECT count(*),cat_sn FROM " . $xoopsDB->prefix("tad_uploader_file") . " GROUP BY cat_sn";
     $result = $xoopsDB->query($sql) or web_error($sql);
     while (list($count, $cat_sn) = $xoopsDB->fetchRow($result)) {
         $cate_count[$cat_sn] = $count;
@@ -274,8 +272,8 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = "", $show
             $option .= ($chk_view and !in_array($cat_sn, $ok_cat)) ? "" : "<optgroup label='{$cat_title}' style='font-style: normal;color:black;'>" . get_tad_uploader_cate_option($cat_sn, $level, $v, "0") . "</optgroup>";
         } else {
             $counter = (empty($cate_count[$cat_sn])) ? 0 : $cate_count[$cat_sn];
-            $option  .= ($chk_view and !in_array($cat_sn, $ok_cat)) ? "" : "<option value='{$cat_sn}' $selected >{$dot}{$cat_title} ($counter)</option>";
-            $option  .= get_tad_uploader_cate_option($cat_sn, $level, $v, $show_dot, $optgroup, $chk_view);
+            $option .= ($chk_view and !in_array($cat_sn, $ok_cat)) ? "" : "<option value='{$cat_sn}' $selected >{$dot}{$cat_title} ($counter)</option>";
+            $option .= get_tad_uploader_cate_option($cat_sn, $level, $v, $show_dot, $optgroup, $chk_view);
         }
     }
     return $option;
@@ -368,13 +366,14 @@ function get_tad_uploader_BreadCrumb_path($csn = "", $sub = false)
         $home = array();
     }
 
-    $sql = "select cat_title,of_cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='{$csn}'";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql                  = "select cat_title,of_cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='{$csn}'";
+    $result               = $xoopsDB->query($sql) or web_error($sql);
     list($title, $of_csn) = $xoopsDB->fetchRow($result);
 
     $opt_sub = (!empty($of_csn)) ? get_tad_uploader_BreadCrumb_path($of_csn, true) : "";
 
-    $opt = $path = "";
+    $opt  = array();
+    $path = "";
 
     if (!empty($title)) {
         $opt[$title] = XOOPS_URL . "/modules/tad_uploader/index.php?of_cat_sn=$csn";
@@ -524,9 +523,9 @@ function get_tad_uploader($cat_sn = "")
         return;
     }
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='$cat_sn'";
+    $sql    = "select * from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='$cat_sn'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
-    $data = $xoopsDB->fetchArray($result);
+    $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -538,9 +537,9 @@ function get_file($cfsn = "")
         return;
     }
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where cfsn='$cfsn'";
+    $sql    = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where cfsn='$cfsn'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
-    $data = $xoopsDB->fetchArray($result);
+    $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -597,13 +596,13 @@ function dlfile($cfsn = "")
     if (!empty($cf['file_url'])) {
         header("location:{$cf['file_url']}");
     } else {
-        $sql = "select uid from " . $xoopsDB->prefix("tad_uploader_file") . " where `cfsn`='$cfsn'";
-        $result = $xoopsDB->queryF($sql) or die($sql);
+        $sql       = "select uid from " . $xoopsDB->prefix("tad_uploader_file") . " where `cfsn`='$cfsn'";
+        $result    = $xoopsDB->queryF($sql) or die($sql);
         list($uid) = $xoopsDB->fetchRow($result);
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
 
-        $sql = "select files_sn from " . $xoopsDB->prefix("tad_uploader_files_center") . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
-        $result = $xoopsDB->queryF($sql) or die($sql);
+        $sql            = "select files_sn from " . $xoopsDB->prefix("tad_uploader_files_center") . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
+        $result         = $xoopsDB->queryF($sql) or die($sql);
         list($files_sn) = $xoopsDB->fetchRow($result);
 
         return $files_sn;
@@ -614,9 +613,9 @@ function dlfile($cfsn = "")
 function get_file_by_cfsn($cfsn = "")
 {
     global $xoopsUser, $xoopsDB, $TadUpFiles;
-    $sql = "select * from " . $xoopsDB->prefix("tad_uploader_files_center") . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
+    $sql    = "select * from " . $xoopsDB->prefix("tad_uploader_files_center") . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
     $result = $xoopsDB->queryF($sql) or die($sql);
-    $file = $xoopsDB->fetchArray($result);
+    $file   = $xoopsDB->fetchArray($result);
     return $file;
 }
 
@@ -648,9 +647,9 @@ function get_tad_uploader_file($cfsn = "")
         return;
     }
 
-    $sql = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where cfsn='$cfsn'";
+    $sql    = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where cfsn='$cfsn'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
-    $data = $xoopsDB->fetchArray($result);
+    $data   = $xoopsDB->fetchArray($result);
     return $data;
 }
 
@@ -693,14 +692,14 @@ function delete_tad_uploader($cat_sn = "")
     }
 
     //找出所屬資料夾
-    $sql = "select cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}' $where";
+    $sql    = "select cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}' $where";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
     while (list($sub_cat_sn) = $xoopsDB->fetchRow($result)) {
         delete_tad_uploader($sub_cat_sn);
     }
 
     //找出所屬檔案
-    $sql = "select cfsn,cf_name from " . $xoopsDB->prefix("tad_uploader_file") . " where cat_sn='{$cat_sn}'";
+    $sql    = "select cfsn,cf_name from " . $xoopsDB->prefix("tad_uploader_file") . " where cat_sn='{$cat_sn}'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
     while (list($cfsn, $cf_name) = $xoopsDB->fetchRow($result)) {
         $flies[$cfsn] = $cf_name;
@@ -734,9 +733,9 @@ function get_catfile_num($cat_sn = 0)
         return;
     }
 
-    $sql = "select count(*) from " . $xoopsDB->prefix("tad_uploader_file") . " as a," . $xoopsDB->prefix("tad_uploader") . " as b where a.cat_sn=b.cat_sn and (a.cat_sn='{$cat_sn}' or b.of_cat_sn='{$cat_sn}')";
+    $sql    = "select count(*) from " . $xoopsDB->prefix("tad_uploader_file") . " as a," . $xoopsDB->prefix("tad_uploader") . " as b where a.cat_sn=b.cat_sn and (a.cat_sn='{$cat_sn}' or b.of_cat_sn='{$cat_sn}')";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
-    $total = 0;
+    $total  = 0;
     while (list($data) = $xoopsDB->fetchRow($result)) {
         $total += $data;
     }
@@ -748,8 +747,8 @@ function get_subcat_num($cat_sn = 0)
 {
     global $xoopsDB;
 
-    $sql = "select count(*) from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
+    $sql        = "select count(*) from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}'";
+    $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
     list($data) = $xoopsDB->fetchRow($result);
     return $data;
 }

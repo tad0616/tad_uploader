@@ -17,7 +17,7 @@ function list_all_data($the_cat_sn = 0)
     $interface_menu["<i class='fa fa-th-large'></i>"] = "op.php?op=list_mode&list_mode=icon&of_cat_sn={$the_cat_sn}";
     $interface_menu["<i class='fa fa-th-list'></i>"]  = "op.php?op=list_mode&list_mode=more&of_cat_sn={$the_cat_sn}";
 
-    $sort_code = $up_tool = $del_js = $FooTableJS = $path = "";
+    $FooTableJS = $path = "";
 
     //目前路徑
     $arr = get_tad_uploader_BreadCrumb_path($the_cat_sn);
@@ -51,13 +51,12 @@ function list_all_data($the_cat_sn = 0)
     //若有權限則可排序
     $jquery = get_jquery(true);
 
-    $upform = $move_option = $menu_option = "";
+    $upform = $move_option = "";
     if ($check_up_power) {
 
         //搬移的選單
         $disbale[]   = $the_cat_sn;
         $move_option = get_cata_select($disbale);
-        //$menu_option=get_cata_select("",$the_cat_sn);
         $menu_option = get_tad_uploader_cate_option(0, 0, $the_cat_sn, 1, false);
         $upform      = $TadUpFiles->upform(true, 'upfile', null, false);
     }
@@ -116,8 +115,8 @@ function get_folder_list($the_cat_sn = "", $check_up_power = "")
     //die($sql);
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
 
-    $main = $all = "";
-    $i    = 0;
+    $all = array();
+    $i   = 0;
     while (list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result)) {
 
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
@@ -229,42 +228,42 @@ function get_tad_uploader_attribute($cat_sn = "", $check_power = false, $check_u
         $disbale[] = $cat_sn;
         $option    = get_cata_select($disbale);
         $move_tool = "
-      <td>
-      <FORM action='{$_SERVER['PHP_SELF']}' method='POST'>
-      <img src='images/folder_new.png' alt='" . _MD_TADUP_CREATE_FOLDER . "' title='" . _MD_TADUP_CREATE_FOLDER . "' border='0' height='16' width='16' hspace=4 align='absmiddle'>" . _MD_TADUP_CREATE_FOLDER . "
-      <input type='text' name='cat_title' size=12 value='" . _MD_TADUP_NEW_FOLDER . "'>
-      <INPUT type='hidden' name='of_cat_sn' value='{$cat_sn}'>
-      <INPUT type='hidden' name='op' value='create_folder'>
-      <INPUT type='submit' value='" . _TAD_SUBMIT . "'>
-      </FORM>
-      </td>
-      ";
-
-        if (!empty($cat_sn)) {
-            $tool = "
-       <tr>
         <td>
         <FORM action='{$_SERVER['PHP_SELF']}' method='POST'>
-        <img src='images/folder_move.png' alt='" . _MD_TADUP_FOLDER_MOVE . "' title='" . _MD_TADUP_FOLDER_MOVE . "' border='0' height='16' width='16' hspace=4 align='absmiddle'>" . _MD_TADUP_FOLDER_MOVE . "
-        <select name='new_of_cat_sn' style='width:120px;'>
-        <option value=0>" . _MD_TADUP_ROOT . "</option>
-        $option
-        </select>
-        <INPUT type='hidden' name='cat_sn' value='{$cat_sn}'>
-        <INPUT type='hidden' name='op' value='new_of_cat_sn'>
-        <INPUT type='submit' value='" . _MD_TADUP_MOVE . "'>
-        </FORM>
-        </td><td>
-        <FORM action='{$_SERVER['PHP_SELF']}' method='POST'>
-        <img src='images/folder_rename.png' alt='" . _MD_TADUP_FOLDER_RENAME . "' title='" . _MD_TADUP_FOLDER_RENAME . "' border='0' height='16' width='16' hspace=4 align='absmiddle'>" . _MD_TADUP_FOLDER_RENAME . "
-        <input type='text' name='new_cat_title' size=12 value='{$cat['cat_title']}'>
-        <INPUT type='hidden' name='cat_sn' value='{$cat_sn}'>
-        <INPUT type='hidden' name='op' value='new_cat_title'>
+        <img src='images/folder_new.png' alt='" . _MD_TADUP_CREATE_FOLDER . "' title='" . _MD_TADUP_CREATE_FOLDER . "' border='0' height='16' width='16' hspace=4 align='absmiddle'>" . _MD_TADUP_CREATE_FOLDER . "
+        <input type='text' name='cat_title' size=12 value='" . _MD_TADUP_NEW_FOLDER . "'>
+        <INPUT type='hidden' name='of_cat_sn' value='{$cat_sn}'>
+        <INPUT type='hidden' name='op' value='create_folder'>
         <INPUT type='submit' value='" . _TAD_SUBMIT . "'>
         </FORM>
         </td>
-         </tr>
         ";
+
+        if (!empty($cat_sn)) {
+            $tool = "
+        <tr>
+            <td>
+            <FORM action='{$_SERVER['PHP_SELF']}' method='POST'>
+            <img src='images/folder_move.png' alt='" . _MD_TADUP_FOLDER_MOVE . "' title='" . _MD_TADUP_FOLDER_MOVE . "' border='0' height='16' width='16' hspace=4 align='absmiddle'>" . _MD_TADUP_FOLDER_MOVE . "
+            <select name='new_of_cat_sn' style='width:120px;'>
+            <option value=0>" . _MD_TADUP_ROOT . "</option>
+            $option
+            </select>
+            <INPUT type='hidden' name='cat_sn' value='{$cat_sn}'>
+            <INPUT type='hidden' name='op' value='new_of_cat_sn'>
+            <INPUT type='submit' value='" . _MD_TADUP_MOVE . "'>
+            </FORM>
+            </td><td>
+            <FORM action='{$_SERVER['PHP_SELF']}' method='POST'>
+            <img src='images/folder_rename.png' alt='" . _MD_TADUP_FOLDER_RENAME . "' title='" . _MD_TADUP_FOLDER_RENAME . "' border='0' height='16' width='16' hspace=4 align='absmiddle'>" . _MD_TADUP_FOLDER_RENAME . "
+            <input type='text' name='new_cat_title' size=12 value='{$cat['cat_title']}'>
+            <INPUT type='hidden' name='cat_sn' value='{$cat_sn}'>
+            <INPUT type='hidden' name='op' value='new_cat_title'>
+            <INPUT type='submit' value='" . _TAD_SUBMIT . "'>
+            </FORM>
+            </td>
+            </tr>
+            ";
         }
     }
 
@@ -296,15 +295,13 @@ function update_tad_uploader($col_name = "", $col_val = "", $cat_sn = "")
 }
 
 //更新tad_uploader_data現有資料
-function update_data($cat_sn = "")
+function update_data()
 {
     global $xoopsDB;
 
     foreach ($_POST['cf_desc'] as $cfsn => $cf_desc) {
         $cfsn = update_tad_uploader_file($cfsn, "cf_desc", $cf_desc);
     }
-
-    return $cdsn;
 }
 
 //找出路徑
@@ -425,7 +422,7 @@ $new_cat_sn    = system_CleanVars($_REQUEST, 'new_cat_sn', 0, 'int');
 switch ($op) {
 
     case "update_data":
-        update_data($cat_sn);
+        update_data();
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
         break;
