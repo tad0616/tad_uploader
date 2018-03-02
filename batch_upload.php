@@ -3,7 +3,7 @@ include_once "header.php";
 include_once "language/{$xoopsConfig['language']}/batch.php";
 
 $op     = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$cat_sn = (isset($_REQUEST['cat_sn'])) ? intval($_REQUEST['cat_sn']) : 0;
+$cat_sn = (isset($_REQUEST['cat_sn'])) ? (int)$_REQUEST['cat_sn'] : 0;
 
 switch ($op) {
     case "import":
