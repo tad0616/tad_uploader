@@ -12,7 +12,7 @@ function tad_uploader_b_show_1($options)
 
     $result = $xoopsDB->query($sql) or web_error($sql);
 
-    $block = = array();
+    $block = array();
     $i     = 0;
     while (list($cfsn, $cat_sn, $cf_name, $cf_desc, $file_url) = $xoopsDB->fetchRow($result)) {
 
@@ -90,7 +90,7 @@ if (!function_exists("check_up_power")) {
         $gperm_handler = xoops_getHandler('groupperm');
 
         //權限項目編號
-        $perm_itemid = (int)$cat_sn;
+        $perm_itemid = (int) $cat_sn;
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
         if (empty($cat_sn)) {
             if ($kind == "catalog") {

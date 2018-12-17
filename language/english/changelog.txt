@@ -1,3 +1,9 @@
+Tad Uploader 3.5.4 (released from 2019-01-01)
+=========================================================== ================
+1. Support PHP7.1
+2. Support BootStrap4
+3. Remove the Big5 language
+
 Tad Uploader 3.5.3 (released on 2017-08-02)
 ================================================== ================
 1. To avoid misleading to the root directory of the inspection (thanks to geek01 provided)

@@ -3,7 +3,7 @@ include_once "header.php";
 include_once "language/{$xoopsConfig['language']}/batch.php";
 
 $op     = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$cat_sn = (isset($_REQUEST['cat_sn'])) ? (int)$_REQUEST['cat_sn'] : 0;
+$cat_sn = (isset($_REQUEST['cat_sn'])) ? (int) $_REQUEST['cat_sn'] : 0;
 
 switch ($op) {
     case "import":
@@ -51,13 +51,13 @@ function tad_uploader_batch_upload_form($cat_sn = "")
     $root = $isAdmin ? "<option value=''>" . _MD_TADUP_ROOT . "</div>" : "";
 
     $main = "
-    <form action='{$_SERVER['PHP_SELF']}' method='post' id='myForm' enctype='multipart/form-data'>
+    <form action='{$_SERVER['PHP_SELF']}' method='post' id='myForm' class='form-horizontal' enctype='multipart/form-data'>
         <div class='alert alert-success'>
           " . _MA_TADUP_BATCH_UPLOAD_TO . "<span style='color:red;'>" . _TAD_UPLOADER_BATCH_DIR . "</span>
         </div>
 
-        <div class='form-group'>
-          <label class='col-sm-2 control-label'>
+        <div class='form-group row'>
+          <label class='col-sm-2 control-label col-form-label text-sm-right'>
             " . _MD_TADUP_SELECT_FOLDER . "
           </label>
           <div class='col-sm-4'>
@@ -66,7 +66,7 @@ function tad_uploader_batch_upload_form($cat_sn = "")
               $cate_select
             </select>
           </div>
-          <label class='col-sm-2 control-label'>
+          <label class='col-sm-2 control-label col-form-label text-sm-right'>
             " . _MD_TADUP_CREATE_NEW_FOLDER . "
           </label>
           <div class='col-sm-4'>
@@ -83,7 +83,7 @@ function tad_uploader_batch_upload_form($cat_sn = "")
             $tr
         </table>
 
-        <div class='row text-center'>
+        <div class='text-center'>
             <input type='hidden' name='op' value='import'>
             <button type='submit' class='btn btn-primary'>" . _MA_BATCH_SAVE . "</button>
         </div>
