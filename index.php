@@ -152,7 +152,7 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
 
-    $all = "";
+    $all = array();
     $i   = 0;
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url) = $xoopsDB->fetchRow($result)) {
         $ff = get_file_by_cfsn($cfsn);
