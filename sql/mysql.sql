@@ -53,5 +53,8 @@ CREATE TABLE `tad_uploader_files_center` (
   `original_filename` varchar(255) NOT NULL default '',
   `hash_filename` varchar(255) NOT NULL default '',
   `sub_dir` varchar(255) NOT NULL default '',
+  `upload_date` datetime NOT NULL COMMENT '上傳時間',
+  `uid` mediumint(8) unsigned NOT NULL default 0 COMMENT '上傳者',
+  `tag` varchar(255) NOT NULL default '' COMMENT '註記',
   PRIMARY KEY (`files_sn`)
 ) ENGINE=MyISAM ;
