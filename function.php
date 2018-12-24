@@ -373,7 +373,7 @@ function get_tad_uploader_BreadCrumb_path($csn = "", $sub = false)
     $opt_sub = (!empty($of_csn)) ? get_tad_uploader_BreadCrumb_path($of_csn, true) : "";
 
     $opt  = array();
-    $path = "";
+    $path = array();
 
     if (!empty($title)) {
         $opt[$title] = XOOPS_URL . "/modules/tad_uploader/index.php?of_cat_sn=$csn";
