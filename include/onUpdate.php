@@ -129,7 +129,7 @@ function go_update1()
   `cfsn` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`log_sn`)
   )";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     return true;
 }
@@ -266,12 +266,12 @@ function go_update6()
   `sub_dir` varchar(255) NOT NULL default '',
   PRIMARY KEY (`files_sn`)
 ) ENGINE=MyISAM ";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
 
     $os = (PATH_SEPARATOR == ':') ? "linux" : "win";
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where `cf_name`!=''";
-    $result = $xoopsDB->queryF($sql) or web_error($sql);
+    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
         if (empty($cf_name)) {
             continue;
@@ -324,7 +324,7 @@ function chk_chk7()
 {
     global $xoopsDB;
     $sql          = "SHOW Fields FROM " . $xoopsDB->prefix("tad_uploader_file") . " where `Field`='cf_size' and `Type` like 'bigint%'";
-    $result       = $xoopsDB->queryF($sql) or web_error($sql);
+    $result       = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
     list($Fields) = $xoopsDB->fetchRow($result);
 
     if (empty($Fields)) {

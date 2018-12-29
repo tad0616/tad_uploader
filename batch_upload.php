@@ -124,7 +124,7 @@ function tad_uploader_batch_import()
         $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
         $sql = "insert into " . $xoopsDB->prefix("tad_uploader_file") . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
     values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
-        $xoopsDB->query($sql) or web_error($sql);
+        $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
         //取得最後新增資料的流水編號
         $cfsn = $xoopsDB->getInsertId();
 
