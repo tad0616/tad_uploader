@@ -4,6 +4,8 @@
 function tad_uploader_b_show_1($options)
 {
     global $xoopsDB, $xoTheme;
+    $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
@@ -30,7 +32,6 @@ function tad_uploader_b_show_1($options)
         $i++;
     }
     $block['link'] = $link;
-    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     return $block;
 }
