@@ -37,7 +37,7 @@ function get_tad_uploader_cate_path($the_cat_sn = "", $include_self = true)
             LEFT JOIN `{$tbl}` t7 ON t7.of_cat_sn = t6.cat_sn
             WHERE t1.of_cat_sn = '0'";
 
-        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+        $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         while ($all = $xoopsDB->fetchArray($result)) {
             if (in_array($the_cat_sn, $all)) {
                 foreach ($all as $cat_sn) {
@@ -64,7 +64,7 @@ function get_tad_uploader_sub_cate($cat_sn = "0")
 {
     global $xoopsDB;
     $sql        = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}'";
-    $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     $cat_sn_arr = array();
     while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $cat_sn_arr[$cat_sn] = $cat_title;
@@ -252,7 +252,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = "", $show
     $level += 1;
 
     $sql    = "SELECT count(*),cat_sn FROM " . $xoopsDB->prefix("tad_uploader_file") . " GROUP BY cat_sn";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     while (list($count, $cat_sn) = $xoopsDB->fetchRow($result)) {
         $cate_count[$cat_sn] = $count;
     }
@@ -260,7 +260,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = "", $show
     $option = ($of_cat_sn) ? "" : "";
     $sql    = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$of_cat_sn}' order by cat_sort";
     //die($sql);
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     if ($chk_view) {
         $ok_cat = chk_cate_power('catalog_up');
@@ -345,7 +345,7 @@ function chk_cate_power($kind = "")
 
     $sql = "select gperm_itemid from " . $xoopsDB->prefix("group_permission") . " where gperm_modid='$module_id' and gperm_name='$kind' and gperm_groupid in ($gsn_arr)";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
     while (list($gperm_itemid) = $xoopsDB->fetchRow($result)) {
         $ok_cat[] = $gperm_itemid;
@@ -367,7 +367,7 @@ function get_tad_uploader_BreadCrumb_path($csn = "", $sub = false)
     }
 
     $sql                  = "select cat_title,of_cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='{$csn}'";
-    $result               = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result               = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     list($title, $of_csn) = $xoopsDB->fetchRow($result);
 
     $opt_sub = (!empty($of_csn)) ? get_tad_uploader_BreadCrumb_path($of_csn, true) : "";
@@ -477,7 +477,7 @@ function getItem_Permissions($itemid, $gperm_name)
     $module_id = $xoopsModule->getVar('mid');
     $sql       = " SELECT gperm_groupid FROM " . $xoopsDB->prefix("group_permission") . " where gperm_modid='$module_id' and gperm_itemid ='$itemid' and gperm_name='$gperm_name' ";
     //echo $sql ;
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, _LINE__);
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     while ($row = $xoopsDB->fetchArray($result)) {
         $data[] = $row['gperm_groupid'];
     }

@@ -10,7 +10,7 @@ $total = 0;
 $os    = (PATH_SEPARATOR == ':') ? "linux" : "win";
 
 $sql = "SELECT * FROM " . $xoopsDB->prefix("tad_uploader_file") . " WHERE `cf_name`!=''";
-$result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, _LINE__);
+$result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
     if (empty($cf_name)) {
         continue;
