@@ -4,6 +4,7 @@ Tad Uploader 3.5.4 (released from 2019-01-01)
 2. Support BootStrap4
 3. Remove the Big5 language
 4. Attached support panoramic picture
+5. Support MySQL database strict mode
 
 Tad Uploader 3.5.3 (released on 2017-08-02)
 ================================================== ================

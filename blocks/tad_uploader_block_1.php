@@ -3,7 +3,7 @@
 //區塊主函式 (最新上傳文件)
 function tad_uploader_b_show_1($options)
 {
-    global $xoopsDB;
+    global $xoopsDB, $xoTheme;
 
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/tad_function.php";
 
@@ -30,6 +30,7 @@ function tad_uploader_b_show_1($options)
         $i++;
     }
     $block['link'] = $link;
+    $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     return $block;
 }
@@ -44,12 +45,21 @@ function tad_uploader_b_edit_1($options)
 
     $form = "
     {$option['js']}
-      " . _MB_TADUP_SHOW_NUM . "
-      <INPUT type='text' name='options[0]' value='{$options[0]}'><br>
-    " . _MB_TADUP_SHOW_CATE . "
-      {$option['form']}
-      <INPUT type='hidden' name='options[1]' id='bb' value='{$options[1]}'><br>
-      ";
+    <ol class='my-form'>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADUP_SHOW_NUM . "</lable>
+            <div class='my-content'>
+                <input type='text' class='my-input' name='options[0]' value='{$options[0]}' size=6>
+            </div>
+        </li>
+        <li class='my-row'>
+            <lable class='my-label'>" . _MB_TADUP_SHOW_CATE . "</lable>
+            <div class='my-content'>
+                {$option['form']}
+                <input type='hidden' name='options[1]' id='bb' value='{$options[1]}'>
+            </div>
+        </li>
+    </ol>";
     return $form;
 }
 

@@ -12,7 +12,6 @@ define('_MA_TADUP_FATHER_FOLDER', '所屬資料夾');
 define('_MA_TADUP_ENABLE', '是否啟用');
 define('_MA_TADUP_SHARE', '是否共享');
 define('_MA_TADUP_SAVE', '儲存');
-define('_MA_TADUP_DB_ERROR2', '無法取代tad_uploader中的資料');
 define('_MA_TADUP_FUNCTION', '功能');
 define('_MA_TADUP_DEL_CONFIRM', '確定要刪除此資料夾？底下的所有資料夾及檔案都會被刪除喔！');
 define('_MA_TADUP_LIST_ALL_FILES', '列出所有資料夾中文件');
