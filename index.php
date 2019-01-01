@@ -273,15 +273,15 @@ function get_tad_uploader_attribute($cat_sn = "", $check_power = false, $check_u
     $admin = ($isAdmin) ? "<img src='images/stop.png' alt='" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "' title='" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "' border='0' height='16' width='16' hspace=4 align='absmiddle'><a href=\"javascript:delete_tad_uploader_func({$cat_sn},{$cat['of_cat_sn']});\">" . sprintf(_MD_TADUP_FOLDER_DEL, $cat_title) . "</a>" : "";
 
     $main = "
-  <table style='width:auto' id='t'>
-  <tr>
-  <td valign='top'>
-  {$admin}
-  </td>
-  $move_tool
-  </tr>
-  $tool
-  </table>";
+    <table style='width:auto' id='t'>
+    <tr>
+    <td valign='top'>
+    {$admin}
+    </td>
+    $move_tool
+    </tr>
+    $tool
+    </table>";
     return $main;
 }
 
@@ -289,6 +289,14 @@ function get_tad_uploader_attribute($cat_sn = "", $check_power = false, $check_u
 function update_tad_uploader($col_name = "", $col_val = "", $cat_sn = "")
 {
     global $xoopsDB;
+    if (!check_up_power("catalog", $cat_sn)) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+    }
+    $myts = MyTextSanitizer::getInstance();
+    $cat_sn=(int) $cat_sn;
+    $col_name=$myts->addSlashes($col_name);
+    $col_val=$myts->addSlashes($col_val);
+
     $sql = "update " . $xoopsDB->prefix("tad_uploader") . " set  $col_name = '{$col_val}' where cat_sn='$cat_sn'";
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
     return $cat_sn;
@@ -298,8 +306,9 @@ function update_tad_uploader($col_name = "", $col_val = "", $cat_sn = "")
 function update_data()
 {
     global $xoopsDB;
-
+    $myts = MyTextSanitizer::getInstance();
     foreach ($_POST['cf_desc'] as $cfsn => $cf_desc) {
+        $cf_desc=$myts->addSlashes($cf_desc);
         $cfsn = update_tad_uploader_file($cfsn, "cf_desc", $cf_desc);
     }
 }
@@ -359,12 +368,12 @@ function create_folder($cat_title = "", $of_cat_sn = "")
 {
     global $xoopsDB, $xoopsUser;
     if ($xoopsUser) {
-        $uid = $xoopsUser->getVar('uid');
+        $uid = $xoopsUser->uid();
     }
     //$cat_max_sort=get_cat_max_sort($of_cat_sn);
 
     $sql = "insert into " . $xoopsDB->prefix("tad_uploader") . " (cat_title,cat_enable,uid,of_cat_sn,cat_share,cat_sort)
-  values('{$cat_title}','1','{$uid}','{$of_cat_sn}','1','0')";
+    values('{$cat_title}','1','{$uid}','{$of_cat_sn}','1','0')";
     $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR4);
 
     //取得最後新增資料的流水編號
@@ -405,6 +414,9 @@ function save_power()
 function update_tad_uploader_count($cat_sn = "")
 {
     global $xoopsDB;
+    if (!check_up_power("catalog", $cat_sn)) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+    }
     $sql = "update " . $xoopsDB->prefix("tad_uploader") . " set  cat_count = cat_count+1 where cat_sn='{$cat_sn}'";
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
     return $cat_sn;
@@ -418,6 +430,11 @@ $cat_sn        = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
 $of_cat_sn     = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
 $new_of_cat_sn = system_CleanVars($_REQUEST, 'new_of_cat_sn', 0, 'int');
 $new_cat_sn    = system_CleanVars($_REQUEST, 'new_cat_sn', 0, 'int');
+$new_cat_title = system_CleanVars($_REQUEST, 'new_cat_title', '', 'string');
+$cat_title     = system_CleanVars($_REQUEST, 'cat_title', '', 'string');
+$all_selected  = system_CleanVars($_REQUEST, 'all_selected', '', 'string');
+$select_files  = system_CleanVars($_REQUEST, 'select_files', '', 'array');
+$cat_desc      = system_CleanVars($_REQUEST, 'cat_desc', '', 'string');
 
 switch ($op) {
 
@@ -425,51 +442,44 @@ switch ($op) {
         update_data();
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
-        break;
 
     case "new_of_cat_sn":
         update_tad_uploader("of_cat_sn", $new_of_cat_sn, $cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$new_of_cat_sn}");
         exit;
-        break;
 
     case "new_cat_title":
-        update_tad_uploader("cat_title", $_POST['new_cat_title'], $cat_sn);
+        update_tad_uploader("cat_title", $new_cat_title, $cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
-        break;
 
     case "dlfile":
         $files_sn = dlfile($cfsn);
         $TadUpFiles->add_file_counter($files_sn, true);
         exit;
-        break;
 
     case "del_file":
         del_file($cfsn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
         exit;
-        break;
 
     case "save_files":
         $uid    = $xoopsUser->uid();
         $cat_sn = add_tad_uploader_file();
 
-        if ($_POST['all_selected'] == 'all_del') {
-            delfile($_POST['select_files']);
-        } elseif ($_POST['all_selected'] == 'all_move') {
-            movefile($_POST['select_files'], $_POST['new_cat_sn']);
-            $cat_sn = $_POST['new_cat_sn'];
+        if ($all_selected == 'all_del') {
+            delfile($select_files);
+        } elseif ($all_selected == 'all_move') {
+            movefile($select_files, $new_cat_sn);
+            $cat_sn = $new_cat_sn;
         }
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
-        break;
 
     case "create_folder":
-        $cat_sn = create_folder($_POST['cat_title'], $of_cat_sn);
+        $cat_sn = create_folder($cat_title, $of_cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?op=set_group_power&of_cat_sn={$cat_sn}");
         exit;
-        break;
 
     case "set_group_power":
         $main = set_group_power();
@@ -479,20 +489,17 @@ switch ($op) {
         save_power();
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
-        break;
 
     case "save_cat_desc":
-        update_tad_uploader("cat_desc", $_POST['cat_desc'], $cat_sn);
+        update_tad_uploader("cat_desc", $cat_desc, $cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
-        break;
 
     //刪除資料
     case "delete_tad_uploader";
         delete_tad_uploader($cat_sn);
         header("location:{$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
         exit;
-        break;
 
     default:
         list_all_data($of_cat_sn);
