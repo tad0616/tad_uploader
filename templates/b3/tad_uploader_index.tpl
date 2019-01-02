@@ -25,13 +25,13 @@
     });
 
     $("#clickAll").click(function() {
-      if($("#clickAll").attr("checked")){
+      if($("#clickAll").prop("checked")){
         $(".u<{$cat_sn}>").each(function() {
-        $(this).attr("checked", true);
+        $(this).prop("checked", true);
         });
       }else{
        $(".u<{$cat_sn}>").each(function() {
-           $(this).attr("checked", false);
+           $(this).prop("checked", false);
        });
       }
     });
