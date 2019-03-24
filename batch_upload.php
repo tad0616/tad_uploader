@@ -97,13 +97,14 @@ function tad_uploader_batch_import()
 {
     global $xoopsDB, $xoopsUser, $xoopsModuleConfig, $TadUpFiles;
 
-    if (!empty($_POST['new_cat_sn'])) {
-        $cat_sn = add_tad_uploader("", $_POST['new_cat_sn'], "", "1", $_POST['cat_sn'], $_POST['cat_add_form']);
-    } else {
-        $cat_sn = $_POST['cat_sn'];
+    $new_cat_sn = (int) $_POST['new_cat_sn'];
+    $cat_sn     = (int) $_POST['cat_sn'];
+
+    if (!empty($new_cat_sn)) {
+        $cat_sn = add_tad_uploader("", $new_cat_sn, "", "1", $cat_sn, $_POST['cat_add_form']);
     }
 
-    $uid      = $xoopsUser->getVar('uid');
+    $uid      = $xoopsUser->uid();
     $uid_name = XoopsUser::getUnameFromId($uid, 1);
     //$now=xoops_getUserTimestamp(time());
 
@@ -123,15 +124,15 @@ function tad_uploader_batch_import()
 
         $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
         $sql = "insert into " . $xoopsDB->prefix("tad_uploader_file") . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
-    values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
+        values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
         $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         //取得最後新增資料的流水編號
         $cfsn = $xoopsDB->getInsertId();
 
         $new_filename = _TAD_UPLOADER_DIR . "/{$cfsn}_{$file_path}";
 
-        //$file_src=auto_charset($file_src,'web');
-        //$new_filename=auto_charset($new_filename,'web');
+        $file_src     = auto_charset($file_src, 'web');
+        $new_filename = auto_charset($new_filename, 'web');
 
         //複製匯入單一檔案：
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");

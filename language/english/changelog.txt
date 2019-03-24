@@ -1,3 +1,9 @@
+Tad Uploader 3.5.5 (released from 2019-03-24)
+=========================================================== ================
+1. Fix folder sorting problem
+2. Fixed the problem that the import file could not be downloaded.
+3. Fixed the problem that the icon could not be displayed when the auxiliary file name was capitalized.
+
 Tad Uploader 3.5.4 (released from 2019-01-01)
 =========================================================== ================
 1. Support PHP7.1

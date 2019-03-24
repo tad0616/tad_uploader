@@ -10,7 +10,7 @@ $TadUpFiles = new TadUpFiles("tad_uploader");
 
 $uid_dir = 0;
 if ($xoopsUser) {
-    $uid_dir = $xoopsUser->getVar('uid');
+    $uid_dir = $xoopsUser->uid();
 }
 define("_TAD_UPLOADER_DIR", XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid_dir}");
 define("_TAD_UPLOADER_BATCH_DIR", XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch/user_{$uid_dir}");
@@ -286,7 +286,7 @@ function check_up_power($kind = "catalog", $cat_sn = "")
 
     //取得目前使用者的群組編號
     if ($xoopsUser) {
-        $uid    = $xoopsUser->getVar('uid');
+        $uid    = $xoopsUser->uid();
         $groups = $xoopsUser->getGroups();
     } else {
         $uid    = 0;
@@ -686,7 +686,7 @@ function delete_tad_uploader($cat_sn = "")
     }
 
     if ($xoopsUser) {
-        $uid   = $xoopsUser->getVar('uid');
+        $uid   = $xoopsUser->uid();
         $where = ($isAdmin) ? "" : " and uid='{$uid}'";
     } else {
         $groups = XOOPS_GROUP_ANONYMOUS;

@@ -80,7 +80,7 @@ function update_tad_uploader($cfsn = "")
         $cat_sn = $_POST['add_to_cat'];
     }
 
-    $uid = $xoopsUser->getVar('uid');
+    $uid = $xoopsUser->uid();
 
     if (!empty($_POST['file_url'])) {
         $file_url = $myts->addSlashes($_POST['file_url']);

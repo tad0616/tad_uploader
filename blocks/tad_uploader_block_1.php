@@ -67,13 +67,14 @@ function tad_uploader_b_edit_1($options)
 //判別格式圖檔
 function chk_file_pic($file)
 {
-    $f = explode(".", $file);
-    $n = sizeof($f) - 1;
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tad_uploader/images/mime/{$f[$n]}.png")) {
+    $f   = explode(".", $file);
+    $n   = sizeof($f) - 1;
+    $ext = strtolower($f[$n]);
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tad_uploader/images/mime/{$ext}.png")) {
         return "mime.png";
     }
 
-    return "{$f[$n]}.png";
+    return "{$ext}.png";
 }
 
 if (!function_exists("check_up_power")) {
@@ -91,7 +92,7 @@ if (!function_exists("check_up_power")) {
         if ($xoopsUser) {
             $groups  = $xoopsUser->getGroups();
             $isAdmin = $xoopsUser->isAdmin($module_id);
-            $uid     = $xoopsUser->getVar('uid');
+            $uid     = $xoopsUser->uid();
         } else {
             $groups  = XOOPS_GROUP_ANONYMOUS;
             $isAdmin = false;
