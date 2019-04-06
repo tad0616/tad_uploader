@@ -20,13 +20,8 @@ function list_all_data($the_cat_sn = 0)
     $FooTableJS = $path = "";
 
     //目前路徑
-    $arr = get_tad_uploader_BreadCrumb_path($the_cat_sn);
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/jBreadCrumb.php")) {
-        redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . "/modules/tadtools/jBreadCrumb.php";
-    $jBreadCrumb = new jBreadCrumb($arr);
-    $path        = $jBreadCrumb->render();
+    $arr  = get_tad_uploader_cate_path($the_cat_sn);
+    $path = tad_breadcrumb($the_cat_sn, $arr, "index.php", "of_cat_sn", "cat_title");
 
     //新增人氣值
     if (!empty($the_cat_sn)) {
@@ -160,7 +155,7 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
             list($width, $height, $type, $attr) = getimagesize(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}");
             $pic                                = XOOPS_URL . "/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}";
         } else {
-            $pic = XOOPS_URL . "/modules/tad_uploader/images/mime/" . file_pic($cf_name);
+            $pic = XOOPS_URL . "/modules/tadtools/images/mimetype/" . file_pic($cf_name);
         }
 
         $size    = roundsize($cf_size);
@@ -179,7 +174,7 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
         if ($ff['kind'] == "img") {
             $all[$i]['thumb_style'] = ($height > $width) ? "width:85px;" : "height:64px;max-width:85px;";
         } else {
-            $all[$i]['thumb_style'] = "";
+            $all[$i]['thumb_style'] = "height:64px;";
         }
         $all[$i]['pic']      = $pic;
         $all[$i]['fname']    = ($ff['kind'] == "img") ? "" : $fname;
@@ -292,10 +287,10 @@ function update_tad_uploader($col_name = "", $col_val = "", $cat_sn = "")
     if (!check_up_power("catalog", $cat_sn)) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
     }
-    $myts = MyTextSanitizer::getInstance();
-    $cat_sn=(int) $cat_sn;
-    $col_name=$myts->addSlashes($col_name);
-    $col_val=$myts->addSlashes($col_val);
+    $myts     = MyTextSanitizer::getInstance();
+    $cat_sn   = (int) $cat_sn;
+    $col_name = $myts->addSlashes($col_name);
+    $col_val  = $myts->addSlashes($col_val);
 
     $sql = "update " . $xoopsDB->prefix("tad_uploader") . " set  $col_name = '{$col_val}' where cat_sn='$cat_sn'";
     $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
@@ -308,8 +303,8 @@ function update_data()
     global $xoopsDB;
     $myts = MyTextSanitizer::getInstance();
     foreach ($_POST['cf_desc'] as $cfsn => $cf_desc) {
-        $cf_desc=$myts->addSlashes($cf_desc);
-        $cfsn = update_tad_uploader_file($cfsn, "cf_desc", $cf_desc);
+        $cf_desc = $myts->addSlashes($cf_desc);
+        $cfsn    = update_tad_uploader_file($cfsn, "cf_desc", $cf_desc);
     }
 }
 

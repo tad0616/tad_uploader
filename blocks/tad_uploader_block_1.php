@@ -64,19 +64,6 @@ function tad_uploader_b_edit_1($options)
     return $form;
 }
 
-//判別格式圖檔
-function chk_file_pic($file)
-{
-    $f   = explode(".", $file);
-    $n   = sizeof($f) - 1;
-    $ext = strtolower($f[$n]);
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tad_uploader/images/mime/{$ext}.png")) {
-        return "mime.png";
-    }
-
-    return "{$ext}.png";
-}
-
 if (!function_exists("check_up_power")) {
     //檢查有無上傳權利
     function check_up_power($kind = "catalog", $cat_sn = "")

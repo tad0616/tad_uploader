@@ -354,40 +354,6 @@ function chk_cate_power($kind = "")
     return $ok_cat;
 }
 
-//取得路徑
-
-function get_tad_uploader_BreadCrumb_path($csn = "", $sub = false)
-{
-    global $xoopsDB;
-
-    if (!$sub) {
-        $home[_TAD_TO_MOD] = XOOPS_URL . "/modules/tad_uploader/index.php";
-    } else {
-        $home = array();
-    }
-
-    $sql                  = "select cat_title,of_cat_sn from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='{$csn}'";
-    $result               = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    list($title, $of_csn) = $xoopsDB->fetchRow($result);
-
-    $opt_sub = (!empty($of_csn)) ? get_tad_uploader_BreadCrumb_path($of_csn, true) : "";
-
-    $opt  = array();
-    $path = array();
-
-    if (!empty($title)) {
-        $opt[$title] = XOOPS_URL . "/modules/tad_uploader/index.php?of_cat_sn=$csn";
-    }
-    if (is_array($opt_sub)) {
-        $path = array_merge($home, $opt_sub, $opt);
-    } elseif (is_array($opt)) {
-        $path = array_merge($home, $opt);
-    } else {
-        $path = $home;
-    }
-    return $path;
-}
-
 //取代/新增tad_uploader現有資料
 function add_tad_uploader($the_cat_sn = "", $cat_title = "", $cat_desc = "", $cat_enable = "1", $of_cat_sn = "0", $cat_add_form = 0, $cat_share = "auto", $cat_sort = "0", $cat_count = "0", $catalog = array(1, 2, 3), $catalog_up = array(1), $is_back = 0)
 {
@@ -510,8 +476,8 @@ function file_pic($file)
     foreach ($extarr as $val) {
         $ext = strtolower($val);
     }
-    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tad_uploader/images/mime/{$ext}.png")) {
-        return "mime.png";
+    if (!file_exists(XOOPS_ROOT_PATH . "/modules/tadtools/images/mimetype/{$ext}.png")) {
+        return "none.png";
     }
 
     return "{$ext}.png";
