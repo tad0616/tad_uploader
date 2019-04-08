@@ -21,7 +21,7 @@ define('_MI_SHOW_MODE_MORE', 'List');
 define('_MI_SHOW_MODE_ICON', 'Icon');
 
 define('_MI_TADUPLOADER_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADUPLOADER_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADUPLOADER_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADUPLOADER_BACK_2_ADMIN', 'Back to Administration of ');
 
 //help
