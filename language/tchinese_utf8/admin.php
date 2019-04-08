@@ -19,7 +19,7 @@ define('_MA_TADUP_AUTHOR', '建立者');
 define('_MA_TADUP_FILE_COUNTER', '人氣值');
 define('_MA_TADUP_EDIT', '編輯');
 define('_MA_TADUP_DEL', '刪除');
-define('_MA_TADUP_ADD_FORM', '新增資料夾');
+define('_MA_TADUP_ADD_FORM', '資料夾管理');
 define('_MA_TADUP_FILE_NAME', '檔案名稱');
 define('_MA_TADUP_FILE_DATE', '日期');
 define('_MA_TADUP_FILE_SIZE', '大小');
