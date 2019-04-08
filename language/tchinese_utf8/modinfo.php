@@ -21,7 +21,7 @@ define('_MI_SHOW_MODE_MORE', '詳細列表');
 define('_MI_SHOW_MODE_ICON', '圖示');
 
 define('_MI_TADUPLOADER_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_TADUPLOADER_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_TADUPLOADER_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_TADUPLOADER_BACK_2_ADMIN', '管理');
 
 //help
