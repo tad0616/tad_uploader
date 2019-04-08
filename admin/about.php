@@ -9,7 +9,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @copyright    The XOOPS Project http://sourceforge.net/projects/xoops/
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package      Tad Uploader
  * @since        2.5.0
@@ -17,8 +17,8 @@
  * @version      $Id $
  **/
 
-include '../../../include/cp_header.php';
-include '../../../class/xoopsformloader.php';
+include __DIR__ . '/../../../include/cp_header.php';
+include __DIR__ . '/../../../class/xoopsformloader.php';
 xoops_cp_header();
 include_once XOOPS_ROOT_PATH . "/modules/" . $xoopsModule->getVar("dirname") . "/class/admin.php";
 

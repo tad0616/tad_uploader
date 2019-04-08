@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_uploader_adm_main.html";
+$xoopsOption['template_main'] = "tad_uploader_adm_main.tpl";
 include_once "header.php";
 include_once "../function.php";
 
@@ -11,7 +11,7 @@ function list_tad_uploader_cate_tree($def_cat_sn = "")
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql    = "select cat_sn , count(*) from " . $xoopsDB->prefix("tad_uploader_file") . " group by cat_sn";
+    $sql    = "SELECT cat_sn , count(*) FROM " . $xoopsDB->prefix("tad_uploader_file") . " GROUP BY cat_sn";
     $result = $xoopsDB->query($sql);
     while (list($cat_sn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$cat_sn] = $counter;
@@ -21,8 +21,8 @@ function list_tad_uploader_cate_tree($def_cat_sn = "")
 
     $data[] = "{ id:0, pId:0, name:'All', url:'main.php', target:'_self', open:true}";
 
-    $sql    = "select cat_sn,of_cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . "  order by cat_sort";
-    $result = $xoopsDB->query($sql) or web_error($sql);
+    $sql    = "SELECT cat_sn,of_cat_sn,cat_title FROM " . $xoopsDB->prefix("tad_uploader") . "  ORDER BY cat_sort";
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
     while (list($cat_sn, $of_cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_cat_sn == $cat_sn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         //$open            = in_array($cat_sn, $path_arr) ? 'true' : 'false';
@@ -58,8 +58,8 @@ function list_tad_uploader($cat_sn = "")
     $sql     = $PageBar['sql'];
     $total   = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql);
-    $files  = '';
+    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $files  = array();
     while ($all = $xoopsDB->fetchArray($result)) {
         $files[] = $all;
     }
@@ -74,8 +74,11 @@ function list_tad_uploader($cat_sn = "")
         redirect_header("index.php", 3, _MA_NEED_TADTOOLS);
     }
     include_once XOOPS_ROOT_PATH . "/modules/tadtools/sweet_alert.php";
-    $sweet_alert      = new sweet_alert();
-    $sweet_alert_code = $sweet_alert->render("delete_tad_uploader_func", "main.php?op=delete_tad_uploader&cat_sn=", 'cat_sn');
+    $sweet_alert = new sweet_alert();
+    $sweet_alert->render("delete_tad_uploader_func", "main.php?op=delete_tad_uploader&cat_sn=", 'cat_sn');
+    $sweet_alert2 = new sweet_alert();
+    $sweet_alert2->render("delete_file_func", "main.php?op=del_file&cat_sn={$cat_sn}&cfsn=", 'cfsn');
+
     // $xoopsTpl->assign('sweet_alert_code', $sweet_alert_code);
 }
 
@@ -87,7 +90,7 @@ function get_cate_data($cat_sn = 0)
     $sql    = "select * from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='$cat_sn'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
 
-    $data = "";
+    $data = array();
 
     list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result);
 
@@ -138,7 +141,7 @@ function tad_uploader_cate_form($cat_sn = "")
     $cat_sort     = (!isset($DBV['cat_sort'])) ? $cat_max_sort : $DBV['cat_sort'];
 
     $mod_id             = $xoopsModule->getVar('mid');
-    $moduleperm_handler = xoops_gethandler('groupperm');
+    $moduleperm_handler = xoops_getHandler('groupperm');
     $read_group         = $moduleperm_handler->getGroupIds("catalog", $cat_sn, $mod_id);
     $post_group         = $moduleperm_handler->getGroupIds("catalog_up", $cat_sn, $mod_id);
 
@@ -176,7 +179,7 @@ function tad_uploader_cate_form($cat_sn = "")
 function get_tad_uploader_all()
 {
     global $xoopsDB;
-    $sql    = "select * from " . $xoopsDB->prefix("tad_uploader");
+    $sql    = "SELECT * FROM " . $xoopsDB->prefix("tad_uploader");
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
     $data   = $xoopsDB->fetchArray($result);
     return $data;
@@ -187,6 +190,7 @@ include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op        = system_CleanVars($_REQUEST, 'op', '', 'string');
 $cat_sn    = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
 $of_cat_sn = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
+$cfsn      = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
 
 switch ($op) {
     case "add_tad_uploader":
@@ -194,20 +198,23 @@ switch ($op) {
         add_tad_uploader($cat_sn, $_POST['cat_title'], $_POST['cat_desc'], $_POST['cat_enable'], $of_cat_sn, $_POST['add_to_cat'], $_POST['cat_share'], $_POST['cat_sort'], $_POST['cat_count'], $_POST['catalog'], $_POST['catalog_up'], 'admin');
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //刪除資料
-    case "delete_tad_uploader";
+    case "delete_tad_uploader":
         delete_tad_uploader($cat_sn);
         header("location: " . $_SERVER['PHP_SELF']);
         exit;
-        break;
 
     //輸入表格
     case "tad_uploader_cate_form":
         list_tad_uploader_cate_tree($cat_sn);
         tad_uploader_cate_form($cat_sn);
         break;
+
+    case "del_file":
+        del_file($cfsn);
+        header("location: {$_SERVER['PHP_SELF']}?cat_sn={$cat_sn}");
+        exit;
 
     default:
         list_tad_uploader_cate_tree($cat_sn);

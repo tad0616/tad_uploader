@@ -1,7 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 include "header.php";
-$xoopsOption['template_main'] = set_bootstrap("tad_uploader_uploads.html");
+$xoopsOption['template_main'] = "tad_uploader_uploads.tpl";
 
 if (sizeof($upload_powers) <= 0 or empty($xoopsUser)) {
     redirect_header(XOOPS_URL . "/user.php", 3, _MD_TADUP_NO_EDIT_POWER);
@@ -17,7 +17,7 @@ function uploads_tabs($cat_sn = "", $cfsn = "")
     $jquery_path = get_jquery(true);
     $randStr     = randStr();
 
-    if ($_REQUEST['op'] == 'to_batch_upload') {
+    if ($_REQUEST['op'] === 'to_batch_upload') {
         $to_batch_upload = '$tabs.tabs("select", last_tab);';
     }
 
@@ -80,7 +80,7 @@ function update_tad_uploader($cfsn = "")
         $cat_sn = $_POST['add_to_cat'];
     }
 
-    $uid = $xoopsUser->getVar('uid');
+    $uid = $xoopsUser->uid();
 
     if (!empty($_POST['file_url'])) {
         $file_url = $myts->addSlashes($_POST['file_url']);
@@ -123,7 +123,6 @@ function update_tad_uploader($cfsn = "")
 
         $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
     } else {
-
         $sql = "update " . $xoopsDB->prefix("tad_uploader_file") . " set cat_sn='{$cat_sn}',cf_desc='{$cf_desc}' {$uptime} where cfsn='$cfsn'";
 
         $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR5);
@@ -143,15 +142,24 @@ switch ($op) {
     //新增資料
     case "insert_tad_uploader":
         $cat_sn = add_tad_uploader_file();
-        header("location: index.php?of_cat_sn={$cat_sn}");
-        exit;
+
+        if (check_up_power("catalog", $cat_sn)) {
+            header("location: index.php?of_cat_sn={$cat_sn}");
+            exit;
+        } else {
+            redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+        }
         break;
 
     //更新資料
-    case "update_tad_uploader";
+    case "update_tad_uploader":
         $cat_sn = update_tad_uploader($cfsn);
-        header("location: index.php?of_cat_sn={$cat_sn}");
-        exit;
+        if (check_up_power("catalog", $cat_sn)) {
+            header("location: index.php?of_cat_sn={$cat_sn}");
+            exit;
+        } else {
+            redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+        }
         break;
 
     default:

@@ -22,7 +22,7 @@ CREATE TABLE `tad_uploader_file` (
   `cf_type` varchar(255) NOT NULL default '',
   `cf_size` int(11) unsigned NOT NULL default '0',
   `cf_count` smallint(6) unsigned NOT NULL default '0',
-  `up_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `up_date` datetime NOT NULL,
   `file_url` varchar(255) NOT NULL default '',
   `cf_sort` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`cfsn`),
@@ -33,7 +33,7 @@ CREATE TABLE `tad_uploader_file` (
 CREATE TABLE `tad_uploader_dl_log` (
   `log_sn` smallint(5) unsigned NOT NULL auto_increment,
   `uid` mediumint(8) unsigned NOT NULL default '0',
-  `dl_time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `dl_time` datetime NOT NULL,
   `from_ip` varchar(15) NOT NULL default '',
   `cfsn` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (`log_sn`)
@@ -53,5 +53,8 @@ CREATE TABLE `tad_uploader_files_center` (
   `original_filename` varchar(255) NOT NULL default '',
   `hash_filename` varchar(255) NOT NULL default '',
   `sub_dir` varchar(255) NOT NULL default '',
+  `upload_date` datetime NOT NULL COMMENT '上傳時間',
+  `uid` mediumint(8) unsigned NOT NULL default 0 COMMENT '上傳者',
+  `tag` varchar(255) NOT NULL default '' COMMENT '註記',
   PRIMARY KEY (`files_sn`)
 ) ENGINE=MyISAM ;

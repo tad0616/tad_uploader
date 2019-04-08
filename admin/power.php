@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-$xoopsOption['template_main'] = "tad_uploader_adm_power.html";
+$xoopsOption['template_main'] = "tad_uploader_adm_power.tpl";
 include_once "header.php";
 include_once "../function.php";
 include_once XOOPS_ROOT_PATH . "/Frameworks/art/functions.php";
@@ -15,7 +15,8 @@ $xoopsTpl->assign('jquery_path', $jquery_path);
 
 //抓取所有資料夾
 
-$sql    = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader");
+$item_list = array();
+$sql = "SELECT cat_sn,cat_title FROM " . $xoopsDB->prefix("tad_uploader");
 $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
 while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
     $item_list[$cat_sn] = $cat_title;

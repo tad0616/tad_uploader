@@ -3,7 +3,7 @@ include_once "header.php";
 include_once "language/{$xoopsConfig['language']}/batch.php";
 
 $op     = (empty($_REQUEST['op'])) ? "" : $_REQUEST['op'];
-$cat_sn = (isset($_REQUEST['cat_sn'])) ? intval($_REQUEST['cat_sn']) : 0;
+$cat_sn = (isset($_REQUEST['cat_sn'])) ? (int) $_REQUEST['cat_sn'] : 0;
 
 switch ($op) {
     case "import":
@@ -51,25 +51,25 @@ function tad_uploader_batch_upload_form($cat_sn = "")
     $root = $isAdmin ? "<option value=''>" . _MD_TADUP_ROOT . "</div>" : "";
 
     $main = "
-    <form action='{$_SERVER['PHP_SELF']}' method='post' id='myForm' enctype='multipart/form-data'>
+    <form action='{$_SERVER['PHP_SELF']}' method='post' id='myForm' class='form-horizontal' enctype='multipart/form-data'>
         <div class='alert alert-success'>
           " . _MA_TADUP_BATCH_UPLOAD_TO . "<span style='color:red;'>" . _TAD_UPLOADER_BATCH_DIR . "</span>
         </div>
 
-        <div class='form-group'>
-          <label class='col-md-2 control-label'>
+        <div class='form-group row'>
+          <label class='col-sm-2 control-label col-form-label text-sm-right'>
             " . _MD_TADUP_SELECT_FOLDER . "
           </label>
-          <div class='col-md-4'>
+          <div class='col-sm-4'>
             <select name='cat_sn' size=1 class='form-control'>
               $root
               $cate_select
             </select>
           </div>
-          <label class='col-md-2 control-label'>
+          <label class='col-sm-2 control-label col-form-label text-sm-right'>
             " . _MD_TADUP_CREATE_NEW_FOLDER . "
           </label>
-          <div class='col-md-4'>
+          <div class='col-sm-4'>
             <input type='text' name='new_cat_sn' class='form-control'>
           </div>
         </div>
@@ -83,7 +83,7 @@ function tad_uploader_batch_upload_form($cat_sn = "")
             $tr
         </table>
 
-        <div class='row text-center'>
+        <div class='text-center'>
             <input type='hidden' name='op' value='import'>
             <button type='submit' class='btn btn-primary'>" . _MA_BATCH_SAVE . "</button>
         </div>
@@ -97,13 +97,14 @@ function tad_uploader_batch_import()
 {
     global $xoopsDB, $xoopsUser, $xoopsModuleConfig, $TadUpFiles;
 
-    if (!empty($_POST['new_cat_sn'])) {
-        $cat_sn = add_tad_uploader("", $_POST['new_cat_sn'], "", "1", $_POST['cat_sn'], $_POST['cat_add_form']);
-    } else {
-        $cat_sn = $_POST['cat_sn'];
+    $new_cat_sn = (int) $_POST['new_cat_sn'];
+    $cat_sn     = (int) $_POST['cat_sn'];
+
+    if (!empty($new_cat_sn)) {
+        $cat_sn = add_tad_uploader("", $new_cat_sn, "", "1", $cat_sn, $_POST['cat_add_form']);
     }
 
-    $uid      = $xoopsUser->getVar('uid');
+    $uid      = $xoopsUser->uid();
     $uid_name = XoopsUser::getUnameFromId($uid, 1);
     //$now=xoops_getUserTimestamp(time());
 
@@ -123,15 +124,15 @@ function tad_uploader_batch_import()
 
         $now = date("Y-m-d H:i:s", xoops_getUserTimestamp(time()));
         $sql = "insert into " . $xoopsDB->prefix("tad_uploader_file") . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
-    values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
-        $xoopsDB->query($sql) or web_error($sql);
+        values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
+        $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
         //取得最後新增資料的流水編號
         $cfsn = $xoopsDB->getInsertId();
 
         $new_filename = _TAD_UPLOADER_DIR . "/{$cfsn}_{$file_path}";
 
-        //$file_src=auto_charset($file_src,'web');
-        //$new_filename=auto_charset($new_filename,'web');
+        $file_src     = auto_charset($file_src, 'web');
+        $new_filename = auto_charset($new_filename, 'web');
 
         //複製匯入單一檔案：
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
@@ -139,7 +140,6 @@ function tad_uploader_batch_import()
         $TadUpFiles->import_one_file($file_src, $new_filename, null, null, null, $_POST['cf_desc'][$filename], true, true);
 
         unlink($file_src);
-
     }
 
     //刪除其他多餘檔案

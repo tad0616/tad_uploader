@@ -9,10 +9,9 @@ set_time_limit(0);
 $total = 0;
 $os    = (PATH_SEPARATOR == ':') ? "linux" : "win";
 
-$sql    = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where `cf_name`!=''";
-$result = $xoopsDB->queryF($sql) or web_error($sql);
+$sql = "SELECT * FROM " . $xoopsDB->prefix("tad_uploader_file") . " WHERE `cf_name`!=''";
+$result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
-
     if (empty($cf_name)) {
         continue;
     }
@@ -77,7 +76,6 @@ while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_co
             echo "<div style='color:blue'>產生：「{$cf_name}」完畢</div>";
         } else {
             echo "<div style='color:red'>將{$from}」改名為「{$to}」失敗！</div>";
-
         }
         $total++;
     } else {

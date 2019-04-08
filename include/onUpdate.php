@@ -27,10 +27,43 @@ function xoops_module_update_tad_uploader(&$module, $old_version)
         go_update6();
     }
 
+    if (chk_chk7()) {
+        go_update7();
+    }
+
     chk_tad_uploader_block();
     mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch");
 
+    //新增檔案欄位
+    if (chk_fc_tag()) {
+        go_fc_tag();
+    }
+
     return true;
+}
+
+//新增檔案欄位
+function chk_fc_tag()
+{
+    global $xoopsDB;
+    $sql    = "SELECT count(`tag`) FROM " . $xoopsDB->prefix("tad_uploader_files_center");
+    $result = $xoopsDB->query($sql);
+    if (empty($result)) {
+        return true;
+    }
+
+    return false;
+}
+
+function go_fc_tag()
+{
+    global $xoopsDB;
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_uploader_files_center") . "
+    ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
+    ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
+    ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
+    ";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $xoopsDB->error());
 }
 
 //刪除錯誤的重複欄位及樣板檔
@@ -69,7 +102,6 @@ function chk_tad_uploader_block()
             $xoopsDB->queryF($sql);
         }
     }
-
 }
 
 //檢查是否需要更新
@@ -97,7 +129,7 @@ function go_update1()
   `cfsn` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`log_sn`)
   )";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     return true;
 }
@@ -234,14 +266,13 @@ function go_update6()
   `sub_dir` varchar(255) NOT NULL default '',
   PRIMARY KEY (`files_sn`)
 ) ENGINE=MyISAM ";
-    $xoopsDB->queryF($sql) or web_error($sql);
+    $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
     $os = (PATH_SEPARATOR == ':') ? "linux" : "win";
 
     $sql    = "select * from " . $xoopsDB->prefix("tad_uploader_file") . " where `cf_name`!=''";
-    $result = $xoopsDB->queryF($sql) or web_error($sql);
+    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
-
         if (empty($cf_name)) {
             continue;
         }
@@ -288,90 +319,111 @@ function go_update6()
     return true;
 }
 
-//建立目錄
-function mk_dir($dir = "")
+//修改分類名稱欄位名稱
+function chk_chk7()
 {
-    //若無目錄名稱秀出警告訊息
-    if (empty($dir)) {
-        return;
+    global $xoopsDB;
+    $sql          = "SHOW Fields FROM " . $xoopsDB->prefix("tad_uploader_file") . " where `Field`='cf_size' and `Type` like 'bigint%'";
+    $result       = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    list($Fields) = $xoopsDB->fetchRow($result);
+
+    if (empty($Fields)) {
+        return true;
     }
 
-    //若目錄不存在的話建立目錄
-    if (!is_dir($dir)) {
-        umask(000);
-        //若建立失敗秀出警告訊息
-        mkdir($dir, 0777);
+    return false;
+}
+
+function go_update7()
+{
+    global $xoopsDB;
+    $sql = "ALTER TABLE " . $xoopsDB->prefix("tad_uploader_file") . " CHANGE `cf_size` `cf_size` bigint unsigned NOT NULL DEFAULT '0'";
+    $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin", 30, $xoopsDB->error());
+
+    return true;
+}
+
+
+//建立目錄
+if (!function_exists('mk_dir')) {
+    function mk_dir($dir = "")
+    {
+        //若無目錄名稱秀出警告訊息
+        if (empty($dir)) {
+            return;
+        }
+
+        //若目錄不存在的話建立目錄
+        if (!is_dir($dir)) {
+            umask(000);
+            //若建立失敗秀出警告訊息
+            mkdir($dir, 0777);
+        }
     }
 }
 
 //拷貝目錄
-function full_copy($source = "", $target = "")
-{
-    if (is_dir($source)) {
-        @mkdir($target);
-        $d = dir($source);
-        while (false !== ($entry = $d->read())) {
-            if ($entry == '.' || $entry == '..') {
-                continue;
-            }
+if (!function_exists('full_copy')) {
+    function full_copy($source = "", $target = "")
+    {
+        if (is_dir($source)) {
+            @mkdir($target);
+            $d = dir($source);
+            while (false !== ($entry = $d->read())) {
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
 
-            $Entry = $source . '/' . $entry;
-            if (is_dir($Entry)) {
-                full_copy($Entry, $target . '/' . $entry);
-                continue;
+                $Entry = $source . '/' . $entry;
+                if (is_dir($Entry)) {
+                    full_copy($Entry, $target . '/' . $entry);
+                    continue;
+                }
+                copy($Entry, $target . '/' . $entry);
             }
-            copy($Entry, $target . '/' . $entry);
+            $d->close();
+        } else {
+            copy($source, $target);
         }
-        $d->close();
-    } else {
-        copy($source, $target);
     }
 }
 
-function rename_win($oldfile, $newfile)
-{
-    if (!rename($oldfile, $newfile)) {
-        if (copy($oldfile, $newfile)) {
-            unlink($oldfile);
-            return true;
+if (!function_exists('rename_win')) {
+    function rename_win($oldfile, $newfile)
+    {
+        if (!rename($oldfile, $newfile)) {
+            if (copy($oldfile, $newfile)) {
+                unlink($oldfile);
+                return true;
+            }
+            return false;
         }
-        return false;
+        return true;
     }
-    return true;
 }
 
-//做縮圖
-function thumbnail($filename = "", $thumb_name = "", $type = "image/jpeg", $width = "120")
-{
+if (!function_exists('delete_directory')) {
+    function delete_directory($dirname)
+    {
+        if (is_dir($dirname)) {
+            $dir_handle = opendir($dirname);
+        }
 
-    ini_set('memory_limit', '50M');
-    // Get new sizes
-    list($old_width, $old_height) = getimagesize($filename);
+        if (!$dir_handle) {
+            return false;
+        }
 
-    $percent = ($old_width > $old_height) ? round($width / $old_width, 2) : round($width / $old_height, 2);
-
-    $newwidth  = ($old_width > $old_height) ? $width : $old_width * $percent;
-    $newheight = ($old_width > $old_height) ? $old_height * $percent : $width;
-
-    // Load
-    $thumb = imagecreatetruecolor($newwidth, $newheight);
-    if ($type == "image/jpeg" or $type == "image/jpg" or $type == "image/pjpg" or $type == "image/pjpeg") {
-        $source = imagecreatefromjpeg($filename);
-        $type   = "image/jpeg";
-    } elseif ($type == "image/png") {
-        $source = imagecreatefrompng($filename);
-        $type   = "image/png";
-    } elseif ($type == "image/gif") {
-        $source = imagecreatefromgif($filename);
-        $type   = "image/gif";
+        while ($file = readdir($dir_handle)) {
+            if ($file != "." && $file != "..") {
+                if (!is_dir($dirname . "/" . $file)) {
+                    unlink($dirname . "/" . $file);
+                } else {
+                    delete_directory($dirname . '/' . $file);
+                }
+            }
+        }
+        closedir($dir_handle);
+        rmdir($dirname);
+        return true;
     }
-
-    // Resize
-    imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $old_width, $old_height);
-
-    header("Content-type: image/png");
-    imagepng($thumb, $thumb_name);
-
-    return;
-    exit;
 }

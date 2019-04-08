@@ -1,15 +1,14 @@
 <?php
 function xoops_module_install_tad_uploader(&$module)
 {
-
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader");
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch");
+    mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_uploader');
+    mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_uploader_batch');
 
     return true;
 }
 
 //建立目錄
-function mk_dir($dir = "")
+function mk_dir($dir = '')
 {
     //若無目錄名稱秀出警告訊息
     if (empty($dir)) {
