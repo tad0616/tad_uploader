@@ -10,7 +10,7 @@ function xoops_module_uninstall_tad_uploader(&$module)
     return true;
 }
 
-function delete_directory($dirname)
+function tad_uploader_delete_directory($dirname)
 {
     if (is_dir($dirname)) {
         $dir_handle = opendir($dirname);
@@ -25,7 +25,7 @@ function delete_directory($dirname)
             if (!is_dir($dirname . '/' . $file)) {
                 unlink($dirname . '/' . $file);
             } else {
-                delete_directory($dirname . '/' . $file);
+                tad_uploader_delete_directory($dirname . '/' . $file);
             }
         }
     }
@@ -34,7 +34,7 @@ function delete_directory($dirname)
     return true;
 }
 
-function full_copy($source = '', $target = '')
+function tad_uploader_full_copy($source = '', $target = '')
 {
     if (is_dir($source)) {
         @mkdir($target);
@@ -46,7 +46,7 @@ function full_copy($source = '', $target = '')
 
             $Entry = $source . '/' . $entry;
             if (is_dir($Entry)) {
-                full_copy($Entry, $target . '/' . $entry);
+                tad_uploader_full_copy($Entry, $target . '/' . $entry);
                 continue;
             }
             copy($Entry, $target . '/' . $entry);

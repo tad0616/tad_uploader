@@ -364,7 +364,7 @@ if (!function_exists('mk_dir')) {
 
 //拷貝目錄
 if (!function_exists('full_copy')) {
-    function full_copy($source = "", $target = "")
+    function tad_uploader_full_copy($source = "", $target = "")
     {
         if (is_dir($source)) {
             @mkdir($target);
@@ -376,7 +376,7 @@ if (!function_exists('full_copy')) {
 
                 $Entry = $source . '/' . $entry;
                 if (is_dir($Entry)) {
-                    full_copy($Entry, $target . '/' . $entry);
+                    tad_uploader_full_copy($Entry, $target . '/' . $entry);
                     continue;
                 }
                 copy($Entry, $target . '/' . $entry);
