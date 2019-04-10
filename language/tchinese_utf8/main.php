@@ -60,3 +60,28 @@ define('_MD_TADUP_CANT_UP2ROOT', '根目錄不能上傳喔，請重新選擇目�
 define('_MD_TADUP_UPLOADED_AND_NO_POWER', '上傳成功，但此資料夾並不開放讀取。');
 
 define('_MD_TADUP_UPLOAD_FILE', '上傳');
+
+define('_MD_TADUP_DB_ERROR1', '無法取得tad_uploader資料');
+define('_MD_TADUP_SET_ACCESS_POWER', '請設定各個群組可讀取使用的資料夾');
+define('_MD_TADUP_SET_UPLOAD_POWER', '請設定各個群組可上傳的資料夾');
+define('_MD_TADUP_FOLDER_NAME', '資料夾名稱');
+define('_MD_TADUP_FOLDER_DESC', '資料夾描述');
+define('_MD_TADUP_FATHER_FOLDER', '所屬資料夾');
+define('_MD_TADUP_ENABLE', '是否啟用');
+define('_MD_TADUP_SHARE', '是否共享');
+define('_MD_TADUP_SAVE', '儲存');
+define('_MD_TADUP_FUNCTION', '功能');
+define('_MD_TADUP_DEL_CONFIRM', '確定要刪除此資料夾？底下的所有資料夾及檔案都會被刪除喔！');
+define('_MD_TADUP_LIST_ALL_FILES', '列出所有資料夾中文件');
+define('_MD_TADUP_AUTHOR', '建立者');
+define('_MD_TADUP_FILE_COUNTER', '人氣值');
+define('_MD_TADUP_EDIT', '編輯');
+define('_MD_TADUP_DEL', '刪除');
+define('_MD_TADUP_ADD_FORM', '「%s」管理');
+define('_MD_TADUP_FILE_NAME', '檔案名稱');
+define('_MD_TADUP_FILE_DATE', '日期');
+define('_MD_TADUP_FILE_SIZE', '大小');
+define('_MD_TADUP_EMPTY', '尚無資料');
+
+define('_MD_TADUP_CAN_ACCESS_GROUPS2', '可<b>讀取</b>群組');
+define('_MD_TADUP_CAN_UPLOADS_GROUPS', '可<b>上傳</b>群組');
