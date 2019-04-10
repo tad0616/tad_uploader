@@ -358,6 +358,11 @@ function chk_cate_power($kind = "")
 function add_tad_uploader($the_cat_sn = "", $cat_title = "", $cat_desc = "", $cat_enable = "1", $of_cat_sn = "0", $cat_add_form = 0, $cat_share = "auto", $cat_sort = "0", $cat_count = "0", $catalog = array(1, 2, 3), $catalog_up = array(1), $is_back = 0)
 {
     global $xoopsDB, $xoopsUser, $xoopsModule;
+
+    if (!check_up_power("catalog_up", $the_cat_sn)) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
+    }
+
     if ($xoopsUser) {
         $uid = $xoopsUser->uid();
     }
@@ -719,6 +724,72 @@ function get_subcat_num($cat_sn = 0)
     $result     = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
     list($data) = $xoopsDB->fetchRow($result);
     return $data;
+}
+
+//tad_uploader編輯表單
+function tad_uploader_cate_form($cat_sn = "")
+{
+    global $xoopsDB, $xoopsModule, $xoopsTpl;
+    include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+
+    if (!check_up_power("catalog_up", $cat_sn)) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
+    }
+
+    //抓取預設值
+    if (!empty($cat_sn)) {
+        $DBV = get_tad_uploader($cat_sn);
+    } else {
+        $DBV = array();
+    }
+
+    //預設值設定
+    $cat_sn      = (!isset($DBV['cat_sn'])) ? $cat_sn : $DBV['cat_sn'];
+    $cat_title   = (!isset($DBV['cat_title'])) ? "" : $DBV['cat_title'];
+    $cat_desc    = (!isset($DBV['cat_desc'])) ? "" : $DBV['cat_desc'];
+    $cat_enable  = (!isset($DBV['cat_enable'])) ? "1" : $DBV['cat_enable'];
+    $uid         = (!isset($DBV['uid'])) ? "" : $DBV['uid'];
+    $of_cat_sn   = (!isset($DBV['of_cat_sn'])) ? "" : $DBV['of_cat_sn'];
+    $cata_select = get_cata_select(array($cat_sn), $of_cat_sn);
+    $cat_share   = (!isset($DBV['cat_share'])) ? "1" : $DBV['cat_share'];
+    $cat_count   = (!isset($DBV['cat_count'])) ? "" : $DBV['cat_count'];
+
+    $cat_max_sort = get_cat_max_sort();
+    $cat_sort     = (!isset($DBV['cat_sort'])) ? $cat_max_sort : $DBV['cat_sort'];
+
+    $mod_id             = $xoopsModule->getVar('mid');
+    $moduleperm_handler = xoops_getHandler('groupperm');
+    $read_group         = $moduleperm_handler->getGroupIds("catalog", $cat_sn, $mod_id);
+    $post_group         = $moduleperm_handler->getGroupIds("catalog_up", $cat_sn, $mod_id);
+
+    if (empty($read_group)) {
+        $read_group = array(1, 2, 3);
+    }
+
+    if (empty($post_group)) {
+        $post_group = array(1);
+    }
+
+    //可見群組
+    $SelectGroup_name = new XoopsFormSelectGroup("view_group", "catalog", true, $read_group, 6, true);
+    $SelectGroup_name->setExtra("class='span12 form-control' id='view_group'");
+    $enable_group = $SelectGroup_name->render();
+
+    //可上傳群組
+    $SelectGroup_name = new XoopsFormSelectGroup("upload_group", "catalog_up", true, $post_group, 6, true);
+    $SelectGroup_name->setExtra("class='span12 form-control' id='upload_group'");
+    $enable_upload_group = $SelectGroup_name->render();
+
+    $xoopsTpl->assign('cata_select', $cata_select);
+    $xoopsTpl->assign('cat_title', $cat_title);
+    $xoopsTpl->assign('cat_desc', $cat_desc);
+    $xoopsTpl->assign('enable_group', $enable_group);
+    $xoopsTpl->assign('enable_upload_group', $enable_upload_group);
+    $xoopsTpl->assign('cat_sn', $cat_sn);
+    $xoopsTpl->assign('cat_count', $cat_count);
+    $xoopsTpl->assign('cat_sort', $cat_sort);
+    $xoopsTpl->assign('cat_enable', $cat_enable);
+    $xoopsTpl->assign('cat_share', $cat_share);
 }
 
 if (!function_exists('mime_content_type')) {
