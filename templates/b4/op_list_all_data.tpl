@@ -5,7 +5,11 @@
     <{$path}>
 </div>
 
-<h3><{$cat_title}></h3>
+<h3><{$cat_title}>
+    <{if $up_power}>
+        <a href="index.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn}>" class="btn btn-warning btn-sm"><{$smarty.const._TAD_EDIT}></a>
+    <{/if}>
+</h3>
 
 <div id="save_msg"></div>
 

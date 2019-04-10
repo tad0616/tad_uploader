@@ -305,9 +305,24 @@ $select_files  = system_CleanVars($_REQUEST, 'select_files', '', 'array');
 $cat_desc      = system_CleanVars($_REQUEST, 'cat_desc', '', 'string');
 $this_folder   = system_CleanVars($_REQUEST, 'this_folder', '', 'string');
 $add_cat_title = system_CleanVars($_REQUEST, 'add_cat_title', '', 'string');
-$add_to_cat = system_CleanVars($_REQUEST, 'add_to_cat', 0, 'int');
+$add_to_cat    = system_CleanVars($_REQUEST, 'add_to_cat', 0, 'int');
+$cat_share     = system_CleanVars($_REQUEST, 'cat_share', 0, 'int');
+$cat_sort      = system_CleanVars($_REQUEST, 'cat_sort', 0, 'int');
+$cat_count     = system_CleanVars($_REQUEST, 'cat_count', 0, 'int');
+$cat_enable    = system_CleanVars($_REQUEST, 'cat_enable', 0, 'int');
+$catalog       = system_CleanVars($_REQUEST, 'catalog', '', 'array');
+$catalog_up    = system_CleanVars($_REQUEST, 'catalog_up', '', 'array');
 
 switch ($op) {
+    //分類設定
+    case "tad_uploader_cate_form":
+        tad_uploader_cate_form($cat_sn);
+        break;
+
+    case "add_tad_uploader":
+        add_tad_uploader($cat_sn, $cat_title, $cat_desc, $cat_enable, $of_cat_sn, $add_to_cat, $cat_share, $cat_sort, $cat_count, $catalog, $catalog_up, 'admin');
+        header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
+        exit;
 
     case "update_data":
         update_data();
