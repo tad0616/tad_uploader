@@ -4,8 +4,8 @@ include_once "header.php";
 include_once "../function.php";
 
 /*-----------function區--------------*/
-$tad_uploader    = array(1, 2, 3);
-$tad_uploader_up = array(1);
+$tad_uploader    = [1, 2, 3];
+$tad_uploader_up = [1];
 
 //上層權限
 $of_cat_sn = (int)$_GET['of_cat_sn'];

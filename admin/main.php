@@ -59,7 +59,7 @@ function list_tad_uploader($cat_sn = "")
     $total   = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $files  = array();
+    $files  = [];
     while ($all = $xoopsDB->fetchArray($result)) {
         $files[] = $all;
     }
@@ -90,7 +90,7 @@ function get_cate_data($cat_sn = 0)
     $sql    = "select * from " . $xoopsDB->prefix("tad_uploader") . " where cat_sn='$cat_sn'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
 
-    $data = array();
+    $data = [];
 
     list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result);
 

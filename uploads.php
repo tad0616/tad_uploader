@@ -25,7 +25,7 @@ function uploads_tabs($cat_sn = "", $cfsn = "")
     if (!empty($cfsn)) {
         $DBV = get_tad_uploader_file($cfsn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定

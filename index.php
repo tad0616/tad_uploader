@@ -108,7 +108,7 @@ function get_folder_list($the_cat_sn = "", $check_up_power = "")
     //die($sql);
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
 
-    $all = array();
+    $all = [];
     $i   = 0;
     while (list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result)) {
 
@@ -145,7 +145,7 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
 
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
 
-    $all = array();
+    $all = [];
     $i   = 0;
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url) = $xoopsDB->fetchRow($result)) {
         $ff = get_file_by_cfsn($cfsn);
@@ -192,7 +192,7 @@ function get_files_list($the_cat_sn = "", $check_up_power = "")
 function roundsize($size)
 {
     $i   = 0;
-    $iec = array('B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB');
+    $iec = ['B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB'];
     while (($size / 1024) > 1) {
         $size = $size / 1024;
         $i++;}
@@ -266,7 +266,7 @@ function get_path($cat_sn = "")
 }
 
 //搬移檔案
-function movefile($select_files = array(), $new_cat_sn = "")
+function movefile($select_files = [], $new_cat_sn = "")
 {
     global $col_intf;
     if (empty($select_files)) {

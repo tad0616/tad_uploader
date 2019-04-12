@@ -65,7 +65,7 @@ function get_tad_uploader_sub_cate($cat_sn = "0")
     global $xoopsDB;
     $sql        = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='{$cat_sn}'";
     $result     = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    $cat_sn_arr = array();
+    $cat_sn_arr = [];
     while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $cat_sn_arr[$cat_sn] = $cat_title;
     }
@@ -220,7 +220,7 @@ function get_file_max_sort($cat_sn = "")
 }
 
 //取得類別下拉選單
-function get_cata_select($disable_cat_sn = array(), $dbv = 0, $of_cat_sn = 0, $tab = "")
+function get_cata_select($disable_cat_sn = [], $dbv = 0, $of_cat_sn = 0, $tab = "")
 {
     global $xoopsDB;
     $sql    = "select cat_sn,cat_title from " . $xoopsDB->prefix("tad_uploader") . " where of_cat_sn='$of_cat_sn' and cat_enable='1'";
@@ -338,7 +338,7 @@ function chk_cate_power($kind = "")
         $user_array = $xoopsUser->getGroups();
         $gsn_arr    = implode(",", $user_array);
     } else {
-        $user_array = array(3);
+        $user_array = [3];
         $isAdmin    = 0;
         $gsn_arr    = 3;
     }
@@ -355,7 +355,7 @@ function chk_cate_power($kind = "")
 }
 
 //取代/新增tad_uploader現有資料
-function add_tad_uploader($the_cat_sn = "", $cat_title = "", $cat_desc = "", $cat_enable = "1", $of_cat_sn = "0", $cat_add_form = 0, $cat_share = "auto", $cat_sort = "0", $cat_count = "0", $catalog = array(1, 2, 3), $catalog_up = array(1), $is_back = 0)
+function add_tad_uploader($the_cat_sn = "", $cat_title = "", $cat_desc = "", $cat_enable = "1", $of_cat_sn = "0", $cat_add_form = 0, $cat_share = "auto", $cat_sort = "0", $cat_count = "0", $catalog = [1, 2, 3], $catalog_up = [1], $is_back = 0)
 {
     global $xoopsDB, $xoopsUser, $xoopsModule;
 
@@ -740,7 +740,7 @@ function tad_uploader_cate_form($cat_sn = "")
     if (!empty($cat_sn)) {
         $DBV = get_tad_uploader($cat_sn);
     } else {
-        $DBV = array();
+        $DBV = [];
     }
 
     //預設值設定
@@ -750,7 +750,7 @@ function tad_uploader_cate_form($cat_sn = "")
     $cat_enable  = (!isset($DBV['cat_enable'])) ? "1" : $DBV['cat_enable'];
     $uid         = (!isset($DBV['uid'])) ? "" : $DBV['uid'];
     $of_cat_sn   = (!isset($DBV['of_cat_sn'])) ? "" : $DBV['of_cat_sn'];
-    $cata_select = get_cata_select(array($cat_sn), $of_cat_sn);
+    $cata_select = get_cata_select([$cat_sn], $of_cat_sn);
     $cat_share   = (!isset($DBV['cat_share'])) ? "1" : $DBV['cat_share'];
     $cat_count   = (!isset($DBV['cat_count'])) ? "" : $DBV['cat_count'];
 
@@ -763,11 +763,11 @@ function tad_uploader_cate_form($cat_sn = "")
     $post_group         = $moduleperm_handler->getGroupIds("catalog_up", $cat_sn, $mod_id);
 
     if (empty($read_group)) {
-        $read_group = array(1, 2, 3);
+        $read_group = [1, 2, 3];
     }
 
     if (empty($post_group)) {
-        $post_group = array(1);
+        $post_group = [1];
     }
 
     //可見群組
@@ -795,7 +795,7 @@ function tad_uploader_cate_form($cat_sn = "")
 if (!function_exists('mime_content_type')) {
     function mime_content_type($filename)
     {
-        $mime_types = array(
+        $mime_types = [
 
             'txt'  => 'text/plain',
             'htm'  => 'text/html',
@@ -849,7 +849,7 @@ if (!function_exists('mime_content_type')) {
             // open office
             'odt'  => 'application/vnd.oasis.opendocument.text',
             'ods'  => 'application/vnd.oasis.opendocument.spreadsheet',
-        );
+        ];
 
         $ext = strtolower(array_pop(explode('.', $filename)));
         if (array_key_exists($ext, $mime_types)) {

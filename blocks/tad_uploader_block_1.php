@@ -14,7 +14,7 @@ function tad_uploader_b_show_1($options)
 
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
 
-    $block = array();
+    $block = [];
     $i     = 0;
     while (list($cfsn, $cat_sn, $cf_name, $cf_desc, $file_url) = $xoopsDB->fetchRow($result)) {
 
