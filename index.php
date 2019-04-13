@@ -146,7 +146,7 @@ function get_files_list($the_cat_sn = '', $check_up_power = '')
     $i = 0;
     while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url) = $xoopsDB->fetchRow($result)) {
         $ff = get_file_by_cfsn($cfsn);
-        if ('img' == $ff['kind']) {
+        if ('img' === $ff['kind']) {
             list($width, $height, $type, $attr) = getimagesize(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}");
             $pic = XOOPS_URL . "/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}";
         } else {
@@ -166,13 +166,13 @@ function get_files_list($the_cat_sn = '', $check_up_power = '')
 
         $up_date = date('Y-m-d H:i:s', xoops_getUserTimestamp(strtotime($up_date)));
 
-        if ('img' == $ff['kind']) {
+        if ('img' === $ff['kind']) {
             $all[$i]['thumb_style'] = ($height > $width) ? 'width:85px;' : 'height:64px;max-width:85px;';
         } else {
             $all[$i]['thumb_style'] = 'height:64px;';
         }
         $all[$i]['pic'] = $pic;
-        $all[$i]['fname'] = ('img' == $ff['kind']) ? '' : $fname;
+        $all[$i]['fname'] = ('img' === $ff['kind']) ? '' : $fname;
         $all[$i]['cfsn'] = $cfsn;
         $all[$i]['cf_name'] = $cf_name;
         $all[$i]['up_date'] = $up_date;
@@ -341,14 +341,14 @@ switch ($op) {
         exit;
 
     case 'batch_dir_tools':
-        if ('new_cat_title' == $this_folder) {
+        if ('new_cat_title' === $this_folder) {
             update_tad_uploader('cat_title', $new_cat_title, $cat_sn);
             header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
-        } elseif ('add_cat_title' == $this_folder) {
+        } elseif ('add_cat_title' === $this_folder) {
             $cat_sn = add_tad_uploader('', $add_cat_title, '', '1', $cat_sn, $add_to_cat);
             header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
             $cat_sn = $new_cat_sn;
-        } elseif ('new_of_cat_sn' == $this_folder) {
+        } elseif ('new_of_cat_sn' === $this_folder) {
             update_tad_uploader('of_cat_sn', $new_of_cat_sn, $cat_sn);
             header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$new_of_cat_sn}");
             $cat_sn = $new_cat_sn;
@@ -356,9 +356,9 @@ switch ($op) {
         exit;
 
     case 'batch_file_tools':
-        if ('all_del' == $all_selected) {
+        if ('all_del' === $all_selected) {
             delfile($select_files);
-        } elseif ('all_move' == $all_selected) {
+        } elseif ('all_move' === $all_selected) {
             movefile($select_files, $new_cat_sn);
             $cat_sn = $new_cat_sn;
         }

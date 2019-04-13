@@ -7,7 +7,7 @@ if (!$isAdmin) {
 //取消上傳時間限制
 set_time_limit(0);
 $total = 0;
-$os = (PATH_SEPARATOR == ':') ? 'linux' : 'win';
+$os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
 $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_uploader_file') . " WHERE `cf_name`!=''";
 $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
@@ -19,8 +19,8 @@ while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_co
     echo "<h3>$cf_name</h3>";
 
     $type = explode('/', $cf_type);
-    $kind = ('image' == $type[0]) ? 'img' : 'file';
-    $kind_dir = ('img' == $kind) ? 'image' : 'file';
+    $kind = ('image' === $type[0]) ? 'img' : 'file';
+    $kind_dir = ('img' === $kind) ? 'image' : 'file';
     $extarr = explode('.', $cf_name);
     foreach ($extarr as $val) {
         $ext = mb_strtolower($val);
@@ -46,19 +46,19 @@ while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_co
 
     echo '<div>建立：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}』</div>";
 
-    if ('img' == $kind) {
+    if ('img' === $kind) {
         mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
         echo '<div>建立：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs』</div>";
         $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
         echo '<div>產生：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}』</div>";
     }
 
-    if ('win' == $os and _CHARSET == 'UTF-8') {
+    if ('win' === $os and _CHARSET === 'UTF-8') {
         $from = iconv(_CHARSET, 'Big5', $from);
         $to = iconv(_CHARSET, 'Big5', $to);
 
         echo '<div>簡檔案名稱轉為 Big5 格式</div>';
-    } elseif ('linux' == $os and _CHARSET == 'Big5') {
+    } elseif ('linux' === $os and _CHARSET === 'Big5') {
         $from = iconv(_CHARSET, 'UTF-8', $from);
         $to = iconv(_CHARSET, 'UTF-8', $to);
 

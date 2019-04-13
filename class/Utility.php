@@ -56,7 +56,7 @@ class Utility
         }
 
         while ($file = readdir($dir_handle)) {
-            if ('.' != $file && '..' != $file) {
+            if ('.' !== $file && '..' !== $file) {
                 if (!is_dir($dirname . '/' . $file)) {
                     unlink($dirname . '/' . $file);
                 } else {
@@ -79,7 +79,7 @@ class Utility
             }
             $d = dir($source);
             while (false !== ($entry = $d->read())) {
-                if ('.' == $entry || '..' == $entry) {
+                if ('.' === $entry || '..' === $entry) {
                     continue;
                 }
 
@@ -342,7 +342,7 @@ class Utility
 ) ENGINE=MyISAM ";
         $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
 
-        $os = (PATH_SEPARATOR == ':') ? 'linux' : 'win';
+        $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
         $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cf_name`!=''";
         $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
@@ -352,8 +352,8 @@ class Utility
             }
 
             $type = explode('/', $cf_type);
-            $kind = ('image' == $type[0]) ? 'img' : 'file';
-            $kind_dir = ('img' == $kind) ? 'image' : 'file';
+            $kind = ('image' === $type[0]) ? 'img' : 'file';
+            $kind_dir = ('img' === $kind) ? 'image' : 'file';
             $extarr = explode('.', $cf_name);
             foreach ($extarr as $val) {
                 $ext = mb_strtolower($val);
@@ -366,15 +366,15 @@ class Utility
             $readme = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}_info.txt";
 
             mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
-            if ('img' == $kind) {
+            if ('img' === $kind) {
                 mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
                 $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
             }
 
-            if ('win' == $os and _CHARSET == 'UTF-8') {
+            if ('win' === $os and _CHARSET === 'UTF-8') {
                 $from = iconv(_CHARSET, 'Big5', $from);
                 $to = iconv(_CHARSET, 'Big5', $to);
-            } elseif ('linux' == $os and _CHARSET == 'Big5') {
+            } elseif ('linux' === $os and _CHARSET === 'Big5') {
                 $from = iconv(_CHARSET, 'UTF-8', $from);
                 $to = iconv(_CHARSET, 'UTF-8', $to);
             }

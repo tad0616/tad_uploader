@@ -317,7 +317,7 @@ function check_up_power($kind = 'catalog', $cat_sn = '')
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
 
     if (empty($cat_sn)) {
-        if ('catalog' == $kind) {
+        if ('catalog' === $kind) {
             return true;
         }
         if ($isAdmin) {
@@ -382,7 +382,7 @@ function add_tad_uploader($the_cat_sn = '', $cat_title = '', $cat_desc = '', $ca
         $catalog = getItem_Permissions($of_cat_sn, 'catalog');
         $catalog_up = getItem_Permissions($of_cat_sn, 'catalog_up');
     }
-    if ('auto' == $cat_share) {
+    if ('auto' === $cat_share) {
         if (empty($of_cat_sn)) {
             $cat_share = 1;
         } else {
@@ -473,7 +473,7 @@ function get_file_name($real_file_name = '', $cfsn = '')
     $f = explode('.', $real_file_name);
     $ln = count($f) - 1;
     $sub = $f[$ln];
-    if ('php' == $sub) {
+    if ('php' === $sub) {
         $real_file_name .= 's';
     }
 
