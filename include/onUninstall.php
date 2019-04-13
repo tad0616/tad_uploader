@@ -1,7 +1,5 @@
 <?php
 
-use XoopsModules\Tad_uploader\Utility;
-
 function xoops_module_uninstall_tad_uploader(&$module)
 {
     global $xoopsDB;

@@ -35,7 +35,7 @@ function xoops_module_update_tad_uploader(&$module, $old_version)
     }
 
     Utility::chk_tad_uploader_block();
-    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch");
+    Utility::mk_dir(XOOPS_ROOT_PATH . '/uploads/tad_uploader_batch');
 
     //新增檔案欄位
     if (Utility::chk_fc_tag()) {

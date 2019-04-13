@@ -10,9 +10,9 @@ function tad_uploader_search($queryarray, $andor, $limit, $offset, $userid)
         }
         $queryarray = $arr;
     }
-    $sql = "SELECT `cfsn`,`cf_name`,`up_date`, `uid` FROM " . $xoopsDB->prefix("tad_uploader_file") . " WHERE 1";
-    if ($userid != 0) {
-        $sql .= " AND uid=" . $userid . " ";
+    $sql = 'SELECT `cfsn`,`cf_name`,`up_date`, `uid` FROM ' . $xoopsDB->prefix('tad_uploader_file') . ' WHERE 1';
+    if (0 != $userid) {
+        $sql .= ' AND uid=' . $userid . ' ';
     }
     if (is_array($queryarray) && $count = count($queryarray)) {
         $sql .= " AND ((`cf_name` LIKE '%{$queryarray[0]}%'  OR `cf_desc` LIKE '%{$queryarray[0]}%' )";
@@ -24,15 +24,16 @@ function tad_uploader_search($queryarray, $andor, $limit, $offset, $userid)
     }
     $sql .= 'ORDER BY  `cf_sort` DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
-    $ret    = [];
-    $i      = 0;
+    $ret = [];
+    $i = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $ret[$i]['image'] = 'images/folder.png';
-        $ret[$i]['link']  = 'index.php?op=dlfile&cfsn=' . $myrow['cfsn'];
+        $ret[$i]['link'] = 'index.php?op=dlfile&cfsn=' . $myrow['cfsn'];
         $ret[$i]['title'] = $myrow['cf_name'];
-        $ret[$i]['time']  = strtotime($myrow['up_date']);
-        $ret[$i]['uid']   = $myrow['uid'];
+        $ret[$i]['time'] = strtotime($myrow['up_date']);
+        $ret[$i]['uid'] = $myrow['uid'];
         $i++;
     }
+
     return $ret;
 }

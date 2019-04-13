@@ -3,7 +3,7 @@
 include_once __DIR__ . '/header.php';
 
 $updateRecordsArray = $_POST['tr'];
-$sort               = 1;
+$sort = 1;
 foreach ($updateRecordsArray as $recordIDValue) {
     $recordIDValue = (int) $recordIDValue;
     $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set `cf_sort`='{$sort}' where `cfsn`='{$recordIDValue}'";
