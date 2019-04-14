@@ -351,6 +351,7 @@ class Utility
             $kind = ('image' === $type[0]) ? 'img' : 'file';
             $kind_dir = ('img' === $kind) ? 'image' : 'file';
             $extarr = explode('.', $cf_name);
+            $ext = '';
             foreach ($extarr as $val) {
                 $ext = mb_strtolower($val);
             }
@@ -364,7 +365,6 @@ class Utility
             self::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
             if ('img' === $kind) {
                 self::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
-                $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
             }
 
             if ('win' === $os and _CHARSET === 'UTF-8') {
@@ -380,8 +380,10 @@ class Utility
                     $sql2 = 'insert into ' . $xoopsDB->prefix('tad_uploader_files_center') . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
                     $xoopsDB->queryF($sql2) or /** @scrutinizer ignore-call */web_error($sql2);
                     $fp = fopen($readme, 'wb');
-                    fwrite($fp, $cf_name);
-                    fclose($fp);
+                    if (is_resource($fp)) {
+                        fwrite($fp, $cf_name);
+                        fclose($fp);
+                    }
                 }
             }
         }
