@@ -1,1 +1,1 @@
-<{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b4/op_`$now_op`.tpl"}>
+<{includeq file="$xoops_rootpath/modules/tad_uploader/templates/b4/op_`$now_op`.tpl"}>

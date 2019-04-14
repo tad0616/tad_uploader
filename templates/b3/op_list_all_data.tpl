@@ -21,17 +21,17 @@
 
 <form action="index.php" method="POST" enctype="multipart/form-data" role="form">
     <{if $list_mode=="icon"}>
-        <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b3/sub_list_all_data_icon.tpl"}>
+        <{includeq file="$xoops_rootpath/modules/tad_uploader/templates/b3/sub_list_all_data_icon.tpl"}>
     <{else}>
-        <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b3/sub_list_all_data.tpl"}>
+        <{includeq file="$xoops_rootpath/modules/tad_uploader/templates/b3/sub_list_all_data.tpl"}>
     <{/if}>
     <{if $up_power}>
-        <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b3/sub_selected_files_tool.tpl"}>
+        <{includeq file="$xoops_rootpath/modules/tad_uploader/templates/b3/sub_selected_files_tool.tpl"}>
     <{/if}>
 </form>
 
 
 <{if $up_power}>
-    <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b3/sub_js.tpl"}>
-    <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b3/sub_batch_tool.tpl"}>
+    <{includeq file="$xoops_rootpath/modules/tad_uploader/templates/b3/sub_js.tpl"}>
+    <{includeq file="$xoops_rootpath/modules/tad_uploader/templates/b3/sub_batch_tool.tpl"}>
 <{/if}>

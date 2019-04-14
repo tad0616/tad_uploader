@@ -16,10 +16,7 @@
  * @author       Tad
  * @version      $Id $
  **/
-require_once __DIR__ . '/../../../include/cp_header.php';
 include __DIR__ . '/header.php';
-
-include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/class/admin.php';
 
 $index_admin = new ModuleAdmin();
 
