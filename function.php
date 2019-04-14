@@ -775,7 +775,9 @@ function tad_uploader_cate_form($cat_sn = ''): void
 
     $mod_id = $xoopsModule->getVar('mid');
     $moduleperm_handler = xoops_getHandler('groupperm');
+    /** @scrutinizer ignore-call */
     $read_group = $moduleperm_handler->getGroupIds('catalog', $cat_sn, $mod_id);
+    /** @scrutinizer ignore-call */
     $post_group = $moduleperm_handler->getGroupIds('catalog_up', $cat_sn, $mod_id);
 
     if (empty($read_group)) {
