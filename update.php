@@ -10,7 +10,7 @@ $total = 0;
 $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
 $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_uploader_file') . " WHERE `cf_name`!=''";
-$result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+$result = $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
 while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
     if (empty($cf_name)) {
         continue;
@@ -69,7 +69,7 @@ while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_co
         if (rename($from, $to)) {
             $sql2 = 'insert into ' . $xoopsDB->prefix('tad_uploader_files_center') . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
             echo "<div>執行：「{$sql}」</div>";
-            $xoopsDB->queryF($sql2) or web_error($sql2);
+            $xoopsDB->queryF($sql2) or /** @scrutinizer ignore-call */web_error($sql2);
             $fp = fopen($readme, 'wb');
             fwrite($fp, $cf_name);
             fclose($fp);
