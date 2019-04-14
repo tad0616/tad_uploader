@@ -1,12 +1,12 @@
 <?php
 /*-----------引入檔案區--------------*/
-include 'header.php';
-$xoopsOption['template_main'] = 'tad_uploader_index.tpl';
+require __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_uploader_index.tpl';
 if (empty($_SESSION['list_mode'])) {
     $_SESSION['list_mode'] = $xoopsModuleConfig['show_mode'];
 }
 
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
 //列出所有資料
@@ -56,7 +56,7 @@ function list_all_data($the_cat_sn = 0)
     }
 
     if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php')) {
-        include_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
+        require_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
         $FooTable = new FooTable();
         $FooTable->render(false);
     }
@@ -91,7 +91,7 @@ function list_all_data($the_cat_sn = 0)
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
+    require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
     $sweet_alert = new sweet_alert();
     $sweet_alert->render('delete_tad_uploader_func', "index.php?op=delete_tad_uploader&of_cat_sn={$the_cat_sn}&cat_sn=", 'cat_sn');
     $sweet_alert2 = new sweet_alert();
@@ -109,7 +109,7 @@ function get_folder_list($the_cat_sn = '', $check_up_power = '')
 
     $all = [];
     $i = 0;
-    while (list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result))) {
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
         if (!check_up_power('catalog', $cat_sn)) {
             continue;
@@ -144,7 +144,7 @@ function get_files_list($the_cat_sn = '', $check_up_power = '')
 
     $all = [];
     $i = 0;
-    while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url) = $xoopsDB->fetchRow($result))) {
         $ff = get_file_by_cfsn($cfsn);
         if ('img' === $ff['kind']) {
             list($width, $height, $type, $attr) = getimagesize(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/image/.thumbs/{$ff['hash_filename']}");
@@ -239,7 +239,7 @@ function find_path($cat_sn = '')
     $sql = 'select cat_sn,cat_title,of_cat_sn from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='$cat_sn'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
 
-    while (list($cat_sn, $cat_title, $of_cat_sn) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($cat_sn, $cat_title, $of_cat_sn) = $xoopsDB->fetchRow($result))) {
         $cat_sn_array = $cat_sn . "'>" . $cat_title;
         if (!empty($of_cat_sn)) {
             $cat_sn_array .= '||' . find_path($of_cat_sn);
@@ -293,7 +293,7 @@ function update_tad_uploader_count($cat_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
 $cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
@@ -390,4 +390,4 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

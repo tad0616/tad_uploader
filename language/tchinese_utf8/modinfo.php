@@ -1,5 +1,5 @@
 <?php
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
+require_once XOOPS_ROOT_PATH . '/modules/tadtools/language/' . $xoopsConfig['language'] . '/modinfo_common.php';
 
 define('_MI_TADUP_NAME', '網路硬碟');
 define('_MI_TADUP_DESC', '就是上傳模組囉～');

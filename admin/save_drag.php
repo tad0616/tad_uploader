@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include '../../../include/cp_header.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $of_cat_sn = (int)$_POST['of_cat_sn'];
 $cat_sn = (int)$_POST['cat_sn'];
@@ -23,7 +23,7 @@ function chk_cate_path($cat_sn, $of_cat_sn)
     //抓出子目錄的編號
     $sql = 'select cat_sn from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='{$cat_sn}'";
     $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (list($sub_cat_sn) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($sub_cat_sn) = $xoopsDB->fetchRow($result))) {
         if (chk_cate_path($sub_cat_sn, $of_cat_sn)) {
             return true;
         }

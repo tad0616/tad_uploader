@@ -1,5 +1,5 @@
 <?php
-include 'header.php';
+require __DIR__ . '/header.php';
 if (!$isAdmin) {
     redirect_header(XOOPS_URL, 3, '非管理員，無權限使用此功能');
 }
@@ -11,7 +11,7 @@ $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
 $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_uploader_file') . " WHERE `cf_name`!=''";
 $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
+while (false !== (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result))) {
     if (empty($cf_name)) {
         continue;
     }

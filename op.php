@@ -1,9 +1,9 @@
 <?php
 /*-----------引入檔案區--------------*/
-include __DIR__ . '/header.php';
+require __DIR__ . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
 $cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');

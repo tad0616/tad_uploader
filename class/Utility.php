@@ -140,7 +140,7 @@ class Utility
     {
         global $xoopsDB;
         //die(var_export($xoopsConfig));
-        include XOOPS_ROOT_PATH . '/modules/tad_uploader/xoops_version.php';
+        require XOOPS_ROOT_PATH . '/modules/tad_uploader/xoops_version.php';
 
         //先找出該有的區塊以及對應樣板
         foreach ($modversion['blocks'] as $i => $block) {
@@ -153,7 +153,7 @@ class Utility
         $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
     WHERE `dirname` = 'tad_uploader' ORDER BY `func_num`";
         $result = $xoopsDB->query($sql);
-        while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result))) {
             //假如現有的區塊和樣板對不上就刪掉
             if ($template != $tpl_file_arr[$show_func]) {
                 $sql = 'delete from ' . $xoopsDB->prefix('newblocks') . " where bid='{$bid}'";
@@ -265,7 +265,7 @@ class Utility
         $sql = 'select cfsn,uid,cf_name from ' . $xoopsDB->prefix('tad_uploader_file') . " where file_url=''";
         $result = $xoopsDB->query($sql) or die($sql);
 
-        while (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result))) {
             //搬移影片檔
             if (!is_dir($dir . "/user_{$uid}")) {
                 mk_dir($dir . "/user_{$uid}");
@@ -346,7 +346,7 @@ class Utility
 
         $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cf_name`!=''";
         $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result))) {
             if (empty($cf_name)) {
                 continue;
             }
