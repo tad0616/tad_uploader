@@ -3,6 +3,7 @@ Tad Uploader 3.5.6 (尚未釋出)
 1.移除 jBreadCrumb，改用 tadtools 中的 tad_breadcrumb 函數
 2.移除內建 mime 圖示，改用 tadtools 中的 圖示
 3.更新界面圖示
+4.有權限的使用者可以在前台管理分類
 
 
 Tad Uploader 3.5.5 (2019-03-24釋出)
