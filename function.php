@@ -670,12 +670,11 @@ function delete_tad_uploader($cat_sn = ''): void
     if (!$power) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
     }
-
+    $where = '';
     if ($xoopsUser) {
         $uid = $xoopsUser->uid();
         $where = ($isAdmin) ? '' : " and uid='{$uid}'";
     } else {
-        $groups = XOOPS_GROUP_ANONYMOUS;
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_LOGIN);
     }
 
@@ -687,6 +686,7 @@ function delete_tad_uploader($cat_sn = ''): void
     }
 
     //找出所屬檔案
+    $flies = [];
     $sql = 'select cfsn,cf_name from ' . $xoopsDB->prefix('tad_uploader_file') . " where cat_sn='{$cat_sn}'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
     while ([$cfsn, $cf_name] = $xoopsDB->fetchRow($result)) {
