@@ -259,6 +259,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = '', $show
     $dot = ($show_dot == '1') ? str_repeat('--', $level) : '';
     $level += 1;
 
+    $cate_count = [];
     $sql = 'SELECT count(*),cat_sn FROM ' . $xoopsDB->prefix('tad_uploader_file') . ' GROUP BY cat_sn';
     $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
     while ([$count, $cat_sn] = $xoopsDB->fetchRow($result)) {
@@ -270,9 +271,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = '', $show
     //die($sql);
     $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
 
-    if ($chk_view) {
-        $ok_cat = chk_cate_power('catalog_up');
-    }
+    $ok_cat = ($chk_view) ? chk_cate_power('catalog_up') : [];
 
     while ([$cat_sn, $cat_title] = $xoopsDB->fetchRow($result)) {
         $selected = ($v == $cat_sn) ? 'selected' : '';
