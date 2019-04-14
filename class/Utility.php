@@ -47,28 +47,25 @@ class Utility
     //刪除目錄
     public static function delete_directory($dirname)
     {
-        $dir_handle = '';
         if (is_dir($dirname)) {
             $dir_handle = opendir($dirname);
-        }
-
-        if (!$dir_handle) {
-            return false;
-        }
-
-        while ($file = readdir($dir_handle)) {
-            if ('.' !== $file && '..' !== $file) {
-                if (!is_dir($dirname . '/' . $file)) {
-                    unlink($dirname . '/' . $file);
-                } else {
-                    self::delete_directory($dirname . '/' . $file);
+            if ($dir_handle) {
+                while ($file = readdir($dir_handle)) {
+                    if ('.' !== $file && '..' !== $file) {
+                        if (!is_dir($dirname . '/' . $file)) {
+                            unlink($dirname . '/' . $file);
+                        } else {
+                            self::delete_directory($dirname . '/' . $file);
+                        }
+                    }
                 }
+                closedir($dir_handle);
+                rmdir($dirname);return true;
+
             }
         }
-        closedir($dir_handle);
-        rmdir($dirname);
 
-        return true;
+        return false;
     }
 
     //拷貝目錄
