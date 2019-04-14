@@ -16,7 +16,6 @@
  * @author       Tad
  * @version      $Id $
  **/
-
 require_once __DIR__ . '/../../../include/cp_header.php';
 include __DIR__ . '/header.php';
 
