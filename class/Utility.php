@@ -47,7 +47,6 @@ class Utility
     //刪除目錄
     public static function delete_directory($dirname = '')
     {
-        $dir_handle = false;
         if (is_dir($dirname)) {
             $dir_handle = opendir($dirname);
             if ($dir_handle) {
