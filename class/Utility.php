@@ -47,6 +47,7 @@ class Utility
     //刪除目錄
     public static function delete_directory($dirname)
     {
+        $dir_handle = '';
         if (is_dir($dirname)) {
             $dir_handle = opendir($dirname);
         }
@@ -128,10 +129,10 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'ALTER TABLE ' . $xoopsDB->prefix('tad_uploader_files_center') . "
-    ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
-    ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
-    ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
-    ";
+        ADD `upload_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '上傳時間',
+        ADD `uid` MEDIUMINT(8) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上傳者',
+        ADD `tag` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '註記'
+        ";
         $xoopsDB->queryF($sql) or redirect_header(XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin', 30, $xoopsDB->error());
     }
 
@@ -150,8 +151,7 @@ class Utility
         }
 
         //找出目前所有的樣板檔
-        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
-    WHERE `dirname` = 'tad_uploader' ORDER BY `func_num`";
+        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . '`  WHERE `dirname` = "tad_uploader" ORDER BY `func_num`';
         $result = $xoopsDB->query($sql);
         while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
@@ -161,13 +161,13 @@ class Utility
 
                 //連同樣板以及樣板實體檔案也要刪掉
                 $sql = 'delete from ' . $xoopsDB->prefix('tplfile') . ' as a
-            left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
-            where a.tpl_refid='$bid' and a.tpl_module='tad_uploader' and a.tpl_type='block'";
+                left join ' . $xoopsDB->prefix('tplsource') . "  as b on a.tpl_id=b.tpl_id
+                where a.tpl_refid='$bid' and a.tpl_module='tad_uploader' and a.tpl_type='block'";
                 $xoopsDB->queryF($sql);
             } else {
                 $sql = 'update ' . $xoopsDB->prefix('tplfile') . "
-            set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
-            where tpl_refid='{$bid}'";
+                set tpl_file='{$template}' , tpl_desc='{$tpl_desc_arr[$show_func]}'
+                where tpl_refid='{$bid}'";
                 $xoopsDB->queryF($sql);
             }
         }
@@ -191,13 +191,13 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'CREATE TABLE IF NOT EXISTS ' . $xoopsDB->prefix('tad_uploader_dl_log') . ' (
-  `log_sn` smallint(5) unsigned NOT NULL auto_increment,
-  `uid` smallint(5) unsigned NOT NULL,
-  `dl_time` datetime NOT NULL,
-  `from_ip` varchar(15) NOT NULL,
-  `cfsn` smallint(5) unsigned NOT NULL,
-  PRIMARY KEY  (`log_sn`)
-  )';
+        `log_sn` smallint(5) unsigned NOT NULL auto_increment,
+        `uid` smallint(5) unsigned NOT NULL,
+        `dl_time` datetime NOT NULL,
+        `from_ip` varchar(15) NOT NULL,
+        `cfsn` smallint(5) unsigned NOT NULL,
+        PRIMARY KEY  (`log_sn`)
+        )';
         $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
 
         return true;
@@ -260,7 +260,7 @@ class Utility
     {
         global $xoopsDB;
         $dir = XOOPS_ROOT_PATH . '/uploads/tad_uploader';
-        mk_dir($dir . '_batch');
+        Utility::mk_dir($dir . '_batch');
 
         $sql = 'select cfsn,uid,cf_name from ' . $xoopsDB->prefix('tad_uploader_file') . " where file_url=''";
         $result = $xoopsDB->query($sql) or die($sql);
@@ -268,7 +268,7 @@ class Utility
         while (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result)) {
             //搬移影片檔
             if (!is_dir($dir . "/user_{$uid}")) {
-                mk_dir($dir . "/user_{$uid}");
+                Utility::mk_dir($dir . "/user_{$uid}");
             }
             rename_win("{$dir}/{$cfsn}_{$cf_name}", "{$dir}/user_{$uid}/{$cfsn}_{$cf_name}");
         }
@@ -324,22 +324,22 @@ class Utility
         //取消上傳時間限制
         set_time_limit(0);
 
-        $sql = 'CREATE TABLE IF NOT EXISTS `' . $xoopsDB->prefix('tad_uploader_files_center') . "` (
-  `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `col_name` varchar(255) NOT NULL default '',
-  `col_sn` smallint(5) unsigned NOT NULL default '0',
-  `sort` smallint(5) unsigned NOT NULL default '1',
-  `kind` enum('img','file') NOT NULL default 'img',
-  `file_name` varchar(255) NOT NULL default '',
-  `file_type` varchar(255) NOT NULL default '',
-  `file_size` int(10) unsigned NOT NULL default '0',
-  `description` text NOT NULL,
-  `counter` mediumint(8) unsigned NOT NULL default '0',
-  `original_filename` varchar(255) NOT NULL default '',
-  `hash_filename` varchar(255) NOT NULL default '',
-  `sub_dir` varchar(255) NOT NULL default '',
-  PRIMARY KEY (`files_sn`)
-) ENGINE=MyISAM ";
+        $sql = "CREATE TABLE IF NOT EXISTS `" . $xoopsDB->prefix('tad_uploader_files_center') . "` (
+        `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+        `col_name` varchar(255) NOT NULL default '',
+        `col_sn` smallint(5) unsigned NOT NULL default '0',
+        `sort` smallint(5) unsigned NOT NULL default '1',
+        `kind` enum('img','file') NOT NULL default 'img',
+        `file_name` varchar(255) NOT NULL default '',
+        `file_type` varchar(255) NOT NULL default '',
+        `file_size` int(10) unsigned NOT NULL default '0',
+        `description` text NOT NULL,
+        `counter` mediumint(8) unsigned NOT NULL default '0',
+        `original_filename` varchar(255) NOT NULL default '',
+        `hash_filename` varchar(255) NOT NULL default '',
+        `sub_dir` varchar(255) NOT NULL default '',
+        PRIMARY KEY (`files_sn`)
+        ) ENGINE=MyISAM ";
         $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
 
         $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
@@ -365,9 +365,9 @@ class Utility
             $to = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}.{$ext}";
             $readme = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}_info.txt";
 
-            mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
+            Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
             if ('img' === $kind) {
-                mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
+                Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
                 $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
             }
 

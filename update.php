@@ -35,18 +35,20 @@ while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_co
     $readme = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}_info.txt";
 
     echo "<div>相關路徑如下：
-  <ol>
-  <li>原始：{$from}</li>
-  <li>新檔：{$to}</li>
-  <li>說明：{$readme}</li>
-  </ol>
-  </div>";
+    <ol>
+    <li>原始：{$from}</li>
+    <li>新檔：{$to}</li>
+    <li>說明：{$readme}</li>
+    </ol>
+    </div>";
 
+    /** @scrutinizer ignore-call */
     mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
 
     echo '<div>建立：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}』</div>";
 
     if ('img' === $kind) {
+        /** @scrutinizer ignore-call */
         mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
         echo '<div>建立：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs』</div>";
         $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";

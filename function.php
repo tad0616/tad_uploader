@@ -16,6 +16,7 @@ if ($xoopsUser) {
 define('_TAD_UPLOADER_DIR', XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid_dir}");
 define('_TAD_UPLOADER_BATCH_DIR', XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch/user_{$uid_dir}");
 define('_TAD_UPLOADER_URL', XOOPS_URL . '/uploads/tad_uploader');
+/** @scrutinizer ignore-call */
 mk_dir(_TAD_UPLOADER_BATCH_DIR);
 
 //取得路徑
