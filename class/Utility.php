@@ -260,7 +260,7 @@ class Utility
     {
         global $xoopsDB;
         $dir = XOOPS_ROOT_PATH . '/uploads/tad_uploader';
-        mk_dir($dir . '_batch');
+        self::mk_dir($dir . '_batch');
 
         $sql = 'select cfsn,uid,cf_name from ' . $xoopsDB->prefix('tad_uploader_file') . " where file_url=''";
         $result = $xoopsDB->query($sql) or die($sql);
@@ -268,7 +268,7 @@ class Utility
         while (false !== (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result))) {
             //搬移影片檔
             if (!is_dir($dir . "/user_{$uid}")) {
-                mk_dir($dir . "/user_{$uid}");
+                self::mk_dir($dir . "/user_{$uid}");
             }
             rename_win("{$dir}/{$cfsn}_{$cf_name}", "{$dir}/user_{$uid}/{$cfsn}_{$cf_name}");
         }
@@ -365,9 +365,9 @@ class Utility
             $to = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}.{$ext}";
             $readme = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}_info.txt";
 
-            mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
+            self::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
             if ('img' === $kind) {
-                mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
+                self::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
                 $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
             }
 

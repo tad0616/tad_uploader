@@ -1,4 +1,7 @@
 <?php
+
+use XoopsModules\Tad_themes\Utility;
+
 require __DIR__ . '/header.php';
 if (!$isAdmin) {
     redirect_header(XOOPS_URL, 3, '非管理員，無權限使用此功能');
@@ -42,12 +45,12 @@ while (false !== (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_s
   </ol>
   </div>";
 
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
+    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
 
     echo '<div>建立：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}』</div>";
 
     if ('img' === $kind) {
-        mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
+        Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
         echo '<div>建立：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs』</div>";
         $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
         echo '<div>產生：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}』</div>";

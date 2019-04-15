@@ -1,4 +1,7 @@
 <?php
+
+use XoopsModules\Tadtools\Utility;
+
 //引入TadTools的函式庫
 if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
     redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
@@ -15,7 +18,7 @@ if ($xoopsUser) {
 define('_TAD_UPLOADER_DIR', XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid_dir}");
 define('_TAD_UPLOADER_BATCH_DIR', XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch/user_{$uid_dir}");
 define('_TAD_UPLOADER_URL', XOOPS_URL . '/uploads/tad_uploader');
-mk_dir(_TAD_UPLOADER_BATCH_DIR);
+Utility::mk_dir(_TAD_UPLOADER_BATCH_DIR);
 
 //取得路徑
 function get_tad_uploader_cate_path($the_cat_sn = '', $include_self = true)
