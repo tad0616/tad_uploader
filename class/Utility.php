@@ -342,7 +342,10 @@ class Utility
 
         $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cf_name`!=''";
         $result = $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
-        while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
+        while ($all = $xoopsDB->fetchArray($result)) {
+            foreach ($all as $k => $v) {
+                $$k = $v;
+            }
             if (empty($cf_name)) {
                 continue;
             }

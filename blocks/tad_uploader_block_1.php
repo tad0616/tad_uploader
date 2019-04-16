@@ -130,7 +130,7 @@ if (!function_exists('block_uploader_cate')) {
                arr[i] = document.getElementById('c{$cat_sn}').value;
                i++;
               }";
-            $ckecked = (in_array($cat_sn, $sc, true)) ? 'checked' : '';
+            $ckecked = (in_array($cat_sn, $sc)) ? 'checked' : '';
             $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$cat_sn}' value='{$cat_sn}' class='bbv' onChange=bbv() $ckecked><label for='c{$cat_sn}'>$cat_title</label></span> ";
         }
 
