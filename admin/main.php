@@ -13,7 +13,7 @@ function list_tad_uploader_cate_tree($def_cat_sn = '')
 
     $sql = 'SELECT cat_sn , count(*) FROM ' . $xoopsDB->prefix('tad_uploader_file') . ' GROUP BY cat_sn';
     $result = $xoopsDB->query($sql);
-    while (false !== (list($cat_sn, $counter) = $xoopsDB->fetchRow($result))) {
+    while (list($cat_sn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$cat_sn] = $counter;
     }
     $path = get_tad_uploader_cate_path($def_cat_sn);
@@ -22,8 +22,8 @@ function list_tad_uploader_cate_tree($def_cat_sn = '')
     $data[] = "{ id:0, pId:0, name:'All', url:'main.php', target:'_self', open:true}";
 
     $sql = 'SELECT cat_sn,of_cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader') . '  ORDER BY cat_sort';
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
-    while (false !== (list($cat_sn, $of_cat_sn, $cat_title) = $xoopsDB->fetchRow($result))) {
+    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    while (list($cat_sn, $of_cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_cat_sn == $cat_sn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         //$open            = in_array($cat_sn, $path_arr) ? 'true' : 'false';
         $display_counter = empty($cate_count[$cat_sn]) ? '' : " ({$cate_count[$cat_sn]})";
@@ -58,7 +58,7 @@ function list_tad_uploader($cat_sn = '')
     $sql = $PageBar['sql'];
     $total = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
     $files = [];
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         $files[] = $all;

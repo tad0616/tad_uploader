@@ -45,16 +45,11 @@ class Utility
     }
 
     //刪除目錄
-    public static function delete_directory($dirname)
+    public static function delete_directory($dirname = '')
     {
         if (is_dir($dirname)) {
             $dir_handle = opendir($dirname);
-        }
-
-        if (!$dir_handle) {
-            return false;
-        }
-
+            if ($dir_handle) {
         while ($file = readdir($dir_handle)) {
             if ('.' !== $file && '..' !== $file) {
                 if (!is_dir($dirname . '/' . $file)) {
@@ -66,8 +61,10 @@ class Utility
         }
         closedir($dir_handle);
         rmdir($dirname);
-
         return true;
+    }
+        }
+        return false;
     }
 
     //拷貝目錄
@@ -150,10 +147,9 @@ class Utility
         }
 
         //找出目前所有的樣板檔
-        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . "`
-    WHERE `dirname` = 'tad_uploader' ORDER BY `func_num`";
+        $sql = 'SELECT bid,name,visible,show_func,template FROM `' . $xoopsDB->prefix('newblocks') . '`  WHERE `dirname` = "tad_uploader" ORDER BY `func_num`';
         $result = $xoopsDB->query($sql);
-        while (false !== (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result))) {
+        while (list($bid, $name, $visible, $show_func, $template) = $xoopsDB->fetchRow($result)) {
             //假如現有的區塊和樣板對不上就刪掉
             if ($template != $tpl_file_arr[$show_func]) {
                 $sql = 'delete from ' . $xoopsDB->prefix('newblocks') . " where bid='{$bid}'";
@@ -198,7 +194,7 @@ class Utility
   `cfsn` smallint(5) unsigned NOT NULL,
   PRIMARY KEY  (`log_sn`)
   )';
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -265,7 +261,7 @@ class Utility
         $sql = 'select cfsn,uid,cf_name from ' . $xoopsDB->prefix('tad_uploader_file') . " where file_url=''";
         $result = $xoopsDB->query($sql) or die($sql);
 
-        while (false !== (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result))) {
+        while (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result)) {
             //搬移影片檔
             if (!is_dir($dir . "/user_{$uid}")) {
                 self::mk_dir($dir . "/user_{$uid}");
@@ -324,7 +320,7 @@ class Utility
         //取消上傳時間限制
         set_time_limit(0);
 
-        $sql = 'CREATE TABLE IF NOT EXISTS `' . $xoopsDB->prefix('tad_uploader_files_center') . "` (
+        $sql = "CREATE TABLE IF NOT EXISTS `" . $xoopsDB->prefix('tad_uploader_files_center') . "` (
   `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `col_name` varchar(255) NOT NULL default '',
   `col_sn` smallint(5) unsigned NOT NULL default '0',
@@ -340,13 +336,16 @@ class Utility
   `sub_dir` varchar(255) NOT NULL default '',
   PRIMARY KEY (`files_sn`)
 ) ENGINE=MyISAM ";
-        $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
 
         $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
         $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cf_name`!=''";
-        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
-        while (false !== (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result))) {
+        $result = $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+        while ($all = $xoopsDB->fetchArray($result)) {
+            foreach ($all as $k => $v) {
+                $$k = $v;
+            }
             if (empty($cf_name)) {
                 continue;
             }
@@ -355,6 +354,7 @@ class Utility
             $kind = ('image' === $type[0]) ? 'img' : 'file';
             $kind_dir = ('img' === $kind) ? 'image' : 'file';
             $extarr = explode('.', $cf_name);
+            $ext = '';
             foreach ($extarr as $val) {
                 $ext = mb_strtolower($val);
             }
@@ -368,7 +368,6 @@ class Utility
             self::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
             if ('img' === $kind) {
                 self::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
-                $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
             }
 
             if ('win' === $os and _CHARSET === 'UTF-8') {
@@ -382,12 +381,14 @@ class Utility
             if (file_exists($from)) {
                 if (rename($from, $to)) {
                     $sql2 = 'insert into ' . $xoopsDB->prefix('tad_uploader_files_center') . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
-                    $xoopsDB->queryF($sql2) or web_error($sql2);
+                    $xoopsDB->queryF($sql2) or /** @scrutinizer ignore-call */web_error($sql2);
                     $fp = fopen($readme, 'wb');
+                    if (is_resource($fp)) {
                     fwrite($fp, $cf_name);
                     fclose($fp);
                 }
             }
+        }
         }
 
         return true;
@@ -398,7 +399,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'SHOW Fields FROM ' . $xoopsDB->prefix('tad_uploader_file') . " where `Field`='cf_size' and `Type` like 'bigint%'";
-        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
         list($Fields) = $xoopsDB->fetchRow($result);
 
         if (empty($Fields)) {

@@ -95,7 +95,7 @@ function update_tad_uploader($cfsn = '')
     }
 
     if ('1' == $_POST['new_date']) {
-        $now = date('Y-m-d H:i:s', xoops_getUserTimestamp(time()));
+        $now = date('Y-m-d H:i:s');
         $uptime = ",up_date='{$now}'";
     } else {
         $uptime = '';
@@ -145,7 +145,7 @@ switch ($op) {
             header("location: index.php?of_cat_sn={$cat_sn}");
             exit;
         }
-            redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
 
         break;
     //更新資料
@@ -155,7 +155,7 @@ switch ($op) {
             header("location: index.php?of_cat_sn={$cat_sn}");
             exit;
         }
-            redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
 
         break;
     default:

@@ -12,7 +12,7 @@ function tad_uploader_b_show_1($options)
     $and_cat_sn = empty($options[1]) ? '' : "and b.cat_sn in({$options[1]})";
     $sql = 'select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from ' . $xoopsDB->prefix('tad_uploader_file') . ' as a left join ' . $xoopsDB->prefix('tad_uploader') . " as b on a.cat_sn=b.cat_sn where b.cat_share='1'  $and_cat_sn order by a.up_date desc limit 0,{$options[0]}";
 
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
 
     $block = [];
     $i = 0;
@@ -130,7 +130,7 @@ if (!function_exists('block_uploader_cate')) {
                arr[i] = document.getElementById('c{$cat_sn}').value;
                i++;
               }";
-            $ckecked = (in_array($cat_sn, $sc, true)) ? 'checked' : '';
+            $ckecked = (in_array($cat_sn, $sc)) ? 'checked' : '';
             $option .= "<span style='white-space:nowrap;'><input type='checkbox' id='c{$cat_sn}' value='{$cat_sn}' class='bbv' onChange=bbv() $ckecked><label for='c{$cat_sn}'>$cat_title</label></span> ";
         }
 

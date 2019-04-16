@@ -47,7 +47,7 @@
       <{/if}>
 
       <{if $op=="tad_uploader_cate_form"}>
-        <{includeq file="$xoops_rootpath/modules/$xoops_dirname/templates/b3/op_tad_uploader_cate_form.tpl"}>
+        <{includeq file="$xoops_rootpath/modules/tad_uploader/templates/b3/op_tad_uploader_cate_form.tpl"}>
       <{elseif $files}>
         <form action="main.php" method="post" class="form-horizontal" role="form">
           <table class="table table-striped table-bordered">

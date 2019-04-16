@@ -2,7 +2,7 @@
 
 use XoopsModules\Tad_uploader\Utility;
 
-function xoops_module_update_tad_uploader(&$module, $old_version)
+function xoops_module_update_tad_uploader()
 {
     global $xoopsDB;
 
