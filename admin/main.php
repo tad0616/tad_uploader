@@ -11,23 +11,23 @@ function list_tad_uploader_cate_tree($def_cat_sn = '')
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = 'SELECT cat_sn , count(*) FROM ' . $xoopsDB->prefix('tad_uploader_file') . ' GROUP BY cat_sn';
+    $sql    = 'SELECT cat_sn , count(*) FROM ' . $xoopsDB->prefix('tad_uploader_file') . ' GROUP BY cat_sn';
     $result = $xoopsDB->query($sql);
     while (list($cat_sn, $counter) = $xoopsDB->fetchRow($result)) {
         $cate_count[$cat_sn] = $counter;
     }
-    $path = get_tad_uploader_cate_path($def_cat_sn);
+    $path     = get_tad_uploader_cate_path($def_cat_sn);
     $path_arr = array_keys($path);
 
     $data[] = "{ id:0, pId:0, name:'All', url:'main.php', target:'_self', open:true}";
 
-    $sql = 'SELECT cat_sn,of_cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader') . '  ORDER BY cat_sort';
+    $sql    = 'SELECT cat_sn,of_cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader') . '  ORDER BY cat_sort';
     $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
     while (list($cat_sn, $of_cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_cat_sn == $cat_sn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         //$open            = in_array($cat_sn, $path_arr) ? 'true' : 'false';
         $display_counter = empty($cate_count[$cat_sn]) ? '' : " ({$cate_count[$cat_sn]})";
-        $data[] = "{ id:{$cat_sn}, pId:{$of_cat_sn}, name:'{$cat_title}{$display_counter}', url:'main.php?cat_sn={$cat_sn}', open: true ,target:'_self' {$font_style}}";
+        $data[]          = "{ id:{$cat_sn}, pId:{$of_cat_sn}, name:'{$cat_title}{$display_counter}', url:'main.php?cat_sn={$cat_sn}', open: true ,target:'_self' {$font_style}}";
     }
 
     $json = implode(",\n", $data);
@@ -36,7 +36,7 @@ function list_tad_uploader_cate_tree($def_cat_sn = '')
         redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
     }
     include_once XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php';
-    $ztree = new ztree('news_tree', $json, 'save_drag.php', 'save_sort.php', 'of_cat_sn', 'cat_sn');
+    $ztree      = new ztree('news_tree', $json, 'save_drag.php', 'save_sort.php', 'of_cat_sn', 'cat_sn');
     $ztree_code = $ztree->render();
     $xoopsTpl->assign('ztree_code', $ztree_code);
 
@@ -54,12 +54,12 @@ function list_tad_uploader($cat_sn = '')
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
     $PageBar = getPageBar($sql, $to_limit, 10);
-    $bar = $PageBar['bar'];
-    $sql = $PageBar['sql'];
-    $total = $PageBar['total'];
+    $bar     = $PageBar['bar'];
+    $sql     = $PageBar['sql'];
+    $total   = $PageBar['total'];
 
     $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
-    $files = [];
+    $files  = [];
     while ($all = $xoopsDB->fetchArray($result)) {
         $files[] = $all;
     }
@@ -87,7 +87,7 @@ function get_cate_data($cat_sn = 0)
 {
     global $xoopsDB, $xoopsTpl;
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='$cat_sn'";
+    $sql    = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='$cat_sn'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
 
     $data = [];
@@ -99,26 +99,26 @@ function get_cate_data($cat_sn = 0)
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
     $enable = ('1' == $cat_enable) ? "<img src='../images/button_ok.png'>" : "<img src='../images/button_cancel.png'>";
-    $share = ('1' == $cat_share) ? "<img src='../images/button_ok.png'>" : "<img src='../images/encrypted.gif'>";
+    $share  = ('1' == $cat_share) ? "<img src='../images/button_ok.png'>" : "<img src='../images/encrypted.gif'>";
 
-    $data['cat_sort'] = $cat_sort;
+    $data['cat_sort']  = $cat_sort;
     $data['cat_title'] = $cat_title;
-    $data['cat_desc'] = $cat_desc;
-    $data['uid_name'] = $uid_name;
-    $data['enable'] = $enable;
-    $data['share'] = $share;
+    $data['cat_desc']  = $cat_desc;
+    $data['uid_name']  = $uid_name;
+    $data['enable']    = $enable;
+    $data['share']     = $share;
     $data['cat_count'] = $cat_count;
-    $data['cat_sn'] = $cat_sn;
+    $data['cat_sn']    = $cat_sn;
 
     return $data;
 }
 
 /*-----------執行動作判斷區----------*/
 include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
+$op        = system_CleanVars($_REQUEST, 'op', '', 'string');
+$cat_sn    = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
 $of_cat_sn = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
-$cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
+$cfsn      = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
 
 switch ($op) {
     case 'add_tad_uploader':

@@ -51,7 +51,6 @@ function uploads_tabs($cat_sn = '', $cfsn = '')
     $upform = $TadUpFiles->upform(true, 'upfile', null, false);
     $xoopsTpl->assign('upform', $upform);
 
-    $xoopsTpl->assign('bootstrap', get_bootstrap());
     $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
     $xoopsTpl->assign('randStr', $randStr);
     $xoopsTpl->assign('jquery', $jquery_path);
