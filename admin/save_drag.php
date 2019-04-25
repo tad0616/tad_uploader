@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 include '../../../include/cp_header.php';
 
@@ -22,7 +24,7 @@ function chk_cate_path($cat_sn, $of_cat_sn)
     global $xoopsDB;
     //抓出子目錄的編號
     $sql = 'select cat_sn from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='{$cat_sn}'";
-    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($sub_cat_sn) = $xoopsDB->fetchRow($result)) {
         if (chk_cate_path($sub_cat_sn, $of_cat_sn)) {
             return true;

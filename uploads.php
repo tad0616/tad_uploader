@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 include 'header.php';
 $xoopsOption['template_main'] = 'tad_uploader_uploads.tpl';
@@ -14,8 +16,8 @@ function uploads_tabs($cat_sn = '', $cfsn = '')
     global $xoopsDB, $xoopsModuleConfig, $xoopsModule, $xoopsTpl, $interface_menu, $TadUpFiles;
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $jquery_path = get_jquery(true);
-    $randStr = randStr();
+    $jquery_path = Utility::get_jquery(true);
+    $randStr = Utility::randStr();
 
     if ('to_batch_upload' === $_REQUEST['op']) {
         $to_batch_upload = '$tabs.tabs("select", last_tab);';
@@ -51,7 +53,7 @@ function uploads_tabs($cat_sn = '', $cfsn = '')
     $upform = $TadUpFiles->upform(true, 'upfile', null, false);
     $xoopsTpl->assign('upform', $upform);
 
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
     $xoopsTpl->assign('randStr', $randStr);
     $xoopsTpl->assign('jquery', $jquery_path);
     $xoopsTpl->assign('to_batch_upload', $to_batch_upload);

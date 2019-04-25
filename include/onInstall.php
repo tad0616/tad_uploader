@@ -1,6 +1,6 @@
 <?php
 
-use XoopsModules\Tad_uploader\Utility;
+use XoopsModules\Tadtools\Utility;
 
 include dirname(__DIR__) . '/preloads/autoloader.php';
 

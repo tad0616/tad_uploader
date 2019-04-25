@@ -1,9 +1,11 @@
 <?php
 
+use XoopsModules\Tadtools\Utility;
+
 namespace XoopsModules\Tad_uploader;
 
 /*
-Utility Class Definition
+Update Class Definition
 
 You may not change or alter any portion of this comment or credits of
 supporting developers from this source code or any supporting source code
@@ -22,91 +24,10 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
 
 /**
- * Class Utility
+ * Class Update
  */
-class Utility
+class Update
 {
-    //建立目錄
-    public static function mk_dir($dir = '')
-    {
-        //若無目錄名稱秀出警告訊息
-        if (empty($dir)) {
-            return;
-        }
-
-        //若目錄不存在的話建立目錄
-        if (!is_dir($dir)) {
-            umask(000);
-            //若建立失敗秀出警告訊息
-            if (!mkdir($dir, 0777) && !is_dir($dir)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
-            }
-        }
-    }
-
-    //刪除目錄
-    public static function delete_directory($dirname = '')
-    {
-        if (is_dir($dirname)) {
-            $dir_handle = opendir($dirname);
-            if ($dir_handle) {
-                while ($file = readdir($dir_handle)) {
-                    if ('.' !== $file && '..' !== $file) {
-                        if (!is_dir($dirname . '/' . $file)) {
-                            unlink($dirname . '/' . $file);
-                        } else {
-                            self::delete_directory($dirname . '/' . $file);
-                        }
-                    }
-                }
-                closedir($dir_handle);
-                rmdir($dirname);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //拷貝目錄
-    public static function full_copy($source = '', $target = '')
-    {
-        if (is_dir($source)) {
-            if (!mkdir($target) && !is_dir($target)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $target));
-            }
-            $d = dir($source);
-            while (false !== ($entry = $d->read())) {
-                if ('.' === $entry || '..' === $entry) {
-                    continue;
-                }
-
-                $Entry = $source . '/' . $entry;
-                if (is_dir($Entry)) {
-                    self::full_copy($Entry, $target . '/' . $entry);
-                    continue;
-                }
-                copy($Entry, $target . '/' . $entry);
-            }
-            $d->close();
-        } else {
-            copy($source, $target);
-        }
-    }
-
-    public static function rename_win($oldfile, $newfile)
-    {
-        if (!rename($oldfile, $newfile)) {
-            if (copy($oldfile, $newfile)) {
-                unlink($oldfile);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        return true;
-    }
 
     //新增檔案欄位
     public static function chk_fc_tag()
@@ -194,7 +115,7 @@ class Utility
         `cfsn` smallint(5) unsigned NOT NULL,
         PRIMARY KEY  (`log_sn`)
         )';
-        $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         return true;
     }
@@ -256,7 +177,7 @@ class Utility
     {
         global $xoopsDB;
         $dir = XOOPS_ROOT_PATH . '/uploads/tad_uploader';
-        self::mk_dir($dir . '_batch');
+        Utility::mk_dir($dir . '_batch');
 
         $sql = 'select cfsn,uid,cf_name from ' . $xoopsDB->prefix('tad_uploader_file') . " where file_url=''";
         $result = $xoopsDB->query($sql) or die($sql);
@@ -264,9 +185,9 @@ class Utility
         while (list($cfsn, $uid, $cf_name) = $xoopsDB->fetchRow($result)) {
             //搬移影片檔
             if (!is_dir($dir . "/user_{$uid}")) {
-                self::mk_dir($dir . "/user_{$uid}");
+                Utility::mk_dir($dir . "/user_{$uid}");
             }
-            rename_win("{$dir}/{$cfsn}_{$cf_name}", "{$dir}/user_{$uid}/{$cfsn}_{$cf_name}");
+            Utility::rename_win("{$dir}/{$cfsn}_{$cf_name}", "{$dir}/user_{$uid}/{$cfsn}_{$cf_name}");
         }
 
         return true;
@@ -336,12 +257,12 @@ class Utility
         `sub_dir` varchar(255) NOT NULL default '',
         PRIMARY KEY (`files_sn`)
         ) ENGINE=MyISAM ";
-        $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
         $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
         $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cf_name`!=''";
-        $result = $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while ($all = $xoopsDB->fetchArray($result)) {
             foreach ($all as $k => $v) {
                 $$k = $v;
@@ -365,9 +286,9 @@ class Utility
             $to = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}.{$ext}";
             $readme = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}_info.txt";
 
-            self::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
+            Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
             if ('img' === $kind) {
-                self::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
+                Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
             }
 
             if ('win' === $os and _CHARSET === 'UTF-8') {
@@ -381,7 +302,7 @@ class Utility
             if (file_exists($from)) {
                 if (rename($from, $to)) {
                     $sql2 = 'insert into ' . $xoopsDB->prefix('tad_uploader_files_center') . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
-                    $xoopsDB->queryF($sql2) or /** @scrutinizer ignore-call */web_error($sql2);
+                    $xoopsDB->queryF($sql2) or Utility::web_error($sql2);
                     $fp = fopen($readme, 'wb');
                     if (is_resource($fp)) {
                         fwrite($fp, $cf_name);
@@ -399,7 +320,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = 'SHOW Fields FROM ' . $xoopsDB->prefix('tad_uploader_file') . " where `Field`='cf_size' and `Type` like 'bigint%'";
-        $result = $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($Fields) = $xoopsDB->fetchRow($result);
 
         if (empty($Fields)) {
