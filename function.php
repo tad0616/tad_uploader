@@ -1,8 +1,7 @@
 <?php
+use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
-xoops_loadLanguage('main', 'tadtools');
 
-include_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
 $TadUpFiles = new TadUpFiles('tad_uploader');
 
 $uid_dir = 0;
@@ -76,7 +75,7 @@ function add_tad_uploader_file()
 {
     global $xoopsDB, $xoopsUser, $TadUpFiles;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $file_url = isset($_POST['file_url']) ? $myts->addSlashes($_POST['file_url']) : '';
 
     if (!empty($_POST['creat_new_cat'])) {

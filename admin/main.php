@@ -1,6 +1,7 @@
 <?php
+use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
-
+use XoopsModules\Tadtools\Ztree;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_uploader_adm_main.tpl';
 include_once 'header.php';
@@ -34,12 +35,8 @@ function list_tad_uploader_cate_tree($def_cat_sn = '')
 
     $json = implode(",\n", $data);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php';
-    $ztree = new ztree('news_tree', $json, 'save_drag.php', 'save_sort.php', 'of_cat_sn', 'cat_sn');
-    $ztree_code = $ztree->render();
+    $Ztree = new Ztree('news_tree', $json, 'save_drag.php', 'save_sort.php', 'of_cat_sn', 'cat_sn');
+    $ztree_code = $Ztree->render();
     $xoopsTpl->assign('ztree_code', $ztree_code);
 
     return $data;
@@ -72,16 +69,11 @@ function list_tad_uploader($cat_sn = '')
     $xoopsTpl->assign('bar', $bar);
     $xoopsTpl->assign('total', $total);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
-    }
-    include_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-    $sweet_alert = new sweet_alert();
-    $sweet_alert->render('delete_tad_uploader_func', 'main.php?op=delete_tad_uploader&cat_sn=', 'cat_sn');
-    $sweet_alert2 = new sweet_alert();
-    $sweet_alert2->render('delete_file_func', "main.php?op=del_file&cat_sn={$cat_sn}&cfsn=", 'cfsn');
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_uploader_func', 'main.php?op=delete_tad_uploader&cat_sn=', 'cat_sn');
+    $SweetAlert2 = new SweetAlert();
+    $SweetAlert2->render('delete_file_func', "main.php?op=del_file&cat_sn={$cat_sn}&cfsn=", 'cfsn');
 
-    // $xoopsTpl->assign('sweet_alert_code', $sweet_alert_code);
 }
 
 //取得所有資料夾列表
