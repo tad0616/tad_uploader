@@ -786,12 +786,12 @@ function tad_uploader_cate_form($cat_sn = '')
     }
 
     //可見群組
-    $SelectGroup_name = new XoopsFormSelectGroup('view_group', 'catalog', true, $read_group, 6, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('view_group', 'catalog', true, $read_group, 6, true);
     $SelectGroup_name->setExtra("class='form-control' id='view_group'");
     $enable_group = $SelectGroup_name->render();
 
     //可上傳群組
-    $SelectGroup_name = new XoopsFormSelectGroup('upload_group', 'catalog_up', true, $post_group, 6, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('upload_group', 'catalog_up', true, $post_group, 6, true);
     $SelectGroup_name->setExtra("class='form-control' id='upload_group'");
     $enable_upload_group = $SelectGroup_name->render();
 

@@ -1,6 +1,5 @@
 <?php
 /**
- * Tad Uploader module
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,21 +10,18 @@
  *
  * @copyright    XOOPS Project (https://xoops.org)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package      Tad Uploader
+ * @package
  * @since        2.5.0
- * @author       Tad
+ * @author
  * @version      $Id $
  **/
-include __DIR__ . '/header.php';
 
-$index_admin = new ModuleAdmin();
+require __DIR__ . '/header.php';
 
-$index_admin->addConfigLabel(_AM_XDIR_CONFIG_CHECK);
-$index_admin->addLineConfigLabel(_AM_XDIR_CONFIG_PHP, $xoopsModule->getInfo('min_php'), 'php');
-$index_admin->addLineConfigLabel(_AM_XDIR_CONFIG_XOOPS, $xoopsModule->getInfo('min_xoops'), 'xoops');
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-echo $index_admin->addNavigation('index.php');
-echo $index_admin->renderIndex();
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->displayIndex();
 
-include __DIR__ . '/footer.php';
+require __DIR__ . '/footer.php';
 xoops_cp_footer();
