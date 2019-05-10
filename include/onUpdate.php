@@ -2,7 +2,12 @@
 
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tad_uploader\Update;
-
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+if (!class_exists('XoopsModules\Tad_uploader\Update')) {
+    include dirname(__DIR__) . '/preloads/autoloader.php';
+}
 function xoops_module_update_tad_uploader()
 {
     global $xoopsDB;

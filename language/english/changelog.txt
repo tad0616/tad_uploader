@@ -1,3 +1,12 @@
+Tad Uploader 3.5.6 (released from 2019-05-10)
+=========================================================== ==
+1. Remove jBreadCrumb and use the tad_breadcrumb function in tadtools instead.
+2. Remove the built-in mime icon and use the icon in tadtools instead.
+3. Update interface icon
+4. Authorized users can manage classification in the foreground
+5. Support XOOPS 2.5.10
+6. No longer supports PHP 5.3
+
 Tad Uploader 3.5.5 (released from 2019-03-24)
 =========================================================== ================
 1. Fix folder sorting problem
