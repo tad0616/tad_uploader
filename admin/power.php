@@ -1,4 +1,6 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 /*-----------引入檔案區--------------*/
 $GLOBALS['xoopsOption']['template_main'] = 'tad_uploader_adm_power.tpl';
 require_once __DIR__ . '/header.php';
@@ -10,7 +12,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 /*-----------function區--------------*/
 $module_id = $xoopsModule->getVar('mid');
 
-$jquery_path = get_jquery(true); //TadTools引入jquery ui
+$jquery_path = Utility::get_jquery(true); //TadTools引入jquery ui
 $xoopsTpl->assign('jquery_path', $jquery_path);
 
 //抓取所有資料夾

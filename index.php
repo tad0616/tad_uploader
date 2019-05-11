@@ -1,7 +1,10 @@
 <?php
+use XoopsModules\Tadtools\FooTable;
+use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
-$GLOBALS['xoopsOption']['template_main'] = 'tad_uploader_index.tpl';
+$xoopsOption['template_main'] = 'tad_uploader_index.tpl';
 if (empty($_SESSION['list_mode'])) {
     $_SESSION['list_mode'] = $xoopsModuleConfig['show_mode'];
 }
@@ -21,7 +24,7 @@ function list_all_data($the_cat_sn = 0)
 
     //目前路徑
     $arr = get_tad_uploader_cate_path($the_cat_sn);
-    $path = tad_breadcrumb($the_cat_sn, $arr, 'index.php', 'of_cat_sn', 'cat_title');
+    $path = Utility::tad_breadcrumb($the_cat_sn, $arr, 'index.php', 'of_cat_sn', 'cat_title');
 
     //新增人氣值
     if (!empty($the_cat_sn)) {
@@ -44,7 +47,7 @@ function list_all_data($the_cat_sn = 0)
     $files_list = get_files_list($the_cat_sn, $check_up_power);
 
     //若有權限則可排序
-    $jquery = get_jquery(true);
+    $jquery = Utility::get_jquery(true);
 
     $upform = $move_option = '';
     if ($check_up_power) {
@@ -55,11 +58,8 @@ function list_all_data($the_cat_sn = 0)
         $upform = $TadUpFiles->upform(true, 'upfile', null, false);
     }
 
-    if (file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php')) {
-        require_once XOOPS_ROOT_PATH . '/modules/tadtools/FooTable.php';
         $FooTable = new FooTable();
         $FooTable->render(false);
-    }
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='{$the_cat_sn}'";
     $result = $xoopsDB->query($sql);
@@ -77,8 +77,7 @@ function list_all_data($the_cat_sn = 0)
     $xoopsTpl->assign('upload_max_filesize', (int) ini_get('upload_max_filesize'));
     $xoopsTpl->assign('max_execution_time', ini_get('max_execution_time'));
     $xoopsTpl->assign('path', $path);
-    $xoopsTpl->assign('bootstrap', get_bootstrap());
-    $xoopsTpl->assign('toolbar', toolbar_bootstrap($interface_menu));
+    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
     $xoopsTpl->assign('cat_sn', $the_cat_sn);
     $xoopsTpl->assign('folder_list', $folder_list);
     $xoopsTpl->assign('files_list', $files_list);
@@ -88,14 +87,10 @@ function list_all_data($the_cat_sn = 0)
     $xoopsTpl->assign('only_show_desc', $xoopsModuleConfig['only_show_desc']);
     $xoopsTpl->assign('icon_width', '130px');
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-    $sweet_alert = new sweet_alert();
-    $sweet_alert->render('delete_tad_uploader_func', "index.php?op=delete_tad_uploader&of_cat_sn={$the_cat_sn}&cat_sn=", 'cat_sn');
-    $sweet_alert2 = new sweet_alert();
-    $sweet_alert2->render('delete_file_func', "index.php?op=del_file&of_cat_sn={$the_cat_sn}&cfsn=", 'cfsn');
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_uploader_func', "index.php?op=delete_tad_uploader&of_cat_sn={$the_cat_sn}&cat_sn=", 'cat_sn');
+    $SweetAlert2 = new SweetAlert();
+    $SweetAlert2->render('delete_file_func', "index.php?op=del_file&of_cat_sn={$the_cat_sn}&cfsn=", 'cfsn');
 }
 
 //抓取底下目錄
@@ -205,7 +200,7 @@ function update_tad_uploader($col_name = '', $col_val = '', $cat_sn = '')
     if (!check_up_power('catalog', $cat_sn)) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
     }
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $cat_sn = (int) $cat_sn;
     $col_name = $myts->addSlashes($col_name);
     $col_val = $myts->addSlashes($col_val);
@@ -221,7 +216,7 @@ function update_tad_uploader($col_name = '', $col_val = '', $cat_sn = '')
 function update_data()
 {
     global $xoopsDB;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     foreach ($_POST['cf_desc'] as $cfsn => $cf_desc) {
         $cf_desc = $myts->addSlashes($cf_desc);
         $cfsn = update_tad_uploader_file($cfsn, 'cf_desc', $cf_desc);
@@ -345,7 +340,7 @@ switch ($op) {
             update_tad_uploader('cat_title', $new_cat_title, $cat_sn);
             header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         } elseif ('add_cat_title' === $this_folder) {
-            $cat_sn = add_tad_uploader('', $add_cat_title, '', '1', $cat_sn, $add_to_cat);
+            $cat_sn = add_tad_uploader(0, $add_cat_title, '', '1', $cat_sn, $add_to_cat);
             header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
             $cat_sn = $new_cat_sn;
         } elseif ('new_of_cat_sn' === $this_folder) {

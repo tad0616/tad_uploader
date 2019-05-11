@@ -3,6 +3,7 @@ xoops_loadLanguage('admin_common', 'tadtools');
 if (!defined('_TAD_NEED_TADTOOLS')) {
     define('_TAD_NEED_TADTOOLS', 'This module needs TadTools module. You can download TadTools from <a href="https://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS EasyGO</a>.');
 }
+
 //power.php
 define('_MA_TADUP_DB_ERROR1', 'Failed to get tad_uploader data');
 define('_MA_TADUP_SET_ACCESS_POWER', 'Visible folders for each group');

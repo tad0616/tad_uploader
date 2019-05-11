@@ -1,6 +1,6 @@
 <?php
 
-use XoopsModules\Tad_themes\Utility;
+use XoopsModules\Tadtools\Utility;
 
 require __DIR__ . '/header.php';
 if (!$isAdmin) {
@@ -13,7 +13,7 @@ $total = 0;
 $os = (PATH_SEPARATOR === ':') ? 'linux' : 'win';
 
 $sql = 'SELECT * FROM ' . $xoopsDB->prefix('tad_uploader_file') . " WHERE `cf_name`!=''";
-$result = $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+$result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_count, $up_date, $file_url, $cf_sort) = $xoopsDB->fetchRow($result)) {
     if (empty($cf_name)) {
         continue;
@@ -38,19 +38,20 @@ while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_co
     $readme = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/{$new_file_name}_info.txt";
 
     echo "<div>相關路徑如下：
-  <ol>
-  <li>原始：{$from}</li>
-  <li>新檔：{$to}</li>
-  <li>說明：{$readme}</li>
-  </ol>
-  </div>";
+    <ol>
+    <li>原始：{$from}</li>
+    <li>新檔：{$to}</li>
+    <li>說明：{$readme}</li>
+    </ol>
+    </div>";
 
-    mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
+    Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}");
 
     echo '<div>建立：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}』</div>";
 
     if ('img' === $kind) {
-        mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
+
+        Utility::mk_dir(XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs");
         echo '<div>建立：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs』</div>";
         $to_thumb = XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}";
         echo '<div>產生：『' . XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid}/{$kind_dir}/.thumbs/{$new_file_name}.{$ext}』</div>";
@@ -72,7 +73,7 @@ while (list($cfsn, $cat_sn, $uid, $cf_name, $cf_desc, $cf_type, $cf_size, $cf_co
         if (rename($from, $to)) {
             $sql2 = 'insert into ' . $xoopsDB->prefix('tad_uploader_files_center') . " (`col_name`, `col_sn`, `sort`, `kind`, `file_name`, `file_type`, `file_size`, `description`, `counter`, `original_filename` , `hash_filename` , `sub_dir`) values('cfsn' ,'{$cfsn}' ,'1' ,'{$kind}' ,'{$safe_file_name}' ,'{$cf_type}' ,'{$cf_size}' ,'{$cf_desc}' ,'{$cf_count}' ,'{$cf_name}' ,'{$new_file_name}.{$ext}' ,'/user_{$uid}')";
             echo "<div>執行：「{$sql}」</div>";
-            $xoopsDB->queryF($sql2) or /** @scrutinizer ignore-call */web_error($sql2);
+            $xoopsDB->queryF($sql2) or Utility::web_error($sql2);
             $fp = fopen($readme, 'wb');
             fwrite($fp, $cf_name);
             fclose($fp);

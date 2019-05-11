@@ -1,6 +1,5 @@
 <?php
 xoops_loadLanguage('modinfo_common', 'tadtools');
-
 define('_MI_TADUP_NAME', '網路硬碟');
 define('_MI_TADUP_DESC', '就是上傳模組囉～');
 define('_MI_TADUP_CREDITS', '林朝敏老師 (prolin99@gmail.com)');

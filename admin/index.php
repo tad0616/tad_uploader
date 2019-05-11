@@ -1,6 +1,5 @@
 <?php
 /**
- * Tad Uploader module
  *
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,13 +10,13 @@
  *
  * @copyright    XOOPS Project (https://xoops.org)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package      Tad Uploader
+ * @package
  * @since        2.5.0
- * @author       Tad
+ * @author
  * @version      $Id $
  **/
 
-include __DIR__ . '/header.php';
+require __DIR__ . '/header.php';
 
 $adminObject = \Xmf\Module\Admin::getInstance();
 

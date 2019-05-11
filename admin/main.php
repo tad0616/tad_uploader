@@ -1,6 +1,9 @@
 <?php
+use XoopsModules\Tadtools\SweetAlert;
+use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tadtools\Ztree;
 /*-----------引入檔案區--------------*/
-$GLOBALS['xoopsOption']['template_main'] = 'tad_uploader_adm_main.tpl';
+$xoopsOption['template_main'] = 'tad_uploader_adm_main.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
@@ -22,7 +25,7 @@ function list_tad_uploader_cate_tree($def_cat_sn = '')
     $data[] = "{ id:0, pId:0, name:'All', url:'main.php', target:'_self', open:true}";
 
     $sql = 'SELECT cat_sn,of_cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader') . '  ORDER BY cat_sort';
-    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($cat_sn, $of_cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $font_style = $def_cat_sn == $cat_sn ? ", font:{'background-color':'yellow', 'color':'black'}" : '';
         //$open            = in_array($cat_sn, $path_arr) ? 'true' : 'false';
@@ -32,12 +35,8 @@ function list_tad_uploader_cate_tree($def_cat_sn = '')
 
     $json = implode(",\n", $data);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php';
-    $ztree = new ztree('news_tree', $json, 'save_drag.php', 'save_sort.php', 'of_cat_sn', 'cat_sn');
-    $ztree_code = $ztree->render();
+    $Ztree = new Ztree('news_tree', $json, 'save_drag.php', 'save_sort.php', 'of_cat_sn', 'cat_sn');
+    $ztree_code = $Ztree->render();
     $xoopsTpl->assign('ztree_code', $ztree_code);
 
     return $data;
@@ -49,16 +48,16 @@ function list_tad_uploader($cat_sn = '')
     global $xoopsDB, $xoopsTpl;
 
     $and = !empty($cat_sn) ? "and a.cat_sn='{$cat_sn}'" : '';
-    get_jquery(true);
+    Utility::get_jquery(true);
     $sql = 'select a.*,b.cat_title from ' . $xoopsDB->prefix('tad_uploader_file') . ' as a left join  ' . $xoopsDB->prefix('tad_uploader') . " as b on a.cat_sn=b.cat_sn where 1 $and order by up_date desc";
 
     //getPageBar($原sql語法, 每頁顯示幾筆資料, 最多顯示幾個頁數選項);
-    $PageBar = getPageBar($sql, $to_limit, 10);
+    $PageBar = Utility::getPageBar($sql, $to_limit, 10);
     $bar = $PageBar['bar'];
     $sql = $PageBar['sql'];
     $total = $PageBar['total'];
 
-    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $files = [];
     while (false !== ($all = $xoopsDB->fetchArray($result))) {
         $files[] = $all;
@@ -70,16 +69,11 @@ function list_tad_uploader($cat_sn = '')
     $xoopsTpl->assign('bar', $bar);
     $xoopsTpl->assign('total', $total);
 
-    if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
-    $sweet_alert = new sweet_alert();
-    $sweet_alert->render('delete_tad_uploader_func', 'main.php?op=delete_tad_uploader&cat_sn=', 'cat_sn');
-    $sweet_alert2 = new sweet_alert();
-    $sweet_alert2->render('delete_file_func', "main.php?op=del_file&cat_sn={$cat_sn}&cfsn=", 'cfsn');
+    $SweetAlert = new SweetAlert();
+    $SweetAlert->render('delete_tad_uploader_func', 'main.php?op=delete_tad_uploader&cat_sn=', 'cat_sn');
+    $SweetAlert2 = new SweetAlert();
+    $SweetAlert2->render('delete_file_func', "main.php?op=del_file&cat_sn={$cat_sn}&cfsn=", 'cfsn');
 
-    // $xoopsTpl->assign('sweet_alert_code', $sweet_alert_code);
 }
 
 //取得所有資料夾列表

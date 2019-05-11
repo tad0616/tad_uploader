@@ -1,6 +1,8 @@
 <?php
+use XoopsModules\Tadtools\Utility;
+
 require_once __DIR__ . '/header.php';
-require_once "language/{$xoopsConfig['language']}/batch.php";
+xoops_loadLanguage('batch', $xoopsModule->getVar('dirname'));
 
 $op = (empty($_REQUEST['op'])) ? '' : $_REQUEST['op'];
 $cat_sn = (isset($_REQUEST['cat_sn'])) ? (int) $_REQUEST['cat_sn'] : 0;
@@ -29,7 +31,7 @@ function tad_uploader_batch_upload_form($cat_sn = '')
                 continue;
             }
 
-            $file = auto_charset($file, 'web');
+            $file = Utility::auto_charset($file, 'web');
 
             $f = explode('.', $file);
             foreach ($f as $part) {
@@ -115,7 +117,7 @@ function tad_uploader_batch_import()
 
         $file_src = _TAD_UPLOADER_BATCH_DIR . "/{$file_path}";
 
-        $file_src = auto_charset($file_src, 'os');
+        $file_src = Utility::auto_charset($file_src, 'os');
 
         $type = mime_content_type($file_src);
         $cf_sort = get_file_max_sort($cat_sn);
@@ -124,14 +126,14 @@ function tad_uploader_batch_import()
         $now = date('Y-m-d H:i:s');
         $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader_file') . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
         values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
-        $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         //取得最後新增資料的流水編號
         $cfsn = $xoopsDB->getInsertId();
 
         $new_filename = _TAD_UPLOADER_DIR . "/{$cfsn}_{$file_path}";
 
-        $file_src = auto_charset($file_src, 'web');
-        $new_filename = auto_charset($new_filename, 'web');
+        $file_src = Utility::auto_charset($file_src, 'web');
+        $new_filename = Utility::auto_charset($new_filename, 'web');
 
         //複製匯入單一檔案：
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
@@ -142,7 +144,7 @@ function tad_uploader_batch_import()
     }
 
     //刪除其他多餘檔案
-    rrmdir(_TAD_UPLOADER_BATCH_DIR);
+    Utility::rrmdir(_TAD_UPLOADER_BATCH_DIR);
 
     return $cat_sn;
 }

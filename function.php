@@ -1,12 +1,7 @@
 <?php
-// declare (strict_types = 1);
-//引入TadTools的函式庫
-if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php')) {
-    redirect_header('http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1', 3, _TAD_NEED_TADTOOLS);
-}
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/tad_function.php';
+use XoopsModules\Tadtools\TadUpFiles;
+use XoopsModules\Tadtools\Utility;
 
-require_once XOOPS_ROOT_PATH . '/modules/tadtools/TadUpFiles.php';
 $TadUpFiles = new TadUpFiles('tad_uploader');
 
 $uid_dir = 0;
@@ -16,7 +11,7 @@ if ($xoopsUser) {
 define('_TAD_UPLOADER_DIR', XOOPS_ROOT_PATH . "/uploads/tad_uploader/user_{$uid_dir}");
 define('_TAD_UPLOADER_BATCH_DIR', XOOPS_ROOT_PATH . "/uploads/tad_uploader_batch/user_{$uid_dir}");
 define('_TAD_UPLOADER_URL', XOOPS_URL . '/uploads/tad_uploader');
-mk_dir(_TAD_UPLOADER_BATCH_DIR);
+Utility::mk_dir(_TAD_UPLOADER_BATCH_DIR);
 
 //取得路徑
 function get_tad_uploader_cate_path($the_cat_sn = '', $include_self = true)
@@ -38,7 +33,7 @@ function get_tad_uploader_cate_path($the_cat_sn = '', $include_self = true)
             LEFT JOIN `{$tbl}` t7 ON t7.of_cat_sn = t6.cat_sn
             WHERE t1.of_cat_sn = '0'";
 
-        $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         while (false !== ($all = $xoopsDB->fetchArray($result))) {
             if (in_array($the_cat_sn, $all)) {
                 foreach ($all as $cat_sn) {
@@ -66,7 +61,7 @@ function get_tad_uploader_sub_cate($cat_sn = '0')
 {
     global $xoopsDB;
     $sql = 'select cat_sn,cat_title from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='{$cat_sn}'";
-    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $cat_sn_arr = [];
     while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $cat_sn_arr[$cat_sn] = $cat_title;
@@ -80,7 +75,7 @@ function add_tad_uploader_file()
 {
     global $xoopsDB, $xoopsUser, $TadUpFiles;
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $file_url = isset($_POST['file_url']) ? $myts->addSlashes($_POST['file_url']) : '';
 
     if (!empty($_POST['creat_new_cat'])) {
@@ -104,10 +99,10 @@ function add_tad_uploader_file()
     if (!empty($file_url)) {
         $size = remote_file_size($file_url);
         if (empty($cf_desc)) {
-            $cf_desc = get_basename($file_url);
+            $cf_desc = Utility::get_basename($file_url);
         }
         $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader_file') . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,file_url,cf_sort) values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$type}','{$size}','{$now}','{$file_url}','{$cf_sort}')";
-        $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     } else {
         // die(var_export($_FILES));
         foreach ($_FILES['upfile']['name'] as $i => $name) {
@@ -117,7 +112,7 @@ function add_tad_uploader_file()
 
             $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader_file') . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort) values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$_FILES['upfile']['type'][$i]}','{$_FILES['upfile']['size'][$i]}','{$now}','{$cf_sort}')";
             //die($sql);
-            $xoopsDB->queryF($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+            $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
             //取得最後新增資料的流水編號
             $cfsn = $xoopsDB->getInsertId();
@@ -155,16 +150,16 @@ function remote_file_size($url)
 
     $fp = fsockopen($host, $port, $errno, $errstr, 20);
     if (is_resource($fp)) {
-    fwrite($fp, 'HEAD ' . $url . " HTTP/1.1\r\n");
-    fwrite($fp, 'HOST: ' . $host . "\r\n");
-    fwrite($fp, "User-Agent: http://www.example.com/my_application\r\n");
-    fwrite($fp, "Connection: close\r\n\r\n");
-    $headers = '';
-    while (!feof($fp)) {
-        $headers .= fgets($fp, 128);
-    }
+        fwrite($fp, 'HEAD ' . $url . " HTTP/1.1\r\n");
+        fwrite($fp, 'HOST: ' . $host . "\r\n");
+        fwrite($fp, "User-Agent: http://www.example.com/my_application\r\n");
+        fwrite($fp, "Connection: close\r\n\r\n");
+        $headers = '';
+        while (!feof($fp)) {
+            $headers .= fgets($fp, 128);
+        }
 
-    fclose($fp);
+        fclose($fp);
     } else {
         return false;
     }
@@ -248,7 +243,7 @@ function get_cata_select($disable_cat_sn = [], $dbv = 0, $of_cat_sn = 0, $tab = 
             continue;
         }
 
-        $option .= "<option value='$cat_sn' " . chk($cat_sn, $dbv, '', 'selected') . " $disabled>{$tab}{$cat_title}</option>\n";
+        $option .= "<option value='$cat_sn' " . Utility::chk($cat_sn, $dbv, '', 'selected') . " $disabled>{$tab}{$cat_title}</option>\n";
         $option .= get_cata_select($disable_cat_sn, $dbv, $cat_sn, $tab);
     }
 
@@ -264,7 +259,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = '', $show
 
     $cate_count = [];
     $sql = 'SELECT count(*),cat_sn FROM ' . $xoopsDB->prefix('tad_uploader_file') . ' GROUP BY cat_sn';
-    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($count, $cat_sn) = $xoopsDB->fetchRow($result)) {
         $cate_count[$cat_sn] = $count;
     }
@@ -272,7 +267,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = '', $show
     $option = ($of_cat_sn) ? '' : '';
     $sql = 'select cat_sn,cat_title from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='{$of_cat_sn}' order by cat_sort";
     //die($sql);
-    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $ok_cat = ($chk_view) ? chk_cate_power('catalog_up') : [];
 
@@ -355,7 +350,7 @@ function chk_cate_power($kind = '')
 
     $sql = 'select gperm_itemid from ' . $xoopsDB->prefix('group_permission') . " where gperm_modid='$module_id' and gperm_name='$kind' and gperm_groupid in ($gsn_arr)";
 
-    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     while (list($gperm_itemid) = $xoopsDB->fetchRow($result)) {
         $ok_cat[] = $gperm_itemid;
@@ -365,11 +360,11 @@ function chk_cate_power($kind = '')
 }
 
 //取代/新增tad_uploader現有資料
-function add_tad_uploader($the_cat_sn = '', $cat_title = '', $cat_desc = '', $cat_enable = '1', $of_cat_sn = '0', $cat_add_form = 0, $cat_share = 'auto', $cat_sort = '0', $cat_count = '0', $catalog = [1, 2, 3], $catalog_up = [1], $is_back = 0)
+function add_tad_uploader($the_cat_sn = 0, $cat_title = '', $cat_desc = '', $cat_enable = '1', $of_cat_sn = '0', $cat_add_form = 0, $cat_share = 'auto', $cat_sort = '0', $cat_count = '0', $catalog = [1, 2, 3], $catalog_up = [1], $is_back = 0)
 {
     global $xoopsDB, $xoopsUser, $xoopsModule;
-
-    if (!check_up_power('catalog_up', $the_cat_sn)) {
+    // die('the_cat_sn=' . $the_cat_sn);
+    if (!empty($the_cat_sn) && !check_up_power('catalog_up', $the_cat_sn)) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
     }
 
@@ -397,7 +392,7 @@ function add_tad_uploader($the_cat_sn = '', $cat_title = '', $cat_desc = '', $ca
     $cat_count = (int) $cat_count;
 
     $sql = 'replace into ' . $xoopsDB->prefix('tad_uploader') . " (cat_sn,cat_title,cat_desc,cat_enable,uid,of_cat_sn,cat_share,cat_sort,cat_count) values('{$the_cat_sn}','{$cat_title}','{$cat_desc}','{$cat_enable}','{$uid}','{$of_cat_sn}','{$cat_share}','{$cat_sort}','{$cat_count}')";
-    $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     //取得最後新增資料的流水編號
     $cat_sn = $xoopsDB->getInsertId();
@@ -415,7 +410,7 @@ function add_tad_uploader($the_cat_sn = '', $cat_title = '', $cat_desc = '', $ca
 }
 
 //以下目錄屬性相同
-function get_path_belong($cat_sn, $tad_uploader, $tad_uploader_up, $cat_enable, $cat_share): void
+function get_path_belong($cat_sn, $tad_uploader, $tad_uploader_up, $cat_enable, $cat_share)
 {
     global $xoopsDB;
     $sql = ' SELECT cat_sn FROM ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='$cat_sn' ";
@@ -425,7 +420,7 @@ function get_path_belong($cat_sn, $tad_uploader, $tad_uploader_up, $cat_enable, 
         $sn = $row['cat_sn'];
 
         $sql2 = ' UPDATE ' . $xoopsDB->prefix('tad_uploader') . " set cat_enable ='$cat_enable' ,cat_share ='$cat_share' where cat_sn = '$sn' ";
-        $xoopsDB->queryF($sql2) or /** @scrutinizer ignore-call */web_error($sql2);
+        $xoopsDB->queryF($sql2) or Utility::web_error($sql2);
 
         //寫入權限
         saveItem_Permissions($tad_uploader, $sn, 'tad_uploader');
@@ -435,7 +430,7 @@ function get_path_belong($cat_sn, $tad_uploader, $tad_uploader_up, $cat_enable, 
 }
 
 //儲存權限
-function saveItem_Permissions($groups, $itemid, $perm_name): void
+function saveItem_Permissions($groups, $itemid, $perm_name)
 {
     global $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
@@ -459,7 +454,7 @@ function getItem_Permissions($itemid, $gperm_name)
     $module_id = $xoopsModule->getVar('mid');
     $sql = ' SELECT gperm_groupid FROM ' . $xoopsDB->prefix('group_permission') . " where gperm_modid='$module_id' and gperm_itemid ='$itemid' and gperm_name='$gperm_name' ";
     //echo $sql ;
-    $result = $xoopsDB->query($sql) or /** @scrutinizer ignore-call */web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     while (false !== ($row = $xoopsDB->fetchArray($result))) {
         $data[] = $row['gperm_groupid'];
     }
@@ -529,7 +524,7 @@ function get_file($cfsn = '')
 }
 
 //刪除檔案
-function delfile($select_files): void
+function delfile($select_files)
 {
     global $xoopsDB, $TadUpFiles;
     if (empty($select_files)) {
@@ -541,7 +536,7 @@ function delfile($select_files): void
 }
 
 //刪除一個檔案
-function del_file($cfsn = '', $del_sql = true): void
+function del_file($cfsn = '', $del_sql = true)
 {
     global $xoopsDB, $TadUpFiles;
     if (empty($cfsn)) {
@@ -582,12 +577,12 @@ function dlfile($cfsn = '')
         header("location:{$cf['file_url']}");
     } else {
         $sql = 'select uid from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cfsn`='$cfsn'";
-        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($uid) = $xoopsDB->fetchRow($result);
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
 
         $sql = 'select files_sn from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
-        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($files_sn) = $xoopsDB->fetchRow($result);
 
         return $files_sn;
@@ -599,14 +594,14 @@ function get_file_by_cfsn($cfsn = '')
 {
     global $xoopsUser, $xoopsDB, $TadUpFiles;
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
-    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $file = $xoopsDB->fetchArray($result);
 
     return $file;
 }
 
 //下載紀錄
-function add_dl_log($cfsn = '', $uid = ''): void
+function add_dl_log($cfsn = '', $uid = '')
 {
     global $xoopsDB;
     if (empty($cfsn)) {
@@ -662,7 +657,7 @@ function update_tad_uploader_file($cfsn = '', $col_name = '', $col_value = '')
 }
 
 //刪除目錄
-function delete_tad_uploader($cat_sn = ''): void
+function delete_tad_uploader($cat_sn = '')
 {
     global $xoopsDB, $xoopsUser, $xoopsModule, $isAdmin;
 
@@ -673,6 +668,8 @@ function delete_tad_uploader($cat_sn = ''): void
     $where = '';
     if ($xoopsUser) {
         $uid = $xoopsUser->uid();
+        $module_id = $xoopsModule->getVar('mid');
+        $isAdmin = $xoopsUser->isAdmin($module_id);
         $where = ($isAdmin) ? '' : " and uid='{$uid}'";
     } else {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_LOGIN);
@@ -744,7 +741,7 @@ function get_subcat_num($cat_sn = 0)
 }
 
 //tad_uploader編輯表單
-function tad_uploader_cate_form($cat_sn = ''): void
+function tad_uploader_cate_form($cat_sn = '')
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -775,9 +772,9 @@ function tad_uploader_cate_form($cat_sn = ''): void
 
     $mod_id = $xoopsModule->getVar('mid');
     $modulepermHandler = xoops_getHandler('groupperm');
-    /** @scrutinizer ignore-call */
+
     $read_group = $modulepermHandler->getGroupIds('catalog', $cat_sn, $mod_id);
-    /** @scrutinizer ignore-call */
+
     $post_group = $modulepermHandler->getGroupIds('catalog_up', $cat_sn, $mod_id);
 
     if (empty($read_group)) {
