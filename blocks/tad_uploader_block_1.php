@@ -16,7 +16,7 @@ function tad_uploader_b_show_1($options)
 
     $block = [];
     $i = 0;
-    while (false !== (list($cfsn, $cat_sn, $cf_name, $cf_desc, $file_url) = $xoopsDB->fetchRow($result))) {
+    while (list($cfsn, $cat_sn, $cf_name, $cf_desc, $file_url) = $xoopsDB->fetchRow($result)) {
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
         if (!check_up_power('catalog', $cat_sn)) {
             continue;
@@ -125,7 +125,7 @@ if (!function_exists('block_uploader_cate')) {
         $sql = 'SELECT cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader') . " WHERE cat_enable='1' ORDER BY cat_sort";
         $result = $xoopsDB->query($sql);
         $option = '';
-        while (false !== (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result))) {
+        while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
             $js .= "if(document.getElementById('c{$cat_sn}').checked){
                arr[i] = document.getElementById('c{$cat_sn}').value;
                i++;

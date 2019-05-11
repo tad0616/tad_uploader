@@ -33,7 +33,7 @@ function list_tad_uploader_cate_tree($def_cat_sn = '')
     $json = implode(",\n", $data);
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/ztree.php';
     $ztree = new ztree('news_tree', $json, 'save_drag.php', 'save_sort.php', 'of_cat_sn', 'cat_sn');
@@ -71,7 +71,7 @@ function list_tad_uploader($cat_sn = '')
     $xoopsTpl->assign('total', $total);
 
     if (!file_exists(XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php')) {
-        redirect_header('index.php', 3, _MA_NEED_TADTOOLS);
+        redirect_header('index.php', 3, _TAD_NEED_TADTOOLS);
     }
     require_once XOOPS_ROOT_PATH . '/modules/tadtools/sweet_alert.php';
     $sweet_alert = new sweet_alert();
@@ -95,7 +95,7 @@ function get_cate_data($cat_sn = 0)
     list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result);
 
     $cat_desc = nl2br($cat_desc);
-    $uid_name = XoopsUser::getUnameFromId($uid, 1);
+    $uid_name = \XoopsUser::getUnameFromId($uid, 1);
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
     $enable = ('1' == $cat_enable) ? "<img src='../images/button_ok.png'>" : "<img src='../images/button_cancel.png'>";

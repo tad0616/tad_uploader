@@ -582,12 +582,12 @@ function dlfile($cfsn = '')
         header("location:{$cf['file_url']}");
     } else {
         $sql = 'select uid from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cfsn`='$cfsn'";
-        $result = $xoopsDB->queryF($sql) or die($sql);
+        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         list($uid) = $xoopsDB->fetchRow($result);
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
 
         $sql = 'select files_sn from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
-        $result = $xoopsDB->queryF($sql) or die($sql);
+        $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
         list($files_sn) = $xoopsDB->fetchRow($result);
 
         return $files_sn;
@@ -599,7 +599,7 @@ function get_file_by_cfsn($cfsn = '')
 {
     global $xoopsUser, $xoopsDB, $TadUpFiles;
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
-    $result = $xoopsDB->queryF($sql) or die($sql);
+    $result = $xoopsDB->queryF($sql) or web_error($sql, __FILE__, __LINE__);
     $file = $xoopsDB->fetchArray($result);
 
     return $file;
@@ -789,12 +789,12 @@ function tad_uploader_cate_form($cat_sn = ''): void
     }
 
     //可見群組
-    $SelectGroup_name = new XoopsFormSelectGroup('view_group', 'catalog', true, $read_group, 6, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('view_group', 'catalog', true, $read_group, 6, true);
     $SelectGroup_name->setExtra("class='form-control' id='view_group'");
     $enable_group = $SelectGroup_name->render();
 
     //可上傳群組
-    $SelectGroup_name = new XoopsFormSelectGroup('upload_group', 'catalog_up', true, $post_group, 6, true);
+    $SelectGroup_name = new \XoopsFormSelectGroup('upload_group', 'catalog_up', true, $post_group, 6, true);
     $SelectGroup_name->setExtra("class='form-control' id='upload_group'");
     $enable_upload_group = $SelectGroup_name->render();
 

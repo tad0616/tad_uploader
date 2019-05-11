@@ -18,12 +18,12 @@ $xoopsTpl->assign('jquery_path', $jquery_path);
 $item_list = [];
 $sql = 'SELECT cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader');
 $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
-while (false !== (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result))) {
+while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
     $item_list[$cat_sn] = $cat_title;
 }
 
 $perm_desc = '';
-$formi = new XoopsGroupPermForm('', $module_id, 'catalog', $perm_desc);
+$formi = new \XoopsGroupPermForm('', $module_id, 'catalog', $perm_desc);
 foreach ($item_list as $item_id => $item_name) {
     $formi->addItem($item_id, $item_name);
 }
@@ -31,7 +31,7 @@ foreach ($item_list as $item_id => $item_name) {
 $main1 = $formi->render();
 $xoopsTpl->assign('main1', $main1);
 
-$formi = new XoopsGroupPermForm('', $module_id, 'catalog_up', $perm_desc);
+$formi = new \XoopsGroupPermForm('', $module_id, 'catalog_up', $perm_desc);
 foreach ($item_list as $item_id => $item_name) {
     $formi->addItem($item_id, $item_name);
 }
