@@ -1,7 +1,8 @@
 <?php
+
 use XoopsModules\Tadtools\Utility;
 
-include 'header.php';
+require __DIR__ . '/header.php';
 if (!$isAdmin) {
     redirect_header(XOOPS_URL, 3, '非管理員，無權限使用此功能');
 }

@@ -4,8 +4,8 @@ use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\Ztree;
 /*-----------引入檔案區--------------*/
 $xoopsOption['template_main'] = 'tad_uploader_adm_main.tpl';
-include_once 'header.php';
-include_once '../function.php';
+require_once __DIR__ . '/header.php';
+require_once dirname(__DIR__) . '/function.php';
 
 /*-----------function區--------------*/
 
@@ -59,7 +59,7 @@ function list_tad_uploader($cat_sn = '')
 
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $files = [];
-    while ($all = $xoopsDB->fetchArray($result)) {
+    while (false !== ($all = $xoopsDB->fetchArray($result))) {
         $files[] = $all;
     }
     $cate = get_cate_data($cat_sn);
@@ -89,7 +89,7 @@ function get_cate_data($cat_sn = 0)
     list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result);
 
     $cat_desc = nl2br($cat_desc);
-    $uid_name = XoopsUser::getUnameFromId($uid, 1);
+    $uid_name = \XoopsUser::getUnameFromId($uid, 1);
     $uid_name = (empty($uid_name)) ? XoopsUser::getUnameFromId($uid, 0) : $uid_name;
 
     $enable = ('1' == $cat_enable) ? "<img src='../images/button_ok.png'>" : "<img src='../images/button_cancel.png'>";
@@ -108,7 +108,7 @@ function get_cate_data($cat_sn = 0)
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
 $of_cat_sn = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
@@ -145,4 +145,4 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('op', $op);
-include_once 'footer.php';
+require_once __DIR__ . '/footer.php';

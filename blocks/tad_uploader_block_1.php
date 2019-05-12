@@ -12,6 +12,7 @@ function tad_uploader_b_show_1($options)
     $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
+
     $and_cat_sn = empty($options[1]) ? '' : "and b.cat_sn in({$options[1]})";
     $sql = 'select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from ' . $xoopsDB->prefix('tad_uploader_file') . ' as a left join ' . $xoopsDB->prefix('tad_uploader') . " as b on a.cat_sn=b.cat_sn where b.cat_share='1'  $and_cat_sn order by a.up_date desc limit 0,{$options[0]}";
 
@@ -73,8 +74,8 @@ if (!function_exists('check_up_power')) {
         global $xoopsUser;
 
         //取得模組編號
-        $modhandler = xoops_getHandler('module');
-        $xoopsModule = $modhandler->getByDirname('tad_uploader');
+        $moduleHandler = xoops_getHandler('module');
+        $xoopsModule = $moduleHandler->getByDirname('tad_uploader');
         $module_id = $xoopsModule->getVar('mid');
 
         //取得目前使用者的群組編號
@@ -88,7 +89,7 @@ if (!function_exists('check_up_power')) {
         }
 
         //取得群組權限功能
-        $gperm_handler = xoops_getHandler('groupperm');
+        $gpermHandler = xoops_getHandler('groupperm');
 
         //權限項目編號
         $perm_itemid = (int) $cat_sn;
@@ -101,7 +102,7 @@ if (!function_exists('check_up_power')) {
                 return true;
             }
         } else {
-            if ($gperm_handler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
+            if ($gpermHandler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
                 return true;
             }
         }

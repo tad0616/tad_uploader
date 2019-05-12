@@ -2,10 +2,10 @@
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-include '../../../include/cp_header.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
-$of_cat_sn = (int) $_POST['of_cat_sn'];
-$cat_sn = (int) $_POST['cat_sn'];
+$of_cat_sn = (int)$_POST['of_cat_sn'];
+$cat_sn = (int)$_POST['cat_sn'];
 
 if ($of_cat_sn == $cat_sn) {
     die(_MA_TREETABLE_MOVE_ERROR1 . '(' . date('Y-m-d H:i:s') . ')');

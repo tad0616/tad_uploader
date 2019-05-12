@@ -2,19 +2,19 @@
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
-include 'header.php';
-$xoopsOption['template_main'] = 'tad_uploader_uploads.tpl';
+require __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'tad_uploader_uploads.tpl';
 
 if (count($upload_powers) <= 0 or empty($xoopsUser)) {
     redirect_header(XOOPS_URL . '/user.php', 3, _MD_TADUP_NO_EDIT_POWER);
 }
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
 function uploads_tabs($cat_sn = '', $cfsn = '')
 {
     global $xoopsDB, $xoopsModuleConfig, $xoopsModule, $xoopsTpl, $interface_menu, $TadUpFiles;
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $jquery_path = Utility::get_jquery(true);
     $randStr = Utility::randStr();
@@ -132,7 +132,7 @@ function update_tad_uploader($cfsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
 $cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
@@ -166,4 +166,4 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

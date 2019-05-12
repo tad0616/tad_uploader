@@ -27,7 +27,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * Class Update
  */
 class Update
-{
+    {
 
     //新增檔案欄位
     public static function chk_fc_tag()
@@ -58,7 +58,7 @@ class Update
     {
         global $xoopsDB;
         //die(var_export($xoopsConfig));
-        include XOOPS_ROOT_PATH . '/modules/tad_uploader/xoops_version.php';
+        require XOOPS_ROOT_PATH . '/modules/tad_uploader/xoops_version.php';
 
         //先找出該有的區塊以及對應樣板
         foreach ($modversion['blocks'] as $i => $block) {

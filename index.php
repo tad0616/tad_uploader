@@ -3,13 +3,13 @@ use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
-include 'header.php';
+require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_uploader_index.tpl';
 if (empty($_SESSION['list_mode'])) {
     $_SESSION['list_mode'] = $xoopsModuleConfig['show_mode'];
 }
 
-include XOOPS_ROOT_PATH . '/header.php';
+require XOOPS_ROOT_PATH . '/header.php';
 /*-----------function區--------------*/
 
 //列出所有資料
@@ -58,8 +58,8 @@ function list_all_data($the_cat_sn = 0)
         $upform = $TadUpFiles->upform(true, 'upfile', null, false);
     }
 
-    $FooTable = new FooTable();
-    $FooTable->render(false);
+        $FooTable = new FooTable();
+        $FooTable->render(false);
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='{$the_cat_sn}'";
     $result = $xoopsDB->query($sql);
@@ -288,7 +288,7 @@ function update_tad_uploader_count($cat_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-include_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
+require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
 $op = system_CleanVars($_REQUEST, 'op', '', 'string');
 $cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
 $cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
@@ -385,4 +385,4 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

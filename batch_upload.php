@@ -1,8 +1,8 @@
 <?php
 use XoopsModules\Tadtools\Utility;
 
-include_once 'header.php';
-include_once "language/{$xoopsConfig['language']}/batch.php";
+require_once __DIR__ . '/header.php';
+xoops_loadLanguage('batch', $xoopsModule->getVar('dirname'));
 
 $op = (empty($_REQUEST['op'])) ? '' : $_REQUEST['op'];
 $cat_sn = (isset($_REQUEST['cat_sn'])) ? (int) $_REQUEST['cat_sn'] : 0;
@@ -106,7 +106,7 @@ function tad_uploader_batch_import()
     }
 
     $uid = $xoopsUser->uid();
-    $uid_name = XoopsUser::getUnameFromId($uid, 1);
+    $uid_name = \XoopsUser::getUnameFromId($uid, 1);
     //$now=xoops_getUserTimestamp(time());
 
     set_time_limit(0);

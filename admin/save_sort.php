@@ -1,6 +1,6 @@
 <?php
 /*-----------引入檔案區--------------*/
-include '../../../include/cp_header.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $cat_sn = (int)$_POST['cat_sn'];
 $sort = (int)$_POST['sort'];

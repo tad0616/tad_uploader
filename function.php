@@ -34,7 +34,7 @@ function get_tad_uploader_cate_path($the_cat_sn = '', $include_self = true)
             WHERE t1.of_cat_sn = '0'";
 
         $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        while ($all = $xoopsDB->fetchArray($result)) {
+        while (false !== ($all = $xoopsDB->fetchArray($result))) {
             if (in_array($the_cat_sn, $all)) {
                 foreach ($all as $cat_sn) {
                     if (!empty($cat_sn)) {
@@ -164,7 +164,7 @@ function remote_file_size($url)
         return false;
     }
 
-    //echo $errno .": " . $errstr . "<br />";
+    //echo $errno .": " . $errstr . "<br>";
     $return = -2;
     $arr_headers = explode("\n", $headers);
     // echo "HTTP headers for <a href='" . $url . "'>..." . substr($url,strlen($url)-20). "</a>:";
@@ -194,7 +194,7 @@ function remote_file_size($url)
     } else {
         $return = $status;
     }
-    // echo intval($status) .": [" . $newurl . "]<br />";
+    // echo intval($status) .": [" . $newurl . "]<br>";
     if ((int) $status == 302 && mb_strlen($newurl) > 0) {
         // 302 redirect: get HTTP HEAD of new URL
         $return = remote_file_size($newurl);
@@ -309,7 +309,7 @@ function check_up_power($kind = 'catalog', $cat_sn = '')
     $module_id = $xoopsModule->getVar('mid');
 
     //取得群組權限功能
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
 
     //權限項目編號
     $perm_itemid = (int) $cat_sn;
@@ -323,7 +323,7 @@ function check_up_power($kind = 'catalog', $cat_sn = '')
             return true;
         }
     } else {
-        if ($gperm_handler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
+        if ($gpermHandler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
             return true;
         }
     }
@@ -364,7 +364,7 @@ function add_tad_uploader($the_cat_sn = 0, $cat_title = '', $cat_desc = '', $cat
 {
     global $xoopsDB, $xoopsUser, $xoopsModule;
     // die('the_cat_sn=' . $the_cat_sn);
-    if (!empty($the_cat_sn) and !check_up_power('catalog_up', $the_cat_sn)) {
+    if (!empty($the_cat_sn) && !check_up_power('catalog_up', $the_cat_sn)) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
     }
 
@@ -416,7 +416,7 @@ function get_path_belong($cat_sn, $tad_uploader, $tad_uploader_up, $cat_enable, 
     $sql = ' SELECT cat_sn FROM ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='$cat_sn' ";
 
     $result = $xoopsDB->query($sql) or die($sql);
-    while ($row = $xoopsDB->fetchArray($result)) {
+    while (false !== ($row = $xoopsDB->fetchArray($result))) {
         $sn = $row['cat_sn'];
 
         $sql2 = ' UPDATE ' . $xoopsDB->prefix('tad_uploader') . " set cat_enable ='$cat_enable' ,cat_share ='$cat_share' where cat_sn = '$sn' ";
@@ -434,15 +434,15 @@ function saveItem_Permissions($groups, $itemid, $perm_name)
 {
     global $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
 
     // First, if the permissions are already there, delete them
-    $gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
+    $gpermHandler->deleteByModule($module_id, $perm_name, $itemid);
 
     // Save the new permissions
     if (count($groups) > 0) {
         foreach ($groups as $group_id) {
-            $gperm_handler->addRight($perm_name, $itemid, $group_id, $module_id);
+            $gpermHandler->addRight($perm_name, $itemid, $group_id, $module_id);
         }
     }
 }
@@ -455,7 +455,7 @@ function getItem_Permissions($itemid, $gperm_name)
     $sql = ' SELECT gperm_groupid FROM ' . $xoopsDB->prefix('group_permission') . " where gperm_modid='$module_id' and gperm_itemid ='$itemid' and gperm_name='$gperm_name' ";
     //echo $sql ;
     $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-    while ($row = $xoopsDB->fetchArray($result)) {
+    while (false !== ($row = $xoopsDB->fetchArray($result))) {
         $data[] = $row['gperm_groupid'];
     }
 
@@ -577,12 +577,12 @@ function dlfile($cfsn = '')
         header("location:{$cf['file_url']}");
     } else {
         $sql = 'select uid from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cfsn`='$cfsn'";
-        $result = $xoopsDB->queryF($sql) or die($sql);
+        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($uid) = $xoopsDB->fetchRow($result);
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
 
         $sql = 'select files_sn from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
-        $result = $xoopsDB->queryF($sql) or die($sql);
+        $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($files_sn) = $xoopsDB->fetchRow($result);
 
         return $files_sn;
@@ -594,7 +594,7 @@ function get_file_by_cfsn($cfsn = '')
 {
     global $xoopsUser, $xoopsDB, $TadUpFiles;
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
-    $result = $xoopsDB->queryF($sql) or die($sql);
+    $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     $file = $xoopsDB->fetchArray($result);
 
     return $file;
@@ -744,7 +744,7 @@ function get_subcat_num($cat_sn = 0)
 function tad_uploader_cate_form($cat_sn = '')
 {
     global $xoopsDB, $xoopsModule, $xoopsTpl;
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     if (!check_up_power('catalog_up', $cat_sn) or $cat_sn == 0) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
@@ -771,11 +771,11 @@ function tad_uploader_cate_form($cat_sn = '')
     $cat_sort = (!isset($DBV['cat_sort'])) ? $cat_max_sort : $DBV['cat_sort'];
 
     $mod_id = $xoopsModule->getVar('mid');
-    $moduleperm_handler = xoops_getHandler('groupperm');
+    $modulepermHandler = xoops_getHandler('groupperm');
 
-    $read_group = $moduleperm_handler->getGroupIds('catalog', $cat_sn, $mod_id);
+    $read_group = $modulepermHandler->getGroupIds('catalog', $cat_sn, $mod_id);
 
-    $post_group = $moduleperm_handler->getGroupIds('catalog_up', $cat_sn, $mod_id);
+    $post_group = $modulepermHandler->getGroupIds('catalog_up', $cat_sn, $mod_id);
 
     if (empty($read_group)) {
         $read_group = [1, 2, 3];
