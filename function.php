@@ -462,7 +462,11 @@ function getItem_Permissions($itemid, $gperm_name)
     return $data;
 }
 
-/********************檔案處理*******************/
+/********************檔案處理******************
+ * @param string $real_file_name
+ * @param string $cfsn
+ * @return string
+ */
 
 //取得上傳檔名
 function get_file_name($real_file_name = '', $cfsn = '')
