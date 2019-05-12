@@ -1,5 +1,7 @@
 <?php
 
+global $xoopsConfig;
+
 //---基本設定---//
 $modversion = [];
 
