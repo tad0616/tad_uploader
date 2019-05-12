@@ -241,7 +241,7 @@ class Update
         //取消上傳時間限制
         set_time_limit(0);
 
-        $sql = "CREATE TABLE IF NOT EXISTS `" . $xoopsDB->prefix('tad_uploader_files_center') . "` (
+        $sql = 'CREATE TABLE IF NOT EXISTS `' . $xoopsDB->prefix('tad_uploader_files_center') . "` (
         `files_sn` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
         `col_name` varchar(255) NOT NULL default '',
         `col_sn` smallint(5) unsigned NOT NULL default '0',
