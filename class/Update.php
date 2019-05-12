@@ -1,8 +1,8 @@
 <?php
 
-use XoopsModules\Tadtools\Utility;
-
 namespace XoopsModules\Tad_uploader;
+
+use XoopsModules\Tadtools\Utility;
 
 /*
 Update Class Definition
