@@ -101,11 +101,14 @@ function add_tad_uploader_file()
         if (empty($cf_desc)) {
             $cf_desc = Utility::get_basename($file_url);
         }
+
+        $name = $myts->addSlashes($name);
         $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader_file') . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,file_url,cf_sort) values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$type}','{$size}','{$now}','{$file_url}','{$cf_sort}')";
         $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     } else {
         // die(var_export($_FILES));
         foreach ($_FILES['upfile']['name'] as $i => $name) {
+            $name = $myts->addSlashes($name);
             if (empty($_POST['cf_desc'])) {
                 $cf_desc = $name;
             }
@@ -750,7 +753,7 @@ function tad_uploader_cate_form($cat_sn = '')
     global $xoopsDB, $xoopsModule, $xoopsTpl;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    if (!check_up_power('catalog_up', $cat_sn) or $cat_sn == 0) {
+    if (!check_up_power('catalog_up', $cat_sn) and $cat_sn != 0) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
     }
 

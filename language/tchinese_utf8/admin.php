@@ -1,7 +1,5 @@
 <?php
 xoops_loadLanguage('admin_common', 'tadtools');
-define('_TAD_NEED_TADTOOLS', ' 需要 modules/tadtools，可至<a href="http://campus-xoops.tn.edu.tw/modules/tad_modules/index.php?module_sn=1" target="_blank">XOOPS輕鬆架</a>下載。');
-
 //power.php
 define('_MA_TADUP_DB_ERROR1', '無法取得tad_uploader資料');
 define('_MA_TADUP_SET_ACCESS_POWER', '請設定各個群組可讀取使用的資料夾');
@@ -19,7 +17,7 @@ define('_MA_TADUP_AUTHOR', '建立者');
 define('_MA_TADUP_FILE_COUNTER', '人氣值');
 define('_MA_TADUP_EDIT', '編輯');
 define('_MA_TADUP_DEL', '刪除');
-define('_MA_TADUP_ADD_FORM', '資料夾管理');
+define('_MA_TADUP_ADD_FORM', '新增資料夾');
 define('_MA_TADUP_FILE_NAME', '檔案名稱');
 define('_MA_TADUP_FILE_DATE', '日期');
 define('_MA_TADUP_FILE_SIZE', '大小');
