@@ -66,7 +66,7 @@
                   </td>
                   <td>
                     <a href="<{$xoops_url}>/modules/tad_uploader/index.php?of_cat_sn=<{$file.cat_sn}>"><{$file.cf_desc}></a>
-                    <span style="color:gray;font-size:12px;"> (<{$file.cf_count}>)</span>
+                    <span style="color:gray;font-size: 75%;"> (<{$file.cf_count}>)</span>
                   </td>
                   <td><{$file.up_date}></td>
                   <td><{$file.cf_size}></td>

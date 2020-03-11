@@ -72,7 +72,7 @@
         <div class="col-sm-3">
             <div class="row">
             <label><{$smarty.const._MD_TADUP_FOLDER_DESC}></label>
-            <textarea name="cat_desc" class="form-control" style="height:120px;font-size:12px"><{$cat_desc}></textarea>
+            <textarea name="cat_desc" class="form-control" style="height:120px;font-size: 75%"><{$cat_desc}></textarea>
             </div>
         </div>
 

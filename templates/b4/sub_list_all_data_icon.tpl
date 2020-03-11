@@ -14,7 +14,7 @@
                             <{/if}>
                         </a>
                         <div style="overflow: hidden; width:100%; height:50px; text-align:center;">
-                            <a href="index.php?of_cat_sn=<{$folder.cat_sn}>" style="font-size:12px;text-align:left;">
+                            <a href="index.php?of_cat_sn=<{$folder.cat_sn}>" style="font-size: 75%;text-align:left;">
                             <{$folder.cat_title}></a>(<{$folder.file_num}>)
                         </div>
                     </li>
@@ -36,7 +36,7 @@
                             <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}> selected_file" onChange="chk_selected_files();">
                         <{/if}>
 
-                        <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>" style="display:inline-block;width:auto;line-height:110%;font-size:12px;text-align:left;margin:0px auto;">
+                        <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>" style="display:inline-block;width:auto;line-height:110%;font-size: 75%;text-align:left;margin:0px auto;">
 
                         <{if $only_show_desc=="1"}>
                             <{$file.cf_desc}>

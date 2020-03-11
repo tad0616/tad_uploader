@@ -3,14 +3,14 @@
 }
 
 .file_num{
-  font-size:11px;
+  font-size: 68.75%;
   font-family:Arial;
 }
 
 .cat_count{
   font-family:Arial;
   padding:6px;
-  font-size:11px;
+  font-size: 68.75%;
   border-right:0px;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .pic_title {
-  font-size:11px;
+  font-size: 68.75%;
   height:16px;
   line-height:16px;
 	position: absolute;
@@ -57,7 +57,7 @@
 }
 
 .pic_desc {
-  font-size:11px;
+  font-size: 68.75%;
   height:40px;
 	position: absolute;
 	left: 19px;
@@ -73,7 +73,7 @@
 }
 
 .video_info {
-  font-size:11px;
+  font-size: 68.75%;
   height:40px;
 	position: absolute;
 	left: 19px;
@@ -95,7 +95,6 @@
   text-decoration:none;
 }
 
-
 .mode_change:hover{
   background-color:rgb(255,204,51);
   color:#000000;
@@ -106,7 +105,6 @@
   float:right;
   color:rgb(0,153,204);
 }
-
 
 .MediaCate {
 	margin: 6px;
@@ -139,7 +137,6 @@
 	padding:6px;
 }
 
-
 .tp_cate_title{
 	width:130px;
 	padding:4px 2px 4px 2px;
@@ -153,37 +150,33 @@
 
 .tp_index_title a{
 	color: rgb(0,112,240);
-	font-size: 12px;
+	font-size: 75%;
 }
 
 .tp_index_creator{
 	color: #FF8C00;
 	overflow: hidden;
-	font-size: 11px;
+	font-size: 68.75%;
 }
 
 .tp_index_date{
 	color: Gray;
 	overflow: hidden;
-	font-size: 10px;
+	font-size: 62.5%;
 }
 
 .tp_index_counter{
 	overflow: hidden;
-	font-size: 11px;
+	font-size: 68.75%;
 }
-
-
-
 
 div#code_results textarea{
 	width: 96%;
 	background-color: #FCFCFC;
 	color: rgb(153,153,255);
-	font-size: 11px;
+	font-size: 68.75%;
 	padding:8px;
 }
-
 
 .set_code{
 	background-color: #000000;
@@ -224,7 +217,6 @@ td.media_menu{
 	background-color: #FFFFFF;
 }
 
-
 table#tp_index{
 }
 
@@ -232,4 +224,3 @@ table#tp_index td{
 	padding: 4px;
 	background-color: rgb(240,240,240);
 }
-

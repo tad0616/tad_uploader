@@ -51,10 +51,10 @@
                                 </label>
                             <{/if}>
                         </td>
-                        <td headers="h3" style="font-size:11px;text-align:center;"><{$folder.file_num}><{$smarty.const._MD_TADUP_FILE}></td>
-                        <td headers="h4" style="font-size:11px;text-align:center;"><{$folder.cat_count}></td>
+                        <td headers="h3" style="font-size: 68.75%;text-align:center;"><{$folder.file_num}><{$smarty.const._MD_TADUP_FILE}></td>
+                        <td headers="h4" style="font-size: 68.75%;text-align:center;"><{$folder.cat_count}></td>
                         <{if $only_show_desc!="1"}>
-                        <td headers="h5" style="font-size:12px;"><{$folder.cat_desc}></td>
+                        <td headers="h5" style="font-size: 75%;"><{$folder.cat_desc}></td>
                         <{/if}>
                         <{if $up_power}>
                         <td headers="h6" style="text-align:center;">
@@ -89,12 +89,12 @@
                         <{/if}>
                         </a>
                     </td>
-                    <td headers="h3" style="font-size:11px;text-align:center;"><{$file.up_date}></td>
-                    <td headers="h4" style="font-size:11px;text-align:center;"><{$file.size}></td>
-                    <td style="font-size:11px;text-align:center;"><{$file.cf_count}></td>
+                    <td headers="h3" style="font-size: 68.75%;text-align:center;"><{$file.up_date}></td>
+                    <td headers="h4" style="font-size: 68.75%;text-align:center;"><{$file.size}></td>
+                    <td style="font-size: 68.75%;text-align:center;"><{$file.cf_count}></td>
 
                     <{if $only_show_desc!="1"}>
-                        <td headers="h5" style="font-size:12px;">
+                        <td headers="h5" style="font-size: 75%;">
                         <{if $file.cf_desc!=$file.cf_name}>
                             <{$file.cf_desc}>
                         <{/if}></td>
