@@ -58,8 +58,8 @@ function list_all_data($the_cat_sn = 0)
         $upform = $TadUpFiles->upform(true, 'upfile', null, false);
     }
 
-        $FooTable = new FooTable();
-        $FooTable->render(false);
+    $FooTable = new FooTable();
+    $FooTable->render(false);
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='{$the_cat_sn}'";
     $result = $xoopsDB->query($sql);
@@ -326,8 +326,7 @@ switch ($op) {
         exit;
 
     case 'dlfile':
-        $files_sn = dlfile($cfsn);
-        $TadUpFiles->add_file_counter($files_sn, true);
+        dlfile($cfsn);
         exit;
 
     case 'del_file':

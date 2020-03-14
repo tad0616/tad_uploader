@@ -574,7 +574,7 @@ function dlfile($cfsn = '')
         redirect_header('index.php', 3, _MD_TADUP_NO_ACCESS_POWER);
     }
     if ($xoopsUser) {
-        $uid = $xoopsUser->getVar('uid');
+        $uid = $xoopsUser->uid();
         add_dl_log($cfsn, $uid);
     }
     //更新人氣值
@@ -582,19 +582,20 @@ function dlfile($cfsn = '')
 
     if (!empty($cf['file_url'])) {
         header("location:{$cf['file_url']}");
+        exit;
     } else {
         $sql = 'select uid from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cfsn`='$cfsn'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($uid) = $xoopsDB->fetchRow($result);
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
 
-        $sql = 'select files_sn from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
+        $sql = 'select files_sn,kind from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        list($files_sn) = $xoopsDB->fetchRow($result);
+        list($files_sn, $kind) = $xoopsDB->fetchRow($result);
 
-        return $files_sn;
+        $force = $kind == 'img' ? true : false;
+        $TadUpFiles->add_file_counter($files_sn, true, $force);
     }
-    exit;
 }
 
 function get_file_by_cfsn($cfsn = '')

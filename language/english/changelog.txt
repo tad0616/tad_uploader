@@ -1,3 +1,8 @@
+Tad Uploader 3.5.8 (released 2020-03-14)
+====================================================
+1. Correction for accessibility 2.0 AA standard
+
+
 Tad Uploader 3.5.7 (released from 2020-01-31)
 ======================================================= ==
 1. Enhance file name filtering
