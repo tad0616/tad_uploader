@@ -57,9 +57,9 @@
                         <td headers="h5" style="font-size: 75%;"><{$folder.cat_desc}></td>
                         <{/if}>
                         <{if $up_power}>
-                        <td headers="h6" style="text-align:center;">
+                        <td headers="h6" style="text-align:center;" nowrap>
                             <{if $folder.file_num==0}>
-                            <a href="javascript:delete_tad_uploader_func(<{$folder.cat_sn}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
+                            <a href="javascript:delete_tad_uploader_func(<{$folder.cat_sn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                             <{/if}>
                         </td>
                         <{/if}>
@@ -101,9 +101,9 @@
                     <{/if}>
 
                     <{if $up_power}>
-                        <td headers="h6" style="text-align:center;">
-                            <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-sm btn-danger"><{$smarty.const._TAD_DEL}></a>
-                            <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                        <td headers="h6" style="text-align:center;" nowrap>
+                            <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                            <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
                         </td>
                     <{/if}>
                     </tr>

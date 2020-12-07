@@ -1,15 +1,15 @@
 <?php
+use Xmf\Request;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
-$cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
-$of_cat_sn = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
-$new_of_cat_sn = system_CleanVars($_REQUEST, 'new_of_cat_sn', 0, 'int');
-$new_cat_sn = system_CleanVars($_REQUEST, 'new_cat_sn', 0, 'int');
+$op = Request::getString('op');
+$cfsn = Request::getInt('cfsn');
+$cat_sn = Request::getInt('cat_sn');
+$of_cat_sn = Request::getInt('of_cat_sn');
+$new_of_cat_sn = Request::getInt('new_of_cat_sn');
+$new_cat_sn = Request::getInt('new_cat_sn');
 
 switch ($op) {
     case 'list_mode':

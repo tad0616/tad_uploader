@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
 use XoopsModules\Tadtools\Ztree;
@@ -108,11 +109,10 @@ function get_cate_data($cat_sn = 0)
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
-$of_cat_sn = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
-$cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
+$op = Request::getString('op');
+$cat_sn = Request::getInt('cat_sn');
+$of_cat_sn = Request::getInt('of_cat_sn');
+$cfsn = Request::getInt('cfsn');
 
 switch ($op) {
     case 'add_tad_uploader':

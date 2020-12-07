@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -132,10 +133,9 @@ function update_tad_uploader($cfsn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
-$cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
+$op = Request::getString('op');
+$cfsn = Request::getInt('cfsn');
+$cat_sn = Request::getInt('cat_sn');
 
 switch ($op) {
     //新增資料

@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
@@ -47,7 +48,7 @@ function list_all_data($the_cat_sn = 0)
     $files_list = get_files_list($the_cat_sn, $check_up_power);
 
     //若有權限則可排序
-    $jquery = Utility::get_jquery(true);
+    Utility::get_jquery(true);
 
     $upform = $move_option = '';
     if ($check_up_power) {
@@ -81,7 +82,6 @@ function list_all_data($the_cat_sn = 0)
     $xoopsTpl->assign('cat_sn', $the_cat_sn);
     $xoopsTpl->assign('folder_list', $folder_list);
     $xoopsTpl->assign('files_list', $files_list);
-    $xoopsTpl->assign('jqueryui', $jquery);
     $xoopsTpl->assign('up_power', $check_up_power);
     $xoopsTpl->assign('list_mode', $_SESSION['list_mode']);
     $xoopsTpl->assign('only_show_desc', $xoopsModuleConfig['only_show_desc']);
@@ -288,27 +288,26 @@ function update_tad_uploader_count($cat_sn = '')
 }
 
 /*-----------執行動作判斷區----------*/
-require_once $GLOBALS['xoops']->path('/modules/system/include/functions.php');
-$op = system_CleanVars($_REQUEST, 'op', '', 'string');
-$cfsn = system_CleanVars($_REQUEST, 'cfsn', 0, 'int');
-$cat_sn = system_CleanVars($_REQUEST, 'cat_sn', 0, 'int');
-$of_cat_sn = system_CleanVars($_REQUEST, 'of_cat_sn', 0, 'int');
-$new_of_cat_sn = system_CleanVars($_REQUEST, 'new_of_cat_sn', 0, 'int');
-$new_cat_sn = system_CleanVars($_REQUEST, 'new_cat_sn', 0, 'int');
-$new_cat_title = system_CleanVars($_REQUEST, 'new_cat_title', '', 'string');
-$cat_title = system_CleanVars($_REQUEST, 'cat_title', '', 'string');
-$all_selected = system_CleanVars($_REQUEST, 'all_selected', '', 'string');
-$select_files = system_CleanVars($_REQUEST, 'select_files', '', 'array');
-$cat_desc = system_CleanVars($_REQUEST, 'cat_desc', '', 'string');
-$this_folder = system_CleanVars($_REQUEST, 'this_folder', '', 'string');
-$add_cat_title = system_CleanVars($_REQUEST, 'add_cat_title', '', 'string');
-$add_to_cat = system_CleanVars($_REQUEST, 'add_to_cat', 0, 'int');
-$cat_share = system_CleanVars($_REQUEST, 'cat_share', 0, 'int');
-$cat_sort = system_CleanVars($_REQUEST, 'cat_sort', 0, 'int');
-$cat_count = system_CleanVars($_REQUEST, 'cat_count', 0, 'int');
-$cat_enable = system_CleanVars($_REQUEST, 'cat_enable', 0, 'int');
-$catalog = system_CleanVars($_REQUEST, 'catalog', '', 'array');
-$catalog_up = system_CleanVars($_REQUEST, 'catalog_up', '', 'array');
+$op = Request::getString('op');
+$cfsn = Request::getInt('cfsn');
+$cat_sn = Request::getInt('cat_sn');
+$of_cat_sn = Request::getInt('of_cat_sn');
+$new_of_cat_sn = Request::getInt('new_of_cat_sn');
+$new_cat_sn = Request::getInt('new_cat_sn');
+$new_cat_title = Request::getString('new_cat_title');
+$cat_title = Request::getString('cat_title');
+$all_selected = Request::getString('all_selected');
+$select_files = Request::getArray('select_files');
+$cat_desc = Request::getString('cat_desc');
+$this_folder = Request::getString('this_folder');
+$add_cat_title = Request::getString('add_cat_title');
+$add_to_cat = Request::getInt('add_to_cat');
+$cat_share = Request::getInt('cat_share');
+$cat_sort = Request::getInt('cat_sort');
+$cat_count = Request::getInt('cat_count');
+$cat_enable = Request::getInt('cat_enable');
+$catalog = Request::getArray('catalog');
+$catalog_up = Request::getArray('catalog_up');
 
 switch ($op) {
     //分類設定

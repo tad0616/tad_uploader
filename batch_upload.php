@@ -1,11 +1,12 @@
 <?php
+use Xmf\Request;
 use XoopsModules\Tadtools\Utility;
 
 require_once __DIR__ . '/header.php';
-xoops_loadLanguage('batch', $xoopsModule->getVar('dirname'));
+xoops_loadLanguage('batch', $xoopsModule->dirname());
 
-$op = (empty($_REQUEST['op'])) ? '' : $_REQUEST['op'];
-$cat_sn = (isset($_REQUEST['cat_sn'])) ? (int) $_REQUEST['cat_sn'] : 0;
+$op = Request::getString('op');
+$cat_sn = Request::getInt('cat_sn');
 
 switch ($op) {
     case 'import':
