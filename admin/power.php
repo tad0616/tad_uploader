@@ -10,16 +10,14 @@ require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 
 /*-----------function區--------------*/
-$module_id = $xoopsModule->getVar('mid');
-
-$jquery_path = Utility::get_jquery(true); //TadTools引入jquery ui
-$xoopsTpl->assign('jquery_path', $jquery_path);
+$module_id = $xoopsModule->mid();
 
 //抓取所有資料夾
 
 $item_list = [];
 $sql = 'SELECT cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader');
-$result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MA_TADUP_DB_ERROR1);
+$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+
 while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
     $item_list[$cat_sn] = $cat_title;
 }

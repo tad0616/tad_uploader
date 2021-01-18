@@ -37,7 +37,6 @@ define('_MD_TADUP_IS_SHARE', '是否分享（若選「否」則該資料夾僅�
 define('_MD_TADUP_CREAT_NEW_CATE', '在左邊目錄下建立新目錄');
 
 //function
-define('_MD_TADUP_DB_ERROR5', '無法取代tad_uploader_file中的資料');
 define('_MD_TADUP_DB_ERROR6', '無法更新tad_uploader_file中的資料');
 define('_MD_TADUP_DB_ERROR7', '無法刪除tad_uploader_file中的資料');
 define('_MD_TADUP_NO_EDIT_POWER', '您沒有編輯或上傳權限');
@@ -86,3 +85,6 @@ define('_MD_TADUP_EMPTY', '尚無資料');
 
 define('_MD_TADUP_CAN_ACCESS_GROUPS2', '可<b>讀取</b>群組');
 define('_MD_TADUP_CAN_UPLOADS_GROUPS', '可<b>上傳</b>群組');
+
+define('_MD_TADUP_BATCH_UPLOAD_TO', '請先將檔案上傳至：');
+define('_MD_BATCH_SAVE', '儲存');

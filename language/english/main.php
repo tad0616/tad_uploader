@@ -37,7 +37,6 @@ define('_MD_TADUP_IS_SHARE', 'Not Shared (a private folder visible and uploadabl
 define('_MD_TADUP_CREAT_NEW_CATE', 'Create a sub-category from left category');
 
 //function
-define('_MD_TADUP_DB_ERROR5', 'Failed to replace tad_uploader_file data');
 define('_MD_TADUP_DB_ERROR6', 'Failed to update tad_uploader_file data');
 define('_MD_TADUP_DB_ERROR7', 'Failed to delete tad_uploader_file data');
 define('_MD_TADUP_NO_EDIT_POWER', 'You have NO permission to edit or upload');
@@ -87,3 +86,6 @@ define('_MD_TADUP_EMPTY', 'Empty');
 
 define('_MD_TADUP_CAN_ACCESS_GROUPS2', '<b>Visible</b> to groups');
 define('_MD_TADUP_CAN_UPLOADS_GROUPS', '<b>Uploadable</b> to groups');
+
+define('_MD_TADUP_BATCH_UPLOAD_TO', 'Please upload files to:');
+define('_MD_BATCH_SAVE', 'Save');

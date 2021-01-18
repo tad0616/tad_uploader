@@ -3,7 +3,7 @@
 use XoopsModules\Tadtools\Utility;
 
 require __DIR__ . '/header.php';
-if (!$isAdmin) {
+if (!$_SESSION['tad_upload_adm']) {
     redirect_header(XOOPS_URL, 3, '非管理員，無權限使用此功能');
 }
 

@@ -1,6 +1,7 @@
 <?php
 use XoopsModules\Tadtools\TadUpFiles;
 use XoopsModules\Tadtools\Utility;
+require_once "function_block.php";
 
 $TadUpFiles = new TadUpFiles('tad_uploader');
 
@@ -288,66 +289,20 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = '', $show
     return $option;
 }
 
-//檢查有無權限
-function check_up_power($kind = 'catalog', $cat_sn = '')
-{
-    global $xoopsUser, $xoopsModule, $isAdmin;
-
-    //取得目前使用者的群組編號
-    if ($xoopsUser) {
-        $uid = $xoopsUser->uid();
-        $groups = $xoopsUser->getGroups();
-    } else {
-        $uid = 0;
-        $groups = XOOPS_GROUP_ANONYMOUS;
-    }
-
-    //若沒分享，則看看是否是自己的資料夾即可。
-    $tad_uploader = get_tad_uploader($cat_sn);
-    if (($tad_uploader['cat_share'] == '0' and $tad_uploader['uid'] != $uid) and !$isAdmin) {
-        return false;
-    }
-
-    //取得模組編號
-    $module_id = $xoopsModule->getVar('mid');
-
-    //取得群組權限功能
-    $gpermHandler = xoops_getHandler('groupperm');
-
-    //權限項目編號
-    $perm_itemid = (int) $cat_sn;
-    //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
-
-    if (empty($cat_sn)) {
-        if ($kind === 'catalog') {
-            return true;
-        }
-        if ($isAdmin) {
-            return true;
-        }
-    } else {
-        if ($gpermHandler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
-            return true;
-        }
-    }
-
-    return false;
-}
-
 //判斷某人在哪些類別中有觀看或發表(upload)的權利
 function chk_cate_power($kind = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsModule, $isAdmin;
+    global $xoopsDB, $xoopsUser, $xoopsModule;
     $module_id = $xoopsModule->getVar('mid');
     if (!empty($xoopsUser)) {
-        if ($isAdmin) {
+        if ($_SESSION['tad_upload_adm']) {
             $ok_cat[] = '0';
         }
         $user_array = $xoopsUser->getGroups();
         $gsn_arr = implode(',', $user_array);
     } else {
         $user_array = [3];
-        $isAdmin = 0;
+        $_SESSION['tad_upload_adm'] = 0;
         $gsn_arr = 3;
     }
 
@@ -498,21 +453,6 @@ function file_pic($file)
     }
 
     return "{$ext}.png";
-}
-
-//以流水號取得某目錄資料
-function get_tad_uploader($cat_sn = '')
-{
-    global $xoopsDB;
-    if (empty($cat_sn)) {
-        return;
-    }
-
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='$cat_sn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
-    $data = $xoopsDB->fetchArray($result);
-
-    return $data;
 }
 
 //以流水號取得某筆檔案資料
@@ -667,18 +607,17 @@ function update_tad_uploader_file($cfsn = '', $col_name = '', $col_value = '')
 //刪除目錄
 function delete_tad_uploader($cat_sn = '')
 {
-    global $xoopsDB, $xoopsUser, $xoopsModule, $isAdmin;
+    global $xoopsDB, $xoopsUser, $xoopsModule;
 
     $power = check_up_power('catalog_up', $cat_sn);
+
     if (!$power) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
     }
     $where = '';
     if ($xoopsUser) {
         $uid = $xoopsUser->uid();
-        $module_id = $xoopsModule->getVar('mid');
-        $isAdmin = $xoopsUser->isAdmin($module_id);
-        $where = ($isAdmin) ? '' : " and uid='{$uid}'";
+        $where = ($_SESSION['tad_upload_adm']) ? '' : " and uid='{$uid}'";
     } else {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_LOGIN);
     }

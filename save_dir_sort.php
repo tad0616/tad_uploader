@@ -1,8 +1,7 @@
 <?php
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
-
-$updateRecordsArray = $_POST['tr'];
+$updateRecordsArray = Request::getVar('tr', [], null, 'array', 4);
 $sort = 1;
 foreach ($updateRecordsArray as $recordIDValue) {
     $recordIDValue = (int) $recordIDValue;

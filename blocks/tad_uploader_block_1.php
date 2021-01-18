@@ -9,9 +9,10 @@ if (!class_exists('XoopsModules\Tadtools\Utility')) {
 function tad_uploader_b_show_1($options)
 {
     global $xoopsDB, $xoTheme;
+
+    require_once XOOPS_ROOT_PATH . "/modules/tad_uploader/function_block.php";
     $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
-
 
     $and_cat_sn = empty($options[1]) ? '' : "and b.cat_sn in({$options[1]})";
     $sql = 'select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from ' . $xoopsDB->prefix('tad_uploader_file') . ' as a left join ' . $xoopsDB->prefix('tad_uploader') . " as b on a.cat_sn=b.cat_sn where b.cat_share='1'  $and_cat_sn order by a.up_date desc limit 0,{$options[0]}";
@@ -65,50 +66,6 @@ function tad_uploader_b_edit_1($options)
     </ol>";
 
     return $form;
-}
-
-if (!function_exists('check_up_power')) {
-    //檢查有無上傳權利
-    function check_up_power($kind = 'catalog', $cat_sn = '')
-    {
-        global $xoopsUser;
-
-        //取得模組編號
-        $moduleHandler = xoops_getHandler('module');
-        $xoopsModule = $moduleHandler->getByDirname('tad_uploader');
-        $module_id = $xoopsModule->getVar('mid');
-
-        //取得目前使用者的群組編號
-        if ($xoopsUser) {
-            $groups = $xoopsUser->getGroups();
-            $isAdmin = $xoopsUser->isAdmin($module_id);
-            $uid = $xoopsUser->uid();
-        } else {
-            $groups = XOOPS_GROUP_ANONYMOUS;
-            $isAdmin = false;
-        }
-
-        //取得群組權限功能
-        $gpermHandler = xoops_getHandler('groupperm');
-
-        //權限項目編號
-        $perm_itemid = (int) $cat_sn;
-        //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
-        if (empty($cat_sn)) {
-            if ('catalog' === $kind) {
-                return true;
-            }
-            if ($isAdmin) {
-                return true;
-            }
-        } else {
-            if ($gpermHandler->checkRight($kind, $cat_sn, $groups, $module_id) or $isAdmin) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
 
 //取得所有類別標題

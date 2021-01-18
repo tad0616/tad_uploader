@@ -16,7 +16,7 @@ require XOOPS_ROOT_PATH . '/header.php';
 //列出所有資料
 function list_all_data($the_cat_sn = 0)
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $isAdmin, $xoopsTpl, $TadUpFiles, $interface_menu;
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $TadUpFiles, $interface_menu;
 
     $interface_menu["<i class='fa fa-th-large'></i>"] = "op.php?op=list_mode&list_mode=icon&of_cat_sn={$the_cat_sn}";
     $interface_menu["<i class='fa fa-th-list'></i>"] = "op.php?op=list_mode&list_mode=more&of_cat_sn={$the_cat_sn}";
@@ -78,7 +78,6 @@ function list_all_data($the_cat_sn = 0)
     $xoopsTpl->assign('upload_max_filesize', (int) ini_get('upload_max_filesize'));
     $xoopsTpl->assign('max_execution_time', ini_get('max_execution_time'));
     $xoopsTpl->assign('path', $path);
-    $xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
     $xoopsTpl->assign('cat_sn', $the_cat_sn);
     $xoopsTpl->assign('folder_list', $folder_list);
     $xoopsTpl->assign('files_list', $files_list);
@@ -96,7 +95,7 @@ function list_all_data($the_cat_sn = 0)
 //抓取底下目錄
 function get_folder_list($the_cat_sn = '', $check_up_power = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $isAdmin;
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig;
 
     $sql = 'select cat_sn,cat_title,cat_desc,cat_enable,uid,of_cat_sn,cat_share,cat_sort,cat_count from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='{$the_cat_sn}' and cat_enable='1' order by cat_sort";
     //die($sql);
@@ -130,7 +129,7 @@ function get_folder_list($the_cat_sn = '', $check_up_power = '')
 //抓取該目錄底下的檔案
 function get_files_list($the_cat_sn = '', $check_up_power = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $isAdmin;
+    global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig;
 
     //排序
     $sql = 'select cfsn,cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,cf_count,up_date,file_url from ' . $xoopsDB->prefix('tad_uploader_file') . "  where cat_sn='{$the_cat_sn}' order by cf_sort";
@@ -314,6 +313,7 @@ switch ($op) {
     case 'tad_uploader_cate_form':
         tad_uploader_cate_form($cat_sn);
         break;
+
     case 'add_tad_uploader':
         add_tad_uploader($cat_sn, $cat_title, $cat_desc, $cat_enable, $of_cat_sn, $add_to_cat, $cat_share, $cat_sort, $cat_count, $catalog, $catalog_up, 'admin');
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
@@ -383,4 +383,5 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
 require_once XOOPS_ROOT_PATH . '/footer.php';

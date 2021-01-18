@@ -8,10 +8,10 @@ $to_cat_sn = Request::getInt('of_cat_sn');
 $and_sn = (empty($to_cat_sn)) ? '' : "?cat_sn=$to_cat_sn";
 
 $interface_menu[_TAD_TO_MOD] = 'index.php';
-$isAdmin = false;
-if ($xoopsUser) {
-    $module_id = $xoopsModule->getVar('mid');
-    $isAdmin = $xoopsUser->isAdmin($module_id);
+
+//判斷是否對該模組有管理權限
+if (!isset($_SESSION['tad_upload_adm'])) {
+    $_SESSION['tad_upload_adm'] = ($xoopsUser) ? $xoopsUser->isAdmin() : false;
 }
 
 $upload_powers = chk_cate_power('catalog_up');
@@ -20,6 +20,6 @@ if (count($upload_powers) > 0 && $xoopsUser) {
     $interface_menu[_MD_TADUP_UPLOAD] = "uploads.php{$and_sn}";
 }
 
-if ($isAdmin) {
+if ($_SESSION['tad_upload_adm']) {
     $interface_menu[_TAD_TO_ADMIN] = 'admin/main.php';
 }

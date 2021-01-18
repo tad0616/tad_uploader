@@ -1,5 +1,4 @@
 <?php
-
 global $xoopsConfig;
 
 //---基本設定---//
@@ -7,7 +6,7 @@ $modversion = [];
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADUP_NAME;
-$modversion['version'] = '3.58';
+$modversion['version'] = '3.59';
 $modversion['description'] = _MI_TADUP_DESC;
 $modversion['author'] = 'Tad(tad0616@gmail.com)';
 $modversion['credits'] = _MI_TADUP_CREDITS;
@@ -18,7 +17,7 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2020/03/14';
+$modversion['release_date'] = '2021/01/18';
 $modversion['module_website_url'] = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
@@ -69,10 +68,6 @@ $modversion['templates'][$i]['file'] = 'tad_uploader_index.tpl';
 $modversion['templates'][$i]['description'] = 'tad_uploader_index.tpl';
 
 $i++;
-$modversion['templates'][$i]['file'] = 'tad_uploader_uploads.tpl';
-$modversion['templates'][$i]['description'] = 'tad_uploader_uploads.tpl';
-
-$i++;
 $modversion['templates'][$i]['file'] = 'tad_uploader_adm_main.tpl';
 $modversion['templates'][$i]['description'] = 'tad_uploader_adm_main.tpl';
 
@@ -91,16 +86,6 @@ $modversion['blocks'][1]['options'] = '10|';
 
 //---模組偏好設定---//
 $i = 1;
-/*
-$modversion['config'][$i]['name'] = 'page_show_num';
-$modversion['config'][$i]['title'] = '_MI_PAGE_SHOW_NUM';
-$modversion['config'][$i]['description'] = '_MI_PAGE_SHOW_NUM_DESC';
-$modversion['config'][$i]['formtype'] = 'texbox';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = "16";
-
-$i++;
- */
 $modversion['config'][$i]['name'] = 'only_show_desc';
 $modversion['config'][$i]['title'] = '_MI_ONLY_SHOW_DESC';
 $modversion['config'][$i]['description'] = '_MI_ONLY_SHOW_DESC_DESC';

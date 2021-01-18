@@ -2,7 +2,6 @@
 xoops_loadLanguage('admin_common', 'tadtools');
 
 //power.php
-define('_MA_TADUP_DB_ERROR1', 'Failed to get tad_uploader data');
 define('_MA_TADUP_SET_ACCESS_POWER', 'Visible folders for each group');
 define('_MA_TADUP_SET_UPLOAD_POWER', 'Uploadable folders for each group');
 define('_MA_TADUP_FOLDER_NAME', 'Folder Name');
