@@ -123,12 +123,11 @@ function tad_uploader_batch_import()
     $cat_sn = (int) $_POST['cat_sn'];
 
     if (!empty($new_cat_sn)) {
-        $cat_sn = add_tad_uploader('', $new_cat_sn, '', '1', $cat_sn, $_POST['cat_add_form']);
+        $cat_sn = add_tad_uploader('', $new_cat_sn, '', '1', $cat_sn);
     }
 
     $uid = $xoopsUser->uid();
     $uid_name = \XoopsUser::getUnameFromId($uid, 1);
-    //$now=xoops_getUserTimestamp(time());
 
     set_time_limit(0);
     foreach ($_POST['files'] as $filename => $file_path) {

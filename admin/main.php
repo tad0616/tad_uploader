@@ -132,6 +132,7 @@ switch ($op) {
         list_tad_uploader_cate_tree($cat_sn);
         tad_uploader_cate_form($cat_sn);
         break;
+
     case 'del_file':
         del_file($cfsn);
         header("location: {$_SERVER['PHP_SELF']}?cat_sn={$cat_sn}");

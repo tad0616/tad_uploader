@@ -3,7 +3,7 @@
         <{if $file_url}>
             $('#file_up').hide();
         <{else}>
-            $hide = "$('#file_link').hide();";
+            $('#file_link').hide();
         <{/if}>
         $("#file_where").change(function() {
             if ($("#file_where").val()=="up") {

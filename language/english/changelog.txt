@@ -1,3 +1,9 @@
+Tad Uploader 3.5.9 (Released on 2021-01-18)
+====================================================
+1.Support XOOPS 2.5.11
+2.Merge BootStrap3 and 4 templates
+3. Fix the problem that the backend can not delete the directory.
+
 Tad Uploader 3.5.8 (released 2020-03-14)
 ====================================================
 1. Correction for accessibility 2.0 AA standard
