@@ -1,4 +1,5 @@
 <?php
+use Xmf\Request;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
 $updateRecordsArray = Request::getVar('tr', [], null, 'array', 4);
