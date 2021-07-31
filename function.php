@@ -20,7 +20,7 @@ function get_tad_uploader_cate_path($the_cat_sn = '', $include_self = true)
     global $xoopsDB, $tad_uploader;
 
     $arr[0]['cat_sn'] = '0';
-    $arr[0]['cat_title'] = "<i class='fa fa-home'></i>";
+    $arr[0]['cat_title'] = "&#xf015;";
     $arr[0]['sub'] = get_tad_uploader_sub_cate(0);
     if (!empty($the_cat_sn)) {
         $tbl = $xoopsDB->prefix('tad_uploader');

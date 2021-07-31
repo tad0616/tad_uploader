@@ -18,8 +18,8 @@ function list_all_data($the_cat_sn = 0)
 {
     global $xoopsDB, $xoopsModule, $xoopsUser, $xoopsModuleConfig, $xoopsTpl, $TadUpFiles, $interface_menu;
 
-    $interface_menu["<i class='fa fa-th-large'></i>"] = "op.php?op=list_mode&list_mode=icon&of_cat_sn={$the_cat_sn}";
-    $interface_menu["<i class='fa fa-th-list'></i>"] = "op.php?op=list_mode&list_mode=more&of_cat_sn={$the_cat_sn}";
+    $interface_menu["&#xf009;"] = "op.php?op=list_mode&list_mode=icon&of_cat_sn={$the_cat_sn}";
+    $interface_menu["&#xf00b;"] = "op.php?op=list_mode&list_mode=more&of_cat_sn={$the_cat_sn}";
 
     $path = '';
 

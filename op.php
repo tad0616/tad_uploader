@@ -16,5 +16,4 @@ switch ($op) {
         $_SESSION['list_mode'] = $_GET['list_mode'];
         header("location: index.php?of_cat_sn={$of_cat_sn}");
         exit;
-        break;
 }

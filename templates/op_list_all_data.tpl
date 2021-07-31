@@ -1,12 +1,15 @@
 <div style="margin-bottom: 30px;">
     <{$path}>
 </div>
-
-<h3><{$cat_title}>
-    <{if $up_power and $cat_sn > 0}>
-        <a href="index.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn}>" class="btn btn-warning btn-sm btn-xs"><{$smarty.const._TAD_EDIT}></a>
-    <{/if}>
-</h3>
+<{if $cat_title}>
+    <h3><{$cat_title}>
+        <{if $up_power and $cat_sn > 0}>
+            <a href="index.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn}>" class="btn btn-warning btn-sm btn-xs"><{$smarty.const._TAD_EDIT}></a>
+        <{/if}>
+    </h3>
+<{else}>
+    <h2 class="sr-only">Files List</h2>
+<{/if}>
 
 <div id="save_msg"></div>
 

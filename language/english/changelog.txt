@@ -1,3 +1,7 @@
+Tad Uploader 3.6 （Released on 2021-07-31)
+====================================================
+1.Compliant with the new Accessibility AA Standard 2021/07
+
 Tad Uploader 3.5.9 (Released on 2021-01-18)
 ====================================================
 1.Support XOOPS 2.5.11
