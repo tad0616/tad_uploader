@@ -521,19 +521,20 @@ function dlfile($cfsn = '')
     update_tad_uploader_file_count($cfsn);
 
     if (!empty($cf['file_url'])) {
-        header("location:{$cf['file_url']}");
+        header("location: {$cf['file_url']}");
         exit;
     } else {
-        $sql = 'select uid from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cfsn`='$cfsn'";
+        $sql = 'select uid, cf_type from ' . $xoopsDB->prefix('tad_uploader_file') . " where `cfsn`='$cfsn'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
-        list($uid) = $xoopsDB->fetchRow($result);
+        list($uid, $cf_type) = $xoopsDB->fetchRow($result);
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
 
         $sql = 'select files_sn,kind from ' . $xoopsDB->prefix('tad_uploader_files_center') . " where  `col_name`='cfsn' and `col_sn`='{$cfsn}'";
         $result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
         list($files_sn, $kind) = $xoopsDB->fetchRow($result);
 
-        $force = $kind == 'img' ? true : false;
+        $force_arr = ['application/pdf', 'audio/mp3', 'video/mp4'];
+        $force = ($kind == 'img' or in_array($cf_type, $force_arr)) ? true : false;
         $TadUpFiles->add_file_counter($files_sn, true, $force);
     }
 }
