@@ -22,7 +22,7 @@
                         <th id="h5" data-hide="phone"><{$smarty.const._MD_TADUP_FILE_DESC}></th>
                     <{/if}>
 
-                    <{if $up_power}>
+                    <{if $up_power and $xoops_isuser}>
                         <th id="h6" data-hide="phone" style="text-align:center;">
                             <{$smarty.const._TAD_FUNCTION}>
                         </th>
@@ -36,7 +36,7 @@
                 <{foreach from=$folder_list item=folder}>
                     <tr id="tr_<{$folder.cat_sn}>">
                         <td headers="h1" colspan=3>
-                            <{if $up_power}>
+                            <{if $up_power and $xoops_isuser}>
                                 <label>
                             <{/if}>
                             <{if $folder.lock}>
@@ -47,7 +47,7 @@
                                 <img src="images/folder_empty.png" alt="folder" style="width: 24px;">
                             <{/if}>
                             <a href="index.php?of_cat_sn=<{$folder.cat_sn}>"><{$folder.cat_title}></a>
-                            <{if $up_power}>
+                            <{if $up_power and $xoops_isuser}>
                                 </label>
                             <{/if}>
                         </td>
@@ -56,7 +56,7 @@
                         <{if $only_show_desc!="1"}>
                         <td headers="h5" style="font-size: 75%;"><{$folder.cat_desc}></td>
                         <{/if}>
-                        <{if $up_power}>
+                        <{if $up_power and $xoops_isuser}>
                         <td headers="h6" style="text-align:center;" nowrap>
                             <{if $folder.file_num==0}>
                             <a href="javascript:delete_tad_uploader_func(<{$folder.cat_sn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
@@ -73,7 +73,7 @@
                 <{foreach from=$files_list item=file}>
                     <tr id="tr_<{$file.cfsn}>">
                     <td headers="h1" style="max-width: 16px;">
-                        <{if $up_power}>
+                        <{if $up_power and $xoops_isuser}>
                         <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}> selected_file" onChange="chk_selected_files();">
                         <{/if}>
                     </td>
@@ -100,7 +100,7 @@
                         <{/if}></td>
                     <{/if}>
 
-                    <{if $up_power}>
+                    <{if $up_power and $xoops_isuser}>
                         <td headers="h6" style="text-align:center;" nowrap>
                             <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
                             <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>

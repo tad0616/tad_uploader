@@ -31,7 +31,7 @@
                     </a>
 
                     <div style="overflow: hidden;width:100%;height:50px;text-align:center;">
-                        <{if $up_power}>
+                        <{if $up_power and $xoops_isuser}>
                         <label class="checkbox-inline">
                             <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}> selected_file" onChange="chk_selected_files();">
                         <{/if}>
@@ -44,7 +44,7 @@
                             <{$file.cf_name}>
                         <{/if}>
                         </a>
-                        <{if $up_power}>
+                        <{if $up_power and $xoops_isuser}>
                         </label>
                         <{/if}>
                     </div>
