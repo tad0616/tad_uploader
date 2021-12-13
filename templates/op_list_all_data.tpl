@@ -8,7 +8,7 @@
         <{/if}>
     </h3>
 <{else}>
-    <h2 class="sr-only">Files List</h2>
+    <h2 class="sr-only visually-hidden">Files List</h2>
 <{/if}>
 
 <div id="save_msg"></div>

@@ -1,5 +1,5 @@
 <form action="uploads.php" method="post" id="myForm" enctype="multipart/form-data" class="form-horizontal" role="form">
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label class="col-sm-2 control-label col-form-label text-sm-right">
             <{$smarty.const._MD_TADUP_SELECT_FOLDER}><{$smarty.const._TAD_FOR}>
         </label>
@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <div class="col-sm-2">
             <select id="file_where" class="form-control">
                 <option value="up" <{if !$file_url}>selected<{/if}>><{$smarty.const._MD_TADUP_UPLOAD}></option>
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label class="col-sm-2 control-label col-form-label text-sm-right">
             <{$smarty.const._MD_TADUP_FILE_DESC}>
         </label>

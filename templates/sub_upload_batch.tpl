@@ -6,7 +6,7 @@
         </span>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row mb-3">
         <label class="col-sm-2 control-label col-form-label text-sm-right">
             <{$smarty.const._MD_TADUP_SELECT_FOLDER}>
         </label>

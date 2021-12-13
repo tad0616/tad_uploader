@@ -1,4 +1,5 @@
 <?php
+use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
@@ -39,5 +40,7 @@ foreach ($item_list as $item_id => $item_name) {
 $main2 = $formi->render();
 $xoopsTpl->assign('main2', $main2);
 
+$EasyResponsiveTabs = new EasyResponsiveTabs('#grouppermform-tabs');
+$EasyResponsiveTabs->rander();
 /*-----------秀出結果區--------------*/
 require_once __DIR__ . '/footer.php';

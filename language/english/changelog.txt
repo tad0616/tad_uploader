@@ -1,8 +1,20 @@
-Tad Uploader 3.6.1 (2021-08-22 釋出)
+Tad Uploader 3.7 (Released on 2021-12-13)
 ====================================
-1.針對 2021/07 新版無障礙 AA 標準進行修正
-2.mp3、mp4、pdf、m4a 改為強制下載
-3.強制至少需登入才能上傳，避免管理者誤開訪客上傳權限
+1.Support BootStrap5
+
+Tad Uploader 3.6.3 (Released on 2021-09-28)
+====================================
+1.Fix the problem that the backend permission setting page is not normal.
+
+Tad Uploader 3.6.2 (Released on 2021-08-24)
+====================================
+1.Search function security correction
+
+Tad Uploader 3.6.1 (Released on 2021-08-22)
+====================================
+1. For 2021/07 new version of the AA standard for accessibility to be amended
+2. change mp3, mp4, pdf, m4a to mandatory download
+3.Compulsory login is required to upload at least, to avoid misuse of visitor uploading privileges by administrators
 
 
 Tad Uploader 3.6 （Released on 2021-07-31)

@@ -1,6 +1,6 @@
 <{if $files_list}>
     <div class="alert alert-info" id="files_tool" style="margin:10px auto;display: none;">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-2 control-label col-form-label text-sm-right">
                 <{$smarty.const._MD_TADUP_SELECTED_FILES}>
             </label>

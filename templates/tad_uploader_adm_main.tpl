@@ -15,7 +15,7 @@
                 </div>
             <{/if}>
 
-            <div class="text-center">
+            <div class="text-center d-grid gap-2">
                 <a href="main.php?op=tad_uploader_cate_form" class="btn btn-info btn-block"><{$smarty.const._MA_TADUP_ADD_FORM}></a>
             </div>
         </div>
@@ -25,7 +25,7 @@
                     <div class="col-sm-4">
                         <h3><{$cate.cat_title}></h3>
                     </div>
-                    <div class="col-sm-8 text-right">
+                    <div class="col-sm-8 text-right text-end">
                         <div style="margin-top: 10px;">
                             <{if $op!="tad_uploader_cate_form" and $cat_sn}>
                                 <a href="javascript:delete_tad_uploader_func(<{$cate.cat_sn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><{$smarty.const._TAD_DEL}></a>

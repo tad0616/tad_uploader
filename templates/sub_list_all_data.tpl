@@ -3,7 +3,7 @@
             <thead>
                 <tr class="success">
                     <th id="h1" data-class="expand" colspan=2>
-                        <label class="sr-only" for="clickAll">clickAll</label>
+                        <label class="sr-only visually-hidden" for="clickAll">clickAll</label>
                         <div class="checkbox-inline">
                             <input type="checkbox" id="clickAll" onChange="chk_selected_files();"> <{$smarty.const._MD_TADUP_FILE_NAME}>
                         </div>

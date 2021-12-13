@@ -1,6 +1,6 @@
 <form action="index.php" method="POST" class="form-horizontal">
     <div class="alert alert-warning" style="margin: 10px auto;">
-        <div class="form-group row">
+        <div class="form-group row mb-3">
             <label class="col-sm-2 col-form-label text-sm-right">
                 <{$smarty.const._MD_TADUP_FOLDER}>
             </label>
@@ -42,7 +42,7 @@
 <{if $smarty.get.of_cat_sn > 0}>
     <form action="index.php" method="POST" enctype="multipart/form-data" role="form" class="form-horizontal">
         <div class="alert alert-success" style="margin: 10px auto;">
-            <div class="form-group row">
+            <div class="form-group row mb-3">
                 <label class="col-sm-2 control-label col-form-label text-sm-right">
                     <{$smarty.const._MD_TADUP_SELECT_FILES}><{$smarty.const._TAD_FOR}>
                 </label>

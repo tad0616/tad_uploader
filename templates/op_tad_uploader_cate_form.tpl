@@ -4,7 +4,7 @@
     <div class="alert alert-info">
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <label class="col-sm-4 control-label col-form-label text-sm-right">
                         <{$smarty.const._MD_TADUP_FATHER_FOLDER}>
                     </label>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <label class="col-sm-4 control-label col-form-label text-sm-right">
                         <{$smarty.const._MD_TADUP_FOLDER_NAME}>
                     </label>
@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <label class="col-sm-4 control-label col-form-label text-sm-right">
                         <{$smarty.const._MD_TADUP_FOLDER_DESC}>
                     </label>
@@ -35,7 +35,7 @@
                 </div>
 
 
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <label class="col-sm-4 control-label col-form-label text-sm-right">
                         <{$smarty.const._MD_TADUP_ENABLE}>
                     </label>
@@ -56,7 +56,7 @@
                 </div>
 
 
-                <div class="form-group row">
+                <div class="form-group row mb-3">
                     <label class="col-sm-4 control-label col-form-label text-sm-right">
                         <{$smarty.const._MD_TADUP_SHARE}>
                     </label>
