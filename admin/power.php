@@ -17,7 +17,7 @@ $module_id = $xoopsModule->mid();
 
 $item_list = [];
 $sql = 'SELECT cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader');
-$result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+$result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
 while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
     $item_list[$cat_sn] = $cat_title;

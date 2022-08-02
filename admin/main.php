@@ -83,7 +83,7 @@ function get_cate_data($cat_sn = 0)
     global $xoopsDB, $xoopsTpl;
 
     $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='$cat_sn'";
-    $result = $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $data = [];
 

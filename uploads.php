@@ -96,7 +96,7 @@ function update_tad_uploader($cfsn = '')
             $name = $_FILES['upfile']['name'][0];
 
             $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_type='{$_FILES['upfile']['type'][$i]}',cf_size='{$_FILES['upfile']['size'][$i]}' {$uptime} where cfsn='$cfsn'";
-            $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+            $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
 
             $TadUpFiles->upload_one_file($name, $_FILES['upfile']['tmp_name'][$i], $_FILES['upfile']['type'][$i], $_FILES['upfile']['size'][$i], null, null, '', $cf_desc, true, true);
         }
@@ -104,11 +104,11 @@ function update_tad_uploader($cfsn = '')
         $size = remote_file_size($file_url);
         $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_size='{$size}' {$uptime},file_url='{$file_url}' where cfsn='$cfsn'";
 
-        $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     } else {
         $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_desc='{$cf_desc}' {$uptime} where cfsn='$cfsn'";
 
-        $xoopsDB->query($sql) or web_error($sql, __FILE__, __LINE__);
+        $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 
     return $cat_sn;
