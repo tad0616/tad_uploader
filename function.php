@@ -483,17 +483,33 @@ function delfile($select_files)
 }
 
 //刪除一個檔案
-function del_file($cfsn = '', $del_sql = true)
+function del_file($cfsn = '', $del_sql = true, $of_cat_sn = '')
 {
-    global $xoopsDB, $TadUpFiles;
+    global $xoopsDB, $TadUpFiles, $xoopsUser;
     if (empty($cfsn)) {
         return;
+    }
+
+    //權限檢查
+    $power = check_up_power('catalog_up', $of_cat_sn);
+
+    if (!$power) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
+    }
+
+    //若要限制原上傳者才能刪除
+    $where_uid = '';
+    if ($xoopsUser) {
+        $uid = $xoopsUser->uid();
+        $where_uid = ($_SESSION['tad_upload_adm']) ? '' : " and uid = '{$uid}'";
+    } else {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_LOGIN);
     }
 
     $file = get_file($cfsn);
     // die(var_export($file));
     if ($del_sql) {
-        $sql = 'delete from ' . $xoopsDB->prefix('tad_uploader_file') . " where cfsn='$cfsn'";
+        $sql = 'delete from ' . $xoopsDB->prefix('tad_uploader_file') . " where cfsn='$cfsn' $where_uid";
         $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR7);
     }
     $TadUpFiles->set_dir('subdir', "/user_{$file['uid']}");

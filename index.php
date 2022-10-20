@@ -174,6 +174,7 @@ function get_files_list($the_cat_sn = '', $check_up_power = '')
         $all[$i]['cf_count'] = $cf_count;
         $all[$i]['cf_desc'] = $cf_desc;
         $all[$i]['cat_sn'] = $cat_sn;
+        $all[$i]['uid'] = $uid;
         $i++;
     }
 
@@ -329,7 +330,7 @@ switch ($op) {
         exit;
 
     case 'del_file':
-        del_file($cfsn);
+        del_file($cfsn, true, $of_cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
         exit;
 

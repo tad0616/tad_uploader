@@ -2,7 +2,7 @@
 xoops_loadLanguage('modinfo_common', 'tadtools');
 define('_MI_TADUP_NAME', 'Tad Uploader');
 define('_MI_TADUP_DESC', 'Simple module for uploading files~');
-define('_MI_TADUP_CREDITS', 'prolin lin (prolin99@gmail.com)');
+define('_MI_TADUP_CREDITS', 'prolin lin (prolin99@gmail.com), geek01');
 define('_MI_TADUP_ADMENU1', 'Folder');
 define('_MI_TADUP_ADMENU2', 'Permission');
 

@@ -1,3 +1,8 @@
+Tad Uploader 3.9 (Released on 2022-10-20)
+==================================================================
+1. Add delete check to avoid arbitrary deletion (thanks to geek01)
+2. Add the function that only the administrator and the uploader himself can delete files (thanks to geek01)
+
 Tad Uploader 3.8 (Released on 2022-08-02)
 ====================================
 1. Fix the problem of saving file link error

@@ -72,40 +72,40 @@
             <tbody id="sort">
                 <{foreach from=$files_list item=file}>
                     <tr id="tr_<{$file.cfsn}>">
-                    <td headers="h1" style="max-width: 16px;">
-                        <{if $up_power and $xoops_isuser}>
-                        <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}> selected_file" onChange="chk_selected_files();">
-                        <{/if}>
-                    </td>
-                    <td headers="h2" nowrap>
-                        <{if $file.pic}>
-                            <div style="width:24px;height:24px;background-image: url(<{$file.pic}>);float:left;background-size:cover;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin-right:2px;"></div>
-                        <{/if}>
-                        <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>&name=<{$file.fname}>">
-                        <{if $only_show_desc=="1"}>
-                            <{$file.cf_desc}>
-                        <{else}>
-                            <{$file.cf_name}>
-                        <{/if}>
-                        </a>
-                    </td>
-                    <td headers="h3" style="font-size: 68.75%;text-align:center;"><{$file.up_date}></td>
-                    <td headers="h4" style="font-size: 68.75%;text-align:center;"><{$file.size}></td>
-                    <td style="font-size: 68.75%;text-align:center;"><{$file.cf_count}></td>
-
-                    <{if $only_show_desc!="1"}>
-                        <td headers="h5" style="font-size: 75%;">
-                        <{if $file.cf_desc!=$file.cf_name}>
-                            <{$file.cf_desc}>
-                        <{/if}></td>
-                    <{/if}>
-
-                    <{if $up_power and $xoops_isuser}>
-                        <td headers="h6" style="text-align:center;" nowrap>
-                            <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
-                            <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                        <td headers="h1" style="max-width: 16px;">
+                            <{if $smarty.session.tad_upload_adm || $file.uid == $xoops_userid}>
+                            <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}> selected_file" onChange="chk_selected_files();">
+                            <{/if}>
                         </td>
-                    <{/if}>
+                        <td headers="h2" nowrap>
+                            <{if $file.pic}>
+                                <div style="width:24px;height:24px;background-image: url(<{$file.pic}>);float:left;background-size:cover;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin-right:2px;"></div>
+                            <{/if}>
+                            <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>&name=<{$file.fname}>">
+                            <{if $only_show_desc=="1"}>
+                                <{$file.cf_desc}>
+                            <{else}>
+                                <{$file.cf_name}>
+                            <{/if}>
+                            </a>
+                        </td>
+                        <td headers="h3" style="font-size: 68.75%;text-align:center;"><{$file.up_date}></td>
+                        <td headers="h4" style="font-size: 68.75%;text-align:center;"><{$file.size}></td>
+                        <td style="font-size: 68.75%;text-align:center;"><{$file.cf_count}></td>
+
+                        <{if $only_show_desc!="1"}>
+                            <td headers="h5" style="font-size: 75%;">
+                            <{if $file.cf_desc!=$file.cf_name}>
+                                <{$file.cf_desc}>
+                            <{/if}></td>
+                        <{/if}>
+
+                        <td headers="h6" style="text-align:center;" nowrap>
+                            <{if $smarty.session.tad_upload_adm || $file.uid == $xoops_userid}>
+                                <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-sm btn-xs btn-danger"><{$smarty.const._TAD_DEL}></a>
+                                <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                            <{/if}>
+                        </td>
                     </tr>
                 <{/foreach}>
             </tbody>

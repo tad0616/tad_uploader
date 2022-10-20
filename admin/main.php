@@ -134,8 +134,8 @@ switch ($op) {
         break;
 
     case 'del_file':
-        del_file($cfsn);
-        header("location: {$_SERVER['PHP_SELF']}?cat_sn={$cat_sn}");
+        del_file($cfsn, true, $of_cat_sn);
+        header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
         exit;
 
     default:
@@ -146,4 +146,7 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('op', $op);
+$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
+$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
+$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
 require_once __DIR__ . '/footer.php';
