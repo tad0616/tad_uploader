@@ -1,0 +1,11 @@
+#of_cat_sn>option {
+  color: rgb(18, 39, 95);
+}
+
+#of_cat_sn>option[selected] {
+    background-color: rgb(255, 238, 4);
+  }
+
+#of_cat_sn>option[disabled] {
+    color: rgb(146, 99, 99);
+  }

@@ -235,20 +235,28 @@ function get_cata_select($disable_cat_sn = [], $dbv = 0, $of_cat_sn = 0, $tab = 
     global $xoopsDB;
     $sql = 'select cat_sn,cat_title from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='$of_cat_sn' and cat_enable='1'";
     $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
-    $option = '';
-    $tab .= '&nbsp;&nbsp;';
+    $option = $disabled = '';
+    $sub_disable_cat_sn = [];
+    if ($of_cat_sn) {
+        $tab .= '----';
+    }
 
-    $disabled = '';
     while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
-        if (is_array($disable_cat_sn)) {
-            $disabled = (in_array($cat_sn, $disable_cat_sn)) ? 'disabled' : '';
+        if ((is_array($disable_cat_sn) && in_array($cat_sn, $disable_cat_sn)) || $dbv == $cat_sn) {
+            $disabled = 'disabled';
+            $sub_disable_cat_sn = array_keys(get_tad_uploader_sub_cate($cat_sn));
+            $new_disable_cat_sn = array_merge($disable_cat_sn, $sub_disable_cat_sn);
+        } else {
+            $disabled = '';
+            $new_disable_cat_sn = $disable_cat_sn;
         }
+
         if (!check_up_power('catalog_up', $cat_sn)) {
             continue;
         }
 
-        $option .= "<option value='$cat_sn' " . Utility::chk($cat_sn, $dbv, '', 'selected') . " $disabled>{$tab}{$cat_title}</option>\n";
-        $option .= get_cata_select($disable_cat_sn, $dbv, $cat_sn, $tab);
+        $option .= "<option value='$cat_sn' " . Utility::chk($cat_sn, $dbv, '', 'selected') . " $disabled>{$tab} {$cat_title}</option>\n";
+        $option .= get_cata_select($new_disable_cat_sn, $dbv, $cat_sn, $tab);
     }
 
     return $option;
@@ -727,7 +735,7 @@ function tad_uploader_cate_form($cat_sn = '')
     $cat_desc = (!isset($DBV['cat_desc'])) ? '' : $DBV['cat_desc'];
     $cat_enable = (!isset($DBV['cat_enable'])) ? '1' : $DBV['cat_enable'];
     $of_cat_sn = (!isset($DBV['of_cat_sn'])) ? '' : $DBV['of_cat_sn'];
-    $cata_select = get_cata_select([$cat_sn], $of_cat_sn);
+    $cata_select = get_cata_select([(int) $cat_sn], 0);
     $cat_share = (!isset($DBV['cat_share'])) ? '1' : $DBV['cat_share'];
     $cat_count = (!isset($DBV['cat_count'])) ? '' : $DBV['cat_count'];
 

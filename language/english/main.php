@@ -62,7 +62,6 @@ define('_MD_TADUP_UPLOADED_AND_NO_POWER', 'Uploaded successfully, but this folde
 define('_MD_TADUP_UPLOAD_FILE', 'Upload');
 
 //power.php
-define('_MD_TADUP_DB_ERROR1', 'Failed to get tad_uploader data');
 define('_MD_TADUP_SET_ACCESS_POWER', 'Visible folders for each group');
 define('_MD_TADUP_SET_UPLOAD_POWER', 'Uploadable folders for each group');
 define('_MD_TADUP_FOLDER_NAME', 'Folder Name');
@@ -70,22 +69,13 @@ define('_MD_TADUP_FOLDER_DESC', 'Description');
 define('_MD_TADUP_FATHER_FOLDER', 'Parent Folder');
 define('_MD_TADUP_ENABLE', 'Status');
 define('_MD_TADUP_SHARE', 'Share');
-define('_MD_TADUP_SAVE', 'Save');
 define('_MD_TADUP_FUNCTION', 'Function');
-define('_MD_TADUP_DEL_CONFIRM', 'Delete this folder? This operation will delete all files in this folder!');
 define('_MD_TADUP_LIST_ALL_FILES', 'Display all files');
 define('_MD_TADUP_AUTHOR', 'Tad (tad0616@gmail.com)');
-define('_MD_TADUP_FILE_COUNTER', 'Count');
 define('_MD_TADUP_EDIT', 'Edit');
 define('_MD_TADUP_DEL', 'Delete');
 define('_MD_TADUP_ADD_FORM', '"%s" configuration');
-define('_MD_TADUP_FILE_NAME', 'Filename');
-define('_MD_TADUP_FILE_DATE', 'Date');
-define('_MD_TADUP_FILE_SIZE', 'Size');
 define('_MD_TADUP_EMPTY', 'Empty');
-
-define('_MD_TADUP_CAN_ACCESS_GROUPS2', '<b>Visible</b> to groups');
-define('_MD_TADUP_CAN_UPLOADS_GROUPS', '<b>Uploadable</b> to groups');
 
 define('_MD_TADUP_BATCH_UPLOAD_TO', 'Please upload files to:');
 define('_MD_BATCH_SAVE', 'Save');
