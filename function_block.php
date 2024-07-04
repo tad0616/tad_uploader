@@ -13,7 +13,7 @@ if (!function_exists('check_up_power')) {
             $uid = 0;
             $groups = XOOPS_GROUP_ANONYMOUS;
         }
-
+        // die("{$kind}-{$cat_sn}");
         //若沒分享，則看看是否是自己的資料夾即可。
         $tad_uploader = get_tad_uploader($cat_sn);
         if (($tad_uploader['cat_share'] == '0' and $tad_uploader['uid'] != $uid) and !$_SESSION['tad_upload_adm']) {

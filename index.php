@@ -351,7 +351,7 @@ switch ($op) {
 
     case 'batch_file_tools':
         if ('all_del' === $all_selected) {
-            delfile($select_files);
+            delfile($select_files, $cat_sn);
         } elseif ('all_move' === $all_selected) {
             movefile($select_files, $new_cat_sn);
             $cat_sn = $new_cat_sn;

@@ -1,3 +1,9 @@
+Tad Uploader 4.0 (released 2024-02-29)
+==================================================================
+1. Streamline the language
+2. Solve the problem that the folder could not be displayed due to the wrong setting of the "Subfolder".
+3. Fixed the problem of not being able to delete all files.
+
 Tad Uploader 3.9 (Released on 2022-10-20)
 ==================================================================
 1. Add delete check to avoid arbitrary deletion (thanks to geek01)
@@ -26,7 +32,7 @@ Tad Uploader 3.6.1 (Released on 2021-08-22)
 3.Compulsory login is required to upload at least, to avoid misuse of visitor uploading privileges by administrators
 
 
-Tad Uploader 3.6 （Released on 2021-07-31)
+Tad Uploader 3.6 (Released on 2021-07-31)
 ====================================================
 1.Compliant with the new Accessibility AA Standard 2021/07
 

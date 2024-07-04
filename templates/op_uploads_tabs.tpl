@@ -26,10 +26,10 @@
 
     <div class="resp-tabs-container vert">
         <div>
-            <{includeq file="$xoops_rootpath/modules/tad_uploader/templates/sub_upload_form.tpl"}>
+            <{include file="$xoops_rootpath/modules/tad_uploader/templates/sub_upload_form.tpl"}>
         </div>
         <div>
-            <{includeq file="$xoops_rootpath/modules/tad_uploader/templates/sub_upload_batch.tpl"}>
+            <{include file="$xoops_rootpath/modules/tad_uploader/templates/sub_upload_batch.tpl"}>
         </div>
     </div>
 </div>

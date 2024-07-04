@@ -479,14 +479,14 @@ function get_file($cfsn = '')
 }
 
 //刪除檔案
-function delfile($select_files)
+function delfile($select_files, $of_cat_sn = '')
 {
     global $xoopsDB, $TadUpFiles;
     if (empty($select_files)) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_SELECTED_FILE);
     }
     foreach ($select_files as $cfsn => $cf_name) {
-        del_file($cfsn);
+        del_file($cfsn, true, $of_cat_sn);
     }
 }
 

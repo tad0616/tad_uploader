@@ -8,6 +8,46 @@ $xoopsOption['template_main'] = 'tad_uploader_adm_main.tpl';
 require_once __DIR__ . '/header.php';
 require_once dirname(__DIR__) . '/function.php';
 
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$cat_sn = Request::getInt('cat_sn');
+$of_cat_sn = Request::getInt('of_cat_sn');
+$cfsn = Request::getInt('cfsn');
+
+switch ($op) {
+    case 'add_tad_uploader':
+        list_tad_uploader_cate_tree($cat_sn);
+        add_tad_uploader($cat_sn, $_POST['cat_title'], $_POST['cat_desc'], $_POST['cat_enable'], $of_cat_sn, $_POST['add_to_cat'], $_POST['cat_share'], $_POST['cat_sort'], $_POST['cat_count'], $_POST['catalog'], $_POST['catalog_up'], 'admin');
+        header('location: ' . $_SERVER['PHP_SELF']);
+        exit;
+
+    //刪除資料
+    case 'delete_tad_uploader':
+        delete_tad_uploader($cat_sn);
+        header('location: ' . $_SERVER['PHP_SELF']);
+        exit;
+
+    //分類設定
+    case 'tad_uploader_cate_form':
+        list_tad_uploader_cate_tree($cat_sn);
+        tad_uploader_cate_form($cat_sn);
+        break;
+
+    case 'del_file':
+        del_file($cfsn, true, $of_cat_sn);
+        header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
+        exit;
+
+    default:
+        list_tad_uploader_cate_tree($cat_sn);
+        list_tad_uploader($cat_sn);
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign('op', $op);
+require_once __DIR__ . '/footer.php';
+
 /*-----------function區--------------*/
 
 //列出所有tad_uploader_cate資料
@@ -107,46 +147,3 @@ function get_cate_data($cat_sn = 0)
 
     return $data;
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$cat_sn = Request::getInt('cat_sn');
-$of_cat_sn = Request::getInt('of_cat_sn');
-$cfsn = Request::getInt('cfsn');
-
-switch ($op) {
-    case 'add_tad_uploader':
-        list_tad_uploader_cate_tree($cat_sn);
-        add_tad_uploader($cat_sn, $_POST['cat_title'], $_POST['cat_desc'], $_POST['cat_enable'], $of_cat_sn, $_POST['add_to_cat'], $_POST['cat_share'], $_POST['cat_sort'], $_POST['cat_count'], $_POST['catalog'], $_POST['catalog_up'], 'admin');
-        header('location: ' . $_SERVER['PHP_SELF']);
-        exit;
-
-    //刪除資料
-    case 'delete_tad_uploader':
-        delete_tad_uploader($cat_sn);
-        header('location: ' . $_SERVER['PHP_SELF']);
-        exit;
-
-    //分類設定
-    case 'tad_uploader_cate_form':
-        list_tad_uploader_cate_tree($cat_sn);
-        tad_uploader_cate_form($cat_sn);
-        break;
-
-    case 'del_file':
-        del_file($cfsn, true, $of_cat_sn);
-        header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$of_cat_sn}");
-        exit;
-
-    default:
-        list_tad_uploader_cate_tree($cat_sn);
-        list_tad_uploader($cat_sn);
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoopsTpl->assign('op', $op);
-$xoTheme->addStylesheet('/modules/tadtools/css/font-awesome/css/font-awesome.css');
-$xoTheme->addStylesheet(XOOPS_URL . "/modules/tadtools/css/xoops_adm{$_SEESION['bootstrap']}.css");
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tadtools/css/my-input.css');
-require_once __DIR__ . '/footer.php';
