@@ -1,6 +1,14 @@
 <?php
 use XoopsModules\Tadtools\TadUpFiles;
+if (!class_exists('XoopsModules\Tadtools\TadUpFiles')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 use XoopsModules\Tadtools\Utility;
+if (!class_exists('XoopsModules\Tadtools\Utility')) {
+    require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
+}
+
 require_once "function_block.php";
 
 $TadUpFiles = new TadUpFiles('tad_uploader');
@@ -76,8 +84,7 @@ function add_tad_uploader_file()
 {
     global $xoopsDB, $xoopsUser, $TadUpFiles;
 
-    $myts = \MyTextSanitizer::getInstance();
-    $file_url = isset($_POST['file_url']) ? $myts->addSlashes($_POST['file_url']) : '';
+    $file_url = isset($_POST['file_url']) ? $xoopsDB->escape($_POST['file_url']) : '';
 
     if (!empty($_POST['creat_new_cat'])) {
         $cat_sn = add_tad_uploader('', $_POST['creat_new_cat'], '', '1', $_POST['cat_sn'], $_POST['add_to_cat']);
@@ -92,7 +99,7 @@ function add_tad_uploader_file()
     $uid = $xoopsUser->uid();
     $sort = 1;
 
-    $cf_desc = $myts->addSlashes($_POST['cf_desc']);
+    $cf_desc = $xoopsDB->escape($_POST['cf_desc']);
     $now = date('Y-m-d H:i:s');
     $cf_sort = (int) $cf_sort;
     $cat_sn = (int) $cat_sn;
@@ -103,13 +110,13 @@ function add_tad_uploader_file()
             $cf_desc = Utility::get_basename($file_url);
         }
 
-        $name = $myts->addSlashes($name);
+        $name = $xoopsDB->escape($name);
         $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader_file') . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,file_url,cf_sort) values('{$cat_sn}','{$uid}','{$name}','{$cf_desc}','{$type}','{$size}','{$now}','{$file_url}','{$cf_sort}')";
         $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
     } else {
         // die(var_export($_FILES));
         foreach ($_FILES['upfile']['name'] as $i => $name) {
-            $name = $myts->addSlashes($name);
+            $name = $xoopsDB->escape($name);
             if (empty($_POST['cf_desc'])) {
                 $cf_desc = $name;
             }

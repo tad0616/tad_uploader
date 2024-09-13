@@ -72,12 +72,10 @@
             <tbody id="sort">
                 <{foreach from=$files_list item=file}>
                     <tr id="tr_<{$file.cfsn}>">
-                        <td headers="h1" style="max-width: 16px;">
+                        <td headers="h1" colspan=2>
                             <{if $smarty.session.tad_upload_adm || $file.uid == $xoops_userid}>
                             <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}> selected_file" onChange="chk_selected_files();">
                             <{/if}>
-                        </td>
-                        <td headers="h2" nowrap>
                             <{if $file.pic}>
                                 <div style="width:24px;height:24px;background-image: url(<{$file.pic}>);float:left;background-size:cover;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin-right:2px;"></div>
                             <{/if}>

@@ -56,8 +56,6 @@ function update_tad_uploader($cfsn = '')
 {
     global $xoopsDB, $xoopsUser, $TadUpFiles;
 
-    $myts = \MyTextSanitizer::getInstance();
-
     if (!empty($_POST['new_cat_sn'])) {
         $cat_sn = add_tad_uploader('', $_POST['new_cat_sn'], '', '1', $_POST['cat_sn'], $_POST['add_to_cat']);
     } else {
@@ -67,13 +65,13 @@ function update_tad_uploader($cfsn = '')
     $uid = $xoopsUser->uid();
 
     if (!empty($_POST['file_url'])) {
-        $file_url = $myts->addSlashes($_POST['file_url']);
+        $file_url = $xoopsDB->escape($_POST['file_url']);
     } else {
         $file_url = '';
     }
 
     if (!empty($_POST['cf_desc'])) {
-        $cf_desc = $myts->addSlashes($_POST['cf_desc']);
+        $cf_desc = $xoopsDB->escape($_POST['cf_desc']);
     } else {
         $cf_desc = '';
     }
