@@ -1,7 +1,7 @@
 <div style="margin-bottom: 30px;">
     <{$path}>
 </div>
-<{if $cat_title}>
+<{if $cat_title|default:false}>
     <h3><{$cat_title}>
         <{if $up_power and $cat_sn > 0 and $xoops_isuser|default:false}>
             <a href="index.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn}>" class="btn btn-warning btn-sm btn-xs"><{$smarty.const._TAD_EDIT}></a>
@@ -15,7 +15,7 @@
 
 <div style="clear:both;"></div>
 
-<{if $cat_desc}>
+<{if $cat_desc|default:false}>
     <div class="alert alert-info"><{$cat_desc}></div>
 <{/if}>
 

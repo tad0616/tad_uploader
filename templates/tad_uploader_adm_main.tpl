@@ -35,7 +35,7 @@
                     </div>
                 </div>
 
-                <{if $cate.cat_desc}>
+                <{if $cate.cat_desc|default:false}>
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="alert alert-success"><{$cate.cat_desc}></div>

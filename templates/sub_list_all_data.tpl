@@ -31,7 +31,7 @@
             </thead>
 
 
-        <{if $folder_list}>
+        <{if $folder_list|default:false}>
             <tbody id="dir_sort">
                 <{foreach from=$folder_list item=folder}>
                     <tr id="tr_<{$folder.cat_sn}>">
@@ -39,7 +39,7 @@
                             <{if $up_power and $xoops_isuser|default:false}>
                                 <label>
                             <{/if}>
-                            <{if $folder.lock}>
+                            <{if $folder.lock|default:false}>
                                 <img src="images/folder_lock.png" alt="folder" style="width: 24px;">
                             <{elseif $folder.file_num > 0}>
                                 <img src="images/folder_full.png" alt="folder" style="width: 24px;">
@@ -68,7 +68,7 @@
             </tbody>
         <{/if}>
 
-        <{if $files_list}>
+        <{if $files_list|default:false}>
             <tbody id="sort">
                 <{foreach from=$files_list item=file}>
                     <tr id="tr_<{$file.cfsn}>">
@@ -76,7 +76,7 @@
                             <{if $smarty.session.tad_upload_adm || $file.uid == $xoops_userid}>
                             <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}> selected_file" onChange="chk_selected_files();">
                             <{/if}>
-                            <{if $file.pic}>
+                            <{if $file.pic|default:false}>
                                 <div style="width:24px;height:24px;background-image: url(<{$file.pic}>);float:left;background-size:cover;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin-right:2px;"></div>
                             <{/if}>
                             <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>&name=<{$file.fname}>">

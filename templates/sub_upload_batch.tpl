@@ -12,7 +12,7 @@
         </label>
         <div class="col-sm-4">
             <select name="cat_sn" size="1" class="form-control">
-                <{if $smarty.session.tad_upload_adm}>
+                <{if $smarty.session.tad_upload_adm|default:false}>
                     <option value=""><{$smarty.const._MD_TADUP_ROOT}></div>
                 <{/if}>
                 <{$cate_select}>

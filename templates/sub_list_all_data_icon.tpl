@@ -1,11 +1,11 @@
     <{if $folder_list or $files_list}>
         <div class="row">
-        <{if $folder_list}>
+        <{if $folder_list|default:false}>
             <ul id="dir_sort" style="display:inline;">
                 <{foreach from=$folder_list item=folder}>
                     <li id="tr_<{$folder.cat_sn}>" style="display:inline; margin:2px; width:<{$icon_width}>; height:130px; float:left;">
                         <a href="index.php?of_cat_sn=<{$folder.cat_sn}>" style="display:block;height:64px;overflow:hidden;margin:0px auto;text-align:center;">
-                            <{if $folder.lock}>
+                            <{if $folder.lock|default:false}>
                                 <img src="images/folder_lock.png" alt="folder">
                             <{elseif $folder.file_num > 0}>
                                 <img src="images/folder_full.png" alt="folder">
@@ -22,7 +22,7 @@
             </ul>
         <{/if}>
 
-        <{if $files_list}>
+        <{if $files_list|default:false}>
             <ul id="sort" style="display:inline;">
                 <{foreach from=$files_list item=file}>
                     <li id="tr_<{$file.cfsn}>" style="display:inline;margin:2px;width:<{$icon_width}>;height:130px;float:left;">

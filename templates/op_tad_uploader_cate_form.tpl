@@ -1,4 +1,4 @@
-<h3><{if $cat_title}><{$smarty.const._MD_TADUP_ADD_FORM|sprintf:$cat_title}><{else}><{$smarty.const._MA_TADUP_ADD_FORM}><{/if}></h3>
+<h3><{if $cat_title|default:false}><{$smarty.const._MD_TADUP_ADD_FORM|sprintf:$cat_title}><{else}><{$smarty.const._MA_TADUP_ADD_FORM}><{/if}></h3>
 
 <form action="<{$smarty.server.PHP_SELF}>" method="POST" enctype="multipart/form-data" class="form-horizontal" role="form">
     <div class="alert alert-info">

@@ -1,6 +1,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
-        <{if $file_url}>
+        <{if $file_url|default:false}>
             $('#file_up').hide();
         <{else}>
             $('#file_link').hide();

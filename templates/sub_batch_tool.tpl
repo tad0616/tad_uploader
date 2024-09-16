@@ -10,7 +10,7 @@
                     <option value="add_cat_title"><{$smarty.const._MD_TADUP_FOLDER_ADD}></option>
                     <{if $cat_sn > 0}>
                         <option value="new_cat_title"><{$smarty.const._MD_TADUP_FOLDER_RENAME}></option>
-                        <{if $move_option}>
+                        <{if $move_option|default:false}>
                             <option value="new_of_cat_sn"><{$smarty.const._MD_TADUP_FOLDER_MOVE}></option>
                         <{/if}>
                     <{/if}>
@@ -23,7 +23,7 @@
                 <input type="hidden" name="add_to_cat" value="<{$smarty.get.of_cat_sn}>">
                 <input type="text" name="add_cat_title" class="form-control" placeholder="<{$smarty.const._MD_TADUP_NEW_FOLDER}>">
             </div>
-            <{if $move_option}>
+            <{if $move_option|default:false}>
                 <div class="col-sm-4" id="new_of_cat_sn_select" style="display: none;">
                     <select name='new_of_cat_sn' class="form-control">
                         <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>

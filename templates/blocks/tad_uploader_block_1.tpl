@@ -1,4 +1,4 @@
-<{if $block.link}>
+<{if $block.link|default:false}>
     <ol class="vertical_menu">
         <{foreach item=link from=$block.link}>
             <li>

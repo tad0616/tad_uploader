@@ -18,7 +18,7 @@
         <div class="col-sm-2">
             <select id="file_where" class="form-control">
                 <option value="up" <{if !$file_url}>selected<{/if}>><{$smarty.const._MD_TADUP_UPLOAD}></option>
-                <option value="link" <{if $file_url}>selected<{/if}>><{$smarty.const._MD_TADUP_LINK}></option>
+                <option value="link" <{if $file_url|default:false}>selected<{/if}>><{$smarty.const._MD_TADUP_LINK}></option>
             </select>
         </div>
         <div id="file_up" class="col-sm-10">
@@ -39,7 +39,7 @@
     </div>
 
     <div class="text-center">
-        <{if $cfsn}>
+        <{if $cfsn|default:false}>
             <label class="checkbox-inline">
                 <input type="checkbox" name="new_date" value="1"><{$smarty.const._MD_TADUP_UPDATE_TO_NEW_DATE}>
             </label>
