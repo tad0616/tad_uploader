@@ -6,7 +6,7 @@
         <div class="col-sm-4">
             <select name="add_to_cat" size=1 class="form-control">
                 <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
-                <{$cate_select}>
+                <{$cate_select|default:''}>
             </select>
         </div>
         <div class="col-sm-6">
@@ -22,10 +22,10 @@
             </select>
         </div>
         <div id="file_up" class="col-sm-10">
-            <{$upform}>
+            <{$upform|default:''}>
         </div>
         <div id="file_link" class="col-sm-10">
-            <input type="text" name="file_url" class="form-control" value="<{$file_url}>" placeholder="<{$smarty.const._MD_TADUP_INPUT_LINK}>">
+            <input type="text" name="file_url" class="form-control" value="<{$file_url|default:''}>" placeholder="<{$smarty.const._MD_TADUP_INPUT_LINK}>">
         </div>
     </div>
 
@@ -34,7 +34,7 @@
             <{$smarty.const._MD_TADUP_FILE_DESC}>
         </label>
         <div class="col-sm-10">
-            <input type="text" name="cf_desc" class="form-control"  value="<{$cf_desc}>">
+            <input type="text" name="cf_desc" class="form-control"  value="<{$cf_desc|default:''}>">
         </div>
     </div>
 
@@ -44,8 +44,8 @@
                 <input type="checkbox" name="new_date" value="1"><{$smarty.const._MD_TADUP_UPDATE_TO_NEW_DATE}>
             </label>
         <{/if}>
-        <input type="hidden" name="op" value="<{$op}>">
-        <input type="hidden" name="cfsn" value="<{$cfsn}>">
+        <input type="hidden" name="op" value="<{$op|default:''}>">
+        <input type="hidden" name="cfsn" value="<{$cfsn|default:''}>">
         <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TADUP_SAVE}></button>
     </div>
 </form>

@@ -2,7 +2,7 @@
     <div id="save_msg"></div>
     <div class="row">
         <div class="col-sm-3">
-            <{$ztree_code}>
+            <{$ztree_code|default:''}>
 
             <{if $cat_sn!="" and $op!="tad_uploader_cate_form"}>
                 <div>
@@ -29,7 +29,7 @@
                         <div style="margin-top: 10px;">
                             <{if $op!="tad_uploader_cate_form" and $cat_sn}>
                                 <a href="javascript:delete_tad_uploader_func(<{$cate.cat_sn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><{$smarty.const._TAD_DEL}></a>
-                                <a href="main.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn}>" class="btn btn-warning"><{$smarty.const._TAD_EDIT}></a>
+                                <a href="main.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn|default:''}>" class="btn btn-warning"><{$smarty.const._TAD_EDIT}></a>
                             <{/if}>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                             <{/foreach}>
                         </tbody>
                     </table>
-                    <{$bar}>
+                    <{$bar|default:''}>
                 </form>
             <{else}>
                 <div class="alert alert-danger text-center">

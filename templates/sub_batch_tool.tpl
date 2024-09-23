@@ -17,7 +17,7 @@
                 </select>
             </div>
             <div class="col-sm-4" id="new_cat_title_input" style="display: none;">
-                <input type="text" name="new_cat_title" class="form-control" value="<{$cat_title}>">
+                <input type="text" name="new_cat_title" class="form-control" value="<{$cat_title|default:''}>">
             </div>
             <div class="col-sm-4" id="add_cat_title_input" style="display: none;">
                 <input type="hidden" name="add_to_cat" value="<{$smarty.get.of_cat_sn}>">
@@ -27,12 +27,12 @@
                 <div class="col-sm-4" id="new_of_cat_sn_select" style="display: none;">
                     <select name='new_of_cat_sn' class="form-control">
                         <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>
-                        <{$move_option}>
+                        <{$move_option|default:''}>
                     </select>
                 </div>
             <{/if}>
             <div class="col-sm-2" id="this_folder_submit" style="display: none;">
-                <input name="cat_sn" type="hidden" value="<{$cat_sn}>">
+                <input name="cat_sn" type="hidden" value="<{$cat_sn|default:''}>">
                 <button type="submit" name="op" value="batch_dir_tools" class="btn btn-primary"><{$smarty.const._TAD_GO}></button>
             </div>
         </div>
@@ -48,13 +48,13 @@
                 </label>
                 <div class="col-sm-4">
                     <input type="hidden" name="add_to_cat" value="<{$smarty.get.of_cat_sn}>">
-                    <{$upform}>
+                    <{$upform|default:''}>
                 </div>
                 <div class="col-sm-4">
-                    <input type="text" name="cf_desc" class="form-control"  value="<{$cf_desc}>" placeholder="<{$smarty.const._MD_TADUP_FILE_DESC}>">
+                    <input type="text" name="cf_desc" class="form-control"  value="<{$cf_desc|default:''}>" placeholder="<{$smarty.const._MD_TADUP_FILE_DESC}>">
                 </div>
                 <div class="col-sm-2">
-                    <input name="cat_sn" type="hidden" value="<{$cat_sn}>">
+                    <input name="cat_sn" type="hidden" value="<{$cat_sn|default:''}>">
                     <button type="submit" name="op" value="save_files" class="btn btn-primary"><{$smarty.const._MD_TADUP_UPLOAD_FILE}></button>
                 </div>
             </div>
@@ -64,7 +64,7 @@
 
 <{if $memory_limit <= $post_max_size or $post_max_size <= $upload_max_filesize}>
     <div class="alert alert-danger">
-        php.ini: memory_limit (<{$memory_limit}>M) > post_max_size (<{$post_max_size}>M) >      upload_max_filesize (<{$upload_max_filesize}>M) ;
-        max_execution_time=<{$max_execution_time}>
+        php.ini: memory_limit (<{$memory_limit|default:''}>M) > post_max_size (<{$post_max_size|default:''}>M) >      upload_max_filesize (<{$upload_max_filesize|default:''}>M) ;
+        max_execution_time=<{$max_execution_time|default:''}>
     </div>
 <{/if}>

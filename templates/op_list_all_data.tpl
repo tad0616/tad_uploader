@@ -1,10 +1,10 @@
 <div style="margin-bottom: 30px;">
-    <{$path}>
+    <{$path|default:''}>
 </div>
 <{if $cat_title|default:false}>
-    <h3><{$cat_title}>
+    <h3><{$cat_title|default:''}>
         <{if $up_power and $cat_sn > 0 and $xoops_isuser|default:false}>
-            <a href="index.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn}>" class="btn btn-warning btn-sm btn-xs"><{$smarty.const._TAD_EDIT}></a>
+            <a href="index.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn|default:''}>" class="btn btn-warning btn-sm btn-xs"><{$smarty.const._TAD_EDIT}></a>
         <{/if}>
     </h3>
 <{else}>
@@ -16,7 +16,7 @@
 <div style="clear:both;"></div>
 
 <{if $cat_desc|default:false}>
-    <div class="alert alert-info"><{$cat_desc}></div>
+    <div class="alert alert-info"><{$cat_desc|default:''}></div>
 <{/if}>
 
 <form action="index.php" method="POST" enctype="multipart/form-data" role="form">

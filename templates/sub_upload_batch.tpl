@@ -15,7 +15,7 @@
                 <{if $smarty.session.tad_upload_adm|default:false}>
                     <option value=""><{$smarty.const._MD_TADUP_ROOT}></div>
                 <{/if}>
-                <{$cate_select}>
+                <{$cate_select|default:''}>
             </select>
         </div>
         <label class="col-sm-2 control-label col-form-label text-sm-right">

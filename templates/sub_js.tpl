@@ -71,11 +71,11 @@
 
         $("#clickAll").click(function() {
             if($("#clickAll").prop("checked")){
-                $(".u<{$cat_sn}>").each(function() {
+                $(".u<{$cat_sn|default:''}>").each(function() {
                     $(this).prop("checked", true);
                 });
             }else{
-                $(".u<{$cat_sn}>").each(function() {
+                $(".u<{$cat_sn|default:''}>").each(function() {
                     $(this).prop("checked", false);
                 });
             }

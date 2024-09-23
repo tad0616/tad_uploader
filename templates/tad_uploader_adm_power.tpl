@@ -7,8 +7,8 @@
         </ul>
 
         <div class="resp-tabs-container vert">
-            <div> <{$main1}> </div>
-            <div> <{$main2}> </div>
+            <div> <{$main1|default:''}> </div>
+            <div> <{$main2|default:''}> </div>
         </div>
     </div>
 </div>

@@ -11,7 +11,7 @@
                     <div class="col-sm-8">
                         <select name="of_cat_sn" class="form-control" id= "of_cat_sn">
                         <option value=""></option>
-                        <{$cata_select}>
+                        <{$cata_select|default:''}>
                         </select>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                         <{$smarty.const._MD_TADUP_FOLDER_NAME}>
                     </label>
                     <div class="col-sm-8">
-                        <input type="text" name="cat_title" value="<{$cat_title}>" class="form-control" placeholder="<{$smarty.const._MD_TADUP_FOLDER_NAME}>">
+                        <input type="text" name="cat_title" value="<{$cat_title|default:''}>" class="form-control" placeholder="<{$smarty.const._MD_TADUP_FOLDER_NAME}>">
                     </div>
                 </div>
 
@@ -30,7 +30,7 @@
                         <{$smarty.const._MD_TADUP_FOLDER_DESC}>
                     </label>
                     <div class="col-sm-8">
-                        <textarea name="cat_desc" class="form-control" style="height: 3rem;"><{$cat_desc}></textarea>
+                        <textarea name="cat_desc" class="form-control" style="height: 3rem;"><{$cat_desc|default:''}></textarea>
                     </div>
                 </div>
 
@@ -79,20 +79,20 @@
 
             <div class="col-sm-3">
                 <label><{$smarty.const._MD_TADUP_CAN_ACCESS_GROUPS2}></label>
-                <{$enable_group}>
+                <{$enable_group|default:''}>
             </div>
 
             <div class="col-sm-3">
                 <label><{$smarty.const._MD_TADUP_CAN_UPLOADS_GROUPS}></label>
-                <{$enable_upload_group}>
+                <{$enable_upload_group|default:''}>
             </div>
         </div>
     </div>
 
     <div class="text-center">
-        <input type="hidden" name="cat_sn" value="<{$cat_sn}>">
-        <input type="hidden" name="cat_sort" value="<{$cat_sort}>">
-        <input type="hidden" name="cat_count" value="<{$cat_count}>">
+        <input type="hidden" name="cat_sn" value="<{$cat_sn|default:''}>">
+        <input type="hidden" name="cat_sort" value="<{$cat_sort|default:''}>">
+        <input type="hidden" name="cat_count" value="<{$cat_count|default:''}>">
         <input type="hidden" name="op" value="add_tad_uploader">
         <button type="submit" class="btn btn-primary"><{$smarty.const._MD_TADUP_SAVE}></button>
     </div>
