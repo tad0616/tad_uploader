@@ -1,8 +1,9 @@
 <?php
+use XoopsModules\Tadtools\Utility;
 global $xoopsDB;
 $userdir = [];
-$sql = "select * from xoops2_tad_uploader_file where `cf_name`!=''";
-$result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+$sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_uploader_file') . '` WHERE `cf_name`!=?';
+$result = Utility::query($sql, 's', ['']) or Utility::web_error($sql, __FILE__, __LINE__);
 while ($all = $xoopsDB->fetchArray($result)) {
     foreach ($all as $k => $v) {
         $$k = $v;
@@ -39,8 +40,8 @@ foreach ($userdir as $uid => $path) {
     }
 }
 
-$sql = "select * from xoops2_tad_uploader_file where `cf_name`!=''";
-$result = $xoopsDB->queryF($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+$sql = 'SELECT * FROM `' . $xoopsDB->prefix('tad_uploader_file') . '` WHERE `cf_name`!=?';
+$result = Utility::query($sql, 's', ['']) or Utility::web_error($sql, __FILE__, __LINE__);
 while ($all = $xoopsDB->fetchArray($result)) {
     foreach ($all as $k => $v) {
         $$k = $v;

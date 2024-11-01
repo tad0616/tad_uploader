@@ -1,11 +1,11 @@
 <{if $files_list|default:false}>
     <div class="alert alert-info" id="files_tool" style="margin:10px auto;display: none;">
         <div class="form-group row mb-3">
-            <label class="col-sm-2 control-label col-form-label text-sm-right">
+            <label class="col-sm-2 control-label col-form-label text-sm-right text-sm-end">
                 <{$smarty.const._MD_TADUP_SELECTED_FILES}>
             </label>
             <div class="col-sm-4">
-                <select name="all_selected" id="all_selected" class="form-control">
+                <select name="all_selected" id="all_selected" class="form-select">
                     <option value=""></option>
                     <option value="all_del"><{$smarty.const._MD_TADUP_SELECTED_DEL}></option>
                     <{if $move_option|default:false}>
@@ -16,7 +16,7 @@
 
             <{if $move_option|default:false}>
                 <div class="col-sm-5" id="all_move_select" style="display: none;">
-                    <select name="new_cat_sn" class="form-control">
+                    <select name="new_cat_sn" class="form-select">
                         <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>
                         <{$move_option|default:''}>
                     </select>

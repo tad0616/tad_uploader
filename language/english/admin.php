@@ -1,5 +1,6 @@
 <?php
 xoops_loadLanguage('admin_common', 'tadtools');
+xoops_loadLanguage('main', 'tadtools');
 
 //power.php
 define('_MA_TADUP_SET_ACCESS_POWER', 'Visible folders for each group');

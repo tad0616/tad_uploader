@@ -2,6 +2,7 @@
 use Xmf\Request;
 use XoopsModules\Tadtools\EasyResponsiveTabs;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_uploader\Tools;
 
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
@@ -11,11 +12,57 @@ if (count($upload_powers) <= 0 or empty($xoopsUser)) {
     redirect_header(XOOPS_URL . '/user.php', 3, _MD_TADUP_NO_EDIT_POWER);
 }
 require XOOPS_ROOT_PATH . '/header.php';
+
+/*-----------執行動作判斷區----------*/
+$op = Request::getString('op');
+$cfsn = Request::getInt('cfsn');
+$cat_sn = Request::getInt('cat_sn');
+
+switch ($op) {
+    //新增資料
+    case 'insert_tad_uploader':
+        $cat_sn = add_tad_uploader_file();
+
+        if (Tools::check_up_power('catalog', $cat_sn)) {
+            header("location: index.php?of_cat_sn={$cat_sn}");
+            exit;
+        }
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+        break;
+
+    //更新資料
+    case 'update_tad_uploader':
+        $cat_sn = update_tad_uploader($cfsn);
+        if (Tools::check_up_power('catalog', $cat_sn)) {
+            header("location: index.php?of_cat_sn={$cat_sn}");
+            exit;
+        }
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
+        break;
+
+    case 'import':
+        $cat_sn = tad_uploader_batch_import();
+        header("location:index.php?of_cat_sn=$cat_sn");
+        exit;
+
+    default:
+        uploads_tabs($cat_sn, $cfsn);
+        batch_upload_form($cat_sn);
+        $op = 'uploads_tabs';
+        break;
+}
+
+/*-----------秀出結果區--------------*/
+$xoopsTpl->assign("now_op", $op);
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoTheme->addStylesheet('modules/tad_uploader/css/module.css');
+require_once XOOPS_ROOT_PATH . '/footer.php';
+
 /*-----------function區--------------*/
 
 function uploads_tabs($cat_sn = '', $cfsn = '')
 {
-    global $xoopsDB, $xoopsModule, $xoopsTpl, $interface_menu, $TadUpFiles;
+    global $xoopsTpl, $TadUpFiles;
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     //抓取預設值
@@ -64,26 +111,16 @@ function update_tad_uploader($cfsn = '')
 
     $uid = $xoopsUser->uid();
 
-    if (!empty($_POST['file_url'])) {
-        $file_url = $xoopsDB->escape($_POST['file_url']);
-    } else {
-        $file_url = '';
-    }
-
-    if (!empty($_POST['cf_desc'])) {
-        $cf_desc = $xoopsDB->escape($_POST['cf_desc']);
-    } else {
-        $cf_desc = '';
-    }
+    $file_url = empty($_POST['file_url']) ? '' : $_POST['file_url'];
+    $cf_desc = empty($_POST['cf_desc']) ? '' : $_POST['cf_desc'];
 
     if ('1' == $_POST['new_date']) {
         $now = date('Y-m-d H:i:s');
-        $uptime = ",up_date='{$now}'";
+        $uptime = ", `up_date`='{$now}'";
     } else {
         $uptime = '';
     }
 
-    //die(var_export($_FILES));
     if (!empty($_FILES['upfile']['name'][0])) {
         //先刪掉原有檔案
         $TadUpFiles->set_dir('subdir', "/user_{$uid}");
@@ -93,20 +130,18 @@ function update_tad_uploader($cfsn = '')
         foreach ($_FILES['upfile']['name'] as $i => $name) {
             $name = $_FILES['upfile']['name'][0];
 
-            $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_type='{$_FILES['upfile']['type'][$i]}',cf_size='{$_FILES['upfile']['size'][$i]}' {$uptime} where cfsn='$cfsn'";
-            $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+            $sql = 'UPDATE `' . $xoopsDB->prefix('tad_uploader_file') . '` SET `cat_sn`=?, `cf_name`=?, `cf_desc`=?, `cf_type`=?, `cf_size`=? ' . $uptime . ' WHERE `cfsn`=?';
+            Utility::query($sql, 'isssii', [$cat_sn, $name, $cf_desc, $_FILES['upfile']['type'][$i], $_FILES['upfile']['size'][$i], $cfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
             $TadUpFiles->upload_one_file($name, $_FILES['upfile']['tmp_name'][$i], $_FILES['upfile']['type'][$i], $_FILES['upfile']['size'][$i], null, null, '', $cf_desc, true, true);
         }
     } elseif (!empty($file_url)) {
         $size = remote_file_size($file_url);
-        $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_name='{$name}',cf_desc='{$cf_desc}',cf_size='{$size}' {$uptime},file_url='{$file_url}' where cfsn='$cfsn'";
-
-        $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'UPDATE `' . $xoopsDB->prefix('tad_uploader_file') . '` SET `cat_sn`=?, `cf_name`=?, `cf_desc`=?, `cf_size`=? ' . $uptime . ', `file_url`=? WHERE `cfsn`=?';
+        Utility::query($sql, 'issisi', [$cat_sn, $cf_desc, $cf_desc, $size, $file_url, $cfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
     } else {
-        $sql = 'update ' . $xoopsDB->prefix('tad_uploader_file') . " set cat_sn='{$cat_sn}',cf_desc='{$cf_desc}' {$uptime} where cfsn='$cfsn'";
-
-        $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'UPDATE `' . $xoopsDB->prefix('tad_uploader_file') . '` SET `cat_sn`=?, `cf_desc`=? ' . $uptime . ' WHERE `cfsn`=?';
+        Utility::query($sql, 'isi', [$cat_sn, $cf_desc, $cfsn]) or Utility::web_error($sql, __FILE__, __LINE__);
     }
 
     return $cat_sn;
@@ -142,9 +177,8 @@ function tad_uploader_batch_import()
         $size = filesize($file_src);
 
         $now = date('Y-m-d H:i:s');
-        $sql = 'insert into ' . $xoopsDB->prefix('tad_uploader_file') . " (cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,up_date,cf_sort)
-        values('{$cat_sn}','{$uid}','{$file_path}','{$_POST['cf_desc'][$filename]}','{$type}','{$size}','{$now}','{$cf_sort}')";
-        $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+        $sql = 'INSERT INTO `' . $xoopsDB->prefix('tad_uploader_file') . '` (`cat_sn`,`uid`,`cf_name`,`cf_desc`,`cf_type`,`cf_size`,`up_date`,`cf_sort`) VALUES (?,?,?,?,?,?,?,?)';
+        Utility::query($sql, 'iisssisi', [$cat_sn, $uid, $file_path, $_POST['cf_desc'][$filename], $type, $size, $now, $cf_sort]) or Utility::web_error($sql, __FILE__, __LINE__);
         //取得最後新增資料的流水編號
         $cfsn = $xoopsDB->getInsertId();
 
@@ -196,48 +230,3 @@ function batch_upload_form($cat_sn = '')
     }
     $xoopsTpl->assign('all_file', $all_file);
 }
-
-/*-----------執行動作判斷區----------*/
-$op = Request::getString('op');
-$cfsn = Request::getInt('cfsn');
-$cat_sn = Request::getInt('cat_sn');
-
-switch ($op) {
-    //新增資料
-    case 'insert_tad_uploader':
-        $cat_sn = add_tad_uploader_file();
-
-        if (check_up_power('catalog', $cat_sn)) {
-            header("location: index.php?of_cat_sn={$cat_sn}");
-            exit;
-        }
-        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
-        break;
-
-    //更新資料
-    case 'update_tad_uploader':
-        $cat_sn = update_tad_uploader($cfsn);
-        if (check_up_power('catalog', $cat_sn)) {
-            header("location: index.php?of_cat_sn={$cat_sn}");
-            exit;
-        }
-        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
-        break;
-
-    case 'import':
-        $cat_sn = tad_uploader_batch_import();
-        header("location:index.php?of_cat_sn=$cat_sn");
-        exit;
-
-    default:
-        uploads_tabs($cat_sn, $cfsn);
-        batch_upload_form($cat_sn);
-        $op = 'uploads_tabs';
-        break;
-}
-
-/*-----------秀出結果區--------------*/
-$xoopsTpl->assign("now_op", $op);
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_uploader/css/module.css');
-require_once XOOPS_ROOT_PATH . '/footer.php';

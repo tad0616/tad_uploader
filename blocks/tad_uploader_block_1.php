@@ -4,26 +4,35 @@ use XoopsModules\Tadtools\Utility;
 if (!class_exists('XoopsModules\Tadtools\Utility')) {
     require XOOPS_ROOT_PATH . '/modules/tadtools/preloads/autoloader.php';
 }
+use XoopsModules\Tad_uploader\Tools;
+if (!class_exists('XoopsModules\Tad_uploader\Tools')) {
+    require XOOPS_ROOT_PATH . '/modules/tad_uploader/preloads/autoloader.php';
+}
 
 //區塊主函式 (最新上傳文件)
 function tad_uploader_b_show_1($options)
 {
     global $xoopsDB, $xoTheme;
 
-    require_once XOOPS_ROOT_PATH . "/modules/tad_uploader/function_block.php";
     $xoTheme->addStylesheet('modules/tadtools/css/vertical_menu.css');
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
-    $and_cat_sn = empty($options[1]) ? '' : "and b.cat_sn in({$options[1]})";
-    $sql = 'select a.cfsn,a.cat_sn,a.cf_name,a.cf_desc,a.file_url from ' . $xoopsDB->prefix('tad_uploader_file') . ' as a left join ' . $xoopsDB->prefix('tad_uploader') . " as b on a.cat_sn=b.cat_sn where b.cat_share='1'  $and_cat_sn order by a.up_date desc limit 0,{$options[0]}";
+    $and_cat_sn = empty($options[1]) ? '' : "AND b.cat_sn IN ({$options[1]})";
+    $sql = "SELECT a.cfsn, a.cat_sn, a.cf_name, a.cf_desc, a.file_url
+    FROM " . $xoopsDB->prefix('tad_uploader_file') . " AS a
+    LEFT JOIN " . $xoopsDB->prefix('tad_uploader') . " AS b ON a.cat_sn = b.cat_sn
+    WHERE b.cat_share = '1' $and_cat_sn
+    ORDER BY a.up_date DESC
+    LIMIT 0, ?";
+    $params = [$options[0]];
 
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $result = Utility::query($sql, 'i', $params) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $block = $link = [];
     $i = 0;
     while (list($cfsn, $cat_sn, $cf_name, $cf_desc, $file_url) = $xoopsDB->fetchRow($result)) {
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
-        if (!check_up_power('catalog', $cat_sn)) {
+        if (!Tools::check_up_power('catalog', $cat_sn)) {
             continue;
         }
 
@@ -83,8 +92,8 @@ if (!function_exists('block_uploader_cate')) {
               i=0;
               var arr = new Array();';
 
-        $sql = 'SELECT cat_sn,cat_title FROM ' . $xoopsDB->prefix('tad_uploader') . " WHERE cat_enable='1' ORDER BY cat_sort";
-        $result = $xoopsDB->query($sql);
+        $sql = 'SELECT `cat_sn`, `cat_title` FROM `' . $xoopsDB->prefix('tad_uploader') . '` WHERE `cat_enable`=1 ORDER BY `cat_sort`';
+        $result = Utility::query($sql);
         $option = '';
         while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
             $js .= "if(document.getElementById('c{$cat_sn}').checked){

@@ -1,8 +1,10 @@
 <?php
 use Xmf\Request;
+use XoopsModules\Tadtools\CategoryHelper;
 use XoopsModules\Tadtools\FooTable;
 use XoopsModules\Tadtools\SweetAlert;
 use XoopsModules\Tadtools\Utility;
+use XoopsModules\Tad_uploader\Tools;
 /*-----------引入檔案區--------------*/
 require __DIR__ . '/header.php';
 $xoopsOption['template_main'] = 'tad_uploader_index.tpl';
@@ -83,12 +85,6 @@ switch ($op) {
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
         exit;
 
-    case 'save_files':
-        $uid = $xoopsUser->uid();
-        $cat_sn = add_tad_uploader_file();
-        header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
-        exit;
-
     case 'save_cat_desc':
         update_tad_uploader('cat_desc', $cat_desc, $cat_sn);
         header("location: {$_SERVER['PHP_SELF']}?of_cat_sn={$cat_sn}");
@@ -108,8 +104,8 @@ switch ($op) {
 
 /*-----------秀出結果區--------------*/
 $xoopsTpl->assign('now_op', $op);
-$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu));
-$xoTheme->addStylesheet(XOOPS_URL . '/modules/tad_uploader/css/module.css');
+$xoopsTpl->assign('toolbar', Utility::toolbar_bootstrap($interface_menu, false, $interface_icon));
+$xoTheme->addStylesheet('modules/tad_uploader/css/module.css');
 require_once XOOPS_ROOT_PATH . '/footer.php';
 
 /*-----------function區--------------*/
@@ -125,7 +121,9 @@ function list_all_data($the_cat_sn = 0)
     $path = '';
 
     //目前路徑
-    $arr = get_tad_uploader_cate_path($the_cat_sn);
+    $categoryHelper = new CategoryHelper('tad_uploader', 'cat_sn', 'of_cat_sn', 'cat_title');
+    $arr = $categoryHelper->getCategoryPath($the_cat_sn);
+    // $arr = get_tad_uploader_cate_path($the_cat_sn);
     $path = Utility::tad_breadcrumb($the_cat_sn, $arr, 'index.php', 'of_cat_sn', 'cat_title');
 
     //新增人氣值
@@ -134,8 +132,8 @@ function list_all_data($the_cat_sn = 0)
     }
 
     //權限檢查
-    $check_power = check_up_power('catalog', $the_cat_sn);
-    $check_up_power = check_up_power('catalog_up', $the_cat_sn);
+    $check_power = Tools::check_up_power('catalog', $the_cat_sn);
+    $check_up_power = Tools::check_up_power('catalog_up', $the_cat_sn);
 
     //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
     if (!$check_power) {
@@ -163,9 +161,10 @@ function list_all_data($the_cat_sn = 0)
     $FooTable = new FooTable();
     $FooTable->render(false);
 
-    $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='{$the_cat_sn}'";
-    $result = $xoopsDB->query($sql);
+    $sql = 'select * from ' . $xoopsDB->prefix('tad_uploader') . ' where cat_sn=?';
+    $result = Utility::query($sql, 'i', [$the_cat_sn]);
     $cate = $xoopsDB->fetchArray($result);
+
     foreach ($cate as $k => $v) {
         $$k = $v;
         $xoopsTpl->assign($k, $v);
@@ -198,15 +197,14 @@ function get_folder_list($the_cat_sn = '', $check_up_power = '')
 {
     global $xoopsDB;
 
-    $sql = 'select cat_sn,cat_title,cat_desc,cat_enable,uid,of_cat_sn,cat_share,cat_sort,cat_count from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='{$the_cat_sn}' and cat_enable='1' order by cat_sort";
-    //die($sql);
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
+    $sql = 'SELECT `cat_sn`,`cat_title`,`cat_desc`,`cat_enable`,`uid`,`of_cat_sn`,`cat_share`,`cat_sort`,`cat_count` FROM `' . $xoopsDB->prefix('tad_uploader') . '` WHERE `of_cat_sn`=? AND `cat_enable`=1 ORDER BY `cat_sort`';
+    $result = Utility::query($sql, 'i', [$the_cat_sn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
 
     $all = [];
     $i = 0;
     while (list($cat_sn, $cat_title, $cat_desc, $cat_enable, $uid, $of_cat_sn, $cat_share, $cat_sort, $cat_count) = $xoopsDB->fetchRow($result)) {
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
-        if (!check_up_power('catalog', $cat_sn)) {
+        if (!Tools::check_up_power('catalog', $cat_sn)) {
             continue;
         }
 
@@ -233,9 +231,8 @@ function get_files_list($the_cat_sn = '', $check_up_power = '')
     global $xoopsDB, $xoopsModuleConfig;
 
     //排序
-    $sql = 'select cfsn,cat_sn,uid,cf_name,cf_desc,cf_type,cf_size,cf_count,up_date,file_url from ' . $xoopsDB->prefix('tad_uploader_file') . "  where cat_sn='{$the_cat_sn}' order by cf_sort";
-
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
+    $sql = 'SELECT `cfsn`, `cat_sn`, `uid`, `cf_name`, `cf_desc`, `cf_type`, `cf_size`, `cf_count`, `up_date`, `file_url` FROM `' . $xoopsDB->prefix('tad_uploader_file') . '` WHERE `cat_sn` =? ORDER BY `cf_sort`';
+    $result = Utility::query($sql, 'i', [$the_cat_sn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR2);
 
     $all = [];
     $i = 0;
@@ -298,16 +295,12 @@ function roundsize($size)
 function update_tad_uploader($col_name = '', $col_val = '', $cat_sn = '')
 {
     global $xoopsDB;
-    if (!check_up_power('catalog', $cat_sn)) {
+    if (!Tools::check_up_power('catalog', $cat_sn)) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
     }
-    $cat_sn = (int) $cat_sn;
-    $col_name = $xoopsDB->escape($col_name);
-    $col_val = $xoopsDB->escape($col_val);
 
-    $sql = 'update ' . $xoopsDB->prefix('tad_uploader') . " set  $col_name = '{$col_val}' where cat_sn='$cat_sn'";
-    // die($sql);
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_uploader') . '` SET `?` = ? WHERE `cat_sn` = ?';
+    Utility::query($sql, 'ssi', [$col_name, $col_val, $cat_sn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
 
     return $cat_sn;
 }
@@ -315,9 +308,7 @@ function update_tad_uploader($col_name = '', $col_val = '', $cat_sn = '')
 //更新tad_uploader_data現有資料
 function update_data()
 {
-    global $xoopsDB;
     foreach ($_POST['cf_desc'] as $cfsn => $cf_desc) {
-        $cf_desc = $xoopsDB->escape($cf_desc);
         $cfsn = update_tad_uploader_file($cfsn, 'cf_desc', $cf_desc);
     }
 }
@@ -329,9 +320,8 @@ function find_path($cat_sn = '')
     if (empty($cat_sn)) {
         return;
     }
-
-    $sql = 'select cat_sn,cat_title,of_cat_sn from ' . $xoopsDB->prefix('tad_uploader') . " where cat_sn='$cat_sn'";
-    $result = $xoopsDB->query($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
+    $sql = 'SELECT `cat_sn`, `cat_title`, `of_cat_sn` FROM `' . $xoopsDB->prefix('tad_uploader') . '` WHERE `cat_sn` = ?';
+    $result = Utility::query($sql, 'i', [$cat_sn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR1);
 
     while (list($cat_sn, $cat_title, $of_cat_sn) = $xoopsDB->fetchRow($result)) {
         $cat_sn_array = $cat_sn . "'>" . $cat_title;
@@ -376,11 +366,11 @@ function movefile($select_files = [], $new_cat_sn = '')
 function update_tad_uploader_count($cat_sn = '')
 {
     global $xoopsDB;
-    if (!check_up_power('catalog', $cat_sn)) {
+    if (!Tools::check_up_power('catalog', $cat_sn)) {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
     }
-    $sql = 'update ' . $xoopsDB->prefix('tad_uploader') . " set  cat_count = cat_count+1 where cat_sn='{$cat_sn}'";
-    $xoopsDB->queryF($sql) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_uploader') . '` SET `cat_count` = `cat_count`+1 WHERE `cat_sn` = ?';
+    Utility::query($sql, 'i', [$cat_sn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
 
     return $cat_sn;
 }

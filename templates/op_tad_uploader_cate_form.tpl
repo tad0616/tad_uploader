@@ -5,11 +5,11 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group row mb-3">
-                    <label class="col-sm-4 control-label col-form-label text-sm-right">
+                    <label class="col-sm-4 control-label col-form-label text-sm-right text-sm-end">
                         <{$smarty.const._MD_TADUP_FATHER_FOLDER}>
                     </label>
                     <div class="col-sm-8">
-                        <select name="of_cat_sn" class="form-control" id= "of_cat_sn">
+                        <select name="of_cat_sn" class="form-select" id= "of_cat_sn">
                         <option value=""></option>
                         <{$cata_select|default:''}>
                         </select>
@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="form-group row mb-3">
-                    <label class="col-sm-4 control-label col-form-label text-sm-right">
+                    <label class="col-sm-4 control-label col-form-label text-sm-right text-sm-end">
                         <{$smarty.const._MD_TADUP_FOLDER_NAME}>
                     </label>
                     <div class="col-sm-8">
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="form-group row mb-3">
-                    <label class="col-sm-4 control-label col-form-label text-sm-right">
+                    <label class="col-sm-4 control-label col-form-label text-sm-right text-sm-end">
                         <{$smarty.const._MD_TADUP_FOLDER_DESC}>
                     </label>
                     <div class="col-sm-8">
@@ -36,7 +36,7 @@
 
 
                 <div class="form-group row mb-3">
-                    <label class="col-sm-4 control-label col-form-label text-sm-right">
+                    <label class="col-sm-4 control-label col-form-label text-sm-right text-sm-end">
                         <{$smarty.const._MD_TADUP_ENABLE}>
                     </label>
                     <div class="col-sm-8">
@@ -57,7 +57,7 @@
 
 
                 <div class="form-group row mb-3">
-                    <label class="col-sm-4 control-label col-form-label text-sm-right">
+                    <label class="col-sm-4 control-label col-form-label text-sm-right text-sm-end">
                         <{$smarty.const._MD_TADUP_SHARE}>
                     </label>
                     <div class="col-sm-8">

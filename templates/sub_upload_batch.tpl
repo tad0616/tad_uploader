@@ -7,18 +7,18 @@
     </div>
 
     <div class="form-group row mb-3">
-        <label class="col-sm-2 control-label col-form-label text-sm-right">
+        <label class="col-sm-2 control-label col-form-label text-sm-right text-sm-end">
             <{$smarty.const._MD_TADUP_SELECT_FOLDER}>
         </label>
         <div class="col-sm-4">
-            <select name="cat_sn" size="1" class="form-control">
+            <select name="cat_sn" size="1" class="form-select">
                 <{if $smarty.session.tad_upload_adm|default:false}>
                     <option value=""><{$smarty.const._MD_TADUP_ROOT}></div>
                 <{/if}>
                 <{$cate_select|default:''}>
             </select>
         </div>
-        <label class="col-sm-2 control-label col-form-label text-sm-right">
+        <label class="col-sm-2 control-label col-form-label text-sm-right text-sm-end">
             <{$smarty.const._MD_TADUP_CREATE_NEW_FOLDER}>
         </label>
         <div class="col-sm-4">

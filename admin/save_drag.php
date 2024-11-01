@@ -3,9 +3,10 @@ use XoopsModules\Tadtools\Utility;
 
 /*-----------引入檔案區--------------*/
 require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-
-$of_cat_sn = (int)$_POST['of_cat_sn'];
-$cat_sn = (int)$_POST['cat_sn'];
+// 關閉除錯訊息
+$xoopsLogger->activated = false;
+$of_cat_sn = (int) $_POST['of_cat_sn'];
+$cat_sn = (int) $_POST['cat_sn'];
 
 if ($of_cat_sn == $cat_sn) {
     die(_MA_TREETABLE_MOVE_ERROR1 . '(' . date('Y-m-d H:i:s') . ')');
@@ -13,8 +14,10 @@ if ($of_cat_sn == $cat_sn) {
     die(_MA_TREETABLE_MOVE_ERROR2 . '(' . date('Y-m-d H:i:s') . ')');
 }
 
-$sql = 'update ' . $xoopsDB->prefix('tad_uploader') . " set `of_cat_sn`='{$of_cat_sn}' where `cat_sn`='{$cat_sn}'";
-$xoopsDB->queryF($sql) or die('Reset Fail! (' . date('Y-m-d H:i:s') . ')');
+$sql = "UPDATE " . $xoopsDB->prefix('tad_uploader') . "
+SET `of_cat_sn` = ?
+WHERE `cat_sn` = ?";
+$result = Utility::query($sql, 'ii', [$of_cat_sn, $cat_sn]) or die('Reset Fail! (' . date('Y-m-d H:i:s') . ')');
 
 echo _MA_TREETABLE_MOVE_OK . ' (' . date('Y-m-d H:i:s') . ')';
 
@@ -23,8 +26,8 @@ function chk_cate_path($cat_sn, $of_cat_sn)
 {
     global $xoopsDB;
     //抓出子目錄的編號
-    $sql = 'select cat_sn from ' . $xoopsDB->prefix('tad_uploader') . " where of_cat_sn='{$cat_sn}'";
-    $result = $xoopsDB->query($sql) or Utility::web_error($sql, __FILE__, __LINE__);
+    $sql = 'SELECT `cat_sn` FROM `' . $xoopsDB->prefix('tad_uploader') . '` WHERE `of_cat_sn`=?';
+    $result = Utility::query($sql, 'i', [$cat_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
     while (list($sub_cat_sn) = $xoopsDB->fetchRow($result)) {
         if (chk_cate_path($sub_cat_sn, $of_cat_sn)) {
             return true;

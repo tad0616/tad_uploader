@@ -79,3 +79,5 @@ define('_MD_TADUP_EMPTY', 'Empty');
 
 define('_MD_TADUP_BATCH_UPLOAD_TO', 'Please upload files to:');
 define('_MD_BATCH_SAVE', 'Save');
+
+define('_MD_TADUP_INDEX', 'All Files');
