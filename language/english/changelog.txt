@@ -42,7 +42,6 @@ Tad Uploader 3.6.1 (Released on 2021-08-22)
 2. change mp3, mp4, pdf, m4a to mandatory download
 3.Compulsory login is required to upload at least, to avoid misuse of visitor uploading privileges by administrators
 
-
 Tad Uploader 3.6 (Released on 2021-07-31)
 ====================================================
 1.Compliant with the new Accessibility AA Standard 2021/07
@@ -57,12 +56,10 @@ Tad Uploader 3.5.8 (released 2020-03-14)
 ====================================================
 1. Correction for accessibility 2.0 AA standard
 
-
 Tad Uploader 3.5.7 (released from 2020-01-31)
 ======================================================= ==
 1. Enhance file name filtering
 2. Fixed the problem that folders cannot be added in the background
-
 
 Tad Uploader 3.5.6 (released from 2019-05-10)
 =========================================================== ==
@@ -92,17 +89,14 @@ Tad Uploader 3.5.3 (released on 2017-08-02)
 1. To avoid misleading to the root directory of the inspection (thanks to geek01 provided)
 2. Fixed a problem with blank pages when uploading to the no-read permission directory
 
-
 Tad Uploader 3.5.2 (2017-06-16 released)
 ==================================================================
 1. Blocks can be added to the optional classification settings
 2. Complete accessibility 2.0 A level detection
 
-
 Tad Uploader 3.5.1 (2017-01-07 released)
 ==================================================================
 1.Change the col-md of boootstrap to col-sm
-
 
 Tad Uploader 3.5 (2016-12-09 released)
 ==================================================================
@@ -110,11 +104,9 @@ Tad Uploader 3.5 (2016-12-09 released)
 2. Fixed the problem that the file could not be deleted in the admin page
 3. XOOPS 2.5.8 support
 
-
 Tad Uploader 3.4.1 (2016-05-26 released)
 ==================================================================
 1. Remove BootStrap2 code
-
 
 Tad Uploader 3.4 (2016-05-18 released)
 ==================================================================
@@ -122,23 +114,19 @@ Tad Uploader 3.4 (2016-05-18 released)
 2. Remove BootStrap2
 3. Modify the Management Interface
 
-
 Tad Uploader 3.3.2 (2016-04-13 released)
 ==================================================================
 1.Fixed upload multiple files at the same filename problem
 
-
 Tad Uploader 3.3.1 (2015-07-28 released)
 ==================================================================
 1.Adjust the layout of the management interface.
-
 
 Tad Uploader 3.3 (2015-07-13 released)
 ==================================================================
 1. Add BootStrap3 support
 2. Fixed PHP syntax specification to conform PSR2
 3. Removed jupload.php
-
 
 Tad Uploader 3.2 (2014-09-25 released)
 ==================================================
@@ -148,13 +136,11 @@ Tad Uploader 3.2 (2014-09-25 released)
 4. Modify the program so that it conforms with WCAG
 5. Fixed in MySQL strict mode can not issue new event
 
-
 Tad Uploader 3.1 (2014-02-17 released)
 ==================================================
 1. Amend classification management background, tree form can not drag and expand the scaling bug
 2. Compact randStr () function, direct access tadtools in randStr ()
 3. Add update.php tool for 2.0 liters 3.0 file conversion fails (File can not be downloaded) who can independently handle this part.
-
 
 Tad Uploader 3.0  (2014-01-20 released)
 ==================================================
@@ -170,7 +156,6 @@ Tad Uploader 3.0  (2014-01-20 released)
 10. Fixed the bug can not join File Links
 11. Join Search function
 
-
 Tad Uploader 3.0 RC1 (2013-10-28 released)
 ==================================================
  1. category page presents added captions.
@@ -178,13 +163,11 @@ Tad Uploader 3.0 RC1 (2013-10-28 released)
  3. read the fine model
  4. "Categories" word to the directory file be placed into the directory 5. Force (classification) at (time update, will not automatically create a classified directory and files put under no classified Not classified directory)
 
-
 Tad Uploader 2.0.1 (2012-06-26 released)
 ==================================================
  1. Fixed open to other groups uploaded, classified display is not the right questions.
  2. The amendments modify the file, the file will go away.
  3. Fixed a bunch of bug ...
-
 
 Tad Uploader 2.0 RC3 (2011-04-10 released)
 ==================================================
@@ -194,12 +177,10 @@ Tad Uploader 2.0 RC3 (2011-04-10 released)
  4. Fixed delete function can not be deleted file problem 5. entity fixed in time "without public folders" under the establishment of a new folder, you can not inherit the parent folder property issue is not public (after private folder under the subfolder, pre- set will not be published)
  6. Reduce the number of unnecessary illustrated archive
 
-
 Tad Uploader 2.0 RC2 (2011-04-07 released)
 ==================================================
  1. Amend not link directly upload files problems.
  2. Adjust the layout of the management interface underneath the front desk, and fix part of the language problem.
-
 
 Tad Uploader 2.0 RC1 (2011-04-06 released)
 ==================================================
