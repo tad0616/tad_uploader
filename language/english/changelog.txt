@@ -1,3 +1,14 @@
+Tad Uploader 5.0 (released on 2024-11-11)
+================================================== ================
+1. Support XOOPS 2.5.11
+2. Support PHP8.3
+3. Use $xoopsDB->escape() instead of $myts->addSlashes()
+4. Modify the problem that the mobile phone cannot directly see the file name
+5. Database syntax parameterization
+6. Fixed the problem that the size of the remote file cannot be obtained
+7. Fixed the problem that the Chinese characters of remote files may become garbled.
+8. The function of uploading remote files has been added to the quick upload interface.
+
 Tad Uploader 4.0 (released 2024-02-29)
 ==================================================================
 1. Streamline the language
@@ -15,7 +26,7 @@ Tad Uploader 3.8 (Released on 2022-08-02)
 
 Tad Uploader 3.7 (Released on 2021-12-13)
 ====================================
-1.Support BootStrap5
+1. Support BootStrap5
 
 Tad Uploader 3.6.3 (Released on 2021-09-28)
 ====================================
@@ -38,7 +49,7 @@ Tad Uploader 3.6 (Released on 2021-07-31)
 
 Tad Uploader 3.5.9 (Released on 2021-01-18)
 ====================================================
-1.Support XOOPS 2.5.11
+1. Support XOOPS 2.5.11
 2.Merge BootStrap3 and 4 templates
 3. Fix the problem that the backend can not delete the directory.
 

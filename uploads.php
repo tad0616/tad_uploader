@@ -94,8 +94,7 @@ function uploads_tabs($cat_sn = '', $cfsn = '')
     $xoopsTpl->assign('cfsn', $cfsn);
 
     $EasyResponsiveTabs = new EasyResponsiveTabs('#uploadTab');
-    $EasyResponsiveTabs->rander();
-
+    $EasyResponsiveTabs->render();
 }
 
 //更新資料到tad_uploader中
