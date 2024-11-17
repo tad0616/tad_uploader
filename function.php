@@ -227,7 +227,7 @@ function get_tad_uploader_cate_option($of_cat_sn = 0, $level = 0, $v = '', $show
     $sql = 'SELECT `cat_sn`,`cat_title` FROM `' . $xoopsDB->prefix('tad_uploader') . '` WHERE `of_cat_sn`=? ORDER BY `cat_sort`';
     $result = Utility::query($sql, 'i', [$of_cat_sn]) or Utility::web_error($sql, __FILE__, __LINE__);
 
-    $ok_cat = ($chk_view) ? Utility::get_gperm_cate_arr('catalog_up') : [];
+    $ok_cat = ($chk_view) ? Utility::get_gperm_cate_arr('catalog_up', 'tad_uploader') : [];
 
     while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
         $selected = ($v == $cat_sn) ? 'selected' : '';

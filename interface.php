@@ -14,7 +14,7 @@ if (!isset($_SESSION['tad_upload_adm'])) {
     $_SESSION['tad_upload_adm'] = isset($xoopsUser) && \is_object($xoopsUser) ? $xoopsUser->isAdmin() : false;
 }
 
-$upload_powers = Utility::get_gperm_cate_arr('catalog_up');
+$upload_powers = Utility::get_gperm_cate_arr('catalog_up', 'tad_uploader');
 
 if ((count($upload_powers) > 0 && isset($xoopsUser) && \is_object($xoopsUser)) or $_SERVER['PHP_SELF'] == '/admin.php') {
     $interface_menu[_MD_TADUP_UPLOAD] = "uploads.php{$and_sn}";
