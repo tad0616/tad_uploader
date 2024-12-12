@@ -101,7 +101,7 @@
                         <td headers="h6" style="text-align:center;" nowrap>
                             <{if $smarty.session.tad_upload_adm || $file.uid == $xoops_userid}>
                                 <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
-                                <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
+                                <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
                             <{/if}>
                         </td>
                     </tr>

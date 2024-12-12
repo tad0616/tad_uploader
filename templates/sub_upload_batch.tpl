@@ -11,7 +11,7 @@
             <{$smarty.const._MD_TADUP_SELECT_FOLDER}>
         </label>
         <div class="col-sm-4">
-            <select name="cat_sn" size="1" class="form-select">
+            <select name="cat_sn" size="1" class="form-control form-select">
                 <{if $smarty.session.tad_upload_adm|default:false}>
                     <option value=""><{$smarty.const._MD_TADUP_ROOT}></div>
                 <{/if}>

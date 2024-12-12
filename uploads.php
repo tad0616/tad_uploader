@@ -105,7 +105,7 @@ function update_tad_uploader($cfsn = '')
     if (!empty($_POST['new_cat_sn'])) {
         $cat_sn = add_tad_uploader('', $_POST['new_cat_sn'], '', '1', $_POST['cat_sn'], $_POST['add_to_cat']);
     } else {
-        $cat_sn = $_POST['add_to_cat'];
+        $cat_sn = (int) $_POST['add_to_cat'];
     }
 
     $uid = $xoopsUser->uid();

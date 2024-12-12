@@ -9,7 +9,7 @@
                         <{$smarty.const._MD_TADUP_FATHER_FOLDER}>
                     </label>
                     <div class="col-sm-8">
-                        <select name="of_cat_sn" class="form-select" id= "of_cat_sn">
+                        <select name="of_cat_sn" class="form-control form-select" id= "of_cat_sn">
                         <option value=""></option>
                         <{$cata_select|default:''}>
                         </select>

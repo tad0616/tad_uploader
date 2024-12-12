@@ -5,7 +5,7 @@
                 <{$smarty.const._MD_TADUP_FOLDER}>
             </label>
             <div class="col-sm-4">
-                <select name="this_folder" id="this_folder" class="form-select">
+                <select name="this_folder" id="this_folder" class="form-control form-select">
                     <option value=""></option>
                     <option value="add_cat_title"><{$smarty.const._MD_TADUP_FOLDER_ADD}></option>
                     <{if $cat_sn > 0}>
@@ -25,7 +25,7 @@
             </div>
             <{if $move_option|default:false}>
                 <div class="col-sm-4" id="new_of_cat_sn_select" style="display: none;">
-                    <select name='new_of_cat_sn' class="form-select">
+                    <select name='new_of_cat_sn' class="form-control form-select">
                         <option value=0><{$smarty.const._MD_TADUP_ROOT}></option>
                         <{$move_option|default:''}>
                     </select>
@@ -41,7 +41,7 @@
 
 <{if $smarty.get.of_cat_sn > 0}>
 <div class="alert alert-success" style="margin: 10px auto;">
-    <{include file="$xoops_rootpath/modules/tad_uploader/templates/sub_upload_form.tpl" add_to_cat="<{$smarty.get.of_cat_sn|intval}>" op="insert_tad_uploader"}>
+    <{include file="$xoops_rootpath/modules/tad_uploader/templates/sub_upload_form.tpl" add_to_cat=$smarty.get.of_cat_sn op="insert_tad_uploader"}>
 </div>
 <{/if}>
 

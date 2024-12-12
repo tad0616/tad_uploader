@@ -7,7 +7,7 @@ $to_cat_sn = Request::getInt('of_cat_sn');
 $and_sn = (empty($to_cat_sn)) ? '' : "?cat_sn=$to_cat_sn";
 
 $interface_menu[_MD_TADUP_INDEX] = 'index.php';
-$interface_icon[_MD_TADUP_INDEX] = "fa-files-o";
+$interface_icon[_MD_TADUP_INDEX] = "fa-file";
 
 //判斷是否對該模組有管理權限
 if (!isset($_SESSION['tad_upload_adm'])) {

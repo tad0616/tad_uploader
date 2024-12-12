@@ -4,7 +4,7 @@
 <{if $cat_title|default:false}>
     <h3><{$cat_title|default:''}>
         <{if $up_power and $cat_sn > 0 and $xoops_isuser|default:false}>
-            <a href="index.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn|default:''}>" class="btn btn-warning btn-sm btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
+            <a href="index.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn|default:''}>" class="btn btn-warning btn-sm btn-xs"><i class="fa fa-pencil" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
         <{/if}>
     </h3>
 <{else}>

@@ -299,8 +299,9 @@ function update_tad_uploader($col_name = '', $col_val = '', $cat_sn = '')
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_UPLOADED_AND_NO_POWER);
     }
 
-    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_uploader') . '` SET `?` = ? WHERE `cat_sn` = ?';
-    Utility::query($sql, 'ssi', [$col_name, $col_val, $cat_sn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
+    $col_name = $xoopsDB->escape($col_name);
+    $sql = 'UPDATE `' . $xoopsDB->prefix('tad_uploader') . '` SET `' . $col_name . '` = ? WHERE `cat_sn` = ?';
+    Utility::query($sql, 'si', [$col_val, $cat_sn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR3);
 
     return $cat_sn;
 }

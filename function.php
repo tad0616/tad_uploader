@@ -32,7 +32,7 @@ function add_tad_uploader_file()
     if (!empty($_POST['creat_new_cat'])) {
         $cat_sn = add_tad_uploader('', $_POST['creat_new_cat'], '', '1', $_POST['cat_sn'], $_POST['add_to_cat']);
     } else {
-        $cat_sn = $_POST['add_to_cat'];
+        $cat_sn = (int) $_POST['add_to_cat'];
     }
 
     if (empty($_FILES['upfile']['name'][0]) and empty($file_url)) {
@@ -42,7 +42,7 @@ function add_tad_uploader_file()
     $uid = $xoopsUser->uid();
     $cf_sort = 1;
 
-    $cf_desc = $_POST['cf_desc'];
+    $cf_desc = (string) $_POST['cf_desc'];
     $now = date('Y-m-d H:i:s');
     $cat_sn = (int) $cat_sn;
 

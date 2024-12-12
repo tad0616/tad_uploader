@@ -5,7 +5,7 @@
         <{else}>
             $('#file_link').hide();
         <{/if}>
-        $("#file_where").change(function() {
+        $("#file_where").on('change', function() {
             if ($("#file_where").val()=="up") {
                 $("#file_up").show();
                 $("#file_link").hide();
@@ -25,7 +25,7 @@
                 <{$smarty.const._MD_TADUP_SELECT_FOLDER}><{$smarty.const._TAD_FOR}>
             </label>
             <div class="col-sm-4">
-                <select name="add_to_cat" size=1 class="form-select">
+                <select name="add_to_cat" size=1 class="form-control form-select">
                     <option value="0"><{$smarty.const._MD_TADUP_ROOT}></option>
                     <{$cate_select|default:''}>
                 </select>
@@ -40,7 +40,7 @@
 
     <div class="form-group row mb-3">
         <div class="col-sm-2">
-            <select id="file_where" class="form-select">
+            <select id="file_where" class="form-control form-select">
                 <option value="up" <{if !$file_url}>selected<{/if}>><{$smarty.const._MD_TADUP_UPLOAD}></option>
                 <option value="link" <{if $file_url|default:false}>selected<{/if}>><{$smarty.const._MD_TADUP_LINK}></option>
             </select>

@@ -8,8 +8,8 @@
                 <h3><{$cate.cat_title}></h3>
                 <ul>
                     <li style="line-height:2;"><{$smarty.const._MA_TADUP_FILE_COUNTER}><{$smarty.const._TAD_FOR}><{$cate.cat_count}></li>
-                    <li style="line-height:2;"><{$smarty.const._MA_TADUP_ENABLE}><{$smarty.const._TAD_FOR}><{if $cate.cat_enable}><i class="fa fa-check-circle text-success" aria-hidden="true"></i><{else}><i class="fa fa-times-circle text-secondary" aria-hidden="true"></i><{/if}></li>
-                    <li style="line-height:2;"><{$smarty.const._MA_TADUP_SHARE}><{$smarty.const._TAD_FOR}><{if $cate.cat_share}><i class="fa fa-unlock text-success" aria-hidden="true"></i><{else}><i class="fa fa-lock text-danger" aria-hidden="true"></i><{/if}></li>
+                    <li style="line-height:2;"><{$smarty.const._MA_TADUP_ENABLE}><{$smarty.const._TAD_FOR}><{if $cate.cat_enable|default:false}><i class="fa fa-check-circle text-success" aria-hidden="true"></i><{else}><i class="fa fa-times-circle text-secondary" aria-hidden="true"></i><{/if}></li>
+                    <li style="line-height:2;"><{$smarty.const._MA_TADUP_SHARE}><{$smarty.const._TAD_FOR}><{if $cate.cat_share|default:false}><i class="fa fa-unlock text-success" aria-hidden="true"></i><{else}><i class="fa fa-lock text-danger" aria-hidden="true"></i><{/if}></li>
                 </ul>
             </div>
         <{/if}>
@@ -22,13 +22,13 @@
         <{if $cat_sn!="" and $now_op!="tad_uploader_cate_form"}>
             <div class="row">
                 <div class="col-sm-4">
-                    <h3><a href="../index.php?of_cat_sn=<{$cat_sn}>"><{$cate.cat_title}></a></h3>
+                    <h3><a href="../index.php?of_cat_sn=<{$cat_sn|default:''}>"><{$cate.cat_title}></a></h3>
                 </div>
                 <div class="col-sm-8 text-right text-end">
                     <div style="margin-top: 10px;">
                         <{if $now_op!="tad_uploader_cate_form" and $cat_sn}>
                             <a href="javascript:delete_tad_uploader_func(<{$cate.cat_sn}>);" class="btn btn-danger <{if $cate.count > 0}>disabled<{/if}>"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
-                            <a href="main.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn|default:''}>" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
+                            <a href="main.php?op=tad_uploader_cate_form&cat_sn=<{$cat_sn|default:''}>" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
                         <{/if}>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
                                 <td><{$file.cf_size}></td>
                                 <td>
                                     <a href="javascript:delete_file_func(<{$file.cfsn}>,<{$file.cat_sn}>);" class="btn btn-sm btn-xs btn-danger" id="del<{$file.cat_sn}>"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
-                                    <a href="<{$xoops_url}>/modules/tad_uploader/uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-info" id="update<{$file.cat_sn}>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
+                                    <a href="<{$xoops_url}>/modules/tad_uploader/uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-info" id="update<{$file.cat_sn}>"><i class="fa fa-pencil" aria-hidden="true"></i>  <{$smarty.const._TAD_EDIT}></a>
                                 </td>
                             </tr>
                         <{/foreach}>

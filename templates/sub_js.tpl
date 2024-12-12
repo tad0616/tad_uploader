@@ -11,7 +11,7 @@
         });
 
         //***檔案管理****
-        $("#all_selected").change(function() {
+        $("#all_selected").on('change', function() {
             var selected_op = $("#all_selected").val();
             if(selected_op=="all_del"){
                 $("#all_move_select").hide();
@@ -26,7 +26,7 @@
         });
 
         //***目錄管理****
-        $("#this_folder").change(function() {
+        $("#this_folder").on('change', function() {
             var folder_op = $("#this_folder").val();
             if(folder_op=="new_cat_title"){
                 $("#new_cat_title_input").show();

@@ -4,6 +4,7 @@ use XoopsModules\Tadtools\Utility;
 /*-----------引入檔案區--------------*/
 require_once __DIR__ . '/header.php';
 // 關閉除錯訊息
+header('HTTP/1.1 200 OK');
 $xoopsLogger->activated = false;
 
 $updateRecordsArray = Request::getVar('tr', [], null, 'array', 4);
