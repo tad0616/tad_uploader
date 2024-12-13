@@ -115,9 +115,6 @@ function list_all_data($the_cat_sn = 0)
 {
     global $xoopsDB, $xoopsModuleConfig, $xoopsTpl, $TadUpFiles, $interface_menu;
 
-    $interface_menu["&#xf009;"] = "op.php?op=list_mode&list_mode=icon&of_cat_sn={$the_cat_sn}";
-    $interface_menu["&#xf00b;"] = "op.php?op=list_mode&list_mode=more&of_cat_sn={$the_cat_sn}";
-
     $path = '';
 
     //目前路徑

@@ -20,3 +20,9 @@ if ((count($upload_powers) > 0 && isset($xoopsUser) && \is_object($xoopsUser)) o
     $interface_menu[_MD_TADUP_UPLOAD] = "uploads.php{$and_sn}";
     $interface_icon[_MD_TADUP_UPLOAD] = "fa-upload";
 }
+
+$interface_menu[_MD_TADUP_ICON] = "op.php?op=list_mode&list_mode=icon&of_cat_sn={$the_cat_sn}";
+$interface_icon[_MD_TADUP_ICON] = "fa-folder-tree";
+
+$interface_menu[_MD_TADUP_LIST] = "op.php?op=list_mode&list_mode=more&of_cat_sn={$the_cat_sn}";
+$interface_icon[_MD_TADUP_LIST] = "fa-rectangle-list";

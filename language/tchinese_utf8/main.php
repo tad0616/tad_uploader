@@ -80,3 +80,6 @@ define('_MD_TADUP_BATCH_UPLOAD_TO', '請先將檔案上傳至：');
 define('_MD_BATCH_SAVE', '儲存');
 
 define('_MD_TADUP_INDEX', '所有檔案');
+
+define('_MD_TADUP_ICON', '圖示');
+define('_MD_TADUP_LIST', '列表');
