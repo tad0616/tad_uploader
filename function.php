@@ -259,10 +259,11 @@ function add_tad_uploader($the_cat_sn = 0, $cat_title = '', $cat_desc = '', $cat
         $of_cat_sn = $cat_add_form;
     }
     //有上層目錄，新增目錄時，而且在前台時($is_back=0) , 依上層權限
-    if ($of_cat_sn and $the_cat_sn == '' and $is_back == 0) {
+    if ($of_cat_sn and $the_cat_sn == 0 and $is_back == 0) {
         $catalog    = Utility::get_perm($of_cat_sn, 'catalog');
         $catalog_up = Utility::get_perm($of_cat_sn, 'catalog_up');
     }
+
     if ($cat_share === 'auto') {
         if (empty($of_cat_sn)) {
             $cat_share = 1;
@@ -413,7 +414,7 @@ function del_file($cfsn = '', $del_sql = true, $of_cat_sn = '')
 }
 
 //下載檔案
-function dlfile($cfsn = '')
+function dlfile($cfsn = '', $name = '')
 {
     global $xoopsUser, $xoopsDB, $TadUpFiles;
     if (empty($cfsn)) {
@@ -448,7 +449,8 @@ function dlfile($cfsn = '')
 
         $force_arr = ['application/pdf', 'audio/mp3', 'video/mp4'];
         $force     = ($kind == 'img' or in_array($cf_type, $force_arr)) ? true : false;
-        $TadUpFiles->add_file_counter($files_sn, true, $force);
+        $TadUpFiles->add_file_counter($files_sn, true, $force, '', [], [], '', $name);
+        // add_file_counter($files_sn = '', $hash = false, $force = false, $path = '', $can_groupid = [], $can_uid = [], $prefix = '', $fn = '')
     }
 }
 
@@ -632,7 +634,7 @@ function tad_uploader_cate_form($cat_sn = '')
     $cat_desc    = (!isset($DBV['cat_desc'])) ? '' : $DBV['cat_desc'];
     $cat_enable  = (!isset($DBV['cat_enable'])) ? '1' : $DBV['cat_enable'];
     $of_cat_sn   = (!isset($DBV['of_cat_sn'])) ? '' : $DBV['of_cat_sn'];
-    $cata_select = get_cata_select([(int) $cat_sn], 0);
+    $cata_select = get_cata_select([(int) $cat_sn], $of_cat_sn);
     $cat_share   = (!isset($DBV['cat_share'])) ? '1' : $DBV['cat_share'];
     $cat_count   = (!isset($DBV['cat_count'])) ? '' : $DBV['cat_count'];
 

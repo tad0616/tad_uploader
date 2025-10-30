@@ -18,7 +18,7 @@ function tad_uploader_b_show_1($options)
     $xoTheme->addStylesheet('modules/tadtools/css/iconize.css');
 
     $and_cat_sn = empty($options[1]) ? '' : "AND b.cat_sn IN ({$options[1]})";
-    $sql = "SELECT a.cfsn, a.cat_sn, a.cf_name, a.cf_desc, a.file_url
+    $sql        = "SELECT a.cfsn, a.cat_sn, a.cf_name, a.cf_desc, a.file_url
     FROM " . $xoopsDB->prefix('tad_uploader_file') . " AS a
     LEFT JOIN " . $xoopsDB->prefix('tad_uploader') . " AS b ON a.cat_sn = b.cat_sn
     WHERE b.cat_share = '1' $and_cat_sn
@@ -29,7 +29,7 @@ function tad_uploader_b_show_1($options)
     $result = Utility::query($sql, 'i', $params) or Utility::web_error($sql, __FILE__, __LINE__);
 
     $block = $link = [];
-    $i = 0;
+    $i     = 0;
     while (list($cfsn, $cat_sn, $cf_name, $cf_desc, $file_url) = $xoopsDB->fetchRow($result)) {
         //依據該群組是否對該權限項目有使用權之判斷 ，做不同之處理
         if (!Tools::check_up_power('catalog', $cat_sn)) {
@@ -38,9 +38,9 @@ function tad_uploader_b_show_1($options)
 
         $cf_name = empty($cf_name) ? Utility::get_basename($file_url) : $cf_name;
 
-        $link[$i]['title'] = empty($cf_desc) ? $cf_name : $cf_desc;
-        $link[$i]['cfsn'] = $cfsn;
-        $link[$i]['cat_sn'] = $cat_sn;
+        $link[$i]['title']   = empty($cf_desc) ? $cf_name : $cf_desc;
+        $link[$i]['cfsn']    = $cfsn;
+        $link[$i]['cat_sn']  = $cat_sn;
         $link[$i]['cf_name'] = $cf_name;
         $i++;
     }
@@ -54,7 +54,7 @@ function tad_uploader_b_edit_1($options)
 {
     $options1_1 = ('1' == $options[1]) ? 'checked' : '';
     $options1_0 = ('0' == $options[1]) ? 'checked' : '';
-    $option = block_uploader_cate($options[1]);
+    $option     = block_uploader_cate($options[1]);
 
     $form = "
     {$option['js']}
@@ -82,7 +82,7 @@ if (!function_exists('block_uploader_cate')) {
     function block_uploader_cate($selected = '')
     {
         global $xoopsDB;
-
+        $sc = [];
         if (!empty($selected)) {
             $sc = explode(',', $selected);
         }
@@ -92,7 +92,7 @@ if (!function_exists('block_uploader_cate')) {
               i=0;
               var arr = new Array();';
 
-        $sql = 'SELECT `cat_sn`, `cat_title` FROM `' . $xoopsDB->prefix('tad_uploader') . '` WHERE `cat_enable`=1 ORDER BY `cat_sort`';
+        $sql    = 'SELECT `cat_sn`, `cat_title` FROM `' . $xoopsDB->prefix('tad_uploader') . '` WHERE `cat_enable`=1 ORDER BY `cat_sort`';
         $result = Utility::query($sql);
         $option = '';
         while (list($cat_sn, $cat_title) = $xoopsDB->fetchRow($result)) {
@@ -108,7 +108,7 @@ if (!function_exists('block_uploader_cate')) {
     }
     </script>";
 
-        $main['js'] = $js;
+        $main['js']   = $js;
         $main['form'] = $option;
 
         return $main;

@@ -25,14 +25,14 @@ function tad_uploader_search($queryarray, $andor, $limit, $offset, $userid)
     }
     $sql .= 'ORDER BY  `cf_sort` DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
-    $ret = [];
-    $i = 0;
+    $ret    = [];
+    $i      = 0;
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $ret[$i]['image'] = 'images/folder.png';
-        $ret[$i]['link'] = 'index.php?op=dlfile&cfsn=' . $myrow['cfsn'];
+        $ret[$i]['link']  = 'index.php?op=dlfile&fn=' . $myrow['cf_name'] . '&cfsn=' . $myrow['cfsn'];
         $ret[$i]['title'] = $myrow['cf_name'];
-        $ret[$i]['time'] = strtotime($myrow['up_date']);
-        $ret[$i]['uid'] = $myrow['uid'];
+        $ret[$i]['time']  = strtotime($myrow['up_date']);
+        $ret[$i]['uid']   = $myrow['uid'];
         $i++;
     }
 

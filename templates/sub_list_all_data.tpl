@@ -79,7 +79,7 @@
                             <{if $file.pic|default:false}>
                                 <div style="width:24px;height:24px;background-image: url(<{$file.pic}>);float:left;background-size:cover;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin-right:2px;"></div>
                             <{/if}>
-                            <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>&name=<{$file.fname}>">
+                            <a href="index.php?op=dlfile&cfsn=<{$file.cfsn}>&cat_sn=<{$file.cat_sn}>&fn=<{$file.cf_name}>">
                             <{if $only_show_desc=="1"}>
                                 <{$file.cf_desc}>
                             <{else}>

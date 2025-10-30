@@ -4,8 +4,7 @@ global $xoopsConfig;
 
 //---模組基本資訊---//
 $modversion['name'] = _MI_TADUP_NAME;
-$modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '5.0.0-Stable' : '5.0';
-// $modversion['version'] = '4.0';
+$modversion['version'] = $_SESSION['xoops_version'] >= 20511 ? '5.1.0-Stable' : '5.1';
 $modversion['description'] = _MI_TADUP_DESC;
 $modversion['author'] = 'Tad(tad0616@gmail.com)';
 $modversion['credits'] = _MI_TADUP_CREDITS;
@@ -16,13 +15,13 @@ $modversion['image'] = "images/logo_{$xoopsConfig['language']}.png";
 $modversion['dirname'] = basename(__DIR__);
 
 //---模組狀態資訊---//
-$modversion['release_date'] = '2024-12-12';
+$modversion['release_date'] = '2025-10-30';
 $modversion['module_website_url'] = 'https://tad0616.net/';
 $modversion['module_website_name'] = _MI_TAD_WEB;
 $modversion['module_status'] = 'release';
 $modversion['author_website_url'] = 'https://tad0616.net/';
 $modversion['author_website_name'] = _MI_TAD_WEB;
-$modversion['min_php'] = 5.4;
+$modversion['min_php'] = 7.3;
 $modversion['min_xoops'] = '2.5.10';
 
 //---paypal資訊---//
