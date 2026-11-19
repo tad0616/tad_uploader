@@ -31,7 +31,7 @@
                     </a>
 
                     <div style="overflow: hidden;width:100%;height:50px;text-align:center;">
-                        <{if $up_power and $xoops_isuser|default:false}>
+                        <{if $up_power and $xoops_isuser|default:false and ($smarty.session.tad_upload_adm || $file.uid == $xoops_userid)}>
                         <label class="checkbox-inline">
                             <input type="checkbox" name="select_files[<{$file.cfsn}>]" value="<{$file.cf_name}>" class="u<{$file.cat_sn}> selected_file" onChange="chk_selected_files();">
                         <{/if}>
@@ -44,8 +44,12 @@
                             <{$file.cf_name}>
                         <{/if}>
                         </a>
-                        <{if $up_power and $xoops_isuser|default:false}>
+                        <{if $up_power and $xoops_isuser|default:false and ($smarty.session.tad_upload_adm || $file.uid == $xoops_userid)}>
                         </label>
+                        <div>
+                            <a href="javascript:delete_file_func(<{$file.cfsn}>);" class="btn btn-sm btn-xs btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> <{$smarty.const._TAD_DEL}></a>
+                            <a href="uploads.php?cfsn=<{$file.cfsn}>" class="btn btn-sm btn-xs btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> <{$smarty.const._TAD_EDIT}></a>
+                        </div>
                         <{/if}>
                     </div>
                     </li>

@@ -385,28 +385,31 @@ function del_file($cfsn = '', $del_sql = true, $of_cat_sn = '')
         return;
     }
 
-    //權限檢查
-    $power = Tools::check_up_power('catalog_up', $of_cat_sn);
-
-    if (!$power) {
-        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
-    }
-
-    //若要限制原上傳者才能刪除
-    $where_uid = '';
     if ($xoopsUser) {
-        $uid       = $xoopsUser->uid();
-        $where_uid = ($_SESSION['tad_upload_adm']) ? '' : " and uid = '{$uid}'";
+        $uid = $xoopsUser->uid();
     } else {
         redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_LOGIN);
     }
 
     $file = get_file($cfsn);
-    // die(var_export($file));
-    if ($del_sql) {
-        $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_uploader_file') . '` WHERE `cfsn`=? ' . $where_uid;
-        Utility::query($sql, 'i', [$cfsn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR7);
+    if (empty($file)) {
+        return;
+    }
 
+    //以檔案實際所屬目錄檢查上傳權限，避免透過偽造目錄編號繞過限制。
+    if (!Tools::check_up_power('catalog_up', $file['cat_sn'])) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
+    }
+
+    //一般使用者只能刪除自己上傳的檔案。
+    $is_upload_admin = !empty($_SESSION['tad_upload_adm']);
+    if (!$is_upload_admin && (int) $file['uid'] !== (int) $uid) {
+        redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_NO_POWER);
+    }
+
+    if ($del_sql) {
+        $sql = 'DELETE FROM `' . $xoopsDB->prefix('tad_uploader_file') . '` WHERE `cfsn`=?';
+        Utility::query($sql, 'i', [$cfsn]) or redirect_header($_SERVER['PHP_SELF'], 3, _MD_TADUP_DB_ERROR7);
     }
     $TadUpFiles->set_dir('subdir', "/user_{$file['uid']}");
     $TadUpFiles->set_col('cfsn', $cfsn); //若要整個刪除
